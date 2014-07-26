@@ -1,2 +1,2 @@
-# SSH Keys
-.ssh/id_*
+# Ignore everything by default and require explicit adding.
+*
