@@ -3,3 +3,15 @@
 	name = Lorenz Leutgeb
 [push]
 	default = simple
+[core]
+	editor = vim
+	autocrlf = input
+[help]
+	autocorrect = 20
+[color]
+	ui = true
+[merge]
+	tool = meld
+	ff = false
+[web]
+	browser = google-chrome
