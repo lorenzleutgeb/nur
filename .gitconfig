@@ -15,3 +15,6 @@
 	ff = false
 [web]
 	browser = google-chrome
+[alias]
+	month = log --no-merges --since='last month' --author=\"Lorenz\" --reverse --pretty=format:'%cd %s %d' --date=short
+	yesterday = log --no-merges --since='yesterday' --author=\"Lorenz\" --reverse --pretty=format:'%cd %s %d' --date=short
