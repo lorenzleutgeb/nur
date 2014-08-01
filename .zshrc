@@ -13,3 +13,4 @@ source $ZSH/oh-my-zsh.sh
 export PATH="/usr/local/heroku/bin:/opt/idea-IU-135.1230/bin:/opt/go_appengine:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
 
 alias ducks='du -cks * | sort -rn | head'
+alias online='ping -c 3 -i 0.5 -w 3 -q 8.8.8.8 > /dev/null'
