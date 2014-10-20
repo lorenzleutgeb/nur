@@ -1,0 +1,21 @@
+'global':
+  'exception-reporting':
+    'userId': 'fa701e7c-36d0-7d50-ba98-fe885d8e1bc6'
+  'welcome':
+    'showOnStartup': false
+  'metrics':
+    'userId': 'c2ec1c9319ed99e98c05d4b0427fc141efabd842'
+  'core':
+    'projectHome': '/Users/lorenz/workspace'
+  'editor':
+    'showInvisibles': true
+    'softWrapAtPreferredLineLength': true
+    'preferredLineLength': 160
+    'invisibles': {}
+  'minimap':
+    'plugins':
+      'git-diff': true
+  'git-log':
+    'fontScale': 1
+  'git-diff':
+    'showIconsInEditorGutter': true
