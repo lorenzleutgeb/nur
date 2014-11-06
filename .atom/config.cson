@@ -19,3 +19,4 @@
     'fontScale': 1
   'git-diff':
     'showIconsInEditorGutter': true
+  'merge-conflicts': {}
