@@ -20,3 +20,7 @@
 [alias]
 	month = log --no-merges --since='last month' --author=lorenz --reverse --pretty=format:'%cd %s %d' --date=short
 	yesterday = log --no-merges --since='yesterday' --author=lorenz --reverse --pretty=format:'%cd %s %d' --date=short
+[filter "media"]
+	clean = git media clean %f
+	smudge = git media smudge %f
+	required = true
