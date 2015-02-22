@@ -10,7 +10,7 @@ plugins=(git git-extras gradle grails jira npm pyhton sudo web-search wd cake co
 
 source $ZSH/oh-my-zsh.sh
 
-export PATH="$HOME/bin:/opt/jdk1.8.0_11/bin:/opt/gradle-2.0/bin:/usr/local/heroku/bin:/opt/idea-IU-139.224.1/bin:/opt/go_appengine:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
+export PATH="$HOME/bin:/opt/apache-maven-3.2.5/bin:/opt/jdk1.8.0_11/bin:/opt/gradle-2.0/bin:/usr/local/heroku/bin:/opt/idea-IU-139.224.1/bin:/opt/go_appengine:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
 
 # Fixes UTF8 on Mac OS apparently
 export PYTHONIOENCODING=utf-8
@@ -30,3 +30,13 @@ docker-enter() {
 	boot2docker ssh '[ -f /var/lib/boot2docker/nsenter ] || docker run --rm -v /var/lib/boot2docker/:/target jpetazzo/nsenter'
 	boot2docker ssh -t sudo /var/lib/boot2docker/docker-enter '$@'
 }
+
+if [ $(uname) = 'Darwin' ]
+then
+	export JAVA_HOME=$(/usr/libexec/java_home)
+
+elif [ $(uname) = 'Linux' ]
+then
+	export JAVA_HOME='/opt/jdk1.8.0_31/'
+
+fi
