@@ -54,6 +54,7 @@ fi
 if [ $(uname) = 'Darwin' ]
 then
 	export JAVA_HOME=$(/usr/libexec/java_home)
+	launchctl setenv MATLAB_JAVA $JAVA_HOME/jre
 
 elif [ $(uname) = 'Linux' ]
 then
