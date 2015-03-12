@@ -14,6 +14,10 @@ function addp {
 	PATH="$PATH:$1"
 }
 
+function svn-search {
+	zgrep --color --line-number $@ ~/.svn.ls.gz
+}
+
 addp "$HOME/bin"
 
 addp "/opt/gradle-2.0/bin"
@@ -21,7 +25,9 @@ addp "/opt/apache-maven-3.2.5/bin"
 addp "/opt/jdk1.8.0_25/bin"
 addp "/opt/gradle-2.2.1/bin"
 addp "/opt/idea-IU-139.659.2/bin"
+addp "/opt/PhpStorm-139.1348/bin"
 addp "/opt/go_appengine"
+addp "/opt/google-cloud-sdk/bin"
 
 # Fixes UTF8 on Mac OS apparently
 export PYTHONIOENCODING=utf-8
@@ -52,4 +58,10 @@ then
 elif [ $(uname) = 'Linux' ]
 then
 	export JAVA_HOME='/opt/jdk1.8.0_31/'
+fi
+
+# If there's hub installed, alias it
+if [ $(which hub) ]
+then
+	alias git=hub
 fi
