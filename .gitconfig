@@ -27,3 +27,5 @@
 [rerere]
 	enabled = true
 	autoupdate = true
+[branch]
+	autosetuprebase = always
