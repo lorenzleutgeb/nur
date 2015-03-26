@@ -29,3 +29,9 @@
 	autoupdate = true
 [branch]
 	autosetuprebase = always
+[alias "catalysts"]
+	cc = config user.email 'lorenz.leutgeb@catalysts.cc'
+[alias "tuwien.ac"]
+	at = config user.email 'lorenz.leutgeb@student.tuwien.ac.at'
+[alias "gmail"]
+	com = config user.email 'lorenz.leutgeb@gmail.com'
