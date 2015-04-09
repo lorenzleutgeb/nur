@@ -66,3 +66,5 @@ if [ $(which hub) ]
 then
 	alias git=hub
 fi
+
+export GOPATH=$HOME
