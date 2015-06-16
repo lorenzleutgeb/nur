@@ -6,7 +6,7 @@ ENABLE_CORRECTION="true"
 COMPLETION_WAITING_DOTS="true"
 HIST_STAMPS="yyyy-mm-dd"
 
-plugins=(git git-extras gradle grails jira npm pyhton sudo web-search wd cake coffee command-not-found)
+plugins=(git git-extras gradle npm pyhton sudo web-search wd cake coffee command-not-found)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -28,6 +28,7 @@ addp "/opt/idea-IU-139.659.2/bin"
 addp "/opt/PhpStorm-139.1348/bin"
 addp "/opt/go_appengine"
 addp "/opt/google-cloud-sdk/bin"
+addp "/opt/pdfover"
 
 # Fixes UTF8 on Mac OS apparently
 export PYTHONIOENCODING=utf-8
@@ -58,7 +59,7 @@ then
 
 elif [ $(uname) = 'Linux' ]
 then
-	export JAVA_HOME='/opt/jdk1.8.0_31/'
+	export JAVA_HOME=/opt/jdk1.8.0_40
 fi
 
 # If there's hub installed, alias it
@@ -66,5 +67,9 @@ if [ $(which hub) ]
 then
 	alias git=hub
 fi
+
+# https://github.com/nvbn/thefuck
+# sudo pip install thefuck
+alias fuck='eval $(thefuck $(fc -ln -1))'
 
 export GOPATH=$HOME
