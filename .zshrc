@@ -29,6 +29,8 @@ addp "/opt/PhpStorm-139.1348/bin"
 addp "/opt/go_appengine"
 addp "/opt/google-cloud-sdk/bin"
 addp "/opt/pdfover"
+# According to https://golang.org/doc/install
+addp "/usr/local/go/bin"
 
 # Fixes UTF8 on Mac OS apparently
 export PYTHONIOENCODING=utf-8
