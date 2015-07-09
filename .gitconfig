@@ -20,6 +20,10 @@
 [alias]
 	month = log --no-merges --since='last month' --author=lorenz --reverse --pretty=format:'%cd %s %d' --date=short
 	yesterday = log --no-merges --since='yesterday' --author=lorenz --reverse --pretty=format:'%cd %s %d' --date=short
+	catalysts = config user.email 'lorenz.leutgeb@catalysts.cc'
+	tuwien = config user.email 'lorenz.leutgeb@student.tuwien.ac.at'
+	gmail = config user.email 'lorenz.leutgeb@gmail.com'
+	coduno = config user.email 'lorenz.leutgeb@cod.uno'
 [filter "media"]
 	clean = git media clean %f
 	smudge = git media smudge %f
@@ -29,9 +33,3 @@
 	autoupdate = true
 [branch]
 	autosetuprebase = always
-[alias "catalysts"]
-	cc = config user.email 'lorenz.leutgeb@catalysts.cc'
-[alias "tuwien.ac"]
-	at = config user.email 'lorenz.leutgeb@student.tuwien.ac.at'
-[alias "gmail"]
-	com = config user.email 'lorenz.leutgeb@gmail.com'
