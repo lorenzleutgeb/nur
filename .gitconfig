@@ -1,6 +1,7 @@
 [user]
 	email = lorenz.leutgeb@gmail.com
 	name = Lorenz Leutgeb
+	signingkey = F8CB882D
 [push]
 	default = simple
 [core]
@@ -24,6 +25,7 @@
 	tuwien = config user.email 'lorenz.leutgeb@student.tuwien.ac.at'
 	gmail = config user.email 'lorenz.leutgeb@gmail.com'
 	coduno = config user.email 'lorenz.leutgeb@cod.uno'
+	log = log --graph --decorate --show-signature
 [filter "media"]
 	clean = git media clean %f
 	smudge = git media smudge %f

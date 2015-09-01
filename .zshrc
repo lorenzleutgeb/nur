@@ -1,6 +1,12 @@
 export ZSH=$HOME/.oh-my-zsh
 
-ZSH_THEME="frisk"
+GIT_CB="git::"
+ZSH_THEME_SCM_PROMPT_PREFIX="%{$fg[green]%}["
+ZSH_THEME_GIT_PROMPT_PREFIX=$ZSH_THEME_SCM_PROMPT_PREFIX$GIT_CB
+ZSH_THEME_GIT_PROMPT_SUFFIX="]%{$reset_color%} "
+ZSH_THEME_GIT_PROMPT_DIRTY=" %{$fg[red]%}*%{$fg[green]%}"
+ZSH_THEME_GIT_PROMPT_CLEAN=""
+
 CASE_SENSITIVE="true"
 ENABLE_CORRECTION="true"
 COMPLETION_WAITING_DOTS="true"
@@ -20,15 +26,8 @@ function svn-search {
 
 addp "$HOME/bin"
 
-addp "/opt/gradle-2.0/bin"
-addp "/opt/apache-maven-3.2.5/bin"
-addp "/opt/jdk1.8.0_25/bin"
-addp "/opt/gradle-2.2.1/bin"
-addp "/opt/idea-IU-139.659.2/bin"
-addp "/opt/PhpStorm-139.1348/bin"
-addp "/opt/go_appengine"
-addp "/opt/google-cloud-sdk/bin"
 addp "/opt/pdfover"
+
 # According to https://golang.org/doc/install
 addp "/usr/local/go/bin"
 
@@ -38,21 +37,7 @@ export PYTHONIOENCODING=utf-8
 alias ducks='du -cks * | sort -rn | head'
 alias online='ping -c 3 -i 0.5 -w 3 -q 8.8.8.8 > /dev/null'
 alias fuck='sudo !!'
-
-# Docker and boot2docker related stuff
-# DOCKER_HOST may be unstable, let's see how it goes ...
-
-DOCKER_HOST=tcp://192.168.59.103:2376
-DOCKER_CERT_PATH=$HOME/.boot2docker/certs/boot2docker-vm
-DOCKER_TLS_VERIFY=1
-
-if [ -n `which docker-enter 2> /dev/null` ]
-	then
-	docker-enter() {
-		boot2docker ssh '[ -f /var/lib/boot2docker/nsenter ] || docker run --rm -v /var/lib/boot2docker/:/target jpetazzo/nsenter'
-		boot2docker ssh -t sudo /var/lib/boot2docker/docker-enter '$@'
-	}
-fi
+alias ssh-git='gcloud compute ssh --zone europe-west1-b --ssh-key-file ~/.ssh/id_rsa lorenz_leutgeb_cod_uno@git'
 
 if [ $(uname) = 'Darwin' ]
 then
@@ -75,3 +60,5 @@ fi
 alias fuck='eval $(thefuck $(fc -ln -1))'
 
 export GOPATH=$HOME
+
+alias docker-fetch="sudo wget https://master.dockerproject.org/linux/amd64/docker -O /usr/bin/docker; sudo chmod 755 /usr/bin/docker"
