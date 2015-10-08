@@ -53,3 +53,5 @@ export GOPATH=$HOME
 alias docker-fetch="sudo wget https://master.dockerproject.org/linux/amd64/docker -O /usr/bin/docker; sudo chmod 755 /usr/bin/docker"
 
 export GITHUB_USER="flowlo"
+
+alias gupu="ssh a8.complang.tuwien.ac.at gupu -geometry 512x128 -font '*-iso8859-1'"
