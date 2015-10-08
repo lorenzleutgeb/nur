@@ -12,7 +12,9 @@ ENABLE_CORRECTION="true"
 COMPLETION_WAITING_DOTS="true"
 HIST_STAMPS="yyyy-mm-dd"
 
-plugins=(git git-extras gradle npm pyhton sudo web-search wd cake coffee command-not-found)
+plugins=(zsh-syntax-highlighting git-extras gradle npm pyhton sudo web-search wd cake coffee command-not-found)
+
+export PROMPT='%'
 
 source $ZSH/oh-my-zsh.sh
 
