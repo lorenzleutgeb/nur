@@ -54,4 +54,4 @@ alias docker-fetch="sudo wget https://master.dockerproject.org/linux/amd64/docke
 
 export GITHUB_USER="flowlo"
 
-alias gupu="ssh a8.complang.tuwien.ac.at gupu -geometry 512x128 -font '*-iso8859-1'"
+alias gupu="ssh lp gupu -geometry 512x128 -font '*-iso8859-1'"
