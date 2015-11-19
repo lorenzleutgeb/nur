@@ -1,0 +1,14 @@
+[core]
+account = 656949618208-pmm9p6o603mv4lm5449ivmifhoihu30c@developer.gserviceaccount.com
+project = coduno
+
+[component_manager]
+
+[compute]
+zone = europe-west1-d
+
+[app]
+promote_by_default = true
+suppress_change_warning = true
+use_cloud_build = true
+
