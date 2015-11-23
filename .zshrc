@@ -55,3 +55,5 @@ alias docker-fetch="sudo wget https://master.dockerproject.org/linux/amd64/docke
 export GITHUB_USER="flowlo"
 
 alias gupu="ssh lp gupu -geometry 512x128 -font '*-iso8859-1'"
+
+export SSH_AUTH_SOCK=$HOME/.gnupg/S.gpg-agent.ssh
