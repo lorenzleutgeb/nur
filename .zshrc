@@ -57,3 +57,7 @@ export GITHUB_USER="flowlo"
 alias gupu="ssh lp gupu -geometry 512x128 -font '*-iso8859-1'"
 
 export SSH_AUTH_SOCK=$HOME/.gnupg/S.gpg-agent.ssh
+
+if [ -n "$ASCIINEMA_REC" ]; then
+	PS1="$ "
+fi
