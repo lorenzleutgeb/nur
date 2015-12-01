@@ -2,7 +2,7 @@ execute pathogen#infect()
 
 syntax enable
 
-set tabstop=4
+set tabstop=8
 
 set cursorline " highlight current line
 
