@@ -1,7 +1,7 @@
 [user]
 	email = lorenz.leutgeb@gmail.com
 	name = Lorenz Leutgeb
-	signingkey = F8CB882D
+	signingkey = EBB1C984
 [push]
 	default = simple
 [core]
