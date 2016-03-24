@@ -22,7 +22,7 @@
 [alias]
 	month = log --no-merges --since='last month' --author=lorenz --reverse --pretty=format:'%cd %s %d' --date=short
 	yesterday = log --no-merges --since='yesterday' --author=lorenz --reverse --pretty=format:'%cd %s %d' --date=short
-	log = log --graph --decorate --show-signature --date=iso8601-strict --use-mailmap
+	l = log --graph --decorate --show-signature --date=iso8601-strict --use-mailmap
 [filter "media"]
 	clean = git media clean %f
 	smudge = git media smudge %f
