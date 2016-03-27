@@ -1,20 +1,11 @@
 export ZSH=$HOME/.oh-my-zsh
 
-GIT_CB="git::"
-ZSH_THEME_SCM_PROMPT_PREFIX="%{$fg[green]%}["
-ZSH_THEME_GIT_PROMPT_PREFIX=$ZSH_THEME_SCM_PROMPT_PREFIX$GIT_CB
-ZSH_THEME_GIT_PROMPT_SUFFIX="]%{$reset_color%} "
-ZSH_THEME_GIT_PROMPT_DIRTY=" %{$fg[red]%}*%{$fg[green]%}"
-ZSH_THEME_GIT_PROMPT_CLEAN=""
-
 CASE_SENSITIVE="true"
 ENABLE_CORRECTION="true"
 COMPLETION_WAITING_DOTS="true"
 HIST_STAMPS="yyyy-mm-dd"
 
-plugins=(zsh-syntax-highlighting git-extras gradle npm pyhton sudo web-search wd cake coffee command-not-found)
-
-export PROMPT='%'
+plugins=(sudo wd command-not-found zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -61,3 +52,5 @@ export SSH_AUTH_SOCK=$HOME/.gnupg/S.gpg-agent.ssh
 if [ -n "$ASCIINEMA_REC" ]; then
 	PS1="$ "
 fi
+
+alias mdv="~/src/github.com/axiros/terminal_markdown_viewer/mdv.py"
