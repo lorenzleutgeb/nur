@@ -4,7 +4,7 @@
 	signingkey = EBB1C984
 	useconfigonly = true
 [push]
-	default = simple
+	default = current
 [core]
 	editor = vim
 	autocrlf = input
