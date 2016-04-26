@@ -1,22 +1,41 @@
-'global':
-  'exception-reporting':
-    'userId': 'fa701e7c-36d0-7d50-ba98-fe885d8e1bc6'
-  'welcome':
-    'showOnStartup': false
-  'metrics':
-    'userId': 'c2ec1c9319ed99e98c05d4b0427fc141efabd842'
-  'core':
-    'projectHome': '/Users/lorenz/workspace'
-  'editor':
-    'showInvisibles': true
-    'softWrapAtPreferredLineLength': true
-    'preferredLineLength': 160
-    'invisibles': {}
-  'minimap':
-    'plugins':
-      'git-diff': true
-  'git-log':
-    'fontScale': 1
-  'git-diff':
-    'showIconsInEditorGutter': true
-  'merge-conflicts': {}
+"*":
+  core:
+    ignoredNames: [
+      ".git"
+      ".hg"
+      ".svn"
+      ".DS_Store"
+      "._*"
+      "Thumbs.db"
+      "*~"
+    ]
+    projectHome: "~/tmp"
+    themes: [
+      "atom-dark-ui"
+      "atom-dark-syntax"
+    ]
+  editor:
+    backUpBeforeSaving: true
+    invisibles: {}
+    preferredLineLength: 160
+    showIndentGuide: true
+    showInvisibles: true
+    softTabs: false
+    softWrapAtPreferredLineLength: true
+    tabLength: 8
+  "exception-reporting":
+    userId: "fa701e7c-36d0-7d50-ba98-fe885d8e1bc6"
+  "git-diff":
+    showIconsInEditorGutter: true
+  "git-log":
+    fontScale: 1
+  "go-plus":
+    goPath: "~"
+  "merge-conflicts": {}
+  metrics:
+    userId: "c2ec1c9319ed99e98c05d4b0427fc141efabd842"
+  minimap:
+    plugins:
+      "git-diff": true
+  welcome:
+    showOnStartup: false
