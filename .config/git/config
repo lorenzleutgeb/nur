@@ -41,3 +41,6 @@
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
 	required = true
+[filter "gpg"]
+	clean = "gpg --encrypt --recipient EBB1C984 -o- %f | git-lfs clean -- %f"
+	smudge = "git-lfs smudge -- %f | gpg --decrypt --output %f"
