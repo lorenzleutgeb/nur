@@ -38,6 +38,6 @@
 [alias]
 	pr = "!f() { remote=${2-origin} ; git fetch $remote refs/pull/$1/head:#$1 ; } ; f"
 [filter "lfs"]
-	smudge = git-lfs smudge %f
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
 	required = true
-	clean = git-lfs clean %f
