@@ -5,9 +5,9 @@ ENABLE_CORRECTION="true"
 COMPLETION_WAITING_DOTS="true"
 HIST_STAMPS="yyyy-mm-dd"
 
-plugins=(sudo wd command-not-found zsh-syntax-highlighting)
-
 source $ZSH/oh-my-zsh.sh
+
+plugins=(sudo lein wd z command-not-found laravel5 zsh-syntax-highlighting)
 
 function addp {
 	PATH="$PATH:$1"
@@ -35,17 +35,9 @@ then
 	alias git=hub
 fi
 
-# https://github.com/nvbn/thefuck
-# sudo pip install thefuck
-alias fuck='eval $(thefuck $(fc -ln -1))'
-
 export GOPATH=$HOME
 
-alias docker-fetch="sudo wget https://master.dockerproject.org/linux/amd64/docker -O /usr/bin/docker; sudo chmod 755 /usr/bin/docker"
-
-export GITHUB_USER="flowlo"
-
-alias gupu="ssh lp gupu -geometry 512x128 -font '*-iso8859-1'"
+export GITHUB_USER="lorenzleutgeb"
 
 export GPG_AGENT_INFO="$HOME/.gnupg/S.gpg-agent:0:1"
 export SSH_AUTH_SOCK=$HOME/.gnupg/S.gpg-agent.ssh
@@ -54,4 +46,10 @@ if [ -n "$ASCIINEMA_REC" ]; then
 	PS1="$ "
 fi
 
-alias mdv="~/src/github.com/axiros/terminal_markdown_viewer/mdv.py"
+export SCLABLE_AUTH_KEY=$(xmlstarlet sel -t -v "/license" ~/.sclable/license.xml)
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f "$HOME/google-cloud-sdk/path.zsh.inc" ]; then source "$HOME/google-cloud-sdk/path.zsh.inc"; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f "$HOME/google-cloud-sdk/completion.zsh.inc" ]; then source "$HOME/google-cloud-sdk/completion.zsh.inc"; fi
