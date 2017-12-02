@@ -35,6 +35,8 @@ then
 	alias git=hub
 fi
 
+export PGPASSWORD="none"
+
 export GOPATH=$HOME
 
 export GITHUB_USER="lorenzleutgeb"
@@ -53,3 +55,6 @@ if [ -f "$HOME/google-cloud-sdk/path.zsh.inc" ]; then source "$HOME/google-cloud
 
 # The next line enables shell command completion for gcloud.
 if [ -f "$HOME/google-cloud-sdk/completion.zsh.inc" ]; then source "$HOME/google-cloud-sdk/completion.zsh.inc"; fi
+
+alias gotty-tmux="gotty -w tmux new -A -s gotty $SHELL"
+alias tmux-gotty="tmux new -A -s gotty"
