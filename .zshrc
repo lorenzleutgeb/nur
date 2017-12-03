@@ -58,3 +58,16 @@ if [ -f "$HOME/google-cloud-sdk/completion.zsh.inc" ]; then source "$HOME/google
 
 alias gotty-tmux="gotty -w tmux new -A -s gotty $SHELL"
 alias tmux-gotty="tmux new -A -s gotty"
+
+function unalias {
+        name=$1
+        def=$(alias $name)
+        echo ${def:${#name}+2:-1}
+}
+
+
+function tilix-gotty {
+	tilix -a session-add-right -e "ngrok start gotty"
+	tilix -a session-add-down -e "$(unalias gotty-tmux)"
+	tmux-gotty
+}
