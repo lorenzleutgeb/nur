@@ -1,0 +1,6 @@
+log: /tmp/ngrok.log
+region: eu
+tunnels:
+  gotty:
+    proto: http
+    addr: 8080
