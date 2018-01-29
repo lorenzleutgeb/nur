@@ -1,6 +1,6 @@
 [user]
 	name = Lorenz Leutgeb
-	signingkey = EBB1C984
+	email = lorenz@leutgeb.xyz
 	useconfigonly = true
 [push]
 	default = current
