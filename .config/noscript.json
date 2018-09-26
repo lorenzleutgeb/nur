@@ -1,0 +1,121 @@
+{
+  "policy": {
+    "DEFAULT": {
+      "capabilities": [
+        "frame",
+        "fetch",
+        "other"
+      ],
+      "temp": false
+    },
+    "TRUSTED": {
+      "capabilities": [
+        "script",
+        "object",
+        "media",
+        "frame",
+        "font",
+        "webgl",
+        "fetch",
+        "other"
+      ],
+      "temp": false
+    },
+    "UNTRUSTED": {
+      "capabilities": [],
+      "temp": false
+    },
+    "sites": {
+      "trusted": [
+        "§:addons.mozilla.org",
+        "§:afx.ms",
+        "§:ajax.aspnetcdn.com",
+        "§:ajax.googleapis.com",
+        "§:bootstrapcdn.com",
+        "§:code.jquery.com",
+        "§:firstdata.com",
+        "§:firstdata.lv",
+        "§:gfx.ms",
+        "§:google.com",
+        "§:googlevideo.com",
+        "§:gstatic.com",
+        "§:hotmail.com",
+        "§:live.com",
+        "§:live.net",
+        "§:maps.googleapis.com",
+        "§:mozilla.net",
+        "§:netflix.com",
+        "§:nflxext.com",
+        "§:nflximg.com",
+        "§:nflxvideo.net",
+        "§:noscript.net",
+        "§:outlook.com",
+        "§:passport.com",
+        "§:passport.net",
+        "§:passportimages.com",
+        "§:paypal.com",
+        "§:paypalobjects.com",
+        "§:securecode.com",
+        "§:securesuite.net",
+        "§:sfx.ms",
+        "§:tinymce.cachefly.net",
+        "§:wlxrs.com",
+        "§:yahoo.com",
+        "§:yahooapis.com",
+        "§:yimg.com",
+        "§:youtube.com",
+        "§:ytimg.com"
+      ],
+      "untrusted": [],
+      "custom": {
+        "§:duckduckgo.com": {
+          "capabilities": [
+            "script",
+            "object",
+            "frame"
+          ],
+          "temp": false
+        },
+        "§:github.com": {
+          "capabilities": [
+            "fetch",
+            "other",
+            "script"
+          ],
+          "temp": false
+        },
+        "§:slack.com": {
+          "capabilities": [
+            "fetch",
+            "script"
+          ],
+          "temp": false
+        },
+        "§:slack-edge.com": {
+          "capabilities": [
+            "script",
+            "font"
+          ],
+          "temp": false
+        }
+      }
+    },
+    "enforced": true,
+    "autoAllowTop": false
+  },
+  "local": {
+    "debug": false,
+    "showCtxMenuItem": true,
+    "showCountBadge": true,
+    "showFullAddresses": false,
+    "storage": "local",
+    "uuid": "3d167761-6b63-4337-ad45-1ed1285c7a0c"
+  },
+  "sync": {
+    "global": false,
+    "xss": true,
+    "clearclick": true,
+    "storage": "sync"
+  },
+  "xssUserChoices": {}
+}
