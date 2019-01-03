@@ -5,7 +5,7 @@
 [push]
 	default = current
 [core]
-	editor = vim
+	editor = nvim
 	autocrlf = input
 [help]
 	autocorrect = 20
