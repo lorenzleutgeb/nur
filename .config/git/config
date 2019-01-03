@@ -26,6 +26,7 @@
 	l = log --graph --decorate --show-signature --date=iso8601-strict --use-mailmap
 	ignore-local = config --local core.excludesfile "/home/lorenz/gitignore"
 	ignore-fetch = "!gi() { curl -L -s https://www.gitignore.io/api/$@ ;}; gi"
+	rebase-branch = "!grb() { git rebase -i $(git merge-base HEAD $@) ;}; grb"
 [filter "media"]
 	clean = git media clean %f
 	smudge = git media smudge %f
