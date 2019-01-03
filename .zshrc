@@ -24,7 +24,7 @@ setopt HIST_REDUCE_BLANKS        # Remove superfluous blanks before recording en
 setopt HIST_VERIFY               # Don't execute immediately upon history expansion.
 setopt HIST_BEEP                 # Beep when accessing nonexistent history.
 
-plugins=(sudo lein wd command-not-found zsh-syntax-highlighting)
+plugins=(sudo lein wd zsh-syntax-highlighting)
 
 function addp {
 	PATH="$PATH:$1"
@@ -57,8 +57,12 @@ addp "/opt/pdfover"
 # According to https://golang.org/doc/install
 addp "/usr/local/go/bin"
 
-# Pyhton tools use this
+# Python tools use this
 addp "$HOME/.local/bin"
+
+addp "$HOME/gradle-5.0/bin"
+
+addp "$HOME/.cargo/bin"
 
 alias ducks='du -cks * | sort -rn | head'
 alias online='ping -c 3 -i 0.5 -w 3 -q 8.8.8.8 > /dev/null'
@@ -69,6 +73,7 @@ if [ $(which hub) ]
 then
 	alias git=hub
 fi
+alias gcan='git commit --amend --no-edit'
 
 export PGPASSWORD="none"
 
@@ -127,4 +132,3 @@ test -r /home/lorenz/.opam/opam-init/init.zsh && . /home/lorenz/.opam/opam-init/
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
