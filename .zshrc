@@ -1,6 +1,3 @@
-export ZSH=$HOME/.oh-my-zsh
-source $ZSH/oh-my-zsh.sh
-
 export CASE_SENSITIVE="true"
 export ENABLE_CORRECTION="true"
 export COMPLETION_WAITING_DOTS="true"
@@ -15,16 +12,42 @@ setopt EXTENDED_HISTORY          # Write the history file in the ":start:elapsed
 setopt INC_APPEND_HISTORY        # Write to the history file immediately, not when the shell exits.
 setopt SHARE_HISTORY             # Share history between all sessions.
 setopt HIST_EXPIRE_DUPS_FIRST    # Expire duplicate entries first when trimming history.
-setopt HIST_IGNORE_DUPS          # Don't record an entry that was just recorded again.
+setopt HIST_IGNORE_DUPS          # Do not record an entry that was just recorded again.
 setopt HIST_IGNORE_ALL_DUPS      # Delete old recorded entry if new entry is a duplicate.
 setopt HIST_FIND_NO_DUPS         # Do not display a line previously found.
-setopt HIST_IGNORE_SPACE         # Don't record an entry starting with a space.
-setopt HIST_SAVE_NO_DUPS         # Don't write duplicate entries in the history file.
+setopt HIST_IGNORE_SPACE         # Do not record an entry starting with a space.
+setopt HIST_SAVE_NO_DUPS         # Do not write duplicate entries in the history file.
 setopt HIST_REDUCE_BLANKS        # Remove superfluous blanks before recording entry.
-setopt HIST_VERIFY               # Don't execute immediately upon history expansion.
+setopt HIST_VERIFY               # Do not execute immediately upon history expansion.
 setopt HIST_BEEP                 # Beep when accessing nonexistent history.
 
-plugins=(sudo lein wd zsh-syntax-highlighting)
+# Theming
+export ZSH_THEME="spaceship"
+# Spaceship options: https://github.com/denysdovhan/spaceship-prompt/blob/6e42f9d78a9fef0d3822d4e6b90d254ca05f1120/docs/Options.md
+export SPACESHIP_CHAR_SUFFIX=""
+export SPACESHIP_CHAR_SYMBOL="$ "
+export SPACESHIP_CHAR_SYMBOL_ROOT="# "
+export SPACESHIP_CHAR_SYMBOL_SECONDARY="… "
+export SPACESHIP_TIME_SHOW="false"
+export SPACESHIP_VI_MODE_SHOW="false"
+export SPACESHIP_GOLANG_SHOW="false"
+
+# Vi Mode
+bindkey -v
+
+export KEYTIMEOUT=1
+
+autoload edit-command-line
+zle -N edit-command-line
+bindkey -M vicmd v edit-command-line
+
+function zle-line-init zle-keymap-select {
+    VIM_PROMPT="%{$fg_bold[yellow]%} [% NORMAL]% %{$reset_color%}"
+    RPS1="${${KEYMAP/vicmd/$VIM_PROMPT}/(main|viins)/} $EPS1"
+    zle reset-prompt
+}
+zle -N zle-line-init
+zle -N zle-keymap-select
 
 function addp {
 	PATH="$PATH:$1"
@@ -35,7 +58,7 @@ function addp {
 # 	zgrep --color --line-number $@ ~/.svn.ls.gz
 # }
 
-# Where I symlink stuff. Also, the Golang tooling will use it.
+# Where I symlink stuff. Also, Go tooling will use it.
 addp "$HOME/bin"
 
 # MiniZinc
@@ -46,6 +69,7 @@ addp "$HOME/graalvm-1.0.0-rc1/bin"
 
 # Google Cloud SDK
 addp "$HOME/google-cloud-sdk/bin"
+
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f "$HOME/google-cloud-sdk/path.zsh.inc" ]; then source "$HOME/google-cloud-sdk/path.zsh.inc"; fi
 
@@ -62,16 +86,19 @@ addp "$HOME/.local/bin"
 
 addp "$HOME/gradle-5.0/bin"
 
+# Rust
 addp "$HOME/.cargo/bin"
 
 alias ducks='du -cks * | sort -rn | head'
 alias online='ping -c 3 -i 0.5 -w 3 -q 8.8.8.8 > /dev/null'
-alias fuck='sudo !!'
+
+# Alias vim to use NeoVim
+alias vim='nvim'
 
 # If there's hub installed, alias it
 if [ $(which hub) ]
 then
-	alias git=hub
+	#alias git=hub
 fi
 alias gcan='git commit --amend --no-edit'
 
@@ -132,3 +159,14 @@ test -r /home/lorenz/.opam/opam-init/init.zsh && . /home/lorenz/.opam/opam-init/
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+source ~/src/gh/zplug/zplug/init.zsh
+zplug denysdovhan/spaceship-prompt, use:spaceship.zsh, from:github, as:theme
+zplug zsh-users/zsh-syntax-highlighting, defer:2
+zplug load #--verbose
+
+spaceship_vi_mode_enable() {
+  function zle-keymap-select() { PROMPT=$(spaceship::compose_prompt $SPACESHIP_PROMPT_ORDER); zle reset-prompt ; zle -R }
+  zle -N zle-keymap-select
+  bindkey -v
+}
