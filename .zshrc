@@ -101,6 +101,7 @@ then
 	#alias git=hub
 fi
 alias gcan='git commit --amend --no-edit'
+alias home="git --git-dir=$HOME/.config/home/ --work-tree=$HOME"
 
 export PGPASSWORD="none"
 

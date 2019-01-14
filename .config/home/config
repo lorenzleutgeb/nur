@@ -1,0 +1,16 @@
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = true
+[remote "origin"]
+	url = git@github.com:lorenzleutgeb/home.git
+	fetch = +refs/heads/*:refs/remotes/origin/*
+[remote "sr.ht"]
+	url = git@git.sr.ht:~lorenzleutgeb/home
+	fetch = +refs/heads/*:refs/remotes/sr.ht/*
+[branch "master"]
+	remote = origin
+	merge = refs/heads/master
+	rebase = true
+[status]
+	showUntrackedFiles = no
