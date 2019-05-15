@@ -1,0 +1,15 @@
+opam-version: "2.0"
+repositories: "default"
+installed-switches: "default"
+switch: "default"
+jobs: 3
+download-jobs: 3
+eval-variables: [
+  sys-ocaml-version
+  ["ocamlc" "-vnum"]
+  "OCaml version present on your system independently of opam, if any"
+]
+default-compiler: [
+  "ocaml-system" {>= "4.02.3"}
+  "ocaml-base-compiler"
+]
