@@ -1,9 +1,7 @@
+source ~/.config/nvim/simple.vim
+
 set runtimepath^=~/.vim runtimepath+=~/.vim/after
 let &packpath = &runtimepath
-
-let mapleader="\<space>"
-" Just to make clear that the local leader key is bacslash.
-let maplocalleader="\\"
 
 " Automatically source rc if saving a vim file.
 if has ('autocmd') " Remain compatible with earlier versions
@@ -73,7 +71,7 @@ highlight ColorColumn ctermbg=black guibg=black
 " To navigate to cursor position (especially epic with eye tracking)
 set mouse=a
 
-setlocal spell
+" setlocal spell
 set spelllang=en_us
 
 " vim-plug Section

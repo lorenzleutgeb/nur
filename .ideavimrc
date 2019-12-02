@@ -1,0 +1,8 @@
+source ~/.config/nvim/simple.vim
+" https://github.com/JetBrains/ideavim/tree/e8ba919661242c94e155f6e047330aa86745f3cd/doc
+imap jj <Esc>
+map <leader>g :action Generate<cr>
+map <leader>r :action RenameElement<cr>
+map <leader>gs :action GotoSymbol<cr>
+map <leader>c :action EditorCompleteStatement<cr>
+map <leader>p :action ParameterInfo<cr>
