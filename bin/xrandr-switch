@@ -1,0 +1,11 @@
+#!/bin/bash
+
+active=$(xrandr | grep "+0+0")
+
+# Check that we have exactly one output.
+
+active=$(echo "$active" | cut -f1 -d' ')
+
+other=$(if [ "$active" = "eDP-1" ] ; then echo "HDMI-2" ; else echo "eDP-1" ; fi)
+
+xrandr --output $other --auto --output $active --off
