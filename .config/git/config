@@ -16,6 +16,9 @@
 	tool = meld
 	ff = false
 	keepBackup = false
+[merge "npm-merge-driver"]
+	name = "Automatically merge npm lockfiles"
+	driver = "npm-merge-driver merge %A %O %B %P"
 [web]
 	browser = google-chrome
 [fetch]
