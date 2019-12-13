@@ -1,0 +1,66 @@
+plugin:
+  zxqfl/tabnine-vim: {}
+
+  wellle/targets.vim: {}
+
+  zhou13/vim-easyescape:
+    before: |
+      let g:easyescape_chars = { "j": 2 }
+      let g:easyescape_timeout = 300
+    after: cnoremap jj <ESC>
+
+  junegunn/vim-easy-align: {}
+
+  airblade/vim-gitgutter: {}
+
+  editorconfig/editorconfig-vim: {}
+
+  itchyny/lightline.vim:
+    before: |
+      let g:lightline = {'colorscheme': 'solarized'}
+
+  frankier/neovim-colors-solarized-truecolor-only:
+    before:
+      set background=dark
+    after:
+      colorscheme solarized
+
+  terryma/vim-multiple-cursors: {}
+
+  tpope/vim-eunuch: {}
+
+  tpope/vim-surround: {}
+
+  rust-lang/rust.vim:
+    before: |
+      let g:rustfmt_autosave = 0
+
+  lorenzleutgeb/coquille:
+    before: |
+      let g:coquille_auto_move = 'true'
+    after: |
+      command Cc call CoqToCursor()
+      command Cn call CoqNext()
+      command Cu call CoqUndo()
+      command Ca call CoqCancel()
+      command Cs call CoqStop()
+      command Cl call CoqLaunch()
+
+  sirver/Ultisnips:
+    before: |
+      let g:UltiSnipsExpandTrigger = '<tab>'
+      let g:UltiSnipsJumpForwardTrigger = '<tab>'
+      let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
+
+  lervag/vimtex:
+    before: |
+      let g:tex_flavor='latex'
+      let g:vimtex_view_method='zathura'
+      let g:vimtex_quickfix_mode=0
+
+  KeitaNakamura/tex-conceal.vim:
+    before: |
+      set conceallevel=1
+      let g:tex_conceal='abdmg'
+
+  liuchengxu/vim-clap: {}
