@@ -1,0 +1,4 @@
+#!/bin/bash
+
+FIRMWARE=$(ls -t -1 ~/Downloads/ergodox*.hex | head -1)
+wally $FIRMWARE

@@ -1,0 +1,19 @@
+#!/bin/bash
+SESSIONS=$(mktemp)
+tmux list-sessions -F '#{session_id}' > $SESSIONS
+if [[ "$(wc -l < $SESSIONS)" -ne 1 ]]
+then
+	echo "Not exactly one tmux session running!"
+	cat $SESSIONS
+	exit 1
+fi
+
+PORT=$(tunnel)
+echo https://lorenz.leutgeb.xyz/tunnel/$PORT/
+gotty \
+	--port $PORT \
+	--ws-origin '.*' \
+	--title-format "Lorenz" \
+	tmux attach-session -t "$(cat $SESSIONS)"
+
+# --random-url --random-url-length 4 \
