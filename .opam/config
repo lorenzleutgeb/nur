@@ -1,7 +1,7 @@
 opam-version: "2.0"
 repositories: "default"
-installed-switches: "default"
-switch: "default"
+installed-switches: ["raml" "default"]
+switch: "raml"
 jobs: 3
 download-jobs: 3
 eval-variables: [
