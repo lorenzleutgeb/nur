@@ -4,3 +4,7 @@
 .#*
 
 credentials.txt
+
+# ctags
+tags
+TAGS
