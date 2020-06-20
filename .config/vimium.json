@@ -1,78 +1,90 @@
 {
-  "settingsVersion": "1.64",
   "exclusionRules": [
     {
-      "pattern": "https?://mail.google.com/*",
-      "passKeys": ""
+      "passKeys": "/jknp",
+      "pattern": "https?://vimawesome.com/*"
     },
     {
-      "pattern": "https?://www.google.com/*",
-      "passKeys": "jk"
+      "passKeys": "t",
+      "pattern": "https?://git.sclable.com/*"
     },
     {
-      "pattern": "https?://github.com/*/*",
-      "passKeys": "cipbwtly"
+      "passKeys": "nb",
+      "pattern": "https?://coveralls.io/*"
     },
     {
-      "pattern": "https?://github.com/*/*/issues/?",
-      "passKeys": "culmar"
+      "passKeys": "pknjtgdwmxaycez/.,sq+",
+      "pattern": "https?://calendar.google.com/*"
     },
     {
-      "pattern": "https?://github.com/*/*/issues/*",
-      "passKeys": "qmla"
+      "passKeys": "t",
+      "pattern": "https?://gitlab.com/*"
     },
     {
-      "pattern": "https?://github.com/*/*/pull/*/files",
-      "passKeys": "ct"
+      "passKeys": "jkucd/npfarbg",
+      "pattern": "https?://mail.google.com/*"
     },
     {
-      "pattern": "https?://inbox.google.com/*",
-      "passKeys": "c/iqhzpe!.x?rjk#"
+      "passKeys": "cpbwtl",
+      "pattern": "https?://github.com/*/*"
     },
     {
-      "pattern": "https?://twitter.com/*",
-      "passKeys": "?/jknrl"
+      "passKeys": "culmar",
+      "pattern": "https?://github.com/*/*/issues/?"
     },
     {
-      "pattern": "https?://www.facebook.com/*",
-      "passKeys": "jklpcso/?"
+      "passKeys": "qmla",
+      "pattern": "https?://github.com/*/*/issues/*"
     },
     {
-      "pattern": "https?://www.google.at/*",
-      "passKeys": "jk"
+      "passKeys": "ct",
+      "pattern": "https?://github.com/*/*/pull/*/files"
     },
     {
-      "pattern": "https?://www.google.it/*",
-      "passKeys": "jk"
+      "passKeys": "c/iqhzpe!.x?rjk#",
+      "pattern": "https?://inbox.google.com/*"
     },
     {
-      "pattern": "https?://www.google.com.au/*",
-      "passKeys": "jk"
+      "passKeys": "?/jknrl",
+      "pattern": "https?://twitter.com/*"
     },
     {
-      "pattern": "https?://bellard.org/*",
-      "passKeys": ""
+      "passKeys": "jklpcso/?",
+      "pattern": "https?://www.facebook.com/*"
     },
     {
-      "pattern": "https://duckduckgo.com/\\?q=*",
-      "passKeys": "jk?/stmd"
+      "passKeys": "jk",
+      "pattern": "https?://www.google.at/*"
+    },
+    {
+      "passKeys": "jk",
+      "pattern": "https?://www.google.com.au/*"
+    },
+    {
+      "passKeys": "jk",
+      "pattern": "https?://www.google.it/*"
+    },
+    {
+      "passKeys": "jk?/stmd",
+      "pattern": "https://duckduckgo.com/\\?q=*"
     }
   ],
   "filterLinkHints": true,
-  "waitForEnterForFilteredHints": true,
+  "grabBackFocus": true,
   "hideHud": false,
-  "keyMappings": "# Insert your preferred key mappings here.\nmap <space> Vomnibar.activateInNewTab\nmap t Vomnibar.activateTabSelection",
+  "ignoreKeyboardLayout": false,
+  "keyMappings": "# Insert your preferred key mappings here.\nmap jj <Esc>\n# I switched these since I am using Tree Style Tabs now,\n# so I really want J to move down (=next in the tree view)\n# and K to move up (=previous in the tree view). \nmap J nextTab\nmap K previousTab",
   "linkHintCharacters": "sadfjklewcmpgh",
   "linkHintNumbers": "0123456789",
   "newTabUrl": "about:newtab",
   "nextPatterns": "next,more,newer,>,›,→,»,≫,>>",
   "previousPatterns": "prev,previous,back,older,<,‹,←,«,≪,<<",
   "regexFindMode": false,
-  "ignoreKeyboardLayout": false,
   "scrollStepSize": 60,
-  "smoothScroll": true,
-  "grabBackFocus": false,
-  "searchEngines": "# l: https://www.google.com/search?q=%s&btnI I'm feeling lucky...\n# y: https://www.youtube.com/results?search_query=%s Youtube\n# gm: https://www.google.com/maps?q=%s Google maps\n# b: https://www.bing.com/search?q=%s Bing\n# d: https://duckduckgo.com/?q=%s DuckDuckGo\n# az: https://www.amazon.com/s/?field-keywords=%s Amazon\n# qw: https://www.qwant.com/?q=%s Qwant\n\ng: https://www.google.com/search?q=%s Google\ngi: https://www.google.com/search?tbm=isch&q=%s Google Images\ngm: https://www.google.com/maps?q=%s Google Maps\nrecent: https://www.google.com/search?hl=en&tbo=1&tbs=qdr:y&q=%s Google (last year only)\ntranslate: http://translate.google.com/?source=osdd#auto|auto|%s Google Translator\nw: http://en.wikipedia.org/wiki/Special:Search?search=%s Wikipedia\nd: https://www.dict.cc/?s= dict.cc\na: http://www.amazon.com/exec/obidos/external-search/?field-keywords=%s&mode=blended Amazon\ne: http://www.ebay.com/sch/?_nkw=%s eBay\nb: http://www.bing.com/search?setmkt=en-GB&q=%s Bing\ngh: https://github.com/search?q=%s GitHub\nhn: https://www.hnsearch.com/search#request/submissions&q=%s&start=0 HackerNews\nso: http://stackoverflow.com/search?q=%s StackOverflow\nsu: http://superuser.com/search?q=%s SuperUser\nsh: http://symbolhound.com/?q=%s SymbolHound\nsy: https://www.thesaurus.com/browse/%s?s=t\nud: https://www.urbandictionary.com/define.php?term=%s UrbanDictionary\nw: https://www.wikipedia.org/w/index.php?title=Special:Search&search=%s Wikipedia\nwa: http://www.wolframalpha.com/input/?i=%s Wolfram|Alpha\nqw: https://www.qwant.com/?q=%s&t=all\nyt: http://www.youtube.com/results?search_query=%s YouTube\nimdb: http://www.imdb.com/find?s=all&q=%s IMDB",
+  "searchEngines": "d: https://duckduckgo.com/?q=%s DuckDuckGo\naz: https://www.amazon.com/s/?field-keywords=%s Amazon\n\n# Google\ng: https://www.google.com/search?q=%s Google\ngi: https://www.google.com/search?tbm=isch&q=%s Google Images\ngm: https://www.google.com/maps?q=%s Google Maps\nrecent: https://www.google.com/search?hl=en&tbo=1&tbs=qdr:y&q=%s Google (last year only)\ntranslate: http://translate.google.com/?source=osdd#auto|auto|%s Google Translator\ndrive: https://drive.google.com/drive/search?q=%s Google Drive\n\na: http://www.amazon.com/exec/obidos/external-search/?field-keywords=%s&mode=blended Amazon\ne: http://www.ebay.com/sch/?_nkw=%s eBay\nb: http://www.bing.com/search?setmkt=en-GB&q=%s Bing\n\nhn: https://www.hnsearch.com/search#request/submissions&q=%s&start=0 HackerNews\nso: http://stackoverflow.com/search?q=%s StackOverflow\nsu: http://superuser.com/search?q=%s SuperUser\n\nwa: http://www.wolframalpha.com/input/?i=%s Wolfram|Alpha\nqw: https://www.qwant.com/?q=%s&t=all\n\n# Entertainment\ny: http://www.youtube.com/results?search_query=%s YouTube\nimdb: http://www.imdb.com/find?s=all&q=%s IMDB\n\n# Definitions\nud: https://www.urbandictionary.com/define.php?term=%s UrbanDictionary\nw: https://www.wikipedia.org/w/index.php?title=Special:Search&search=%s Wikipedia\n\n# Dictionaries, Translators, etc.\ncc: https://www.dict.cc/?s=%s dict.cc\nsy: https://www.thesaurus.com/browse/%s?s=t\n\n# Programming\ngh: https://github.com/search?q=%s GitHub\nhs: https://hoogle.haskell.org/?hoogle=%s Hoogle\ngodoc: https://godoc.org/?q=%s GoDoc\nsh: http://symbolhound.com/?q=%s SymbolHound\nrepl: https://repl.it/languages/%s Repl.it\ncljd: https://clojuredocs.org/search?q=%s ClojureDocs\nman: http://man.he.net/?topic=%s&section=all\n\n# Package Managers/Repositories\nmvn: https://search.maven.org/search?q=%s Maven\napt: https://packages.ubuntu.com/%s\nnpm: https://www.npmjs.com/search?q=%s NPM\nrpm: https://rpmfind.net/linux/rpm2html/search.php?query=%s&submit=Search+...&system=fedora&arch=x86_64 RPMFind\nctan: https://www.ctan.org/search?phrase=%s Comprehensive TeX Archive Network\npip: https://pypi.org/search/?q=%s PyPI\napm: https://atom.io/packages/search?q=%s Atom Packages\nvscode: https://marketplace.visualstudio.com/search?target=VSCode&term=%s VSCode Extensions\nhackage: https://hackage.haskell.org/packages/search?terms=%s Hackage\nclj: https://clojars.org/search?q=%s Clojars\ndh:https://hub.docker.com/search?type=image&architecture=amd64&operating_system=linux&q=%s Docker Hub\ncomposer: https://packagist.org/search/?query=%s Packagist\nnix: https://nixos.org/nixos/packages.html?query=%s NixOS\n\n# Outdoors\noa: https://www.outdooractive.com/search/?q=%s outdooractive\n\n# Work\ngs: https://git.sclable.com/search?utf8=%E2%9C%93&snippets=&scope=&search=%s Sclable GitLab",
   "searchUrl": "https://duckduckgo.com/?q=",
-  "userDefinedLinkHintCss": "div > .vimiumHintMarker {\n/* linkhint boxes */\nbackground: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#FFF785),\n  color-stop(100%,#FFC542));\nborder: 1px solid #E3BE23;\n}\n\ndiv > .vimiumHintMarker span {\n/* linkhint text */\ncolor: black;\nfont-weight: bold;\nfont-size: 12px;\n}\n\ndiv > .vimiumHintMarker > .matchingCharacter {\n}"
+  "settingsVersion": "1.66",
+  "smoothScroll": true,
+  "userDefinedLinkHintCss": "div > .vimiumHintMarker {\n/* linkhint boxes */\nbackground: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#FFF785),\n  color-stop(100%,#FFC542));\nborder: 1px solid #E3BE23;\n}\n\ndiv > .vimiumHintMarker span {\n/* linkhint text */\ncolor: black;\nfont-weight: bold;\nfont-size: 12px;\n}\n\ndiv > .vimiumHintMarker > .matchingCharacter {\n}",
+  "waitForEnterForFilteredHints": true
 }
