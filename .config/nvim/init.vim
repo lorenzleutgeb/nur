@@ -3,6 +3,21 @@ source ~/.config/nvim/simple.vim
 set runtimepath^=~/.vim runtimepath+=~/.vim/after
 let &packpath = &runtimepath
 
+" Make file search more powerful
+set path+=**
+set path+=$PWD/**
+set wildmenu " visual autocomplete for command menu
+set wildignore+=**/node_modules/**
+set wildignore+=**/build/**
+
+set t_8f=[38;2;%lu;%lu;%lum
+set t_8b=[48;2;%lu;%lu;%lum
+set termguicolors
+
+set guifont='FiraCode'
+
+command! MakeTags !ctags -R .
+
 " Automatically source rc if saving a vim file.
 if has ('autocmd') " Remain compatible with earlier versions
  augroup vim       " Source vim configuration upon save
@@ -33,8 +48,6 @@ set tabstop=8
 set cursorline " highlight current line
 
 filetype indent on " load filetype-sepific indent files
-
-set wildmenu " visual autocomplete for command menu
 
 set lazyredraw " redraw only when we need to
 
