@@ -13,3 +13,16 @@ let maplocalleader="\\"
 " Use system keyboard by default and registers if some text
 " should be protected.
 set clipboard^=unnamed,unnamedplus
+
+" Digraphs
+digr !-  8866 " turnstile
+digr NN  8469 " natural  numbers
+digr QQ  8474 " rational numbers
+digr RR  8477 " real     numbers
+digr ZZ  8484 " integer  numbers
+
+"" Ordinal Indicators
+digr O1 59001 " superscript 'st', override
+digr O2 59002 " superscript 'nd', override
+digr O3 59003 " superscript 'rd', override
+digr On 59004 " superscript 'th', overrides
