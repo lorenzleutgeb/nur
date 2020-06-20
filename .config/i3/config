@@ -32,6 +32,7 @@ floating_modifier $mod
 
 # start a terminal
 bindsym $mod+Return exec i3-sensible-terminal
+bindsym $mod+o exec lockscreen
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -170,15 +171,14 @@ bar {
 	status_command /home/lorenz/.config/i3/bar.sh
 
   colors {
-    background #000000
-    statusline #FFFFFF
-    separator  #3A3A3A
+    background #333333
+    statusline #AAAAAA
+    separator #dc322f
 
-    focused_workspace  #980000 #FFD324 #000000
-    active_workspace   #333333 #222222 #FFFFFF
-    inactive_workspace #333333 #222222 #ACACAC
-    urgent_workspace   #2F343A #E00000 #FFFFFF
-    binding_mode       #2F343A #900000 #FFFFFF
+    focused_workspace #282828 #282828 #FFFFFF #fdf6e3
+    active_workspace #fdf6e3 #6c71c4 #fdf6e3 #FFFFFF
+    inactive_workspace #333333 #333333 #AAAAAA #002b36
+    urgent_workspace #d33682 #d33682 #fdf6e3 #FFFFFF
   }
 }
 
@@ -210,7 +210,6 @@ exec "setxkbmap -option 'grp:alt_shift_toggle'"
 #   9 Music        Spotify
 # The following list is ordered first by target workspace and then
 # by application name.
-assign [class="Mattermost"] $ws2
 assign [class="Signal"] $ws2
 assign [class="Skype"] $ws2
 assign [class="Slack"] $ws2
@@ -220,19 +219,20 @@ assign [class="Firefox"] $ws4
 assign [class="Chrome"] $ws4
 assign [class="Chromium"] $ws4
 
-
 assign [class="Alacritty"] $ws7
 
 assign [class="Code"] $ws8
-assign [class="IntelliJ"] $ws8
+assign [class="^.*jetbrains-.*$"] $ws8
 
 assign [class="Spotify"] $ws9
 
 # class                 border  bground text    indicator child_border
-client.focused          #990000 #FFD324 #000000 #2E9EF4   #285577
-client.focused_inactive #333333 #5F676A #FFFFFF #484E50   #5F676A
-client.unfocused        #333333 #222222 #888888 #292D2E   #222222
-client.urgent           #2F343A #E00000 #FFFFFF #E00000   #900000
+client.focused #000000 #000000 #FFFFFF #000000
+client.focused_inactive #333333 #333333 #FFFFFF #000000
+client.unfocused #333333 #333333 #FFFFFF #333333
+client.urgent #d33682 #d33682 #fdf6e3 #dc322f
 client.placeholder      #000000 #0C0C0C #FFFFFF #000000   #0C0C0C
 
 client.background       #FFFFFF
+
+bindsym $mod+p exec gnome-screenshot --interactive
