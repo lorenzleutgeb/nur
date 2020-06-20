@@ -42,6 +42,7 @@
 	cpc = cherry-pick --continue
 	co = checkout
 	cob = checkout -b
+	coc = "! f(){ git checkout \"$1\" && git clean -xfd; }; f"
 	d = diff
 	ds = diff --staged
 	f = fetch
@@ -49,6 +50,7 @@
 	il = ! git config --local core.excludesfile "$HOME/gitignore"
 	m = merge
 	mff = merge --ff-only
+	mr = ! sh -c 'git fetch $1 merge-requests/$2/head:mr-$1-$2 && git checkout mr-$1-$2' -
 	p = push
 	pf = push --force-with-lease
 	pff = push --force
