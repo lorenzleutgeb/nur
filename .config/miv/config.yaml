@@ -1,5 +1,5 @@
 plugin:
-  zxqfl/tabnine-vim: {}
+  #zxqfl/tabnine-vim: {}
 
   wellle/targets.vim: {}
 
