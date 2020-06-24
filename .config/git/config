@@ -60,7 +60,7 @@
 	r = rebase
 	rc = rebase --continue
 	ri = rebase --interactive
-	rb = "!grb() { git rebase -i $(git merge-base HEAD $@) ;}; grb"
+	rb = "!grb() { git rebase -i $(git merge-base HEAD ${@:-sandbox}) ;}; grb"
 	rh = reset --hard
 	s = status
 	who = "!gwho() { git log --pretty=%an $@ | sort | uniq ;}; gwho"
