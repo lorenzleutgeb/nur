@@ -64,3 +64,5 @@ plugin:
       let g:tex_conceal='abdmg'
 
   liuchengxu/vim-clap: {}
+
+  vito-c/jq.vim: {}
