@@ -7,6 +7,8 @@ in
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
+  nixpkgs.config.allowUnfree = true;
+
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage
   # when a new Home Manager release introduces backwards
@@ -24,6 +26,7 @@ in
     pkgs.glibcLocales
     pkgs.google-cloud-sdk
     pkgs.xclip
+    pkgs.jdk11
     #pkgs.miv
     #pkgsUnstable.nodejs
     pkgsUnstable.alacritty
@@ -46,8 +49,10 @@ in
     pkgsUnstable.graphviz
     pkgsUnstable.hlint
     pkgsUnstable.htop
+    pkgsUnstable.jetbrains.idea-ultimate
     pkgsUnstable.jq
     pkgsUnstable.kdiff3
+    pkgsUnstable.kubectl
     pkgsUnstable.ncdu
     pkgsUnstable.neovim
     pkgsUnstable.niv
