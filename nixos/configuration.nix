@@ -132,4 +132,13 @@
   '';
 
   nixpkgs.config.allowUnfree = true;
+
+  # Hacks in /etc/hosts for projects.
+  networking.extraHosts = ''
+    172.16.239.10 postgres.x.sclable.io
+    172.16.239.11 keycloak.x.sclable.io
+    172.16.239.12 wildfly.x.sclable.io
+    172.16.239.13 gateway.x.sclable.io
+  '';
 }
+
