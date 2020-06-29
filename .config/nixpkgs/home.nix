@@ -37,10 +37,12 @@ in
     pkgsUnstable.ctags
     pkgsUnstable.curlFull
     pkgsUnstable.direnv
+    pkgsUnstable.dockerTools
     pkgsUnstable.docker-compose
     pkgsUnstable.entr
     pkgsUnstable.exa
     pkgsUnstable.fd
+    pkgsUnstable.fzf
     pkgsUnstable.ghcid
     pkgsUnstable.gitAndTools.delta
     pkgsUnstable.gitAndTools.diff-so-fancy
@@ -53,10 +55,12 @@ in
     pkgsUnstable.jq
     pkgsUnstable.kdiff3
     pkgsUnstable.kubectl
+    pkgsUnstable.haskellPackages.miv
     pkgsUnstable.ncdu
     pkgsUnstable.neovim
     pkgsUnstable.niv
     pkgsUnstable.nixops
+    pkgsUnstable.nixpkgs-review
     pkgsUnstable.pandoc
     pkgsUnstable.pinta
     pkgsUnstable.postgresql_12
@@ -65,6 +69,7 @@ in
     pkgsUnstable.rofi
     pkgsUnstable.shellcheck
     pkgsUnstable.shfmt
+    pkgsUnstable.spotify
     pkgsUnstable.stow
     pkgsUnstable.stylish-haskell
     pkgsUnstable.tmux
