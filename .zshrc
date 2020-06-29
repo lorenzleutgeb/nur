@@ -109,7 +109,9 @@ addp "$HOME/gradle-5.0/bin"
 # Rust
 addp "$HOME/.cargo/bin"
 
-if [ -d "$HOME/src/github.com/jenv/jenv" ]
+export JENV_DIR="$HOME/src/github.com/jenv/jenv" 
+
+if [ -d "$JENV_DIR" ]
 then
 	addp "$HOME/src/github.com/jenv/jenv/bin"
 	addp "$HOME/.jenv/shims"
@@ -132,13 +134,16 @@ jenv() {
     command jenv "$command" "$@";;
   esac
 }
+else
+	echo "zshrc: Clone jenv to \'$JENV_DIR\' to enable it."
 fi
 
 ZPLUG_HOME=~/src/github.com/zplug/zplug
 
 if [[ ! -d "$ZPLUG_HOME" ]]; then
-    git clone https://github.com/zplug/zplug $ZPLUG_HOME
-    source $ZPLUG_HOME/init.zsh && zplug update --self
+	echo "zshrc: Will install zplug!"
+	git clone https://github.com/zplug/zplug $ZPLUG_HOME
+	source $ZPLUG_HOME/init.zsh && zplug update --self
 fi
 
 source $ZPLUG_HOME/init.zsh
@@ -188,25 +193,42 @@ export FZF_TMUX_HEIGHT='80%'
 export FZF_COMPLETION_OPTS="--preview='batree {1}'"
 export BAT_STYLE='numbers,changes'
 
-alias cat="bat"
-alias ls=exa --time-style=iso --git
-alias l=exa -la --time-style=iso
+if which bat > /dev/null
+then
+	alias cat="bat"
+else
+	echo "zshrc: Install bat to replace cat."
+fi
+
+if which exa > /dev/null
+then
+	alias ls=exa --time-style=iso --git
+	alias l=exa -la --time-style=iso
+else
+	echo "zshrc: Install exa to replace ls."
+fi
+
 alias tungz=tar xvfz
 
 function lst {
 	exa --git --tree --long --time-style=iso --level=${1:-3}
 }
 
-if [ -e /usr/share/fzf/shell/ ]
+if which fzf-share > /dev/null
 then
-	source $HOME/bin/fzf-completion.zsh
-	source /usr/share/fzf/shell/key-bindings.zsh
+	source $(fzf-share)/key-bindings.zsh
+	source $(fzf-share)/completion.zsh
 fi
 
+if which fd > /dev/null
+then
 function f {
 	FZF_DEFAULT_COMMAND='fd' fzf-tmux
 }
+fi
 
+if which batree > /dev/null
+then
 function ff {
 	FZF_DEFAULT_COMMAND='fd -t f' fzf-tmux --delimiter=: --preview='batree {1}'
 }
@@ -214,6 +236,8 @@ function ff {
 function cdf {
 	cd $(FZF_DEFAULT_COMMAND='fd -t d' fzf-tmux --preview='batree {1}')
 }
+fi
+
 alias ducks='du -cks * | sort -rn | head'
 alias online='ping -c 3 -i 0.5 -w 3 -q 8.8.8.8 > /dev/null'
 alias cb='clipboard'
@@ -222,9 +246,11 @@ alias cb='clipboard'
 alias vim='nvim'
 
 # If there's hub installed, alias it
-if [ $(which hub) ]
+if which hub > /dev/null
 then
-	#alias git=hub
+	alias git=hub
+else
+	echo "zshrc: Install hub to replace git."
 fi
 alias g='git'
 alias home="git --git-dir=$HOME/.config/home/ --work-tree=$HOME"
@@ -242,7 +268,10 @@ if [ -n "$ASCIINEMA_REC" ]; then
 	PS1="$ "
 fi
 
-export SCLABLE_AUTH_KEY=$(xmlstarlet sel -t -v "/license" ~/.sclable/license.xml)
+if which xmlstarlet > /dev/null
+then
+	export SCLABLE_AUTH_KEY=$(xmlstarlet sel -t -v "/license" ~/.sclable/license.xml)
+fi
 
 function unalias {
         name=$1
@@ -281,7 +310,6 @@ docker-compose up --detach --build $1
 )
 }
 
-. /home/lorenz/.nix-profile/etc/profile.d/nix.sh
 
 export SCL_BASE=$HOME/src/scl
 export GH_BASE=$HOME/src/gh
@@ -305,7 +333,10 @@ export XDG_CACHE_HOME=$HOME/.cache
 # Node.js
 # https://github.com/nuxt/opencollective#disable-message
 export OPENCOLLECTIVE_HIDE=true
-export NVM_DIR="$HOME/.config/nvm"
+export NVM_DIR="$HOME/src/github.com/nvm-sh/nvm"
+
+if [ -d "$NVM_DIR" ]
+then
 declare -a NODE_GLOBALS=($(find $NVM_DIR/versions/node -maxdepth 3 -type l -wholename '*/bin/*' | xargs -n1 basename | sort | uniq))
 
 NODE_GLOBALS+=("nvm")
@@ -323,6 +354,17 @@ load_nvm () {
 for cmd in "${NODE_GLOBALS[@]}"; do
     eval "${cmd}(){ load_nvm; ${cmd} \$@ }"
 done
+else
+	echo "zshrc: Install nvm to \'$NVM_DIR\' to enable it."
+fi
 
 [[ -s "$HOME/.avn/bin/avn.sh" ]] && source "$HOME/.avn/bin/avn.sh" # load avn
-if [ -e /home/lorenz/.nix-profile/etc/profile.d/nix.sh ]; then . /home/lorenz/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+if [ -e /home/lorenz/.nix-profile/etc/profile.d/nix.sh ]
+then . /home/lorenz/.nix-profile/etc/profile.d/nix.sh
+fi
+
+function machine-hash {
+	nix-hash --type sha256 --base32 --flat /etc/machine-id
+}
+
+eval "$(direnv hook zsh)"
