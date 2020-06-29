@@ -77,4 +77,20 @@ in
     pkgsUnstable.tree
     pkgsUnstable.yq
   ];
+
+  programs.neovim.vimAlias = true;
+  programs.neovim.plugins = with pkgsUnstable.vimPlugins; [
+    editorconfig-vim
+    jq-vim
+    lightline-vim
+    rust-vim
+    targets-vim
+    ultisnips
+    vimtex
+    vim-easy-align
+    vim-eunuch
+    vim-gitgutter
+    vim-multiple-cursors
+    vim-surround
+  ];
 }
