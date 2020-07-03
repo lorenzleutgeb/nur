@@ -63,5 +63,22 @@
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
 
   networking.interfaces.wlp0s20f3.useDHCP = true;
-  networking.hostName = "lorenz.leutgeb.sclable.com";
+  #networking.hostName = "lorenz.leutgeb.sclable.com";
+
+  services.blueman.enable = true;
+  sound.enable = true;
+  hardware = {
+    bluetooth.enable = true;
+    pulseaudio = {
+      enable = true;
+
+      # NixOS allows either a lightweight build (default) or full build of PulseAudio to be installed.
+      # Only the full build has Bluetooth support, so it must be selected here.
+      package = pkgs.pulseaudioFull;
+    };
+    firmware = [
+      # https://www.sofproject.org/
+      pkgs.sof-firmware
+    ];
+  };
 }
