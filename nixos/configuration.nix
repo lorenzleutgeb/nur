@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 {
   imports =
@@ -40,6 +40,8 @@
     fuse
     gcc
     gnumake
+    lsof
+    nixFlakes
     utillinux
     vim
     wget
@@ -68,10 +70,6 @@
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
-
-  # Enable sound.
-  sound.enable = true;
-  hardware.pulseaudio.enable = true;
 
   # Enable the X11 windowing system.
   services.xserver = {
@@ -140,5 +138,11 @@
     172.16.239.12 wildfly.x.sclable.io
     172.16.239.13 gateway.x.sclable.io
   '';
+
+  nix = {
+    package = pkgs.nixFlakes;
+    extraOptions = lib.optionalString (config.nix.package == pkgs.nixFlakes)
+      "experimental-features = nix-command flakes";
+  };
 }
 
