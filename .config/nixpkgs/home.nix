@@ -25,6 +25,7 @@ in
     pkgs.git-lfs
     pkgs.glibcLocales
     pkgs.google-cloud-sdk
+    pkgs.sshfs-fuse
     pkgs.xclip
     pkgs.jdk11
     #pkgs.miv
