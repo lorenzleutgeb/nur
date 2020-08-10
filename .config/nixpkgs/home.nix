@@ -20,25 +20,39 @@ in
   home.stateVersion = "20.03";
 
   home.packages = [
+    pkgs.aspell
+    pkgs.aspellDicts.en
+    pkgs.aspellDicts.en-computers
+    pkgs.aspellDicts.en-science
+    pkgs.asciinema
+    pkgs.brightnessctl
+    pkgs.file
     pkgs.firefox
-    #pkgs.git
-    pkgs.git-lfs
     pkgs.glibcLocales
+    pkgs.git-lfs
     pkgs.google-cloud-sdk
+    pkgs.meld
+    pkgs.pavucontrol
+    pkgs.skypeforlinux
     pkgs.sshfs-fuse
+    pkgs.thunderbird
     pkgs.xclip
     pkgs.jdk11
+    pkgs.zathura
+    pkgs.ncat
+    pkgs.nixFlakes
+    pkgs.vlc
+    pkgs.yubioath-desktop
     #pkgs.miv
     #pkgsUnstable.nodejs
     pkgsUnstable.alacritty
     pkgsUnstable.autojump
-    pkgsUnstable.awscli
-    pkgsUnstable.awslogs
     pkgsUnstable.bat
+    pkgsUnstable.cachix
     pkgsUnstable.ctags
     pkgsUnstable.curlFull
     pkgsUnstable.direnv
-    pkgsUnstable.dockerTools
+    #pkgsUnstable.dockerTools
     pkgsUnstable.docker-compose
     pkgsUnstable.entr
     pkgsUnstable.exa
@@ -65,14 +79,20 @@ in
     pkgsUnstable.pandoc
     pkgsUnstable.pinta
     pkgsUnstable.postgresql_12
+    pkgsUnstable.python38Full
+    pkgsUnstable.python38Packages.pip
+    pkgsUnstable.python38Packages.setuptools
     pkgsUnstable.python38Packages.yamllint
     pkgsUnstable.ripgrep
     pkgsUnstable.rofi
     pkgsUnstable.shellcheck
     pkgsUnstable.shfmt
+    pkgsUnstable.signal-desktop
+    pkgsUnstable.skaffold
     pkgsUnstable.spotify
     pkgsUnstable.stow
     pkgsUnstable.stylish-haskell
+    pkgsUnstable.texlive.combined.scheme-full
     pkgsUnstable.tmux
     pkgsUnstable.travis
     pkgsUnstable.tree
