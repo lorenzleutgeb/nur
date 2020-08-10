@@ -8,9 +8,11 @@
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
   boot.initrd.kernelModules = [ ];
-  boot.kernelPackages = pkgs.linuxPackages_latest;
-  boot.kernelModules = [ "kvm-intel" ];
-  boot.extraModulePackages = [ ];
+  #boot.kernelPackages = with pkgs; linuxPackages_5_7;
+  boot.kernelPackages = with pkgs; linuxPackages_5_7;
+  boot.kernelModules = [ "kvm-intel" "e1000e" ];
+  #boot.extraModulePackages = with config.boot.kernelPackages; [ e1000e ];
+  #boot.extraModulePackages = [ ];
 
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/364ac200-840a-447e-bbfe-0874ffa2a278";
@@ -75,10 +77,25 @@
       # NixOS allows either a lightweight build (default) or full build of PulseAudio to be installed.
       # Only the full build has Bluetooth support, so it must be selected here.
       package = pkgs.pulseaudioFull;
+
+      extraConfig = ''
+        load-module module-alsa-sink   device=hw:0,0 channels=4
+        load-module module-alsa-source device=hw:0,6 channels=4
+      '';
     };
-    firmware = [
-      # https://www.sofproject.org/
-      pkgs.sof-firmware
+  };
+
+  nixpkgs.config.packageOverrides = pkgs: {
+    vaapiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };
+  };
+  hardware.opengl = {
+    enable = true;
+    extraPackages = with pkgs; [
+      vaapiIntel
+      vaapiVdpau
+      libvdpau-va-gl
+      intel-media-driver # only available starting nixos-19.03 or the current nixos-unstable
     ];
   };
+
 }
