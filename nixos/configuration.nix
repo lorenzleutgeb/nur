@@ -44,6 +44,7 @@
     nixFlakes
     utillinux
     vim
+    wirelesstools
     wget
     which
     xorg.xkill
