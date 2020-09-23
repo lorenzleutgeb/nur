@@ -1,0 +1,33 @@
+/**
+ * 1. Navigate to about:support and memorize the profile name.
+ * 2. Place this file in $HOME/.mozilla/firefox/$PROFILE/chrome/userChrome.css
+ * 3. Navigate to about:config and set
+ *
+ *        toolkit.legacyUserProfileCustomizations.stylesheets = true
+ *
+ * 4. Restart Firefox.
+ */
+@namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
+
+/* to hide the native tabs */
+#TabsToolbar {
+    visibility: collapse;
+}
+
+/* to hide the sidebar header */
+#sidebar-header {
+    visibility: collapse;
+}
+
+#back-button, #forward-button {
+    visibility: collapse !important;
+}
+
+.sidebar-placesTree treechildren::-moz-tree-separator { 
+    border: 5px solid red !important;
+}
+
+#sidebar-splitter {
+    border: none;
+    visibility: collapse;
+}

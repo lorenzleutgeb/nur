@@ -1,0 +1,35 @@
+/* Show title of unread tabs with red and italic font */
+/*
+:root.sidebar tab-item.unread .label-content {
+  color: red !important;
+  font-style: italic !important;
+}
+*/
+
+/* Add private browsing indicator per tab */
+/*
+:root.sidebar tab-item.private-browsing tab-label:before {
+  content: "🕶";
+}
+*/
+
+.closebox {
+  display: none;
+}
+
+tab-item {
+  border: dotted 1px #000000FF; 
+}
+
+/* As little space before the tab name as possible.
+   The fold/unfold icon is not affected. */
+tab-item:not(.pinned) {
+  padding-left: 0px !important; /* !important is required when there are enough tabs to cause a scrollbar */
+}
+
+.newtab-button-box {
+  display: none;
+}
+#tabbar {
+  bottom: 0 !important; /* Eliminate dead space on bottom */
+}

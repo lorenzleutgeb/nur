@@ -216,6 +216,7 @@ assign [class="Slack"] $ws2
 assign [class="Thunderbird"] $ws2
 
 assign [class="Firefox"] $ws4
+for_window [class="Firefox"] border pixel 1
 assign [class="Chrome"] $ws4
 assign [class="Chromium"] $ws4
 

@@ -1,0 +1,10 @@
+*.sclable.com , Sclable
+*.sclable.io , Sclable
+*.stackexchange.com , No Container
+berlin-hyp.atlassian.net , Sclable
+duckduckgo.com , No Container
+gist.github.com , No Container
+github.com , No Container
+npmjs.com , No Container
+sclable.atlassian.com , Sclable
+stackoverflow.com , No Container
