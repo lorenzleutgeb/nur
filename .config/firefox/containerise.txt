@@ -1,6 +1,10 @@
+*.facebook.com , Facebook
+*.fb.com , Facebook
+*.instagram.com , Facebook
 *.sclable.com , Sclable
 *.sclable.io , Sclable
 *.stackexchange.com , No Container
+*.whatsapp.com , Facebook
 berlin-hyp.atlassian.net , Sclable
 duckduckgo.com , No Container
 gist.github.com , No Container

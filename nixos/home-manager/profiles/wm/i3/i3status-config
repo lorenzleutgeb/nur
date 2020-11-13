@@ -67,7 +67,7 @@ tztime vienna {
 }
 
 load {
-        format = "%5min"
+        format = "load: %5min"
 }
 
 cpu_temperature 0 {
@@ -76,13 +76,13 @@ cpu_temperature 0 {
 }
 
 memory {
-        format = "%used"
+        format = "mem: %available"
         threshold_degraded = "10%"
-        format_degraded = "MEMORY: %free"
+        format_degraded = "MEMORY: %available"
 }
 
 disk "/" {
-        format = "%free"
+        format = "/: %free"
 }
 
 read_file uptime {

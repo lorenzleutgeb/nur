@@ -1,4 +1,4 @@
-#!/bin/bash
+#! /usr/bin/env sh
 
 FIRMWARE=$(ls -t -1 ~/Downloads/ergodox*.hex | head -1)
-wally $FIRMWARE
+wally-cli $FIRMWARE

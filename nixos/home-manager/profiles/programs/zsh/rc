@@ -2,13 +2,8 @@
 #
 # zsh Options
 # zsh Plugins
-# Setting $PATH and environment for tools
 # Overrides (cat, grep)
 # aliases and functions
-
-# NOTE: Maintain symlinks:
-#  - ~/src/{gh -> github.com, scl -> git.sclable.com}
-#  - ~/src/gh/{ll -> lorenzleutgeb}
 
 zmodload zsh/zprof
 
@@ -35,38 +30,36 @@ setopt HIST_REDUCE_BLANKS        # Remove superfluous blanks before recording en
 setopt HIST_VERIFY               # Do not execute immediately upon history expansion.
 setopt HIST_BEEP                 # Beep when accessing nonexistent history.
 
-# Theming
-export ZSH_THEME="spaceship"
-# Spaceship options: https://github.com/denysdovhan/spaceship-prompt/blob/6e42f9d78a9fef0d3822d4e6b90d254ca05f1120/docs/Options.md
-export SPACESHIP_CHAR_SUFFIX=""
-export SPACESHIP_CHAR_SYMBOL="$ "
-export SPACESHIP_CHAR_SYMBOL_ROOT="# "
-export SPACESHIP_CHAR_SYMBOL_SECONDARY="… "
-export SPACESHIP_TIME_SHOW="false"
-export SPACESHIP_VI_MODE_SHOW="false"
-export SPACESHIP_GOLANG_SHOW="false"
+export EDITOR=nvim
 
 # Vi Mode
 bindkey -v
-
 export KEYTIMEOUT=25
-
 autoload edit-command-line
 zle -N edit-command-line
 bindkey -M vicmd v edit-command-line
 
-function zle-line-init zle-keymap-select {
-    RPS1="${${KEYMAP/vicmd/NORMAL}/(main|viins)/INSERT}"
-    RPS2=$RPS1
+function zle-keymap-select zle-line-init
+{
+    case $KEYMAP in
+        vicmd)      print -n -- "\E]50;CursorShape=0\C-G";;  # block cursor
+        viins|main) print -n -- "\E]50;CursorShape=1\C-G";;  # line cursor
+    esac
+
     zle reset-prompt
+    zle -R
 }
+
+function zle-line-finish
+{
+    print -n -- "\E]50;CursorShape=0\C-G"  # block cursor
+}
+
 zle -N zle-line-init
+zle -N zle-line-finish
 zle -N zle-keymap-select
 
 bindkey "jj" vi-cmd-mode
-#bindkey -v  # instead of set -o vi
-#bindkey -e jj \\e
-#bindkey -M viins 'jj' vi-cmd-mode
 
 function addp {
 	PATH="$PATH:$1"
@@ -78,36 +71,6 @@ addp "$HOME/bin"
 # MiniZinc
 addp "/var/lib/snapd/snap/bin"
 export MZN_STDLIB_DIR=/var/lib/snapd/snap/minizinc/current/usr/share/minizinc
-
-# Gurobi
-addp "$HOME/gurobi/bin"
-
-# Z3
-addp "$HOME/src/github.com/Z3Prover/z3/build/z3"
-
-alias graal-env=addp "$HOME/graalvm-ce-19.2.0.1/bin"
-
-# Google Cloud SDK
-addp "$HOME/google-cloud-sdk/bin"
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f "$HOME/google-cloud-sdk/path.zsh.inc" ]; then source "$HOME/google-cloud-sdk/path.zsh.inc"; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f "$HOME/google-cloud-sdk/completion.zsh.inc" ]; then source "$HOME/google-cloud-sdk/completion.zsh.inc"; fi
-
-addp "/opt/pdfover"
-
-# According to https://golang.org/doc/install
-addp "/usr/local/go/bin"
-
-# Python tools use this
-addp "$HOME/.local/bin"
-
-addp "$HOME/gradle-5.0/bin"
-
-# Rust
-addp "$HOME/.cargo/bin"
 
 export JENV_DIR="$HOME/src/github.com/jenv/jenv" 
 
@@ -193,32 +156,9 @@ export FZF_TMUX_HEIGHT='80%'
 export FZF_COMPLETION_OPTS="--preview='batree {1}'"
 export BAT_STYLE='numbers,changes'
 
-if which bat > /dev/null
-then
-	alias cat="bat"
-else
-	echo "zshrc: Install bat to replace cat."
-fi
-
-if which exa > /dev/null
-then
-	alias ls=exa --time-style=iso --git
-	alias l=exa -la --time-style=iso
-else
-	echo "zshrc: Install exa to replace ls."
-fi
-
-alias tungz=tar xvfz
-
 function lst {
 	exa --git --tree --long --time-style=iso --level=${1:-3}
 }
-
-if which fzf-share > /dev/null
-then
-	source $(fzf-share)/key-bindings.zsh
-	source $(fzf-share)/completion.zsh
-fi
 
 if which fd > /dev/null
 then
@@ -238,13 +178,6 @@ function cdf {
 }
 fi
 
-alias ducks='du -cks * | sort -rn | head'
-alias online='ping -c 3 -i 0.5 -w 3 -q 8.8.8.8 > /dev/null'
-alias cb='clipboard'
-
-# Alias vim to use NeoVim
-alias vim='nvim'
-
 # If there's hub installed, alias it
 if which hub > /dev/null
 then
@@ -263,15 +196,6 @@ export GITHUB_USER="lorenzleutgeb"
 
 export GPG_AGENT_INFO="$HOME/.gnupg/S.gpg-agent:0:1"
 export SSH_AUTH_SOCK=$HOME/.gnupg/S.gpg-agent.ssh
-
-if [ -n "$ASCIINEMA_REC" ]; then
-	PS1="$ "
-fi
-
-if which xmlstarlet > /dev/null
-then
-	export SCLABLE_AUTH_KEY=$(xmlstarlet sel -t -v "/license" ~/.sclable/license.xml)
-fi
 
 function unalias {
         name=$1
@@ -320,51 +244,23 @@ export CAKEML_BASIS=$CAKEMLDIR/basis
 # opam configuration
 test -r /home/lorenz/.opam/opam-init/init.zsh && . /home/lorenz/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
 
-
-# XDG
-# https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html#variables
-export XDG_CONFIG
-export XDG_DATA_HOME=$HOME/.local/share
-export XDG_CONFIG_HOME=$HOME/.config
-export XDG_DATA_DIRS=/usr/local/share:/usr/share
-export XDG_CONFIG_DIRS=/etc/xdg
-export XDG_CACHE_HOME=$HOME/.cache
-
-# Node.js
-# https://github.com/nuxt/opencollective#disable-message
-export OPENCOLLECTIVE_HIDE=true
-export NVM_DIR="$HOME/src/github.com/nvm-sh/nvm"
-
-if [ -d "$NVM_DIR" ]
-then
-declare -a NODE_GLOBALS=($(find $NVM_DIR/versions/node -maxdepth 3 -type l -wholename '*/bin/*' | xargs -n1 basename | sort | uniq))
-
-NODE_GLOBALS+=("nvm")
-NODE_GLOBALS+=("node")
-
-load_nvm () {
-  unset -f ${NODE_GLOBALS}
-  [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm
-  nvm use default
-  if [ -f "$NVM_DIR/bash_completion" ]; then
-    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
-  fi
-}
-
-for cmd in "${NODE_GLOBALS[@]}"; do
-    eval "${cmd}(){ load_nvm; ${cmd} \$@ }"
-done
-else
-	echo "zshrc: Install nvm to \'$NVM_DIR\' to enable it."
-fi
-
-[[ -s "$HOME/.avn/bin/avn.sh" ]] && source "$HOME/.avn/bin/avn.sh" # load avn
-if [ -e /home/lorenz/.nix-profile/etc/profile.d/nix.sh ]
-then . /home/lorenz/.nix-profile/etc/profile.d/nix.sh
-fi
-
 function machine-hash {
 	nix-hash --type sha256 --base32 --flat /etc/machine-id
 }
 
-eval "$(direnv hook zsh)"
+function link-applications {
+	find ~/.nix-profile/share/applications -type l -name '*.desktop' -exec ln -s {} ~/.local/share/applications \;
+}
+
+FLAKES=$HOME/.flakes
+function unflake {
+	DIR=$(readlink -f .)
+	mkdir -p ${FLAKES}${DIR}
+	mv -v flake.{nix,lock} ${FLAKES}${DIR}
+	#git rm -f --cached flake.{nix,lock}
+}
+function reflake {
+	DIR=$(readlink -f .)
+	cp -v ${FLAKES}${DIR}/flake.{nix,lock} .
+	git add flake.{nix,lock}
+}
