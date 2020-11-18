@@ -46,7 +46,7 @@
         pkgs = import ./pkg;
       } // self.lib.importDirToAttrs ./overlay;
 
-      packages.${system} = { inherit (pkgs) kmonad-bin; };
+      packages.${system} = { inherit (pkgs) kmonad-bin; inherit (pkgs.nodePackages) firebase-tools; };
 
       nixosModules = self.lib.importDirToAttrs ./os/module;
 

@@ -97,6 +97,7 @@ with builtins;
     nixfmt
     nixops
     nixpkgs-review
+    nix-index
     noto-fonts
     pandoc
     pinta
@@ -126,6 +127,8 @@ with builtins;
     teamviewer
     transmission-gtk
     universal-ctags
+    nodePackages.node2nix
+    nodePackages.firebase-tools
     #nodejs
     #texlive.combined.scheme-full
     tmux
