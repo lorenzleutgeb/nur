@@ -5,32 +5,35 @@ plugin:
       let g:easyescape_timeout = 300
     after: cnoremap jj <ESC>
 
-  # TODO: Migrate options
+  vim-airline/vim-airline:
+    before: |
+      let g:airline_powerline_fonts = 1
+
   #itchyny/lightline.vim:
   #  before: |
   #    let g:lightline = {'colorscheme': 'solarized'}
 
-  frankier/neovim-colors-solarized-truecolor-only:
-    before:
-      set background=dark
-    after:
-      colorscheme solarized
+  morhetz/gruvbox:
+    before: |
+      let g:gruvbox_italic=1
+      let g:gruvbox_contrast_dark = 'hard'
+    after: |
+      colorscheme gruvbox
+
+  #frankier/neovim-colors-solarized-truecolor-only:
+  #  before:
+  #    set background=dark
+  #  after:
+  #    colorscheme solarized
 
   # TODO: Migrate options
   #rust-lang/rust.vim:
   #  before: |
   #    let g:rustfmt_autosave = 0
+  #
+  let-def/vimbufsync: {}
 
-  lorenzleutgeb/coquille:
-    before: |
-      let g:coquille_auto_move = 'true'
-    after: |
-      command Cc call CoqToCursor()
-      command Cn call CoqNext()
-      command Cu call CoqUndo()
-      command Ca call CoqCancel()
-      command Cs call CoqStop()
-      command Cl call CoqLaunch()
+  whonore/Coqtail: {}
 
   # TODO: Migrate options
   #sirver/Ultisnips:
@@ -39,12 +42,16 @@ plugin:
   #    let g:UltiSnipsJumpForwardTrigger = '<tab>'
   #    let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
 
-  # TODO: Migrate options
-  #lervag/vimtex:
-  #  before: |
-  #    let g:tex_flavor='latex'
-  #    let g:vimtex_view_method='zathura'
-  #    let g:vimtex_quickfix_mode=0
+  lervag/vimtex:
+    before: |
+      let g:tex_flavor = 'latex'
+      let g:vimtex_view_method = 'zathura'
+      let g:vimtex_quickfix_mode=0
+      let g:vimtex_compiler_method = 'arara'
+      let g:vimtex_compiler_progname = 'nvr'
+      let g:vimtex_compiler_arara = {
+       \ 'options' : ['-v'],
+       \}
 
   KeitaNakamura/tex-conceal.vim:
     before: |
@@ -53,4 +60,34 @@ plugin:
 
   liuchengxu/vim-clap: {}
 
-  vito-c/jq.vim: {}
+  bfrg/vim-jq: {}
+
+  editorconfig/editorconfig-vim: {}
+
+  welle/targets.vim: {}
+
+  junegunn/vim-easy-align: {}
+
+  tpope/vim-eunuch: {}
+
+  airblade/vim-gitgutter: {}
+
+  dense-analysis/ale:
+    before: |
+      let g:ale_fixers = {
+      \   'haskell': [
+      \       'ormolu',
+      \   ],
+      \}
+
+  LnL7/vim-nix: {}
+
+  niklasl/vim-rdf: {}
+
+  chikamichi/mediawiki.vim: {}
+
+  aquach/vim-mediawiki-editor:
+    before: |
+      let g:mediawiki_editor_url = "localhost:8080"
+      let g:mediawiki_editor_path = ""
+      let g:mediawiki_editor_username = "lorenz"
