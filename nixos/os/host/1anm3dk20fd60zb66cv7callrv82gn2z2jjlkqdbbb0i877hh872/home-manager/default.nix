@@ -3,6 +3,6 @@
 with builtins;
 
 {
-  imports = [ ./autorandr ../../../../home-manager/profiles/common.nix ];
+  imports = [ ./autorandr ../../../../home-manager/profiles/development.nix ];
 
 }
