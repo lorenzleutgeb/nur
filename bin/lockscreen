@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -euo pipefail
+
 lighticon="$HOME/images/lock-icon-light.png"
 darkicon="$HOME/images/lock-icon-dark.png"
 tmpbg='/tmp/screen.png'

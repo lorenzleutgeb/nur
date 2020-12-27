@@ -1,6 +1,7 @@
 [settings]
 format-padding = 2
 ;format-background = #555555
+enable-ipc = true
 [bar/top]
 monitor =
 bottom = false

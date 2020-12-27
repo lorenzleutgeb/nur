@@ -30,6 +30,8 @@ setopt HIST_REDUCE_BLANKS        # Remove superfluous blanks before recording en
 setopt HIST_VERIFY               # Do not execute immediately upon history expansion.
 setopt HIST_BEEP                 # Beep when accessing nonexistent history.
 
+PROMPT="%# "
+
 export EDITOR=nvim
 
 # Vi Mode
@@ -128,7 +130,7 @@ HISTDB_TABULATE_CMD=(sed -e $'s/\x1f/\t/g')
 #add-zsh-hook precmd histdb-update-outcome
 
 zplug install
-zplug load --verbose
+zplug load #--verbose
 
 if [ -f src/github.com/larkery/zsh-histdb/sqlite-history.zsh ]
 then
@@ -263,4 +265,17 @@ function reflake {
 	DIR=$(readlink -f .)
 	cp -v ${FLAKES}${DIR}/flake.{nix,lock} .
 	git add flake.{nix,lock}
+}
+
+# Prints the local time for an AoE deadline.
+# Input is the day of the deadline.
+# For example, if the Deadline is on 2020-11-27
+# at 23:59 AoE, then call this as
+# aoe 2020-11-27
+function aoe {
+	date -d "${1}T00:00-12:00 +1 day" --iso-8601=minutes
+}
+
+function cplink {
+	[[ -L $1 ]] && cp --remove-destination --verbose $(readlink -f $1) $1
 }

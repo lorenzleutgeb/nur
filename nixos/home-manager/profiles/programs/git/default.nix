@@ -19,6 +19,11 @@
     enable = true;
     package = pkgs.gitAndTools.gitFull;
 
+    includes = [{
+      condition = "gitdir:~/src/git.sclable.com/";
+      contents.user.email = "lorenz.leutgeb@sclable.com";
+    }];
+
     lfs.enable = true;
     userName = "Lorenz Leutgeb";
     userEmail = "lorenz@leutgeb.xyz";
@@ -38,6 +43,7 @@
       c = "commit";
       ca = "commit --amend";
       can = "commit --amend --no-edit";
+      cd = "! cd $(git rev-parse --show-toplevel)";
       cn = "commit --no-verify";
       cp = "cherry-pick";
       cpc = "cherry-pick --continue";
@@ -101,8 +107,6 @@
         commitGraph = "true";
       };
 
-      delta = { theme = "Monokai Extended"; };
-
       interactive.diffFilter = "delta --color-only";
 
       diff = {
@@ -153,8 +157,8 @@
       };
 
       delta = {
-        features = "side-by-side line-numbers decorations";
-        syntax-theme = "ansi-light";
+        theme = "Monokai Extended";
+        features = "line-numbers decorations";
       };
 
       ghq = { root = "~/src"; };

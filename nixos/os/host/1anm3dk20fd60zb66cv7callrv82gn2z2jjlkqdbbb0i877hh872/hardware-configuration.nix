@@ -1,14 +1,21 @@
 { config, lib, pkgs, ... }:
 
 {
-
   boot.initrd.availableKernelModules =
     [ "xhci_pci" "nvme" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
   boot.initrd.kernelModules = [ ];
   #boot.kernelPackages = with pkgs; linuxPackages_5_7;
   boot.kernelPackages = with pkgs; linuxPackages_5_9;
-  boot.kernelModules = [ "kvm-intel" "e1000e" ];
-  #boot.extraModulePackages = with config.boot.kernelPackages; [ e1000e ];
+  boot.kernelModules = [ "kvm-intel" "e1000e" "v4l2loopback" ];
+  boot.extraModulePackages = with config.boot.kernelPackages; [
+    #e1000e
+    v4l2loopback
+  ];
+
+  boot.extraModprobeConfig = ''
+    options v4l2loopback exclusive_caps=1 video_nr=10,11 card_label="v4l2l 0","v4l2l 1"
+  '';
+
   #boot.extraModulePackages = [ ];
 
   fileSystems."/" = {
@@ -58,16 +65,15 @@
   # this is only required for swap files.
   boot.resumeDevice = "/dev/mapper/swap";
 
-  nix.maxJobs = lib.mkDefault 8;
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
 
   networking.interfaces.wlp0s20f3.useDHCP = true;
   #networking.hostName = "lorenz.leutgeb.sclable.com";
 
-  services.blueman.enable = true;
   sound.enable = true;
   hardware = {
     bluetooth.enable = true;
+
     pulseaudio = {
       enable = true;
 
@@ -75,24 +81,29 @@
       # Only the full build has Bluetooth support, so it must be selected here.
       package = pkgs.pulseaudioFull;
 
-      # extraConfig = ''
-      #  load-module module-alsa-sink   device=hw:0,0 channels=4
-      #  load-module module-alsa-source device=hw:0,6 channels=4
-      # '';
+      extraConfig = ''
+        #load-module module-alsa-sink   device=hw:0,0 channels=4
+        #load-module module-alsa-source device=hw:0,6 channels=4
+        .ifexists module-bluetooth-discover.so
+          # https://www.freedesktop.org/wiki/Software/PulseAudio/Documentation/User/Modules/#module-switch-on-connect
+          load-module module-switch-on-connect
+        .endif
+      '';
+
+    };
+
+    opengl = {
+      enable = true;
+      extraPackages = with pkgs; [
+        vaapiIntel
+        vaapiVdpau
+        libvdpau-va-gl
+        intel-media-driver # only available starting nixos-19.03 or the current nixos-unstable
+      ];
     };
   };
 
   nixpkgs.config.packageOverrides = pkgs: {
     vaapiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };
   };
-  hardware.opengl = {
-    enable = true;
-    extraPackages = with pkgs; [
-      vaapiIntel
-      vaapiVdpau
-      libvdpau-va-gl
-      intel-media-driver # only available starting nixos-19.03 or the current nixos-unstable
-    ];
-  };
-
 }

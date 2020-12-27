@@ -9,16 +9,37 @@ in {
   imports = [ ./hardware-configuration.nix "${hardware}/lenovo/thinkpad" ];
 
   # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.systemd-boot.configurationLimit = 16;
-  boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader = {
+    systemd-boot = {
+      enable = true;
+      configurationLimit = 16;
+    };
+    efi.canTouchEfiVariables = true;
+  };
 
   # The global useDHCP flag is deprecated, therefore explicitly set to false here.
   # Per-interface useDHCP will be mandatory in the future, so this generated config
   # replicates the default behaviour.
-  networking.useDHCP = false;
-  networking.networkmanager.enable = true;
-  # Configuration of DHCP per-interface was moved to hardware-configuration.nix
+  networking = {
+    # Configuration of DHCP per-interface was moved to hardware-configuration.nix
+    useDHCP = false;
+    networkmanager.enable = true;
+    hostName = "1anm3dk20fd60zb66cv7callrv82gn2z2jjlkqdbbb0i877hh872";
+
+    # Hacks in /etc/hosts for projects.
+    extraHosts = ''
+      172.16.239.10 postgres.x.sclable.io
+      172.16.239.11 keycloak.x.sclable.io
+      172.16.239.12 wildfly.x.sclable.io
+      172.16.239.13 gateway.x.sclable.io
+      172.16.239.15 zookeeper.x.sclable.io
+      172.16.239.16 kafka.x.sclable.io
+      172.16.239.17 schemaregistry.x.sclable.io
+      172.16.239.18 nuxeo.x.sclable.io
+      172.16.239.19 openldap.x.sclable.io
+      172.16.239.20 phpldapadmin.x.sclable.io
+    '';
+  };
 
   # Select internationalisation properties.
   # i18n.defaultLocale = "en_US.UTF-8";
@@ -60,8 +81,18 @@ in {
   #   enableSSHSupport = true;
   #   pinentryFlavor = "gnome3";
   # };
+  programs = {
+    adb.enable = true;
+  };
 
   services = {
+    # TODO: Remove?
+    neo4j.enable = true;
+    blueman.enable = true;
+
+    fwupd.enable = true;
+
+    tailscale.enable = true;
 
     # Enable the OpenSSH daemon.
     openssh.enable = true;
@@ -100,12 +131,16 @@ in {
 
     udev = {
       packages = [ pkgs.yubikey-personalization ];
-      # See https://github.com/zsa/wally/wiki/Linux-install#2-create-a-udev-rule-file
       extraRules = ''
+        # Teensy rules for the Ergodox EZ
+        # See https://github.com/zsa/wally/wiki/Linux-install#2-create-a-udev-rule-file
         ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="04[789B]?", ENV{ID_MM_DEVICE_IGNORE}="1"
         ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="04[789A]?", ENV{MTP_NO_PROBE}="1"
         SUBSYSTEMS=="usb", ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="04[789ABCD]?", MODE:="0666"
         KERNEL=="ttyACM*", ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="04[789B]?", MODE:="0666"
+
+        # Tobii 4C
+        SUBSYSTEM=="usb", ATTRS{idVendor}=="2104", ATTRS{idProduct}=="0118", GROUP="plugdev", MODE="0666", TAG+="uaccess"
       '';
     };
     pcscd.enable = true;
@@ -116,7 +151,6 @@ in {
       enable = true;
       extraConfig = builtins.readFile ./kmonad.kbd;
     };
-
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
@@ -125,7 +159,8 @@ in {
     createHome = true;
     home = "/home/${username}";
     description = name;
-    extraGroups = [ "audio" "disk" "docker" "networkmanager" "video" "wheel" ];
+    extraGroups =
+      [ "adbusers" "audio" "disk" "docker" "plugdev" "networkmanager" "video" "wheel" ];
     uid = 1000;
     shell = pkgs.zsh;
   };
@@ -136,11 +171,13 @@ in {
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "20.03";
 
-  programs.ssh.startAgent = true;
-
-  security.sudo.wheelNeedsPassword = false;
-
-  programs.zsh.enable = true;
+  security = {
+    sudo.wheelNeedsPassword = false;
+    pam.u2f = {
+      enable = true;
+      cue = true;
+    };
+  };
 
   # If adding a font here does not work, try running
   # fc-cache -f -v
@@ -151,29 +188,21 @@ in {
     noto-fonts
   ];
 
-  virtualisation.docker.enable = true;
-  virtualisation.docker.enableOnBoot = true;
-
-  nixpkgs.config.allowUnfree = true;
-
-  # Hacks in /etc/hosts for projects.
-  networking.extraHosts = ''
-    172.16.239.10 postgres.x.sclable.io
-    172.16.239.11 keycloak.x.sclable.io
-    172.16.239.12 wildfly.x.sclable.io
-    172.16.239.13 gateway.x.sclable.io
-    172.16.239.15 zookeeper.x.sclable.io
-    172.16.239.16 kafka.x.sclable.io
-    172.16.239.17 schemaregistry.x.sclable.io
-    172.16.239.18 nuxeo.x.sclable.io
-    172.16.239.19 openldap.x.sclable.io
-    172.16.239.20 phpldapadmin.x.sclable.io
-  '';
+  virtualisation = {
+    docker = {
+      enable = true;
+      enableOnBoot = true;
+    };
+    # Waiting for https://github.com/NixOS/nixpkgs/pull/101493
+    # virtualbox.host.enable = true;
+  };
 
   nix = {
     package = pkgs.nixFlakes;
     extraOptions = "experimental-features = nix-command flakes";
+    maxJobs = lib.mkDefault 8;
   };
+  nixpkgs.config.allowUnfree = true;
 
   xdg.portal.enable = true;
   xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];

@@ -50,18 +50,12 @@ in {
 
   services.mpd = { enable = true; };
 
-  /* home.packages = [ pkgs.compton ];
-     systemd.user.services."compton" = {
-       Enable = true;
-       Description = "Compton";
-       WantedBy = [ "default.target" ];
-       Path = [ pkgs.compton ];
-       Type = "forking";
-       Restart = "always";
-       RestartSec = 2;
-       ExecStart = "${pkgs.compton}/bin/compton -b";
-     };
-  */
+  services.picom = {
+    enable = true;
+    experimentalBackends = true;
+    backend = "xrender";
+    extraOptions = "";
+  };
 
   programs.feh.enable = true;
 
@@ -256,6 +250,7 @@ in {
       highlight-white = ${theme.color.highlight.white}
     '';
   };
+
   programs.rofi = {
     enable = true;
     font = "${theme.font.sans} 16";
@@ -306,4 +301,6 @@ in {
   };
 
   #xdg.configFile."rofi/config".text = readFile ./rofi;
+
+  home.packages = with pkgs; [ xbindkeys xbindkeys-config rofi-pass rofi-calc ];
 }

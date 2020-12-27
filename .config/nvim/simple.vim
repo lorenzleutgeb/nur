@@ -15,11 +15,12 @@ let maplocalleader="\\"
 set clipboard^=unnamed,unnamedplus
 
 " Digraphs
-digr !-  8866 " turnstile
 digr NN  8469 " natural  numbers
 digr QQ  8474 " rational numbers
 digr RR  8477 " real     numbers
 digr ZZ  8484 " integer  numbers
+digr :=  8788 " colon equals
+digr !-  8866 " turnstile
 
 "" Ordinal Indicators
 digr O1 59001 " superscript 'st', override

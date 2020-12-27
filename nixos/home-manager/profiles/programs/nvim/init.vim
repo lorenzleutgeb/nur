@@ -1,10 +1,18 @@
+" Configuration shared with other Vims,
+" such as IdeaVim, is placed here.
 source ~/.config/nvim/simple.vim
 
 set title
 
-let g:tex_flavor = 'latex'
+" This enables the miv plugin manager.
+filetype off
+if has('vim_starting')
+  " set rtp^=~/.vim/miv/miv
+  " or when you set $XDG_DATA_HOME,
+  set rtp^=$XDG_DATA_HOME/miv/miv
+endif
+filetype plugin indent on
 
-set runtimepath^=~/.vim runtimepath+=~/.vim/after
 let &packpath = &runtimepath
 
 " Make file search more powerful
@@ -91,17 +99,5 @@ set mouse=a
 " setlocal spell
 set spelllang=en_us
 
-filetype off
-if has('vim_starting')
-  set rtp^=~/.local/share/miv/miv
-endif
-filetype plugin indent on
-
+let g:tex_flavor = 'latex'
 let g:latex_view_general_viewer = 'zathura'
-
-let g:vimtex_view_method = "zathura"
-let g:vimtex_compiler_method = 'arara'
-let g:vimtex_compiler_progname = 'nvr'
-let g:vimtex_compiler_arara = {
- \ 'options' : ['-v'],
- \}

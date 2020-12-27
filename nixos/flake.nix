@@ -2,10 +2,10 @@
   description = "Lorenz Leutgeb's Flake";
 
   inputs = {
-    nixpkgs = { url = "nixpkgs/nixos-20.09"; };
+    nixpkgs.url = "nixpkgs/nixos-20.09";
     home-manager = {
       url = "github:nix-community/home-manager/release-20.09";
-      inputs.nixpkgs.follows = "/nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     # Modules
@@ -27,11 +27,6 @@
         config.allowUnfree = true;
       };
     in {
-
-      #packages.x86_64-linux.hello = nixpkgs.legacyPackages.x86_64-linux.hello;
-
-      #defaultPackage.x86_64-linux = self.packages.x86_64-linux.hello;
-
       /* nixosConfigurations."1anm3dk20fd60zb66cv7callrv82gn2z2jjlkqdbbb0i877hh872" = nixpkgs.lib.nixosSystem {
            inherit system;
            modules = [
@@ -46,7 +41,10 @@
         pkgs = import ./pkg;
       } // self.lib.importDirToAttrs ./overlay;
 
-      packages.${system} = { inherit (pkgs) kmonad-bin; inherit (pkgs.nodePackages) firebase-tools; };
+      packages.${system} = {
+        inherit (pkgs) kmonad-bin talon-bin;
+        inherit (pkgs.nodePackages) firebase-tools turtle-validator;
+      };
 
       nixosModules = self.lib.importDirToAttrs ./os/module;
 

@@ -1,5 +1,7 @@
 source ~/.config/nvim/simple.vim
 
+" set g:tex_flavor = 'latex'
+
 set runtimepath^=~/.vim runtimepath+=~/.vim/after
 let &packpath = &runtimepath
 
@@ -92,3 +94,8 @@ if has('vim_starting')
   set rtp^=~/.local/share/miv/miv
 endif
 filetype plugin indent on
+
+let g:vimtex_compiler_method = 'arara'
+let g:vimtex_compiler_arara = {
+ \ 'options' : ['-v'],
+ \}
