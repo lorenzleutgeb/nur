@@ -14,7 +14,7 @@ in {
       enable = true;
       configurationLimit = 16;
     };
-    efi.canTouchEfiVariables = true;
+    #efi.canTouchEfiVariables = true;
   };
 
   # The global useDHCP flag is deprecated, therefore explicitly set to false here.
@@ -24,7 +24,8 @@ in {
     # Configuration of DHCP per-interface was moved to hardware-configuration.nix
     useDHCP = false;
     networkmanager.enable = true;
-    hostName = "1parin0rhaicg80wgcn00yjp12i84c21b7dgi05hngi5b4ivv1bb";
+    hostName = "0wla8w9nlc3a4w4xm1jsj3924icwyyb04dd0kkn27wgryd4ddbik";
+    interfaces.eno1.useDHCP = true;
   };
 
   # Select internationalisation properties.
@@ -67,10 +68,6 @@ in {
   #   enableSSHSupport = true;
   #   pinentryFlavor = "gnome3";
   # };
-  programs = {
-    adb.enable = true;
-  };
-
   services = {
     fwupd.enable = true;
 
@@ -115,15 +112,13 @@ in {
     home = "/home/${username}";
     description = name;
     extraGroups =
-      [ "adbusers" "audio" "disk" "docker" "plugdev" "networkmanager" "video" "wheel" ];
+      [ "audio" "disk" "docker" "plugdev" "networkmanager" "video" "wheel" ];
     uid = 1000;
     shell = pkgs.zsh;
   };
 
   home-manager.users.${username} = import ./home-manager;
 
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "20.03";
 
   security = {
@@ -139,8 +134,6 @@ in {
       enable = true;
       enableOnBoot = true;
     };
-    # Waiting for https://github.com/NixOS/nixpkgs/pull/101493
-    # virtualbox.host.enable = true;
   };
 
   nix = {
@@ -152,8 +145,5 @@ in {
 
   xdg.portal.enable = true;
   xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-
-  #virtualisation.virtualbox.host.enable = true;
-  #users.extraGroups.vboxusers.members = [ "lorenz" ];
 }
 
