@@ -52,11 +52,27 @@
         "type": "indirect"
       }
     },
+    "nixpkgsUnstable": {
+      "locked": {
+        "lastModified": 1609079092,
+        "narHash": "sha256-KhyKfxBHtZlAgudpZ0EJVzeuqROjKfVOwj8j0cuhU50=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "2f47650c2f28d87f86ab807b8a339c684d91ec56",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "ref": "nixos-unstable",
+        "type": "indirect"
+      }
+    },
     "root": {
       "inputs": {
         "hardware": "hardware",
         "home-manager": "home-manager",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs",
+        "nixpkgsUnstable": "nixpkgsUnstable"
       }
     }
   },

@@ -3,6 +3,8 @@
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-20.09";
+    nixpkgsUnstable.url = "nixpkgs/nixos-unstable";
+
     home-manager = {
       url = "github:nix-community/home-manager/release-20.09";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -15,12 +17,16 @@
     };
   };
 
-  outputs = inputs@{ self, nixpkgs, home-manager, ... }:
+  outputs = inputs@{ self, nixpkgs, home-manager, nixpkgsUnstable, ... }:
     with builtins;
     with nixpkgs;
 
     let
       system = "x86_64-linux";
+      pkgsUnstable = import nixpkgsUnstable {
+        inherit system;
+        config.allowUnfree = true;
+      };
       pkgs = import nixpkgs {
         inherit system;
         overlays = builtins.attrValues self.overlays;
