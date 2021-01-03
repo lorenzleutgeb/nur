@@ -14,6 +14,7 @@ with builtins;
 
   home.packages = with pkgs; [
     alacritty
+    baobab
     brightnessctl
     evince
     fira
@@ -46,8 +47,11 @@ with builtins;
     pavucontrol
     pdfgrep
     pinta
+    picard
     poppler_utils
+    qnotero
     ranger
+    rclone-browser
     rofi
     shellcheck
     shfmt
@@ -84,5 +88,6 @@ with builtins;
     yq
     zathura
     zoom-us
+    zotero
   ];
 }

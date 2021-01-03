@@ -13,6 +13,6 @@ with builtins;
     enable = true;
     vimAlias = true;
     extraConfig = readFile ./init.vim;
-    plugins = with pkgs.vimPlugins; [];
+    plugins = with pkgs.vimPlugins; [ ];
   };
 }

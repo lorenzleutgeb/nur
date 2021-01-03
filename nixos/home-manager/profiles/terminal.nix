@@ -9,11 +9,13 @@ with builtins;
     ./programs/fzf.nix
     ./programs/gh.nix
     ./programs/git
+    ./programs/gpg.nix
     ./programs/nvim
     ./programs/password-store.nix
     ./programs/ripgrep.nix
     ./programs/ssh.nix
     ./programs/zsh
+    ./services/gpg-agent.nix
     ./services/syncthing.nix
     ./services/keybase.nix
   ];
@@ -22,10 +24,6 @@ with builtins;
     direnv = {
       enable = true;
       enableNixDirenvIntegration = true;
-    };
-    gpg = {
-      enable = true;
-      settings = { keyserver = "hkps://lorenz.leutgeb.xyz:443/"; };
     };
   };
 
@@ -41,6 +39,7 @@ with builtins;
     curlFull
     direnv
     #dockerTools
+    dnsutils
     docker-compose
     entr
     exa
@@ -54,6 +53,7 @@ with builtins;
     graphviz
     htop
     kbfs
+    mtr
     neovim-remote
     niv
     nixFlakes
@@ -69,6 +69,8 @@ with builtins;
     pinta
     poppler_utils
     python38Full
+    rclone
+    rmapi
     siji
     skaffold
     sshfs-fuse

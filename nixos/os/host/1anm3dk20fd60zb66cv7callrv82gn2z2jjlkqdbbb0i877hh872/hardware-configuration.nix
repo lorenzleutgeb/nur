@@ -7,10 +7,11 @@
   #boot.kernelPackages = with pkgs; linuxPackages_5_7;
   boot.kernelPackages = with pkgs; linuxPackages_5_9;
   boot.kernelModules = [ "kvm-intel" "e1000e" "v4l2loopback" ];
-  boot.extraModulePackages = with config.boot.kernelPackages; [
-    #e1000e
-    v4l2loopback
-  ];
+  boot.extraModulePackages = with config.boot.kernelPackages;
+    [
+      #e1000e
+      v4l2loopback
+    ];
 
   boot.extraModprobeConfig = ''
     options v4l2loopback exclusive_caps=1 video_nr=10,11 card_label="v4l2l 0","v4l2l 1"

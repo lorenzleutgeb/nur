@@ -13,7 +13,7 @@ with builtins;
       settings = {
         "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
         "browser.tabs.loadBookmarksInTabs" = true;
-        "browser.display.background_color" = "#000000";
+        "signon.rememberSignons" = false;
       };
 
       userChrome = readFile ./userChrome.css;

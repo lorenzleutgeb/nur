@@ -25,6 +25,7 @@ in {
     useDHCP = false;
     networkmanager.enable = true;
     hostName = "1anm3dk20fd60zb66cv7callrv82gn2z2jjlkqdbbb0i877hh872";
+    nameservers = [ "100.100.100.100" "1.1.1.1" "1.0.0.1" "8.8.8.8" ];
 
     # Hacks in /etc/hosts for projects.
     extraHosts = ''
@@ -81,9 +82,7 @@ in {
   #   enableSSHSupport = true;
   #   pinentryFlavor = "gnome3";
   # };
-  programs = {
-    adb.enable = true;
-  };
+  programs = { adb.enable = true; };
 
   services = {
     # TODO: Remove?
@@ -143,7 +142,7 @@ in {
         SUBSYSTEM=="usb", ATTRS{idVendor}=="2104", ATTRS{idProduct}=="0118", GROUP="plugdev", MODE="0666", TAG+="uaccess"
       '';
     };
-    pcscd.enable = true;
+    #pcscd.enable = true;
 
     flatpak.enable = true;
 
@@ -159,8 +158,16 @@ in {
     createHome = true;
     home = "/home/${username}";
     description = name;
-    extraGroups =
-      [ "adbusers" "audio" "disk" "docker" "plugdev" "networkmanager" "video" "wheel" ];
+    extraGroups = [
+      "adbusers"
+      "audio"
+      "disk"
+      "docker"
+      "plugdev"
+      "networkmanager"
+      "video"
+      "wheel"
+    ];
     uid = 1000;
     shell = pkgs.zsh;
   };

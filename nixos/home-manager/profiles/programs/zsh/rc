@@ -196,9 +196,6 @@ export GOPATH=$HOME
 
 export GITHUB_USER="lorenzleutgeb"
 
-export GPG_AGENT_INFO="$HOME/.gnupg/S.gpg-agent:0:1"
-export SSH_AUTH_SOCK=$HOME/.gnupg/S.gpg-agent.ssh
-
 function unalias {
         name=$1
         def=$(alias $name)

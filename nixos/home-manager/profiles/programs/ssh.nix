@@ -4,8 +4,14 @@
   programs.ssh = {
     enable = true;
     compression = true;
+    hashKnownHosts = true;
 
     matchBlocks = {
+      remarkable = {
+        # Static Mapping for d4:12:43:dd:a9:a4
+        hostname = "192.168.144.154";
+        user = "root";
+      };
       rg = {
         hostname = "dev.rising-gods.de";
         port = 2022;
