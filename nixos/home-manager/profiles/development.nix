@@ -17,6 +17,7 @@ with builtins;
     ./programs/ripgrep.nix
     ./programs/ssh.nix
     ./programs/zsh
+    ./jetbrains.nix
     ./services/flameshot.nix
     ./services/mpris-proxy.nix
     ./services/syncthing.nix
@@ -65,8 +66,6 @@ with builtins;
     insomnia
     isabelle
     jdk11
-    jetbrains.idea-ultimate
-    jetbrains.goland
     jq
     kbfs
     kdiff3

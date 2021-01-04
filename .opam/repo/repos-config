@@ -1,4 +1,0 @@
-repositories: [
-  "coq-released" {"https://coq.inria.fr/opam/released"}
-  "default" {"https://opam.ocaml.org/"}
-]

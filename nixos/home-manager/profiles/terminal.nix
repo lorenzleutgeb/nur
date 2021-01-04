@@ -5,6 +5,7 @@ with builtins;
 {
   imports = [
     ./common.nix
+    ./docker.nix
     ./programs/bat
     ./programs/fzf.nix
     ./programs/gh.nix
@@ -14,6 +15,7 @@ with builtins;
     ./programs/password-store.nix
     ./programs/ripgrep.nix
     ./programs/ssh.nix
+    ./programs/tmux.nix
     ./programs/zsh
     ./services/gpg-agent.nix
     ./services/syncthing.nix
@@ -78,7 +80,6 @@ with builtins;
     #nodejs
     #texlive.combined.scheme-full
     tailscale
-    tmux
     travis
     tree
     xdotool
