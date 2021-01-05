@@ -43,5 +43,9 @@
         user = "e1127842";
       };
     };
+
+    extraConfig = ''
+      VerifyHostKeyDNS yes
+    '';
   };
 }

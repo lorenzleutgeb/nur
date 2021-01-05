@@ -6,6 +6,7 @@ with builtins;
   imports = [
     ./terminal.nix
     ./wm/i3
+    ./programs/alacritty
     ./programs/autorandr.nix
     ./programs/browserpass.nix
     ./programs/firefox
@@ -13,7 +14,6 @@ with builtins;
   ];
 
   home.packages = with pkgs; [
-    alacritty
     baobab
     brightnessctl
     evince
