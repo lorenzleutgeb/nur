@@ -36,7 +36,9 @@ with builtins;
     aspellDicts.en-science
     asciinema
     autojump
+    beets
     cachix
+    chromaprint
     #ctags
     curlFull
     direnv
@@ -45,7 +47,9 @@ with builtins;
     docker-compose
     entr
     exa
+    fatrace
     fd
+    ffmpeg
     file
     fontconfig
     font-awesome
@@ -67,16 +71,19 @@ with builtins;
     pandoc
     pantheon.elementary-files
     pantheon.elementary-photos
+    pciutils
     pdfgrep
     pinta
     poppler_utils
     python38Full
+    python38Packages.pyacoustid
     rclone
     rmapi
     siji
     skaffold
     sshfs-fuse
     universal-ctags
+    usbutils
     #nodejs
     #texlive.combined.scheme-full
     tailscale

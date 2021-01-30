@@ -1,0 +1,6 @@
+<settings>
+  <localRepository>${env.XDG_CACHE_HOME}/maven/repository</localRepository>
+  <activeProfiles>
+    <activeProfile>use-protoc-command</activeProfile>
+  </activeProfiles>
+</settings>

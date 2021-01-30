@@ -31,6 +31,7 @@
         inherit system;
         overlays = builtins.attrValues self.overlays;
         config.allowUnfree = true;
+        config.allowBroken = true;
       };
     in {
       /* nixosConfigurations."1anm3dk20fd60zb66cv7callrv82gn2z2jjlkqdbbb0i877hh872" = nixpkgs.lib.nixosSystem {

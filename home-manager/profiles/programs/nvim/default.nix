@@ -16,10 +16,10 @@ with builtins;
     plugins = with pkgs.vimPlugins; [ ];
   };
 
-
   xdg.configFile."miv/config.yaml".source = ./config.yaml;
 
-  xdg.configFile."nvim/UltiSnips/tex.snippets".source = ./UltiSnips/tex.snippets;
+  xdg.configFile."nvim/UltiSnips/tex.snippets".source =
+    ./UltiSnips/tex.snippets;
 
   xdg.configFile."nvim/filetype.vim".source = ./filetype.vim;
   xdg.configFile."nvim/ftplugin/help.vim".source = ./ftplugin/help.vim;

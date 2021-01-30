@@ -6,7 +6,7 @@ let
   name = "Lorenz Leutgeb";
   username = "lorenz";
 in {
-  imports = [ ./hardware-configuration.nix "${hardware}/lenovo/thinkpad" ];
+  imports = [ ./hardware-configuration.nix ];
 
   # Use the systemd-boot EFI boot loader.
   boot = {
@@ -27,8 +27,7 @@ in {
     # Configuration of DHCP per-interface was moved to hardware-configuration.nix
     useDHCP = false;
     networkmanager.enable = true;
-    hostName = "1anm3dk20fd60zb66cv7callrv82gn2z2jjlkqdbbb0i877hh872";
-    nameservers = [ "100.100.100.100" "1.1.1.1" "1.0.0.1" "8.8.8.8" ];
+    hostName = "0mqr267g9pkn4i0dfgs03y0w3anzrhnr44jz4k0x0n19k4xwgbgn";
 
     # Hacks in /etc/hosts for projects.
     extraHosts = ''
@@ -88,9 +87,10 @@ in {
   programs = { adb.enable = true; };
 
   services = {
+    cron.enable = true;
     # TODO: Remove?
-    neo4j.enable = true;
-    blueman.enable = true;
+    neo4j.enable = false;
+    blueman.enable = false;
 
     fwupd.enable = true;
 
@@ -107,6 +107,8 @@ in {
 
     # Enable CUPS to print documents.
     printing.enable = true;
+
+    journald.extraConfig = "ReadKMsg=no";
 
     # Enable the X11 windowing system.
     xserver = {
@@ -128,7 +130,7 @@ in {
     # services.xserver.desktopManager.plasma5.enable = true;
 
     logind.extraConfig = ''
-      RuntimeDirectorySize=16G
+      RuntimeDirectorySize=24G
     '';
 
     udev = {
@@ -145,14 +147,9 @@ in {
         SUBSYSTEM=="usb", ATTRS{idVendor}=="2104", ATTRS{idProduct}=="0118", GROUP="plugdev", MODE="0666", TAG+="uaccess"
       '';
     };
-    #pcscd.enable = true;
+    pcscd.enable = true;
 
     flatpak.enable = true;
-
-    kmonad = {
-      enable = true;
-      extraConfig = builtins.readFile ./kmonad.kbd;
-    };
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
@@ -174,6 +171,7 @@ in {
     uid = 1000;
     shell = pkgs.zsh;
   };
+  users.extraGroups.vboxusers.members = [ "lorenz" ];
 
   home-manager.users.${username} = import ./home-manager;
 
@@ -204,7 +202,7 @@ in {
       enableOnBoot = true;
     };
     # Waiting for https://github.com/NixOS/nixpkgs/pull/101493
-    # virtualbox.host.enable = true;
+    virtualbox.host.enable = true;
   };
 
   nix = {
@@ -212,12 +210,12 @@ in {
     extraOptions = "experimental-features = nix-command flakes";
     maxJobs = lib.mkDefault 8;
   };
-  nixpkgs.config.allowUnfree = true;
+  nixpkgs.config = {
+    allowUnfree = true;
+    allowBroken = true;
+  };
 
   xdg.portal.enable = true;
   xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-
-  #virtualisation.virtualbox.host.enable = true;
-  #users.extraGroups.vboxusers.members = [ "lorenz" ];
 }
 

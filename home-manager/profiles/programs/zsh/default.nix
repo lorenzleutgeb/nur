@@ -21,7 +21,6 @@ with builtins;
       g = "hub";
       d = "docker";
 
-      home = "git --git-dir=$HOME/.config/home --work-tree=$HOME";
       machine-hash = "nix-hash --type sha256 --base32 --flat /etc/machine-id";
       lngc = "find . -xtype l -delete";
 

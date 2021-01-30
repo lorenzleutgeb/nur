@@ -63,7 +63,7 @@ with builtins;
     stylish-haskell
     skypeforlinux
     sshfs-fuse
-    talon-bin # Custom package
+    # talon-bin # Custom package
     thunderbird
     teamviewer
     transmission-gtk

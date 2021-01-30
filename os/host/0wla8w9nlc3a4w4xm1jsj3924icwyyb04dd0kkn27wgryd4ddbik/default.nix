@@ -26,6 +26,8 @@ in {
     networkmanager.enable = true;
     hostName = "0wla8w9nlc3a4w4xm1jsj3924icwyyb04dd0kkn27wgryd4ddbik";
     interfaces.eno1.useDHCP = true;
+
+    firewall.allowedTCPPorts = [ 80 443 ];
   };
 
   # Select internationalisation properties.
@@ -100,9 +102,10 @@ in {
         KERNEL=="ttyACM*", ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="04[789B]?", MODE:="0666"
       '';
     };
-    pcscd.enable = true;
 
     flatpak.enable = true;
+
+    unifi.enable = true;
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
@@ -117,6 +120,8 @@ in {
     shell = pkgs.zsh;
   };
 
+  users.users.nginx.extraGroups = [ "acme" ];
+
   home-manager.users.${username} = import ./home-manager;
 
   system.stateVersion = "20.03";
@@ -126,6 +131,20 @@ in {
     pam.u2f = {
       enable = true;
       cue = true;
+    };
+    acme = {
+      email = "lorenz@leutgeb.xyz";
+      acceptTerms = true;
+      certs = {
+        "0wla8w9nlc3a4w4xm1jsj3924icwyyb04dd0kkn27wgryd4ddbik.leutgeb.xyz" = {
+          email = "lorenz@leutgeb.xyz";
+          dnsProvider = "cloudflare";
+          credentialsFile = "/home/lorenz/.config/lego/cloudflare";
+          extraDomainNames = [
+            "*.0wla8w9nlc3a4w4xm1jsj3924icwyyb04dd0kkn27wgryd4ddbik.leutgeb.xyz"
+          ];
+        };
+      };
     };
   };
 
