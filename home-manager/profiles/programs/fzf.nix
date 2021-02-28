@@ -10,7 +10,7 @@
     defaultOptions = [ "--height 40%" "--border" ];
     fileWidgetCommand = "fd --type f";
     fileWidgetOptions = [ "--height 40%" "--border" ];
-    historyWidgetCommand = "fd --type f";
+    #historyWidgetCommand = "fd --type f";
     historyWidgetOptions = [ "--height 40%" "--border" ];
   };
 }

@@ -101,3 +101,7 @@ set spelllang=en_us
 
 let g:tex_flavor = 'latex'
 let g:latex_view_general_viewer = 'zathura'
+
+highlight Normal ctermbg=none
+highlight NonText ctermbg=none
+hi Normal guibg=NONE ctermbg=NONE

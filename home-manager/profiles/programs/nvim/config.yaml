@@ -19,6 +19,7 @@ plugin:
       let g:gruvbox_contrast_dark = 'hard'
     after: |
       colorscheme gruvbox
+      hi Normal guibg=NONE ctermbg=NONE
 
   #frankier/neovim-colors-solarized-truecolor-only:
   #  before:

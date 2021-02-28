@@ -120,10 +120,10 @@ font:
 draw_bold_text_with_bright_colors: true
 
 # Colors (Tomorrow Night Bright)
-#colors:
+colors:
   # Default colors
   #primary:
-  #background: '0x000000'
+  background: '0x000066'
   #foreground: '0xeaeaea'
 
     # Bright and dim foreground colors
@@ -215,7 +215,7 @@ bell:
 #
 # Window opacity as a floating point number from `0.0` to `1.0`.
 # The value `0.0` is completely transparent and `1.0` is opaque.
-background_opacity: 1.0
+background_opacity: 0.8
 
 # Mouse bindings
 #
@@ -289,7 +289,8 @@ live_config_reload: true
 # You can set `shell.program` to the path of your favorite shell, e.g. `/bin/fish`.
 # Entries in `shell.args` are passed unmodified as arguments to the shell.
 shell:
-  program: tmux
+   #program: tmux
+   program: zsh
 #  args:
 #    - --login
 
@@ -381,7 +382,7 @@ key_bindings:
   - { key: Insert,   mods: Shift,   action: PasteSelection               }
   - { key: Key0,     mods: Control, action: ResetFontSize                }
   - { key: Equals,   mods: Control, action: IncreaseFontSize             }
-  - { key: Subtract, mods: Control, action: DecreaseFontSize             }
+  - { key: Minus,    mods: Control, action: DecreaseFontSize             }
   - { key: L,        mods: Control, action: ClearLogNotice               }
   - { key: L,        mods: Control, chars: "\x0c"                        }
   - { key: Home,                    chars: "\x1bOH",   mode: AppCursor   }
