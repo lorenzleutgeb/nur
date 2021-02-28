@@ -31,5 +31,4 @@ with builtins;
   home.file."bin/ez-flash".source = ./scripts/ez-flash;
   home.file."bin/gotty-tmux".source = ./scripts/gotty-tmux;
   home.file."bin/tunnel".source = ./scripts/tunnel;
-  home.file."bin/lockscreen".source = ./scripts/lockscreen;
 }

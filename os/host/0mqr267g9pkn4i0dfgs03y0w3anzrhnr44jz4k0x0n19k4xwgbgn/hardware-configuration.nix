@@ -16,7 +16,7 @@
     "sd_mod"
     "sr_mod"
   ];
-  boot.kernelPackages = with pkgs; linuxPackages_5_9;
+  boot.kernelPackages = with pkgs; linuxPackages_5_10;
   boot.kernelModules = [ "kvm-intel" "v4l2loopback" ];
   boot.extraModulePackages = with config.boot.kernelPackages; [ v4l2loopback ];
 
@@ -84,24 +84,6 @@
 
   sound.enable = true;
   hardware = {
-    pulseaudio = {
-      enable = true;
-
-      # NixOS allows either a lightweight build (default) or full build of PulseAudio to be installed.
-      # Only the full build has Bluetooth support, so it must be selected here.
-      package = pkgs.pulseaudioFull;
-
-      extraConfig = ''
-        #load-module module-alsa-sink   device=hw:0,0 channels=4
-        #load-module module-alsa-source device=hw:0,6 channels=4
-        .ifexists module-bluetooth-discover.so
-          # https://www.freedesktop.org/wiki/Software/PulseAudio/Documentation/User/Modules/#module-switch-on-connect
-          load-module module-switch-on-connect
-        .endif
-      '';
-
-    };
-
     opengl = {
       enable = true;
       extraPackages = with pkgs; [

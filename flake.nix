@@ -2,11 +2,10 @@
   description = "Lorenz Leutgeb's Flake";
 
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-20.09";
-    nixpkgsUnstable.url = "nixpkgs/nixos-unstable";
+    nixpkgs.url = "nixpkgs/nixos-unstable";
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-20.09";
+      url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -17,21 +16,17 @@
     };
   };
 
-  outputs = inputs@{ self, nixpkgs, home-manager, nixpkgsUnstable, ... }:
+  outputs = inputs@{ self, nixpkgs, home-manager, ... }:
     with builtins;
     with nixpkgs;
 
     let
       system = "x86_64-linux";
-      pkgsUnstable = import nixpkgsUnstable {
-        inherit system;
-        config.allowUnfree = true;
-      };
       pkgs = import nixpkgs {
         inherit system;
         overlays = builtins.attrValues self.overlays;
         config.allowUnfree = true;
-        config.allowBroken = true;
+        #config.allowBroken = true;
       };
     in {
       /* nixosConfigurations."1anm3dk20fd60zb66cv7callrv82gn2z2jjlkqdbbb0i877hh872" = nixpkgs.lib.nixosSystem {

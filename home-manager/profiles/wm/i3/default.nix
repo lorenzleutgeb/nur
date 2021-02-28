@@ -303,4 +303,6 @@ in {
   #xdg.configFile."rofi/config".text = readFile ./rofi;
 
   home.packages = with pkgs; [ xbindkeys xbindkeys-config rofi-pass rofi-calc ];
+
+  #home.file."bin/lockscreen".source = ./scripts/lockscreen;
 }

@@ -5,9 +5,8 @@ with builtins;
 {
   imports = [
     ./terminal.nix
-    ./wm/i3
+    ./wm/sway
     ./programs/alacritty
-    ./programs/autorandr.nix
     ./programs/browserpass.nix
     ./programs/firefox
     ./programs/password-store.nix
@@ -74,7 +73,7 @@ with builtins;
     #texlive.combined.scheme-full
     tailscale
     tmux
-    tor-browser-bundle-bin
+    #tor-browser-bundle-bin
     travis
     tree
     vlc

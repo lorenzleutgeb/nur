@@ -5,7 +5,6 @@ with builtins;
 {
   imports = [
     ./graphical.nix
-    ./programs/autorandr.nix
     ./programs/bat
     ./programs/browserpass.nix
     ./programs/firefox
@@ -41,6 +40,7 @@ with builtins;
     #dockerTools
     docker-compose
     entr
+    envsubst
     evince
     exa
     exercism
@@ -126,7 +126,6 @@ with builtins;
     #texlive.combined.scheme-full
     tailscale
     tmux
-    tor-browser-bundle-bin
     travis
     tree
     vlc
