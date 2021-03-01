@@ -80,21 +80,19 @@ in {
         "${modifier}+Shift+k" = "move up";
         "${modifier}+Shift+l" = "move right";
         "${modifier}+z" = "split h";
-        "${modifier}+p" = "exec gnome-screenshot --interactive";
+        "${modifier}+p" = "exec screenshot";
 
-        "XF86MonBrightnessUp" = "exec xbacklight -inc 20";
-        "XF86MonBrightnessDown" = "exec xbacklight -dec 20";
+        #"XF86MonBrightnessUp" = "exec xbacklight -inc 20";
+        #"XF86MonBrightnessDown" = "exec xbacklight -dec 20";
 
-        "XF86AudioPlay" = "exec playerctl play";
-        "XF86AudioPause" = "exec playerctl pause";
+        "XF86AudioPlay" = "exec playerctl play-pause";
+        #"XF86AudioPause" = "exec playerctl pause";
         "XF86AudioNext" = "exec playerctl next";
         "XF86AudioPrev" = "exec playerctl previous";
 
-        "XF86AudioRaiseVolume" =
-          "exec --no-startup-id pactl set-sink-volume 0 +5%";
-        "XF86AudioLowerVolume" =
-          "exec --no-startup-id pactl set-sink-volume 0 -5%";
-        "XF86AudioMute" = "exec --no-startup-id pactl set-sink-mute 0 toggle";
+        "XF86AudioRaiseVolume" = "exec amixer set Master 10%+";
+        "XF86AudioLowerVolume" = "exec amixer set Master 10%-";
+        "XF86AudioMute" = "exec amixer set Master toggle";
       };
 
       modes = {
@@ -208,13 +206,16 @@ in {
   };
 
   home.packages = with pkgs; [
-    swaylock-effects
-    swayidle
-    wl-clipboard
-    wdisplays
-    imv
-    waypipe
-    notify-desktop
+    grim # Screenshots
+    imv # Image viewer
+    notify-desktop # Notification testing
+    playerctl # Media keys
+    slurp # Selecting region (for screenshots)
+    swayidle # Lock when inactive
+    swaylock-effects # Lockscreen
+    wdisplays # List available displays
+    wl-clipboard # Access clipboard
+    waypipe # Network transparency
   ];
 
   home.sessionVariables = {
@@ -293,5 +294,6 @@ in {
     style = readFile ./waybar.css;
   };
 
-  home.file."bin/lockscreen".source = ./lockscreen;
+  home.file."bin/lockscreen".source = ./lockscreen.sh;
+  home.file."bin/screenshot".source = ./screenshot.sh;
 }
