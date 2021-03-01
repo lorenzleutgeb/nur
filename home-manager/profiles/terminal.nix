@@ -15,7 +15,7 @@ with builtins;
     ./programs/password-store.nix
     ./programs/ripgrep.nix
     ./programs/ssh.nix
-    ./programs/tmux.nix
+    ./programs/tmux
     ./programs/zsh
     ./services/gpg-agent.nix
     ./services/syncthing.nix

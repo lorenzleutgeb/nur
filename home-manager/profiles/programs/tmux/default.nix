@@ -353,4 +353,6 @@
             '';
 
   };
+
+  home.file."bin/tmux-window-name".source = ./window-name.sh;
 }

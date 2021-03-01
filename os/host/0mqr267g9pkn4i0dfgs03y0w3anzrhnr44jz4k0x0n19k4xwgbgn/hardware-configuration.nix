@@ -82,20 +82,15 @@
   #networking.interfaces.wlp0s20f3.useDHCP = true;
   #networking.hostName = "lorenz.leutgeb.sclable.com";
 
+  environment.systemPackages = with pkgs; [ intel-gpu-tools libva-utils ];
+
   sound.enable = true;
   hardware = {
     opengl = {
       enable = true;
-      extraPackages = with pkgs; [
-        vaapiIntel
-        vaapiVdpau
-        libvdpau-va-gl
-        intel-media-driver # only available starting nixos-19.03 or the current nixos-unstable
-      ];
+      driSupport = true;
+      driSupport32Bit = true;
+      extraPackages = with pkgs; [ vaapiIntel intel-media-driver ];
     };
-  };
-
-  nixpkgs.config.packageOverrides = pkgs: {
-    vaapiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };
   };
 }

@@ -56,8 +56,6 @@ in {
     longitude = "16.363449";
   };
 
-  programs.feh.enable = true;
-
   wayland.windowManager.sway = let modifier = "Mod4";
   in {
     enable = true;
@@ -115,6 +113,8 @@ in {
           "Return" = "mode default";
         };
       };
+
+      output = { "*" = { "background" = "~/desert.jpg fill"; }; };
 
       # Idea for workspaces:
       #   1 ?
@@ -185,26 +185,6 @@ in {
       };
 
       bars = [ ];
-      /* focused_workspace  #282828 #282828 #FFFFFF #fdf6e3
-         active_workspace   #fdf6e3 #6c71c4 #fdf6e3 #FFFFFF
-         inactive_workspace #000000 #000000 #AAAAAA #002b36
-         urgent_workspace   #d33682 #d33682 #fdf6e3 #FFFFFF
-
-         # class                 border  bground text    indicator child_border
-         client.urgent           #d33682 #d33682 #fdf6e3 #dc322f
-
-         # class                 border  backgr. text    indicator child_border
-         client.focused          #4c7899 #285577 #ffffff #2e9ef4   #285577
-         client.focused_inactive #333333 #5f676a #ffffff #484e50   #5f676a
-         client.unfocused        #333333 #222222 #888888 #292d2e   #222222
-         client.urgent           #2f343a #900000 #ffffff #900000   #900000
-         client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
-      */
-      startup = [{
-        command = "${pkgs.feh}/bin/feh --bg-scale ~/wallpaper.jpg";
-        always = true;
-        #notification = false;
-      }];
     };
     extraConfig = ''
       hide_edge_borders both
@@ -214,14 +194,17 @@ in {
       for_window [app_id="^.*jetbrains-.*$" workspace=8] border none
       for_window [app_id="Alacritty"] border none
       #for_window [title=".* Sharing Indicator"] floating enable
+
       for_window [title="Firefox — Sharing Indicator"] kill;
 
-      #exec "setxkbmap -layout us,de"
-      #exec "setxkbmap -option 'grp:alt_shift_toggle'"
+      # IntelliJ Splash Screen
+      for_window [class="^.*jetbrains-.*$" title="win0"] floating enable;
+      # IntelliJ Welcome Screen
+      for_window [class="^.*jetbrains-.*$" title="Welcome to .*"] floating enable;
+
       exec systemctl --user import-environment
       exec systemctl --user start graphical-session.target
     '';
-    #exec --no-startup-id xsetroot -solid "#000"
   };
 
   home.packages = with pkgs; [
@@ -238,6 +221,7 @@ in {
     MOZ_ENABLE_WAYLAND = 1;
     XDG_CURRENT_DESKTOP = "sway";
     XDG_SESSION_TYPE = "wayland";
+    _JAVA_AWT_WM_NONREPARENTING = "1";
   };
 
   programs.mako = {
@@ -252,14 +236,14 @@ in {
     width = 2560 / 4;
     height = 1440 / 10;
     extraConfig = ''
-    [app-name="Spotify"]
-    border-color=#1DB954
-    [app-name="Spotify Premium"]
-    border-color=#1DB954
-    [app-name="Firefox"]
-    border-color=#E66000
-    [urgency=high actionable]
-    border-color=#ff0000
+      [app-name="Spotify"]
+      border-color=#1DB954
+      [app-name="Spotify Premium"]
+      border-color=#1DB954
+      [app-name="Firefox"]
+      border-color=#E66000
+      [urgency=high actionable]
+      border-color=#ff0000
     '';
   };
 
@@ -306,239 +290,7 @@ in {
         };
       };
     }];
-    style = ''
-      * {
-          border: none;
-          border-radius: 0;
-          /* `otf-font-awesome` is required to be installed for icons */
-          font-family: "${theme.font.sans}", sans-serif;
-          font-size: 13px;
-          min-height: 0;
-      }
-
-      window#waybar {
-          background-color: rgba(0, 0, 0, 0.3);
-          border: none;
-          /*border-bottom: 3px solid rgba(100, 114, 125, 0.5); */
-          color: #ffffff;
-          transition-property: background-color;
-          transition-duration: .5s;
-      }
-
-      window#waybar.hidden {
-          opacity: 0.2;
-      }
-
-      /*
-      window#waybar.empty {
-          background-color: transparent;
-      }
-      window#waybar.solo {
-          background-color: #FFFFFF;
-      }
-      */
-
-      window#waybar.termite {
-          background-color: #3F3F3F;
-      }
-
-      window#waybar.chromium {
-          background-color: #000000;
-          border: none;
-      }
-
-      #workspaces button {
-          padding: 0 5px;
-          background-color: transparent;
-          color: #ffffff;
-          /* Use box-shadow instead of border so the text isn't offset */
-          box-shadow: inset 0 -3px transparent;
-      }
-
-      /* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
-      #workspaces button:hover {
-          background: rgba(0, 0, 0, 0.2);
-          /*box-shadow: inset 0 -3px #ffffff;*/
-      }
-
-      #workspaces button.focused {
-          background-color: rgb(50, 50, 50);
-          /*box-shadow: inset 0 -3px #ffffff; */
-      }
-
-      #workspaces button.urgent {
-          background-color: #eb4d4b;
-      }
-
-      #mode {
-          background-color: #64727D;
-          /*border-bottom: 3px solid #ffffff;*/
-      }
-
-      #clock,
-      #battery,
-      #cpu,
-      #memory,
-      #temperature,
-      #backlight,
-      #network,
-      #pulseaudio,
-      #custom-media,
-      #tray,
-      #mode,
-      #idle_inhibitor,
-      #mpd {
-          padding: 0 10px;
-          margin: 0 4px;
-          color: #ffffff;
-      }
-
-      #window,
-      #workspaces {
-          margin: 0 4px;
-      }
-
-      /* If workspaces is the leftmost module, omit left margin */
-      .modules-left > widget:first-child > #workspaces {
-          margin-left: 0;
-      }
-
-      /* If workspaces is the rightmost module, omit right margin */
-      .modules-right > widget:last-child > #workspaces {
-          margin-right: 0;
-      }
-
-      #clock {
-          background-color: #64727D;
-      }
-
-      #battery {
-          background-color: #ffffff;
-          color: #000000;
-      }
-
-      #battery.charging {
-          color: #ffffff;
-          background-color: #26A65B;
-      }
-
-      @keyframes blink {
-          to {
-              background-color: #ffffff;
-              color: #000000;
-          }
-      }
-
-      #battery.critical:not(.charging) {
-          background-color: #f53c3c;
-          color: #ffffff;
-          animation-name: blink;
-          animation-duration: 0.5s;
-          animation-timing-function: linear;
-          animation-iteration-count: infinite;
-          animation-direction: alternate;
-      }
-
-      label:focus {
-          background-color: #000000;
-      }
-
-      #cpu {
-          background-color: #2ecc71;
-          color: #000000;
-      }
-
-      #memory {
-          background-color: #9b59b6;
-      }
-
-      #backlight {
-          background-color: #90b1b1;
-      }
-
-      #network {
-          background-color: #2980b9;
-      }
-
-      #network.disconnected {
-          background-color: #f53c3c;
-      }
-
-      #pulseaudio {
-          background-color: #f1c40f;
-          color: #000000;
-      }
-
-      #pulseaudio.muted {
-          background-color: #90b1b1;
-          color: #2a5c45;
-      }
-
-      #custom-media {
-          background-color: #66cc99;
-          color: #2a5c45;
-          min-width: 100px;
-      }
-
-      #custom-media.custom-spotify {
-          background-color: #66cc99;
-      }
-
-      #custom-media.custom-vlc {
-          background-color: #ffa000;
-      }
-
-      #temperature {
-          background-color: #f0932b;
-      }
-
-      #temperature.critical {
-          background-color: #eb4d4b;
-      }
-
-      #tray {
-          background-color: #2980b9;
-      }
-
-      #idle_inhibitor {
-          background-color: #2d3436;
-      }
-
-      #idle_inhibitor.activated {
-          background-color: #ecf0f1;
-          color: #2d3436;
-      }
-
-      #mpd {
-          background-color: #66cc99;
-          color: #2a5c45;
-      }
-
-      #mpd.disconnected {
-          background-color: #f53c3c;
-      }
-
-      #mpd.stopped {
-          background-color: #90b1b1;
-      }
-
-      #mpd.paused {
-          background-color: #51a37a;
-      }
-
-      #language {
-          background: #00b093;
-          color: #740864;
-          padding: 0 5px;
-          margin: 0 5px;
-          min-width: 16px;
-      }
-      window#waybar {
-          background: rgba(0, 0, 0, 0.4);
-          /*border-bottom: 3px solid rgba(100, 114, 125, 0.5);*/
-          color: white;
-      }
-          '';
+    style = readFile ./waybar.css;
   };
 
   home.file."bin/lockscreen".source = ./lockscreen;

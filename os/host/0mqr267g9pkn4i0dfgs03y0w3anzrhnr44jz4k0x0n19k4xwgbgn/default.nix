@@ -55,25 +55,26 @@ in {
   time.timeZone = "Europe/Vienna";
   i18n.defaultLocale = "en_US.UTF-8";
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    binutils
-    coreutils
-    elfutils
-    exfat
-    fuse
-    gcc
-    gnumake
-    lsof
-    nixFlakes
-    utillinux
-    vim
-    wirelesstools
-    wget
-    which
-    zip
-  ];
+  environment = {
+    systemPackages = with pkgs; [
+      binutils
+      coreutils
+      elfutils
+      exfat
+      fuse
+      gcc
+      gnumake
+      lsof
+      nixFlakes
+      utillinux
+      vim
+      wirelesstools
+      wget
+      which
+      zip
+    ];
+    sessionVariables.LIBVA_DRIVER_NAME = "iHD";
+  };
 
   services = {
     blueman.enable = false;
@@ -156,10 +157,9 @@ in {
         enable = true;
         cue = true;
       };
-      services = {
-        "swaylock" = {};
-      };
+      services = { "swaylock" = { }; };
     };
+    rtkit.enable = true;
   };
 
   # If adding a font here does not work, try running
