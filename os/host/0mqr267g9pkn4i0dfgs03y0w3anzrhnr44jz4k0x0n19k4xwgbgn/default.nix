@@ -57,21 +57,15 @@ in {
 
   environment = {
     systemPackages = with pkgs; [
-      binutils
-      coreutils
-      elfutils
+      coreutils-full
+      dmidecode
       exfat
-      fuse
-      gcc
-      gnumake
+      exfat-utils
+      lshw
       lsof
       nixFlakes
       utillinux
-      vim
-      wirelesstools
-      wget
       which
-      zip
     ];
     sessionVariables.LIBVA_DRIVER_NAME = "iHD";
   };

@@ -53,6 +53,7 @@ with builtins;
     file
     fontconfig
     font-awesome
+    fuse
     #fwupdmgr
     fzf
     glibcLocales
@@ -89,8 +90,10 @@ with builtins;
     tailscale
     travis
     tree
+    unzip
     xdotool
     yubikey-personalization
     yubioath-desktop
+    zip
   ];
 }

@@ -1,11 +1,8 @@
 { config, lib, pkgs, ... }:
 
 {
-  /* imports =
-      [ (modulesPath + "/installer/scan/not-detected.nix")
-      ];
-  */
-
+  # TODO: Try booting without default modules.
+  #boot.initrd.includeDefaultModules = false;
   boot.initrd.availableKernelModules = [
     "xhci_pci"
     "ahci"
@@ -17,14 +14,16 @@
     "sr_mod"
   ];
   boot.kernelPackages = with pkgs; linuxPackages_5_10;
-  boot.kernelModules = [ "kvm-intel" "v4l2loopback" ];
+  boot.kernelModules = [
+    "kvm-intel" # https://wiki.archlinux.org/index.php/KVM@
+    "v4l2loopback"
+  ];
   boot.extraModulePackages = with config.boot.kernelPackages; [ v4l2loopback ];
 
+  # Add two v4l devices "v4l-0" and "v4l-1" that map to /dev/video1{0,1}.
   boot.extraModprobeConfig = ''
-    options v4l2loopback exclusive_caps=1 video_nr=10,11 card_label="v4l2l 0","v4l2l 1"
+    options v4l2loopback exclusive_caps=1 video_nr=10,11 card_label=v4l-0,v4l-1
   '';
-
-  #boot.extraModulePackages = [ ];
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/af3f86f8-5ca5-404e-800f-cbb4e72b953b";
@@ -82,15 +81,26 @@
   #networking.interfaces.wlp0s20f3.useDHCP = true;
   #networking.hostName = "lorenz.leutgeb.sclable.com";
 
-  environment.systemPackages = with pkgs; [ intel-gpu-tools libva-utils ];
+  environment.systemPackages = with pkgs; [
+    intel-gpu-tools
+    libva-utils
+    #vdpauinfo
+    v4l-utils
+  ];
 
   sound.enable = true;
   hardware = {
     opengl = {
+      # NOTE: Couldn't get VDPAU via VAAPI to work. Probably don't need it.
       enable = true;
       driSupport = true;
       driSupport32Bit = true;
-      extraPackages = with pkgs; [ vaapiIntel intel-media-driver ];
+      extraPackages = with pkgs; [
+        intel-media-driver
+        vaapiIntel
+        #libvdpau
+        #libvdpau-va-gl
+      ];
     };
   };
 }

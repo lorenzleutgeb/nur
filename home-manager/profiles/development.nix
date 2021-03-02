@@ -32,6 +32,7 @@ with builtins;
     aspellDicts.en-science
     asciinema
     autojump
+    binutils
     brightnessctl
     cachix
     #ctags
@@ -39,6 +40,7 @@ with builtins;
     direnv
     #dockerTools
     docker-compose
+    elfutils
     entr
     envsubst
     evince
@@ -54,8 +56,10 @@ with builtins;
     font-awesome
     #fwupdmgr
     fzf
+    gcc
     ghcid
     glibcLocales
+    gnumake
     googleearth
     google-chrome
     google-cloud-sdk
