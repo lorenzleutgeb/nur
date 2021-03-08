@@ -58,78 +58,42 @@ in {
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    binutils
-    coreutils
-    elfutils
-    exfat
-    fuse
-    gcc
-    gnumake
-    lsof
-    nixFlakes
-    utillinux
-    vim
-    wirelesstools
-    wget
-    which
-    xorg.xkill
-    zip
-  ];
 
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  #   pinentryFlavor = "gnome3";
-  # };
-  programs = { adb.enable = true; };
+  environment = {
+    systemPackages = with pkgs; [
+      coreutils-full
+      dmidecode
+      exfat
+      exfat-utils
+      lshw
+      lsof
+      nixFlakes
+      utillinux
+      which
+    ];
+    sessionVariables.LIBVA_DRIVER_NAME = "iHD";
+  };
 
   services = {
-    # TODO: Remove?
-    neo4j.enable = true;
-    blueman.enable = true;
-
+    blueman.enable = false;
+    cron.enable = true;
+    flatpak.enable = true;
     fwupd.enable = true;
-
+    #journald.extraConfig = "ReadKMsg=no";
+    openssh.enable = true;
+    pcscd.enable = true;
+    printing.enable = true;
     tailscale.enable = true;
 
-    # Enable the OpenSSH daemon.
-    openssh.enable = true;
-
-    # Open ports in the firewall.
-    # networking.firewall.allowedTCPPorts = [ ... ];
-    # networking.firewall.allowedUDPPorts = [ ... ];
-    # Or disable the firewall altogether.
-    # networking.firewall.enable = false;
-
-    # Enable CUPS to print documents.
-    printing.enable = true;
-
-    # Enable the X11 windowing system.
-    xserver = {
-      autorun = true;
+    pipewire = {
       enable = true;
-      layout = "us";
-      xkbOptions = "eurosign:e";
-      libinput.enable = true;
-      displayManager.defaultSession = "none+i3";
-      desktopManager = { xterm.enable = false; };
-      windowManager.i3 = {
+      alsa = {
         enable = true;
-        extraPackages = with pkgs; [ dmenu i3status i3lock ];
+        support32Bit = true;
       };
+      pulse.enable = true;
+      jack.enable = true;
     };
-
-    # Enable the KDE Desktop Environment.
-    # services.xserver.displayManager.sddm.enable = true;
-    # services.xserver.desktopManager.plasma5.enable = true;
-
-    logind.extraConfig = ''
-      RuntimeDirectorySize=16G
-    '';
 
     udev = {
       packages = [ pkgs.yubikey-personalization ];
@@ -145,9 +109,10 @@ in {
         SUBSYSTEM=="usb", ATTRS{idVendor}=="2104", ATTRS{idProduct}=="0118", GROUP="plugdev", MODE="0666", TAG+="uaccess"
       '';
     };
-    #pcscd.enable = true;
 
-    flatpak.enable = true;
+    logind.extraConfig = ''
+      RuntimeDirectorySize=16G
+    '';
 
     kmonad = {
       enable = true;
@@ -168,6 +133,7 @@ in {
       "docker"
       "plugdev"
       "networkmanager"
+      "vboxusers"
       "video"
       "wheel"
     ];
@@ -183,10 +149,14 @@ in {
 
   security = {
     sudo.wheelNeedsPassword = false;
-    pam.u2f = {
-      enable = true;
-      cue = true;
+    pam = {
+      u2f = {
+        enable = true;
+        cue = true;
+      };
+      services = { "swaylock" = { }; };
     };
+    rtkit.enable = true;
   };
 
   # If adding a font here does not work, try running
@@ -204,7 +174,7 @@ in {
       enableOnBoot = true;
     };
     # Waiting for https://github.com/NixOS/nixpkgs/pull/101493
-    # virtualbox.host.enable = true;
+    virtualbox.host.enable = true;
   };
 
   nix = {
@@ -212,12 +182,20 @@ in {
     extraOptions = "experimental-features = nix-command flakes";
     maxJobs = lib.mkDefault 8;
   };
-  nixpkgs.config.allowUnfree = true;
+  nixpkgs.config = {
+    allowUnfree = true;
+    #allowBroken = true;
+  };
 
-  xdg.portal.enable = true;
-  xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-
-  #virtualisation.virtualbox.host.enable = true;
-  #users.extraGroups.vboxusers.members = [ "lorenz" ];
+  xdg = {
+    portal = {
+      enable = true;
+      extraPortals = with pkgs; [
+        xdg-desktop-portal-gtk
+        xdg-desktop-portal-wlr
+      ];
+      gtkUsePortal = true;
+    };
+  };
 }
 

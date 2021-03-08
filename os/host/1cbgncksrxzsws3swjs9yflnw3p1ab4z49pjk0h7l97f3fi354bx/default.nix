@@ -27,7 +27,7 @@ in {
     # Configuration of DHCP per-interface was moved to hardware-configuration.nix
     useDHCP = false;
     networkmanager.enable = true;
-    hostName = "0mqr267g9pkn4i0dfgs03y0w3anzrhnr44jz4k0x0n19k4xwgbgn";
+    hostName = "1cbgncksrxzsws3swjs9yflnw3p1ab4z49pjk0h7l97f3fi354bx";
 
     # Hacks in /etc/hosts for projects.
     extraHosts = ''
@@ -107,7 +107,7 @@ in {
     };
 
     logind.extraConfig = ''
-      RuntimeDirectorySize=24G
+      RuntimeDirectorySize=4G
     '';
   };
 

@@ -1,23 +1,25 @@
 { config, lib, pkgs, ... }:
 
 {
-  boot.initrd.availableKernelModules =
-    [ "xhci_pci" "nvme" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
-  boot.initrd.kernelModules = [ ];
-  #boot.kernelPackages = with pkgs; linuxPackages_5_7;
-  boot.kernelPackages = with pkgs; linuxPackages_5_9;
+  # TODO: Try booting without default modules.
+  #boot.initrd.includeDefaultModules = false;
+  boot.initrd.availableKernelModules = [
+    "xhci_pci"
+    "nvme"
+    "usb_storage"
+    "sd_mod"
+    "rtsx_pci_sdmmc"
+  ];
+  boot.kernelPackages = pkgs.linuxPackages_5_10;
   boot.kernelModules = [ "kvm-intel" "e1000e" "v4l2loopback" ];
-  boot.extraModulePackages = with config.boot.kernelPackages;
-    [
-      #e1000e
-      v4l2loopback
-    ];
+  boot.extraModulePackages = with config.boot.kernelPackages; [
+    v4l2loopback
+  ];
 
+  # Add two v4l devices "v4l-0" and "v4l-1" that map to /dev/video1{0,1}.
   boot.extraModprobeConfig = ''
-    options v4l2loopback exclusive_caps=1 video_nr=10,11 card_label="v4l2l 0","v4l2l 1"
+    options v4l2loopback exclusive_caps=1 video_nr=10,11 card_label=v4l2l-0,v4l2l-1
   '';
-
-  #boot.extraModulePackages = [ ];
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/364ac200-840a-447e-bbfe-0874ffa2a278";
@@ -68,43 +70,29 @@
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
 
-  networking.interfaces.wlp0s20f3.useDHCP = true;
-  #networking.hostName = "lorenz.leutgeb.sclable.com";
+  # high-resolution display
+  hardware.video.hidpi.enable = lib.mkDefault true;
+
+  environment.systemPackages = with pkgs; [
+    intel-gpu-tools
+    libva-utils
+    #vdpauinfo
+    v4l-utils
+  ];
 
   sound.enable = true;
   hardware = {
-    bluetooth.enable = true;
-
-    pulseaudio = {
-      enable = true;
-
-      # NixOS allows either a lightweight build (default) or full build of PulseAudio to be installed.
-      # Only the full build has Bluetooth support, so it must be selected here.
-      package = pkgs.pulseaudioFull;
-
-      extraConfig = ''
-        #load-module module-alsa-sink   device=hw:0,0 channels=4
-        #load-module module-alsa-source device=hw:0,6 channels=4
-        .ifexists module-bluetooth-discover.so
-          # https://www.freedesktop.org/wiki/Software/PulseAudio/Documentation/User/Modules/#module-switch-on-connect
-          load-module module-switch-on-connect
-        .endif
-      '';
-
-    };
-
     opengl = {
+      # NOTE: Couldn't get VDPAU via VAAPI to work. Probably don't need it.
       enable = true;
+      driSupport = true;
+      driSupport32Bit = true;
       extraPackages = with pkgs; [
+        intel-media-driver
         vaapiIntel
-        vaapiVdpau
-        libvdpau-va-gl
-        intel-media-driver # only available starting nixos-19.03 or the current nixos-unstable
+        #libvdpau
+        #libvdpau-va-gl
       ];
     };
-  };
-
-  nixpkgs.config.packageOverrides = pkgs: {
-    vaapiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };
   };
 }

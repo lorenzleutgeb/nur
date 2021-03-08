@@ -13,7 +13,7 @@
     "sd_mod"
     "sr_mod"
   ];
-  boot.kernelPackages = with pkgs; linuxPackages_5_10;
+  boot.kernelPackages = pkgs.linuxPackages_5_10;
   boot.kernelModules = [
     "kvm-intel" # https://wiki.archlinux.org/index.php/KVM@
     "v4l2loopback"
@@ -77,9 +77,6 @@
   powerManagement.cpuFreqGovernor = lib.mkDefault "performance";
   # high-resolution display
   hardware.video.hidpi.enable = lib.mkDefault true;
-
-  #networking.interfaces.wlp0s20f3.useDHCP = true;
-  #networking.hostName = "lorenz.leutgeb.sclable.com";
 
   environment.systemPackages = with pkgs; [
     intel-gpu-tools
