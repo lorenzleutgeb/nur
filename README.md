@@ -22,4 +22,12 @@ function machine-hash {
 nixos-rebuild switch --flake .#$(machine-hash)
 ```
 
+# Setup Notes
+
+## SSD Partitioning
+
+`fdisk -c -u /dev/x`
+
+https://www.thomas-krenn.com/de/wiki/Partition_Alignment
+
 [man-machine-id]: https://man7.org/linux/man-pages/man5/machine-id.5.html
