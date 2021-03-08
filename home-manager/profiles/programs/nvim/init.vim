@@ -86,8 +86,8 @@ map <leader>tt :tabedit %<cr>
 :match ExtraWhitespace /\s\+$\| \+\ze\t/
 
 set backup
-set backupdir=~/tmp,.,/tmp,~/
-set directory=~/tmp,.,/tmp,~/
+" set backupdir=~/tmp,.,/tmp,~/
+" set directory=~/tmp,.,/tmp,~/
 set writebackup
 
 set colorcolumn=50,70,80,120
