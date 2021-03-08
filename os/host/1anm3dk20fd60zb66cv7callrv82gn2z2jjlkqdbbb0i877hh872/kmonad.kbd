@@ -20,18 +20,18 @@
   ecs (tap-hold-next 150 esc C-lsft)
 
   ;; Modifiers on home row (left hand)
-  ah (tap-hold-next 200 a lctl)
-  sh (tap-hold-next 200 s lmet)
-  dh (tap-hold-next 200 d lalt)
+  ah (tap-hold-next 250 a lctl)
+  sh (tap-hold-next 250 s lmet)
+  dh (tap-hold-next 250 d lalt)
 
   ;; Modifiers on home row (right hand)
-  kh (tap-hold-next 200 k ralt)
-  lh (tap-hold-next 200 l rmet)
-  ;h (tap-hold-next 200 ; rctl)
+  kh (tap-hold-next 250 k ralt)
+  lh (tap-hold-next 250 l rmet)
+  ;h (tap-hold-next 250 ; rctl)
 
   ;; Space Cadet Shift
-  cdl (tap-hold-next 150 \( lsft)
-  cdr (tap-hold-next 150 \) rsft)
+  cdl (tap-hold-next 250 \( lsft)
+  cdr (tap-hold-next 250 \) rsft)
 
   jt (layer-toggle symbol)
   jh (tap-hold 250 j @jt)
