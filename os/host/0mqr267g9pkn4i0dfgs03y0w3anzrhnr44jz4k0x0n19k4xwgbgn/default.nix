@@ -76,7 +76,10 @@ in {
     flatpak.enable = true;
     fwupd.enable = true;
     #journald.extraConfig = "ReadKMsg=no";
-    openssh.enable = true;
+    openssh = {
+      enable = true;
+      forwardX11 = true;
+    };
     pcscd.enable = true;
     printing.enable = true;
     tailscale.enable = true;
