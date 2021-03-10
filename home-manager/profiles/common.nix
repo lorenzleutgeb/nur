@@ -7,9 +7,16 @@ with builtins;
   # Let Home Manager install and manage itself.
   programs = { home-manager.enable = true; };
 
-  xdg = {
+  xdg = let
+    # TODO: Get UID programmatically.
+    runtimeDir = "/var/run/user/1000";
+  in {
     enable = true;
+    mime.enable = true;
     mimeApps.enable = true;
+    userDirs.enable = true;
+
+    cacheHome = "/.cache";
   };
 
   manual.html.enable = true;
