@@ -125,6 +125,7 @@ in {
       "audio"
       "disk"
       "docker"
+      "libvirtd"
       "plugdev"
       "networkmanager"
       "vboxusers"
@@ -169,6 +170,10 @@ in {
     };
     # Waiting for https://github.com/NixOS/nixpkgs/pull/101493
     virtualbox.host.enable = true;
+    libvirtd = {
+      enable = true;
+      qemuPackage = pkgs.qemu_kvm;
+    };
   };
 
   nix = {

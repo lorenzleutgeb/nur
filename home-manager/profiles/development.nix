@@ -12,6 +12,7 @@ with builtins;
     ./programs/gh.nix
     ./programs/git
     ./programs/nvim
+    ./programs/libvirt
     ./programs/password-store.nix
     ./programs/ripgrep.nix
     ./programs/ssh.nix
