@@ -86,7 +86,7 @@ map <leader>tt :tabedit %<cr>
 :match ExtraWhitespace /\s\+$\| \+\ze\t/
 
 set backup
-" set backupdir=~/tmp,.,/tmp,~/
+set backupdir=$XDG_DATA_HOME/nvim/backup
 " set directory=~/tmp,.,/tmp,~/
 set writebackup
 
