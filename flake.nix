@@ -28,7 +28,8 @@
         config.allowUnfree = true;
         #config.allowBroken = true;
       };
-    in {
+      makeDiskImage = (import "${nixpkgs}/nixos/lib/make-disk-image.nix");
+    in rec {
       /* nixosConfigurations."1anm3dk20fd60zb66cv7callrv82gn2z2jjlkqdbbb0i877hh872" = nixpkgs.lib.nixosSystem {
            inherit system;
            modules = [
@@ -41,20 +42,28 @@
       overlay = self.overlays.pkgs;
       overlays = {
         pkgs = import ./pkg;
-      } // self.lib.importDirToAttrs ./overlay;
+      } // self.util.importDirToAttrs ./overlay;
 
       packages.${system} = {
         inherit (pkgs) kmonad-bin talon-bin;
         inherit (pkgs.nodePackages) firebase-tools turtle-validator;
+
+        nc =  makeDiskImage {
+    inherit pkgs;
+    inherit (pkgs) lib;
+    diskSize = "auto"; #240 * 1000 * 1000 * 1000; # 240GB
+    format = "qcow2";
+    config = nixosConfigurations.nc.config;
+  };
       };
 
-      nixosModules = self.lib.importDirToAttrs ./os/module;
+      nixosModules = self.util.importDirToAttrs ./os/module;
 
       nixosConfigurations =
-        pkgs.lib.mapAttrs (id: _: self.lib.nixosSystemFor id { })
+        pkgs.lib.mapAttrs (id: _: self.util.nixosSystemFor id { })
         (builtins.readDir ./os/host);
 
-      lib = rec {
+      util = rec {
         kebabCaseToCamelCase =
           replaceStrings (map (s: "-${s}") lib.lowerChars) lib.upperChars;
 
