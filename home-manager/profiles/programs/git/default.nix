@@ -164,8 +164,20 @@
       ghq = { root = "~/src"; };
 
       url = {
-        "ssh://git@github.com/lorenzleutgeb" = {
-          insteadOf = "https://github.com/lorenzleutgeb";
+        "ssh://git@github.com/" = {
+          pushInsteadOf = "https://github.com/";
+        };
+        "ssh://git@github.com/" = {
+          insteadof = "gh:";
+        };
+        "ssh://git@github.com/lorenz.leutgeb/" = {
+          insteadof = "gh:ll/";
+        };
+        "ssh://git@git.sclable.com/" = {
+          insteadof = "scl:";
+        };
+        "ssh://git@git.sclable.com/lorenz.leutgeb/" = {
+          insteadof = "scl:ll/";
         };
       };
     };
