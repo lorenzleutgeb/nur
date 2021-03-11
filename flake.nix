@@ -14,9 +14,15 @@
       url = "github:NixOS/nixos-hardware";
       flake = false;
     };
+
+    simple-nixos-mailserver = {
+      url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = inputs@{ self, nixpkgs, home-manager, ... }:
+  outputs =
+    inputs@{ self, nixpkgs, home-manager, simple-nixos-mailserver, ... }:
     with builtins;
     with nixpkgs;
 
@@ -45,16 +51,16 @@
       } // self.util.importDirToAttrs ./overlay;
 
       packages.${system} = {
-        inherit (pkgs) kmonad-bin talon-bin;
+        inherit (pkgs) kmonad-bin;
         inherit (pkgs.nodePackages) firebase-tools turtle-validator;
 
-        nc =  makeDiskImage {
-    inherit pkgs;
-    inherit (pkgs) lib;
-    diskSize = "auto"; #240 * 1000 * 1000 * 1000; # 240GB
-    format = "qcow2";
-    config = nixosConfigurations.nc.config;
-  };
+        nc = makeDiskImage {
+          inherit pkgs;
+          inherit (pkgs) lib;
+          diskSize = "auto"; # 240 * 1000 * 1000 * 1000; # 240GB
+          format = "qcow2";
+          config = nixosConfigurations.nc.config;
+        };
       };
 
       nixosModules = self.util.importDirToAttrs ./os/module;
@@ -118,6 +124,7 @@
           in [
             nixpkgs.nixosModules.notDetected
             home-manager.nixosModules.home-manager
+            simple-nixos-mailserver.nixosModule
             home
             common
             local
