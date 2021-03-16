@@ -3,13 +3,15 @@
 with builtins;
 
 let
-  name = "Lorenz Leutgeb";
-  username = "lorenz";
   domain = "leutgeb.xyz";
-  dom = domain;
   subdomain = name: name + "." + domain;
-  email = "${username}@${domain}";
+  localMail = localPart: "${localPart}@${domain}";
   dnsProvider = "cloudflare";
+  me = {
+    name = "Lorenz Leutgeb";
+    username = "lorenz";
+    email = localMail me.username;
+  };
 in {
   imports = [
     "${modulesPath}/profiles/qemu-guest.nix"
@@ -96,12 +98,16 @@ in {
     domains = [ "leutgeb.xyz" ];
 
     loginAccounts = {
-      "lorenz@leutgeb.xyz" = {
+      ${me.email} = {
         hashedPassword =
           "$6$rJZSLnQH1hInB93$lfi4c2zxQbSJV7H9T9lrjOj6WIDhSEqP5FyjMinEE44j81E1l57hF6Epyxb02EbcWqDT9eYbyo4dBTAwewBgQ/";
         aliases =
-          [ "root@leutgeb.xyz" "webmaster@leutgeb.xyz" "l@leutgeb.xyz" ];
+          [ (localMail "root") (localMail "webmaster") (localMail "l") ];
         catchAll = [ "leutgeb.xyz" ];
+      };
+      ${localMail "daniela"} = {
+        hashedPassword =
+          "$6$C.yOR4Lf$eadC5gBRv0gb6F/X29GkwIsGioWHWSM/ztlJo4FA4bh4i6aCHMz4.Rm2ABKTS/zThIYcSz1TOj/iK5ohHJLUX/";
       };
     };
 
@@ -117,6 +123,27 @@ in {
     # whether to scan inbound emails for viruses (note that this requires at least
     # 1 Gb RAM for the server. Without virus scanning 256 MB RAM should be plenty)
     virusScanning = false;
+
+    hierarchySeparator = "/";
+
+    useFsLayout = true;
+
+    messageSizeLimit = 64 * 1024 * 1024; # 64MiBy ought to be enough...
+
+    forwards = let
+      anna = "a.leutgeb@hotmail.com";
+      daniela = "leutgeb1963@gmail.com";
+      ralph = "ralph.leutgeb@gmx.at";
+    in {
+      ${localMail "a"} = anna;
+      ${localMail "anna"} = anna;
+      ${localMail "d"} = daniela;
+      ${localMail "daniela"} = daniela;
+      ${localMail "dany"} = daniela;
+      ${localMail "r"} = ralph;
+      ${localMail "ralf"} = ralph;
+      ${localMail "ralph"} = ralph;
+    };
   };
 
   services = {
@@ -147,7 +174,7 @@ in {
     nginx = {
       enable = true;
       virtualHosts = {
-        "${dom}" = {
+        "${domain}" = {
           serverAliases = [
             (subdomain "www")
             (subdomain "mta-sts")
@@ -158,11 +185,11 @@ in {
           useACMEHost = "${domain}";
           locations."/" = { root = "/var/www"; };
         };
-        "${subdomain username}" = {
+        "${subdomain me.username}" = {
           onlySSL = true;
           enableACME = false;
           useACMEHost = "${domain}-wildcard";
-          locations."/" = { root = "/home/lorenz/htdocs"; };
+          locations."/" = { root = "/var/www/${subdomain me.username}"; };
         };
       };
     };
@@ -308,11 +335,11 @@ in {
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.${username} = {
+  users.users.${me.username} = {
     isNormalUser = true;
     createHome = true;
-    home = "/home/${username}";
-    description = name;
+    home = "/home/${me.username}";
+    description = me.name;
     extraGroups = [ "disk" "docker" "wheel" ];
     uid = 1000;
     shell = pkgs.zsh;
@@ -322,7 +349,7 @@ in {
   users.mutableUsers = false;
   users.users."nginx".extraGroups = [ "acme" ];
   users.users."postfix".extraGroups = [ "acme" ];
-  home-manager.users.${username} = import ./home-manager;
+  home-manager.users.${me.username} = import ./home-manager;
 
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
@@ -333,16 +360,21 @@ in {
   security = {
     sudo.wheelNeedsPassword = false;
     acme = {
-      inherit email;
+      inherit (me) email;
       acceptTerms = true;
-      certs = let credentialsFile = "/home/lorenz/.config/lego/cloudflare";
-      in {
-        "${domain}" = { inherit email dnsProvider credentialsFile; };
-        "${domain}-wildcard" = {
-          inherit email dnsProvider credentialsFile;
-          domain = subdomain "*";
+      certs =
+        let credentialsFile = "/home/${me.username}/.config/lego/cloudflare";
+        in {
+          "${domain}" = {
+            inherit (me) email;
+            inherit dnsProvider credentialsFile;
+          };
+          "${domain}-wildcard" = {
+            inherit (me) email;
+            inherit dnsProvider credentialsFile;
+            domain = subdomain "*";
+          };
         };
-      };
     };
   };
 
