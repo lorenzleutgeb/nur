@@ -66,6 +66,7 @@ in {
       nixFlakes
       utillinux
       which
+      tpm2-tools
     ];
     sessionVariables.LIBVA_DRIVER_NAME = "iHD";
   };
@@ -152,6 +153,10 @@ in {
       services = { "swaylock" = { }; };
     };
     rtkit.enable = true;
+    tpm2 = {
+      enable = true;
+      abrmd.enable = true;
+    };
   };
 
   # If adding a font here does not work, try running
