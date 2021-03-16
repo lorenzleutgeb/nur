@@ -112,7 +112,7 @@ in {
         };
       };
 
-      output = { "*" = { "background" = "~/desert.jpg fill"; }; };
+      output = { "*" = { "background" = "~/Pictures/nix-color.png fill"; }; };
 
       # Idea for workspaces:
       #   1 ?

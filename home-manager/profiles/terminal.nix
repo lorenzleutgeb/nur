@@ -76,6 +76,7 @@ with builtins;
     pdfgrep
     pinta
     poppler_utils
+    psmisc
     python38Full
     python38Packages.pyacoustid
     rclone
