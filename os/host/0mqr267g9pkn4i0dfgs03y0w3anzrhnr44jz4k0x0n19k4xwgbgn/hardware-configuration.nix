@@ -1,54 +1,63 @@
 { config, lib, pkgs, ... }:
 
 {
-  # TODO: Try booting without default modules.
-  #boot.initrd.includeDefaultModules = false;
-  boot.initrd.availableKernelModules = [
-    "xhci_pci"
-    "ahci"
-    "ehci_pci"
-    "nvme"
-    "usbhid"
-    "usb_storage"
-    "sd_mod"
-    "sr_mod"
-  ];
-  boot.kernelPackages = pkgs.linuxPackages_5_10;
-  boot.kernelModules = [
-    "kvm-intel" # https://wiki.archlinux.org/index.php/KVM@
-    "v4l2loopback"
-  ];
-  boot.extraModulePackages = with config.boot.kernelPackages; [ v4l2loopback ];
+  boot = {
+    initrd = {
+      # TODO: Try booting without default modules.
+      #includeDefaultModules = false;
+      availableKernelModules = [
+        "xhci_pci"
+        "ahci"
+        "ehci_pci"
+        "nvme"
+        "usbhid"
+        "usb_storage"
+        "sd_mod"
+        "sr_mod"
+      ];
+      luks.devices."root".device =
+        "/dev/disk/by-uuid/75533fca-c17b-4b54-b67d-e24053b1dbe2";
+    };
+    kernelModules = [
+      "kvm-intel" # https://wiki.archlinux.org/index.php/KVM@
+      "v4l2loopback"
 
-  # Add two v4l devices "v4l-0" and "v4l-1" that map to /dev/video1{0,1}.
-  boot.extraModprobeConfig = ''
-    options v4l2loopback exclusive_caps=1 video_nr=10,11 card_label=v4l-0,v4l-1
-  '';
+      "vfio"
+      "vfio_iommu_type1"
+      "vfio_pci"
+      "vfio_virqfd"
+    ];
+    kernelPackages = pkgs.linuxPackages_5_10;
+    kernelParams = [ "intel_iommu=on" ];
 
-  fileSystems."/" = {
-    device = "/dev/disk/by-uuid/af3f86f8-5ca5-404e-800f-cbb4e72b953b";
-    fsType = "btrfs";
-    options = [ "subvol=root" ];
+    extraModulePackages = with config.boot.kernelPackages; [ v4l2loopback ];
+
+    # Add two v4l devices "v4l-0" and "v4l-1" that map to /dev/video1{0,1}.
+    extraModprobeConfig = ''
+      options v4l2loopback exclusive_caps=1 video_nr=10,11 card_label=v4l-0,v4l-1
+    '';
   };
 
-  boot.initrd.luks.devices."root".device =
-    "/dev/disk/by-uuid/75533fca-c17b-4b54-b67d-e24053b1dbe2";
-
-  fileSystems."/nix" = {
-    device = "/dev/disk/by-uuid/af3f86f8-5ca5-404e-800f-cbb4e72b953b";
-    fsType = "btrfs";
-    options = [ "subvol=nix" ];
-  };
-
-  fileSystems."/home" = {
-    device = "/dev/disk/by-uuid/af3f86f8-5ca5-404e-800f-cbb4e72b953b";
-    fsType = "btrfs";
-    options = [ "subvol=home" ];
-  };
-
-  fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/BC6E-4BA0";
-    fsType = "vfat";
+  fileSystems = {
+    "/" = {
+      device = "/dev/disk/by-uuid/af3f86f8-5ca5-404e-800f-cbb4e72b953b";
+      fsType = "btrfs";
+      options = [ "subvol=root" ];
+    };
+    "/boot" = {
+      device = "/dev/disk/by-uuid/BC6E-4BA0";
+      fsType = "vfat";
+    };
+    "/home" = {
+      device = "/dev/disk/by-uuid/af3f86f8-5ca5-404e-800f-cbb4e72b953b";
+      fsType = "btrfs";
+      options = [ "subvol=home" ];
+    };
+    "/nix" = {
+      device = "/dev/disk/by-uuid/af3f86f8-5ca5-404e-800f-cbb4e72b953b";
+      fsType = "btrfs";
+      options = [ "subvol=nix" ];
+    };
   };
 
   /* No swap for now, will fix later.
@@ -98,6 +107,23 @@
         #libvdpau
         #libvdpau-va-gl
       ];
+    };
+  };
+
+  virtualisation.kvmgt = {
+    enable = false;
+    device = "0000:00:02.0";
+    vgpus = {
+      "i915-GVTg_V5_4" = {
+        # Memory: 64MB to 384MB
+        # Resolution: up to 1024x768
+        uuid = [ ];
+      };
+      "i915-GVTg_V5_8" = {
+        # Memory: 128MB to 512MB
+        # Resolution: up to 1920x1200
+        uuid = [ "22f62990-85c9-11eb-8dcd-0242ac130003" ];
+      };
     };
   };
 }
