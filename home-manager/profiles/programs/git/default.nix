@@ -39,6 +39,7 @@
         "! git config --get-regexp ^alias\\. | sed -e s/^alias\\.// -e s/\\ /\\ =\\ /";
       a = "add";
       b = "branch";
+      bl = "git for-each-ref --format=\"%(align:24,left)%(committername)%(end) %(committerdate:format:%F) %(objectname:short) %(refname:lstrip=3)\" --sort=committerdate --sort=committername refs/remotes/origin";
       ap = "add --patch";
       c = "commit";
       ca = "commit --amend";
@@ -139,6 +140,10 @@
          	clean = "gpg --encrypt --recipient EBB1C984 -o- %f | git-lfs clean -- %f"
          	smudge = "git-lfs smudge -- %f | gpg --decrypt --output %f"
       */
+
+      init = {
+        defaultBranch = "main";
+      };
 
       merge = {
         ff = "false";
