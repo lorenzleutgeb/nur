@@ -108,6 +108,14 @@ in {
 
         # Tobii 4C
         SUBSYSTEM=="usb", ATTRS{idVendor}=="2104", ATTRS{idProduct}=="0118", GROUP="plugdev", MODE="0666", TAG+="uaccess"
+
+        # TODO: Find out why this does not work and re-enable.
+        # Prevent Logitech G500 Laser Mouse from waking up the system
+        # This is very fragile, since the physical port that the mouse is plugged into is hardcoded.
+        # https://wiki.archlinux.org/index.php/udev#Waking_from_suspend_with_USB_device
+        #SUBSYSTEMS=="usb", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="c068", SYMLINK+="logitech_g500"
+        #ACTION=="add", SUBSYSTEM=="usb", DRIVERS=="usb", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="c068", ATTR{driver/2-13.3.2/power/wakeup}="disabled"
+        #ACTION=="add", SUBSYSTEM=="usb", DRIVERS=="usb", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="c068", RUN+="/bin/sh -c 'echo $env{DEVPATH} >> /home/lorenz/log'"
       '';
     };
 
