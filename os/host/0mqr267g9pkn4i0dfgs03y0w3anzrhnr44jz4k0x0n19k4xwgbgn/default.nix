@@ -72,6 +72,8 @@ in {
     sessionVariables.LIBVA_DRIVER_NAME = "iHD";
   };
 
+  sound.enable = true;
+
   services = {
     blueman.enable = false;
     cron.enable = true;
@@ -94,6 +96,7 @@ in {
       };
       pulse.enable = true;
       jack.enable = true;
+      media-session.enable = true;
     };
 
     udev = {

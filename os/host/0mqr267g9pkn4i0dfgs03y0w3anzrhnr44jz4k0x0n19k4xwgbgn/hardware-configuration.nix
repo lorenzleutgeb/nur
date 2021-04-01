@@ -94,7 +94,6 @@
     v4l-utils
   ];
 
-  sound.enable = true;
   hardware = {
     opengl = {
       # NOTE: Couldn't get VDPAU via VAAPI to work. Probably don't need it.
