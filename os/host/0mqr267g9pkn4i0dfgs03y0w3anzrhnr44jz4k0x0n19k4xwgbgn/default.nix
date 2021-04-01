@@ -202,5 +202,13 @@ in {
       gtkUsePortal = true;
     };
   };
+
+  fonts.fontconfig = {
+    allowBitmaps = false;
+    defaultFonts = {
+      sansSerif = [ "Fira Sans" "DejaVu Sans" ];
+      monospace = [ "Fira Mono" "DejaVu Sans Mono" ];
+    };
+  };
 }
 
