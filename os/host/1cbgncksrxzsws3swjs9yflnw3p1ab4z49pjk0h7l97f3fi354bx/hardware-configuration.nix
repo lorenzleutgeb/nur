@@ -3,42 +3,38 @@
 {
   # TODO: Try booting without default modules.
   #boot.initrd.includeDefaultModules = false;
-  boot.initrd.availableKernelModules = [
-    "xhci_pci"
-    "ahci"
-    "usbhid"
-    "usb_storage"
-    "sd_mod"
-  ];
+  boot.initrd.availableKernelModules =
+    [ "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelPackages = with pkgs; linuxPackages_5_10;
   boot.kernelModules = [ "kvm-intel" "wl" ];
   boot.extraModulePackages = [ boot.kernelPackages.broadcom_sta ];
 
-  fileSystems."/" =
-    { device = "/dev/disk/by-uuid/bf7d978b-0989-40a7-a93e-991b55626ebb";
-      fsType = "btrfs";
-      options = [ "subvol=root" ];
-    };
+  fileSystems."/" = {
+    device = "/dev/disk/by-uuid/bf7d978b-0989-40a7-a93e-991b55626ebb";
+    fsType = "btrfs";
+    options = [ "subvol=root" ];
+  };
 
-  boot.initrd.luks.devices."root".device = "/dev/disk/by-uuid/9bb6dfda-bdbf-416f-b99c-d23694cd9651";
+  boot.initrd.luks.devices."root".device =
+    "/dev/disk/by-uuid/9bb6dfda-bdbf-416f-b99c-d23694cd9651";
 
-  fileSystems."/nix" =
-    { device = "/dev/disk/by-uuid/bf7d978b-0989-40a7-a93e-991b55626ebb";
-      fsType = "btrfs";
-      options = [ "subvol=nix" ];
-    };
+  fileSystems."/nix" = {
+    device = "/dev/disk/by-uuid/bf7d978b-0989-40a7-a93e-991b55626ebb";
+    fsType = "btrfs";
+    options = [ "subvol=nix" ];
+  };
 
-  fileSystems."/home" =
-    { device = "/dev/disk/by-uuid/bf7d978b-0989-40a7-a93e-991b55626ebb";
-      fsType = "btrfs";
-      options = [ "subvol=home" ];
-    };
+  fileSystems."/home" = {
+    device = "/dev/disk/by-uuid/bf7d978b-0989-40a7-a93e-991b55626ebb";
+    fsType = "btrfs";
+    options = [ "subvol=home" ];
+  };
 
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/3A1A-7D62";
-      fsType = "vfat";
-    };
+  fileSystems."/boot" = {
+    device = "/dev/disk/by-uuid/3A1A-7D62";
+    fsType = "vfat";
+  };
 
   swapDevices = [ ];
 

@@ -6,7 +6,9 @@ let
   name = "Lorenz Leutgeb";
   username = "lorenz";
 in {
-  imports = [ ./hardware-configuration.nix ];
+  enable4k = true;
+
+  imports = [ ./hardware-configuration.nix ./mkcert.nix ];
 
   # Use the systemd-boot EFI boot loader.
   boot = {
@@ -27,21 +29,27 @@ in {
   networking = {
     # Configuration of DHCP per-interface was moved to hardware-configuration.nix
     useDHCP = false;
-    networkmanager.enable = true;
+    networkmanager = {
+      enable = true;
+      dns = "dnsmasq";
+    };
+    resolvconf.useLocalResolver = true;
     hostName = "0mqr267g9pkn4i0dfgs03y0w3anzrhnr44jz4k0x0n19k4xwgbgn";
 
     # Hacks in /etc/hosts for projects.
-    extraHosts = ''
-      172.16.239.10 postgres.x.sclable.io
-      172.16.239.11 keycloak.x.sclable.io
-      172.16.239.12 wildfly.x.sclable.io
-      172.16.239.13 gateway.x.sclable.io
-      172.16.239.15 zookeeper.x.sclable.io
-      172.16.239.16 kafka.x.sclable.io
-      172.16.239.17 schemaregistry.x.sclable.io
-      172.16.239.18 nuxeo.x.sclable.io
-      172.16.239.19 openldap.x.sclable.io
-      172.16.239.20 phpldapadmin.x.sclable.io
+    extraHosts = let kube = "10.98.91.27";
+    in ''
+      ${kube} postgres.x.sclable.io
+      ${kube} keycloak.x.sclable.io
+      ${kube} keycloak.x.sclable.io
+      ${kube} wildfly.x.sclable.io
+      ${kube} gateway.x.sclable.io
+      ${kube} zookeeper.x.sclable.io
+      ${kube} kafka.x.sclable.io
+      ${kube} schemaregistry.x.sclable.io
+      ${kube} nuxeo.x.sclable.io
+      ${kube} openldap.x.sclable.io
+      ${kube} phpldapadmin.x.sclable.io
     '';
   };
 
@@ -55,6 +63,8 @@ in {
   # Set your time zone.
   time.timeZone = "Europe/Vienna";
   i18n.defaultLocale = "en_US.UTF-8";
+
+  programs = { sedutil.enable = true; };
 
   environment = {
     systemPackages = with pkgs; [
@@ -118,7 +128,7 @@ in {
         # https://wiki.archlinux.org/index.php/udev#Waking_from_suspend_with_USB_device
         #SUBSYSTEMS=="usb", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="c068", SYMLINK+="logitech_g500"
         #ACTION=="add", SUBSYSTEM=="usb", DRIVERS=="usb", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="c068", ATTR{driver/2-13.3.2/power/wakeup}="disabled"
-        #ACTION=="add", SUBSYSTEM=="usb", DRIVERS=="usb", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="c068", RUN+="/bin/sh -c 'echo $env{DEVPATH} >> /home/lorenz/log'"
+        #ACTION=="add", SUBSYSTEM=="usb", DRIVERS=="usb", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="c068", RUN+="${pkgs.bash}/bin/bash -c 'echo $env{DEVPATH} >> /home/lorenz/log'"
       '';
     };
 

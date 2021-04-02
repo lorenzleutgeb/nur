@@ -28,7 +28,7 @@ in {
     useDHCP = false;
     networkmanager.enable = true;
     hostName = "1anm3dk20fd60zb66cv7callrv82gn2z2jjlkqdbbb0i877hh872";
-    nameservers = [ "100.100.100.100" "1.1.1.1" "1.0.0.1" "8.8.8.8" ];
+    nameservers = [ "1.1.1.1" "1.0.0.1" ];
 
     # Hacks in /etc/hosts for projects.
     extraHosts = ''

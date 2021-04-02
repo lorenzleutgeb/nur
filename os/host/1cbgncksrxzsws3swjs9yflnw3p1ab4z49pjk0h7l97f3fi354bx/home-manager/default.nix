@@ -3,8 +3,6 @@
 with builtins;
 
 {
-  imports = [
-    ../../../../home-manager/profiles/development.nix
-  ];
+  imports = [ ../../../../home-manager/profiles/development.nix ];
 
 }

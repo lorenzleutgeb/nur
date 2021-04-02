@@ -1,6 +1,8 @@
 { config, lib, pkgs, ... }:
 
 {
+  imports = [ ../../hardware/intel-graphics.nix ];
+
   boot = {
     initrd = {
       # TODO: Try booting without default modules.
@@ -87,27 +89,7 @@
   # high-resolution display
   hardware.video.hidpi.enable = lib.mkDefault true;
 
-  environment.systemPackages = with pkgs; [
-    intel-gpu-tools
-    libva-utils
-    #vdpauinfo
-    v4l-utils
-  ];
-
-  hardware = {
-    opengl = {
-      # NOTE: Couldn't get VDPAU via VAAPI to work. Probably don't need it.
-      enable = true;
-      driSupport = true;
-      driSupport32Bit = true;
-      extraPackages = with pkgs; [
-        intel-media-driver
-        vaapiIntel
-        #libvdpau
-        #libvdpau-va-gl
-      ];
-    };
-  };
+  environment.systemPackages = with pkgs; [ v4l-utils ];
 
   virtualisation.kvmgt = {
     enable = false;
