@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }:
+{ lib, pkgs, super, ... }:
 
 with builtins;
 
@@ -10,7 +10,14 @@ with builtins;
     ./programs/browserpass.nix
     ./programs/firefox
     ./programs/password-store.nix
+    ./programs/spotify
+    ./programs/signal-desktop
+    ./programs/thunderbird
+    ./services/ulauncher.nix
   ];
+
+  home.sessionVariables =
+    if super.enable4k then { GDK_DPI_SCALE = "1.5"; } else { };
 
   home.packages = with pkgs; [
     baobab
@@ -51,19 +58,15 @@ with builtins;
     qnotero
     ranger
     rclone-browser
-    rofi
     shellcheck
     shfmt
-    signal-desktop
     siji
     skaffold
-    spotify
     stow
     stylish-haskell
     skypeforlinux
     sshfs-fuse
     # talon-bin # Custom package
-    thunderbird
     teamviewer
     transmission-gtk
     universal-ctags
@@ -73,7 +76,7 @@ with builtins;
     #texlive.combined.scheme-full
     tailscale
     tmux
-    #tor-browser-bundle-bin
+    tor-browser-bundle-bin
     travis
     tree
     vlc

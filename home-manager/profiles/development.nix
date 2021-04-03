@@ -11,6 +11,7 @@ with builtins;
     ./programs/fzf.nix
     ./programs/gh.nix
     ./programs/git
+    ./programs/mkcert.nix
     ./programs/nvim
     ./programs/libvirt
     ./programs/password-store.nix
@@ -39,6 +40,7 @@ with builtins;
     #ctags
     curlFull
     direnv
+    dive
     #dockerTools
     docker-compose
     elfutils
@@ -95,6 +97,7 @@ with builtins;
     pantheon.elementary-photos
     pavucontrol
     pdfgrep
+    perl532Packages.GitAutofixup
     pinta
     poppler_utils
     python38Full
@@ -105,18 +108,14 @@ with builtins;
     python38Packages.requests
     python38Packages.yamllint
     ranger
-    rofi
     shellcheck
     shfmt
-    signal-desktop
     siji
     skaffold
-    spotify
     stow
     stylish-haskell
     skypeforlinux
     sshfs-fuse
-    thunderbird
     teamviewer
     transmission-gtk
     universal-ctags

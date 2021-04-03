@@ -1,5 +1,10 @@
 @namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
 
+
+* {
+	font-family: 'Fira Sans', sans-serif !important;
+}
+
 /* to hide the native tabs */
 #TabsToolbar {
     visibility: collapse;

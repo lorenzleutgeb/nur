@@ -64,6 +64,7 @@
       };
 
       nixosModules = self.util.importDirToAttrs ./os/module;
+      homeManagerModules = self.util.importDirToAttrs ./home-manager/module;
 
       nixosConfigurations =
         pkgs.lib.mapAttrs (id: _: self.util.nixosSystemFor id { })
@@ -101,7 +102,7 @@
                     modules = [
                       # emacs-config.homeManagerModules.emacsConfig
                       # "${vsliveshare}/modules/vsliveshare/home.nix"
-                    ]; # ++ (attrValues self.homeManagerModules);
+                    ] ++ (builtins.attrValues self.homeManagerModules);
                   });
               };
 

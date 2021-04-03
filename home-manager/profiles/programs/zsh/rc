@@ -106,8 +106,6 @@ jenv() {
     command jenv "$command" "$@";;
   esac
 }
-else
-	echo "zshrc: Clone jenv to \'$JENV_DIR\' to enable it."
 fi
 
 ZPLUG_HOME=~/src/github.com/zplug/zplug
@@ -136,7 +134,11 @@ HISTDB_TABULATE_CMD=(sed -e $'s/\x1f/\t/g')
 #autoload -Uz add-zsh-hook
 #add-zsh-hook precmd histdb-update-outcome
 
-zplug install
+if ! zplug check
+then
+	zplug install
+fi
+
 zplug load #--verbose
 
 if [ -f src/github.com/larkery/zsh-histdb/sqlite-history.zsh ]

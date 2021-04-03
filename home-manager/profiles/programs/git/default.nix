@@ -39,7 +39,8 @@
         "! git config --get-regexp ^alias\\. | sed -e s/^alias\\.// -e s/\\ /\\ =\\ /";
       a = "add";
       b = "branch";
-      bl = "git for-each-ref --format=\"%(align:24,left)%(committername)%(end) %(committerdate:format:%F) %(objectname:short) %(refname:lstrip=3)\" --sort=committerdate --sort=committername refs/remotes/origin";
+      bl = ''
+        git for-each-ref --format="%(align:24,left)%(committername)%(end) %(committerdate:format:%F) %(objectname:short) %(refname:lstrip=3)" --sort=committerdate --sort=committername refs/remotes/origin'';
       ap = "add --patch";
       c = "commit";
       ca = "commit --amend";
@@ -57,6 +58,8 @@
       i = "!gi() { curl -L -s https://www.gitignore.io/api/$@ ;}; gi";
       il = ''! git config --local core.excludesfile "$HOME/gitignore"'';
       m = "merge";
+      mm =
+        "! git branch -m master main && git fetch origin && git branch -u origin/main main && git remote set-head origin -a";
       mff = "merge --ff-only";
       mr =
         "! sh -c 'git fetch $1 merge-requests/$2/head:mr-$1-$2 && git checkout mr-$1-$2' -";
@@ -141,9 +144,7 @@
          	smudge = "git-lfs smudge -- %f | gpg --decrypt --output %f"
       */
 
-      init = {
-        defaultBranch = "main";
-      };
+      init = { defaultBranch = "main"; };
 
       merge = {
         ff = "false";
@@ -169,18 +170,10 @@
       ghq = { root = "~/src"; };
 
       url = {
-        "ssh://git@github.com/" = {
-          pushInsteadOf = "https://github.com/";
-        };
-        "ssh://git@github.com/" = {
-          insteadof = "gh:";
-        };
-        "ssh://git@github.com/lorenz.leutgeb/" = {
-          insteadof = "gh:ll/";
-        };
-        "ssh://git@git.sclable.com/" = {
-          insteadof = "scl:";
-        };
+        "ssh://git@github.com/" = { pushInsteadOf = "https://github.com/"; };
+        "ssh://git@github.com/" = { insteadof = "gh:"; };
+        "ssh://git@github.com/lorenz.leutgeb/" = { insteadof = "gh:ll/"; };
+        "ssh://git@git.sclable.com/" = { insteadof = "scl:"; };
         "ssh://git@git.sclable.com/lorenz.leutgeb/" = {
           insteadof = "scl:ll/";
         };

@@ -1,8 +1,10 @@
-{ super, ... }:
+{ pkgs, super, ... }:
 
 with builtins;
 
 {
+  home.packages = [ pkgs.nssTools ];
+
   programs.firefox = {
     enable = true;
 

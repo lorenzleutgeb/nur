@@ -39,10 +39,8 @@ with builtins;
     beets
     cachix
     chromaprint
-    #ctags
     curlFull
     direnv
-    #dockerTools
     dnsutils
     docker-compose
     entr
@@ -54,11 +52,11 @@ with builtins;
     fontconfig
     font-awesome
     fuse
-    #fwupdmgr
     fzf
     glibcLocales
     graphviz
     htop
+    iotop
     kbfs
     mtr
     neovim-remote
@@ -69,6 +67,8 @@ with builtins;
     nixpkgs-review
     nix-index
     noto-fonts
+    nvme-cli
+    openssl
     pandoc
     pantheon.elementary-files
     pantheon.elementary-photos
@@ -79,6 +79,7 @@ with builtins;
     psmisc
     python38Full
     python38Packages.pyacoustid
+    pwgen
     rclone
     rmapi
     siji
@@ -86,13 +87,12 @@ with builtins;
     sshfs-fuse
     universal-ctags
     usbutils
-    #nodejs
-    #texlive.combined.scheme-full
     tailscale
     travis
     tree
     unzip
-    xdotool
+    vmtouch
+    xxHash
     yubikey-personalization
     yubioath-desktop
     zip

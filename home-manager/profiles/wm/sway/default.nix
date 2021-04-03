@@ -64,7 +64,7 @@ in {
       inherit modifier;
       fonts = [ "pango:${theme.font.mono} 10" ];
       terminal = "alacritty";
-      menu = "rofi -show combi";
+      menu = "ulauncher";
 
       keybindings = pkgs.lib.mkOptionDefault {
         "${modifier}+Shift+0" = "move container to workspace 10";
@@ -216,6 +216,7 @@ in {
     wdisplays # List available displays
     wl-clipboard # Access clipboard
     waypipe # Network transparency
+    ulauncher # Applications launcher
   ];
 
   home.sessionVariables = {
@@ -255,7 +256,7 @@ in {
       layer = "top";
       position = "top";
       height = 10;
-      output = [ "HDMI-A-1" ];
+      output = [ "DP-1" ];
       modules-left = [ "sway/workspaces" "sway/mode" ];
       modules-center = [ "sway/window" ];
       modules-right = [ "cpu" "memory" "network" "temperature" "clock" "tray" ];
