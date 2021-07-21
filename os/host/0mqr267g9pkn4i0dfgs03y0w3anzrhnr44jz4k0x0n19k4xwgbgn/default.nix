@@ -51,6 +51,13 @@ in {
       ${kube} openldap.x.sclable.io
       ${kube} phpldapadmin.x.sclable.io
     '';
+
+
+    firewall = {
+      allowedTCPPorts = [
+        8443 # unifi
+      ];
+    };
   };
 
   # Select internationalisation properties.
@@ -64,7 +71,7 @@ in {
   time.timeZone = "Europe/Vienna";
   i18n.defaultLocale = "en_US.UTF-8";
 
-  programs = { sedutil.enable = true; };
+  programs = { sedutil.enable = true; adb.enable = true; };
 
   environment = {
     systemPackages = with pkgs; [
@@ -129,7 +136,15 @@ in {
         #SUBSYSTEMS=="usb", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="c068", SYMLINK+="logitech_g500"
         #ACTION=="add", SUBSYSTEM=="usb", DRIVERS=="usb", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="c068", ATTR{driver/2-13.3.2/power/wakeup}="disabled"
         #ACTION=="add", SUBSYSTEM=="usb", DRIVERS=="usb", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="c068", RUN+="${pkgs.bash}/bin/bash -c 'echo $env{DEVPATH} >> /home/lorenz/log'"
+
+        # BeagleBone Black gets /dev/ttybbb
+        KERNEL=="ttyACM[0-9]*", SUBSYSTEM=="tty", ATTRS{idVendor}=="1d6b", ATTRS{idProduct}=="0104", SYMLINK="ttybbb"
       '';
+    };
+
+    unifi = {
+      enable = true;
+      unifiPackage = pkgs.unifi;
     };
 
     logind.extraConfig = ''

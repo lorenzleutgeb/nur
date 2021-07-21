@@ -71,12 +71,12 @@ with builtins;
     transmission-gtk
     universal-ctags
     obs-studio
-    obs-v4l2sink
+    #obs-v4l2sink
     #nodejs
     #texlive.combined.scheme-full
     tailscale
     tmux
-    tor-browser-bundle-bin
+    #tor-browser-bundle-bin
     travis
     tree
     vlc

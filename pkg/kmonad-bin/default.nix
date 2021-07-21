@@ -1,4 +1,4 @@
-{ stdenv, fetchurl }:
+{ lib, stdenv, fetchurl }:
 
 let
   version = "0.4.1";
@@ -22,7 +22,7 @@ in stdenv.mkDerivation rec {
     install -Dm755 $src "$out"/bin/kmonad
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "An advanced keyboard manager";
     homepage = "https://github.com/david-janssen/kmonad";
     platforms = attrNames srcs;

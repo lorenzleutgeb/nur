@@ -28,6 +28,7 @@ with builtins;
 
   home.packages = with pkgs; [
     alacritty
+    #android-studio
     aspell
     aspellDicts.en
     aspellDicts.en-computers
@@ -43,11 +44,14 @@ with builtins;
     dive
     #dockerTools
     docker-compose
+    dos2unix
+    droidcam
     elfutils
     entr
     envsubst
     evince
     exa
+    exiftool
     exercism
     fd
     file
@@ -72,15 +76,18 @@ with builtins;
     hlint
     htop
     insomnia
+    iperf
     isabelle
     jdk11
     jq
     kbfs
     kdiff3
     kubectl
+    liberation_ttf
     #haskellPackages.miv
     material-icons
     meld
+    mupdf
     ncat
     ncdu
     neovim-remote
@@ -90,6 +97,7 @@ with builtins;
     nixops
     nixpkgs-review
     nix-index
+    nvme-cli
     noto-fonts
     obsidian
     pandoc
@@ -100,6 +108,7 @@ with builtins;
     perl532Packages.GitAutofixup
     pinta
     poppler_utils
+    pwgen
     python38Full
     python38Packages.beautifulsoup4
     python38Packages.mwclient
@@ -125,15 +134,20 @@ with builtins;
     nodePackages.firebase-tools # Custom package
     nodePackages.turtle-validator # Custom package
     obs-studio
-    obs-v4l2sink
+    #obs-v4l2sink
     #nodejs
     #texlive.combined.scheme-full
+    roboto
+    roboto-mono
+    roboto-slab
     tailscale
+    tio
     tmux
     travis
     tree
     vlc
     wally-cli
+    wget
     wrangler
     xclip
     xdotool

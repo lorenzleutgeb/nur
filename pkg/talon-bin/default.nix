@@ -1,7 +1,7 @@
 { stdenv, requireFile, makeWrapper, bzip2, dbus, fetchurl, fontconfig, freetype
 , glib, libGL, libxkbcommon_7, python3, sqlite, udev, xorg, xz, zlib
-, libpulseaudio, qt5, alacritty }:
-with stdenv.lib;
+, libpulseaudio, qt5, alacritty, lib }:
+with lib;
 stdenv.mkDerivation rec {
   pname = "talon";
   version = "89-0.0.8.29-1072-g53955e9";
