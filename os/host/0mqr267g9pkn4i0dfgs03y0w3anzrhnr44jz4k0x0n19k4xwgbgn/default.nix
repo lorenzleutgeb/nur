@@ -52,7 +52,6 @@ in {
       ${kube} phpldapadmin.x.sclable.io
     '';
 
-
     firewall = {
       allowedTCPPorts = [
         8443 # unifi
@@ -71,7 +70,10 @@ in {
   time.timeZone = "Europe/Vienna";
   i18n.defaultLocale = "en_US.UTF-8";
 
-  programs = { sedutil.enable = true; adb.enable = true; };
+  programs = {
+    sedutil.enable = true;
+    adb.enable = true;
+  };
 
   environment = {
     systemPackages = with pkgs; [
