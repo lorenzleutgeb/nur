@@ -63,7 +63,6 @@ with builtins;
     niv
     nixFlakes
     nixfmt
-    nixops
     nixpkgs-review
     nix-index
     noto-fonts
@@ -77,8 +76,8 @@ with builtins;
     pinta
     poppler_utils
     psmisc
-    python38Full
-    python38Packages.pyacoustid
+    #python38Full
+    #python38Packages.pyacoustid
     pwgen
     rclone
     rmapi

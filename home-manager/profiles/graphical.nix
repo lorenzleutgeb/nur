@@ -31,6 +31,7 @@ with builtins;
     font-awesome
     #fwupdmgr
     glibcLocales
+    networkmanagerapplet
     googleearth
     google-chrome
     google-cloud-sdk
@@ -42,7 +43,6 @@ with builtins;
     niv
     nixFlakes
     nixfmt
-    nixops
     nixpkgs-review
     nix-index
     noto-fonts

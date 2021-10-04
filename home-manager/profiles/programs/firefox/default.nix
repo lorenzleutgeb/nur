@@ -28,7 +28,12 @@ with builtins;
 
         # Performance (decoding and rendering)
         # https://wiki.archlinux.org/index.php/Firefox#Hardware_video_acceleration
+
+        /*
+        This crashed Firefox 90.
         "gfx.webrender.compositor.force-enabled" = true;
+        */
+
         "gfx.webrender.enabled" = true;
         "gfx.webrender.all" = true;
         "layers.acceleration.force-enabled" = true;

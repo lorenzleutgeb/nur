@@ -94,7 +94,7 @@ with builtins;
     niv
     nixFlakes
     nixfmt
-    nixops
+    #nixops
     nixpkgs-review
     nix-index
     nvme-cli
@@ -109,6 +109,7 @@ with builtins;
     pinta
     poppler_utils
     pwgen
+    /*
     python38Full
     python38Packages.beautifulsoup4
     python38Packages.mwclient
@@ -116,6 +117,7 @@ with builtins;
     python38Packages.setuptools
     python38Packages.requests
     python38Packages.yamllint
+    */
     ranger
     shellcheck
     shfmt
@@ -130,9 +132,9 @@ with builtins;
     universal-ctags
     monero
     monero-gui
-    nodePackages.node2nix
-    nodePackages.firebase-tools # Custom package
-    nodePackages.turtle-validator # Custom package
+    #nodePackages.node2nix
+    #nodePackages.firebase-tools # Custom package
+    #nodePackages.turtle-validator # Custom package
     obs-studio
     #obs-v4l2sink
     #nodejs
