@@ -41,8 +41,6 @@ with builtins;
     insomnia
     neovim-remote
     niv
-    nixFlakes
-    nixfmt
     nixpkgs-review
     nix-index
     noto-fonts
@@ -55,6 +53,7 @@ with builtins;
     pinta
     picard
     poppler_utils
+    portfolio
     qnotero
     ranger
     rclone-browser

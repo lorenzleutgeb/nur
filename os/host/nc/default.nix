@@ -147,7 +147,8 @@ in {
     };
   };
 
-  extraVirtualAliases.${localMail "theres-und-lorenz"} = [ "theressophie@gmail.com" ${me.email} ];
+  extraVirtualAliases.${localMail "theres-und-lorenz"} =
+    [ "theressophie@gmail.com" "${me.email}" ];
 
   services = {
     tailscale.enable = true;

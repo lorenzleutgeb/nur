@@ -61,8 +61,6 @@ with builtins;
     mtr
     neovim-remote
     niv
-    nixFlakes
-    nixfmt
     nixpkgs-review
     nix-index
     noto-fonts
@@ -82,6 +80,7 @@ with builtins;
     rclone
     rmapi
     siji
+    signal-cli
     skaffold
     sshfs-fuse
     universal-ctags

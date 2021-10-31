@@ -8,20 +8,21 @@ let
 in {
   enable4k = true;
 
-  imports = [ ./hardware-configuration.nix ./mkcert.nix ];
+  imports = [ ./mkcert.nix ./wsl.nix ];
 
   # Use the systemd-boot EFI boot loader.
-  boot = {
-    tmpOnTmpfs = true;
-    loader = {
-      systemd-boot = {
-        enable = true;
-        configurationLimit = 16;
-      };
-      efi.canTouchEfiVariables = true;
-    };
-    kernel.sysctl = { "fs.inotify.max_user_watches" = 65536; };
-  };
+  /* boot = {
+       tmpOnTmpfs = true;
+       loader = {
+         systemd-boot = {
+           enable = true;
+           configurationLimit = 16;
+         };
+         efi.canTouchEfiVariables = true;
+       };
+       kernel.sysctl = { "fs.inotify.max_user_watches" = 65536; };
+     };
+  */
 
   # The global useDHCP flag is deprecated, therefore explicitly set to false here.
   # Per-interface useDHCP will be mandatory in the future, so this generated config
@@ -31,32 +32,10 @@ in {
     useDHCP = false;
     networkmanager = {
       enable = true;
-      dns = "dnsmasq";
+      #dns = "dnsmasq";
     };
     resolvconf.useLocalResolver = true;
-    hostName = "0mqr267g9pkn4i0dfgs03y0w3anzrhnr44jz4k0x0n19k4xwgbgn";
-
-    # Hacks in /etc/hosts for projects.
-    extraHosts = let kube = "10.98.91.27";
-    in ''
-      ${kube} postgres.x.sclable.io
-      ${kube} keycloak.x.sclable.io
-      ${kube} keycloak.x.sclable.io
-      ${kube} wildfly.x.sclable.io
-      ${kube} gateway.x.sclable.io
-      ${kube} zookeeper.x.sclable.io
-      ${kube} kafka.x.sclable.io
-      ${kube} schemaregistry.x.sclable.io
-      ${kube} nuxeo.x.sclable.io
-      ${kube} openldap.x.sclable.io
-      ${kube} phpldapadmin.x.sclable.io
-    '';
-
-    firewall = {
-      allowedTCPPorts = [
-        8443 # unifi
-      ];
-    };
+    hostName = "wsl";
   };
 
   # Select internationalisation properties.
@@ -72,21 +51,21 @@ in {
 
   programs = {
     sedutil.enable = true;
-    adb.enable = true;
+    #adb.enable = true;
   };
 
   environment = {
     systemPackages = with pkgs; [
       coreutils-full
-      dmidecode
-      exfat
-      exfat-utils
+      #dmidecode
+      #exfat
+      #exfat-utils
       lshw
       lsof
+      nixFlakes
       nfs-utils
       utillinux
       which
-      tpm2-tools
     ];
     sessionVariables.LIBVA_DRIVER_NAME = "iHD";
   };
@@ -99,13 +78,9 @@ in {
     flatpak.enable = true;
     fwupd.enable = true;
     #journald.extraConfig = "ReadKMsg=no";
-    openssh = {
-      enable = true;
-      forwardX11 = true;
-    };
     pcscd.enable = true;
-    printing.enable = true;
-    tailscale.enable = true;
+    #printing.enable = true;
+    #tailscale.enable = true;
 
     pipewire = {
       enable = true;
@@ -127,38 +102,14 @@ in {
         ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="04[789A]?", ENV{MTP_NO_PROBE}="1"
         SUBSYSTEMS=="usb", ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="04[789ABCD]?", MODE:="0666"
         KERNEL=="ttyACM*", ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="04[789B]?", MODE:="0666"
-
-        # Tobii 4C
-        SUBSYSTEM=="usb", ATTRS{idVendor}=="2104", ATTRS{idProduct}=="0118", GROUP="plugdev", MODE="0666", TAG+="uaccess"
-
-        # TODO: Find out why this does not work and re-enable.
-        # Prevent Logitech G500 Laser Mouse from waking up the system
-        # This is very fragile, since the physical port that the mouse is plugged into is hardcoded.
-        # https://wiki.archlinux.org/index.php/udev#Waking_from_suspend_with_USB_device
-        #SUBSYSTEMS=="usb", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="c068", SYMLINK+="logitech_g500"
-        #ACTION=="add", SUBSYSTEM=="usb", DRIVERS=="usb", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="c068", ATTR{driver/2-13.3.2/power/wakeup}="disabled"
-        #ACTION=="add", SUBSYSTEM=="usb", DRIVERS=="usb", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="c068", RUN+="${pkgs.bash}/bin/bash -c 'echo $env{DEVPATH} >> /home/lorenz/log'"
-
-        # BeagleBone Black gets /dev/ttybbb
-        KERNEL=="ttyACM[0-9]*", SUBSYSTEM=="tty", ATTRS{idVendor}=="1d6b", ATTRS{idProduct}=="0104", SYMLINK="ttybbb"
       '';
     };
 
-    unifi = {
-      enable = true;
-      unifiPackage = pkgs.unifi;
-    };
-
-    logind.extraConfig = ''
-      RuntimeDirectorySize=24G
-    '';
+    /* logind.extraConfig = ''
+         RuntimeDirectorySize=24G
+       '';
+    */
   };
-
-  users.users.unifi.group = "unifi";
-  users.groups.unifi = { };
-
-  users.users.tss.group = "tss";
-  users.groups.tss = { };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.${username} = {
@@ -171,7 +122,6 @@ in {
       "audio"
       "disk"
       "docker"
-      "libvirtd"
       "plugdev"
       "networkmanager"
       "vboxusers"
@@ -219,11 +169,7 @@ in {
       enableOnBoot = true;
     };
     # Waiting for https://github.com/NixOS/nixpkgs/pull/101493
-    virtualbox.host.enable = true;
-    libvirtd = {
-      enable = true;
-      qemu.package = pkgs.qemu_kvm;
-    };
+    virtualbox.host.enable = false;
   };
 
   nix = {
@@ -253,6 +199,17 @@ in {
       sansSerif = [ "Fira Sans" "DejaVu Sans" ];
       monospace = [ "Fira Mono" "DejaVu Sans Mono" ];
     };
+  };
+
+  # X11 Forwarding
+  services.openssh = {
+    enable = true;
+    forwardX11 = true;
+  };
+
+  programs.ssh = {
+    forwardX11 = true;
+    setXAuthLocation = true;
   };
 }
 

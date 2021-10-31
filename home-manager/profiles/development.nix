@@ -38,6 +38,7 @@ with builtins;
     binutils
     brightnessctl
     cachix
+    cmake
     #ctags
     curlFull
     direnv
@@ -64,6 +65,7 @@ with builtins;
     #fwupdmgr
     fzf
     gcc
+    gdb
     ghcid
     glibcLocales
     gnumake
@@ -84,6 +86,7 @@ with builtins;
     kdiff3
     kubectl
     liberation_ttf
+    llvm
     #haskellPackages.miv
     material-icons
     meld
@@ -92,7 +95,6 @@ with builtins;
     ncdu
     neovim-remote
     niv
-    nixFlakes
     nixfmt
     #nixops
     nixpkgs-review
@@ -109,7 +111,6 @@ with builtins;
     pinta
     poppler_utils
     pwgen
-    /*
     python38Full
     python38Packages.beautifulsoup4
     python38Packages.mwclient
@@ -117,7 +118,6 @@ with builtins;
     python38Packages.setuptools
     python38Packages.requests
     python38Packages.yamllint
-    */
     ranger
     shellcheck
     shfmt

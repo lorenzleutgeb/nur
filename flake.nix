@@ -19,10 +19,15 @@
       url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    vscode-server = {
+      url = "github:msteen/nixos-vscode-server";
+      flake = false;
+    };
   };
 
-  outputs =
-    inputs@{ self, nixpkgs, home-manager, simple-nixos-mailserver, ... }:
+  outputs = inputs@{ self, nixpkgs, home-manager, simple-nixos-mailserver
+    , vscode-server, ... }:
     with builtins;
     with nixpkgs;
 
@@ -52,7 +57,7 @@
 
       packages.${system} = {
         inherit (pkgs) kmonad-bin;
-        inherit (pkgs.nodePackages) firebase-tools turtle-validator;
+        inherit (pkgs.nodePackages) firebase-tools; # turtle-validator;
 
         nc = makeDiskImage {
           inherit pkgs;
@@ -61,14 +66,28 @@
           format = "qcow2";
           config = nixosConfigurations.nc.config;
         };
+
+        mpi = nixosConfigurations.mpi.config.system.build.virtualBoxOVA;
+
+        wsl = nixosConfigurations.wsl.config.system.build.tarball;
+
+        live = nixosConfigurations.live.config.system.build.isoImage;
       };
 
       nixosModules = self.util.importDirToAttrs ./os/module;
       homeManagerModules = self.util.importDirToAttrs ./home-manager/module;
 
       nixosConfigurations =
-        pkgs.lib.mapAttrs (id: _: self.util.nixosSystemFor id { })
-        (builtins.readDir ./os/host);
+        ((pkgs.lib.mapAttrs (id: _: self.util.nixosSystemFor id { })
+          (builtins.readDir ./os/host))) // {
+            live = lib.nixosSystem {
+              inherit system;
+              modules = [
+                "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-graphical-gnome.nix"
+                { boot.kernelPackages = pkgs.linuxPackages_5_14; }
+              ];
+            };
+          };
 
       util = rec {
         kebabCaseToCamelCase =
@@ -82,7 +101,7 @@
 
         nixosSystemFor = let
           specialArgs = {
-            inherit (self.inputs) hardware;
+            inherit (self.inputs) hardware nixpkgs;
             # profiles = self.lib.importDirToAttrs ./nixos/profiles;
           };
         in id:
@@ -102,6 +121,7 @@
                     modules = [
                       # emacs-config.homeManagerModules.emacsConfig
                       # "${vsliveshare}/modules/vsliveshare/home.nix"
+                      "${vscode-server}/modules/vscode-server/home.nix"
                     ] ++ (builtins.attrValues self.homeManagerModules);
                   });
               };

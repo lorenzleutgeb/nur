@@ -62,7 +62,10 @@ in {
     wrapperFeatures.gtk = true;
     config = {
       inherit modifier;
-      fonts = [ "pango:${theme.font.mono} 10" ];
+      fonts = {
+        names = [ "${theme.font.mono}" ];
+        size = 10.0;
+      };
       terminal = "alacritty";
       menu = "ulauncher";
 
