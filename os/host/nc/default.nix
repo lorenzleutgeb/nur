@@ -4,8 +4,10 @@ with builtins;
 
 let
   domain = "leutgeb.xyz";
+  alternateDomain = "falsum.org";
   subdomain = name: name + "." + domain;
   localMail = localPart: "${localPart}@${domain}";
+  alternateLocalMail = localPart: "${localPart}@${alternateDomain}";
   dnsProvider = "cloudflare";
   me = {
     name = "Lorenz Leutgeb";
@@ -103,7 +105,7 @@ in {
         hashedPassword =
           "$6$rJZSLnQH1hInB93$lfi4c2zxQbSJV7H9T9lrjOj6WIDhSEqP5FyjMinEE44j81E1l57hF6Epyxb02EbcWqDT9eYbyo4dBTAwewBgQ/";
         aliases =
-          [ (localMail "root") (localMail "webmaster") (localMail "l") ];
+          [ (localMail "root") (localMail "webmaster") (localMail "l") (alternateLocalMail "lorenz") (alternateLocalMail "lorenz.leutgeb") (alternateLocalMail "l") ];
         catchAll = [ "leutgeb.xyz" ];
       };
       ${localMail "daniela"} = {
@@ -158,7 +160,7 @@ in {
       # Only listen on Tailscale interface.
       # If Tailscale goes down, recover access via netcup vServer Control Panel.
       listenAddresses = [{
-        addr = "100.99.240.62";
+        addr = "100.104.93.77";
         port = 22;
       }];
     };
@@ -189,6 +191,19 @@ in {
           useACMEHost = "${domain}";
           locations."/" = { root = "/var/www"; };
         };
+
+        "${alternateDomain}" = {
+          serverAliases = [
+            (subdomain "www")
+            #(subdomain "mta-sts")
+            #(subdomain "autoconfig")
+          ];
+          onlySSL = true;
+          enableACME = false;
+          useACMEHost = "${alternateDomain}";
+          locations."/" = { root = "/var/www/falsum.org"; };
+        };
+
         "${subdomain me.username}" = {
           onlySSL = true;
           enableACME = false;
@@ -377,6 +392,15 @@ in {
             inherit (me) email;
             inherit dnsProvider credentialsFile;
             domain = subdomain "*";
+          };
+          "${alternateDomain}" = {
+            inherit (me) email;
+            inherit dnsProvider credentialsFile;
+          };
+          "${alternateDomain}-wildcard" = {
+            inherit (me) email;
+            inherit dnsProvider credentialsFile;
+            domain = "*.${alternateDomain}";
           };
         };
     };
