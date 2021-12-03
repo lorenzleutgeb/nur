@@ -40,6 +40,7 @@ with builtins;
     cachix
     chromaprint
     curlFull
+    dasel
     direnv
     dnsutils
     docker-compose
@@ -55,6 +56,8 @@ with builtins;
     fzf
     glibcLocales
     graphviz
+    hledger
+    hledger-web
     htop
     iotop
     kbfs
