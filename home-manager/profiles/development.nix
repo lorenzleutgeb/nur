@@ -142,6 +142,7 @@ with builtins;
     roboto
     roboto-mono
     roboto-slab
+    swiPrologWithGui
     tailscale
     tio
     tmux
