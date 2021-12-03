@@ -91,4 +91,8 @@ with builtins;
     zoom-us
     zotero
   ];
+
+  xdg.mimeApps.defaultApplications = {
+    "application/pdf" = [ "org.pwmt.zathura.desktop" ];
+  };
 }
