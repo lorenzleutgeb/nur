@@ -1,7 +1,7 @@
 { pkgs, ... }:
 
 {
-  home.packages = with pkgs; [ jetbrains.idea-ultimate jetbrains.goland ];
+  home.packages = with pkgs.jetbrains; [ idea-ultimate clion ];
 
   xdg.configFile."ideavim/ideavimrc".text = ''
     source ~/.config/nvim/simple.vim
