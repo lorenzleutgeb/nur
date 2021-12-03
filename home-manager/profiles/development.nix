@@ -80,7 +80,7 @@ with builtins;
     htop
     insomnia
     iperf
-    jdk11
+    jdk17
     jq
     kbfs
     kdiff3
