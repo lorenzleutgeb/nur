@@ -87,7 +87,10 @@
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "performance";
   # high-resolution display
-  hardware.video.hidpi.enable = lib.mkDefault true;
+  hardware = {
+    video.hidpi.enable = lib.mkDefault true;
+    opengl.enable = true;
+  };
 
   environment.systemPackages = with pkgs; [ v4l-utils ];
 
