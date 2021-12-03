@@ -103,6 +103,7 @@ in {
       enable = true;
       forwardX11 = true;
     };
+    ipfs.enable = true;
     pcscd.enable = true;
     printing.enable = true;
     tailscale.enable = true;
