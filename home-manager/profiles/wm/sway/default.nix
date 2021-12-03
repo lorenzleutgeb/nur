@@ -205,6 +205,7 @@ in {
 
       exec systemctl --user import-environment
       exec systemctl --user start graphical-session.target
+      #exec wayvnc
     '';
   };
 
@@ -220,6 +221,7 @@ in {
     wl-clipboard # Access clipboard
     waypipe # Network transparency
     ulauncher # Applications launcher
+    wayvnc # VNC Server
   ];
 
   home.sessionVariables = {
@@ -300,4 +302,9 @@ in {
 
   home.file."bin/lockscreen".source = ./lockscreen.sh;
   home.file."bin/screenshot".source = ./screenshot.sh;
+
+  xdg.configFile."wayvnc/config".text = ''
+    address=100.85.40.10
+    enable_auth=false
+  '';
 }
