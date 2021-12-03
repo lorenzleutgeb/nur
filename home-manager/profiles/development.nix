@@ -11,6 +11,7 @@ with builtins;
     ./programs/fzf.nix
     ./programs/gh.nix
     ./programs/git
+    ./programs/isabelle.nix
     ./programs/mkcert.nix
     ./programs/nvim
     ./programs/libvirt
@@ -79,7 +80,6 @@ with builtins;
     htop
     insomnia
     iperf
-    isabelle
     jdk11
     jq
     kbfs
