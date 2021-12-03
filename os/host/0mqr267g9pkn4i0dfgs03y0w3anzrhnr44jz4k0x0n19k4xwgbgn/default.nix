@@ -55,6 +55,7 @@ in {
     firewall = {
       allowedTCPPorts = [
         8443 # unifi
+        5900 # wayvnc
       ];
     };
   };
