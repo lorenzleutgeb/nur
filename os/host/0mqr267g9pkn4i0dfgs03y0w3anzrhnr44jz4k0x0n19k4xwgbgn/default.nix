@@ -230,8 +230,17 @@ in {
 
   nix = {
     package = pkgs.nixFlakes;
-    extraOptions = "experimental-features = nix-command flakes";
-    maxJobs = lib.mkDefault 8;
+    extraOptions = ''
+      allow-import-from-derivation = true
+      experimental-features = nix-command flakes
+      keep-outputs = true
+    '';
+    binaryCaches = [
+      "https://lean4.cachix.org/"
+    ];
+    binaryCachePublicKeys = [
+      "lean4.cachix.org-1:mawtxSxcaiWE24xCXXgh3qnvlTkyU7evRRnGeAhD4Wk="
+    ];
   };
   nixpkgs.config = {
     allowUnfree = true;
