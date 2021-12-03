@@ -17,8 +17,7 @@ with builtins;
       #lst = assert elem pkgs.exa config.home.packages; "exa --git --tree --long --time-s
       ducks = "du -cks * | sort -rn | head";
 
-      git = "hub";
-      g = "hub";
+      g = "git";
       d = "docker";
 
       machine-hash = "nix-hash --type sha256 --base32 --flat /etc/machine-id";

@@ -189,16 +189,6 @@ function cdf {
 }
 fi
 
-# If there's hub installed, alias it
-if which hub > /dev/null
-then
-	alias git=hub
-else
-	echo "zshrc: Install hub to replace git."
-fi
-alias g='git'
-alias home="git --git-dir=$HOME/.config/home/ --work-tree=$HOME"
-
 export PGPASSWORD="none"
 
 export GOPATH=$HOME

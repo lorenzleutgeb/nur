@@ -1,42 +1,22 @@
 { pkgs, ... }:
 
-{
+let sub = section: subsection: ''${section} "${subsection}"'';
+in {
   home.packages = with pkgs;
     with gitAndTools; [
       delta
       gh
       ghq
+      gitFull
       git-crypt
       git-imerge
       git-lfs
-      hub
       tig
     ];
-
-  # xdg.configFile."git/config".text = builtins.readFile ./config;
 
   programs.git = {
     enable = true;
     package = pkgs.gitAndTools.gitFull;
-
-    includes = [
-      {
-        condition = "gitdir:~/src/git.sclable.com/";
-        contents.user.email = "lorenz.leutgeb@sclable.com";
-      }
-      {
-        condition = "gitdir:~/src/github.molgen.mpg.de/";
-        contents.user.email = "lorenz@mpi-inf.mpg.de";
-      }
-      {
-        condition = "gitdir:~/src/gitlab.mpi-klsb.mpg.de/";
-        contents.user.email = "lorenz@mpi-inf.mpg.de";
-      }
-      {
-        condition = "gitdir:~/src/gitlab.mpi-sws.org/";
-        contents.user.email = "lorenz@mpi-inf.mpg.de";
-      }
-    ];
 
     lfs.enable = true;
     userName = "Lorenz Leutgeb";
@@ -141,23 +121,6 @@
         autoStash = "true";
       };
 
-      /* [merge "npm-merge-driver"]
-         	name = "Automatically merge npm lockfiles"
-         	driver = "npm-merge-driver merge %A %O %B %P"
-
-         [filter "media"]
-         	clean = git media clean %f
-         	smudge = git media smudge %f
-         	required = true
-         [filter "lfs"]
-         	clean = git-lfs clean -- %f
-         	smudge = git-lfs smudge -- %f
-         	required = true
-         [filter "gpg"]
-         	clean = "gpg --encrypt --recipient EBB1C984 -o- %f | git-lfs clean -- %f"
-         	smudge = "git-lfs smudge -- %f | gpg --decrypt --output %f"
-      */
-
       init = { defaultBranch = "main"; };
 
       merge = {
@@ -178,10 +141,46 @@
 
       delta = {
         theme = "Monokai Extended";
-        features = "line-numbers decorations";
+        features = "line-numbers decorations side-by-side";
+        navigate = true;
       };
 
       ghq = { root = "~/src"; };
+
+      sendemail = {
+        smtpEncryption = "tls";
+        smtpServerPort = 587;
+        annotate = true;
+      };
+
+      "${sub "sendemail" "de.mpg.mpi-inf"}" = {
+        smtpUser = "lorenz";
+        smtpServer = "mail.mpi-inf.mpg.de";
+      };
+
+      "${sub "merge" "npm-merge-driver"}" = {
+        name = "Automatically merge npm lockfiles";
+        driver = "npm-merge-driver merge %A %O %B %P";
+      };
+
+      "${sub "filter" "gpg"}" = {
+        clean =
+          "gpg --encrypt --recipient EBB1C984 -o- %f | git-lfs clean -- %f";
+        smudge = "git-lfs smudge -- %f | gpg --decrypt --output %f";
+      };
+
+      "${sub "lfs" "customtransfer.ipfs"}" = {
+        path =
+          "/home/lorenz/src/github.com/lorenzleutgeb/git-lfs-ipfs/transfer.sh";
+        concurrent = false;
+      };
+
+      "${sub "lfs" "extension.ipfs"}" = {
+        clean =
+          "/home/lorenz/src/github.com/lorenzleutgeb/git-lfs-ipfs/clean.sh %f";
+        smudge =
+          "/home/lorenz/src/github.com/lorenzleutgeb/git-lfs-ipfs/smudge.sh %f";
+      };
 
       url = {
         "ssh://git@github.com/" = { pushInsteadOf = "https://github.com/"; };
@@ -202,5 +201,40 @@
         };
       };
     };
+
+    includes = [
+      {
+        condition = "gitdir:~/src/git.sclable.com/";
+        contents.user.email = "lorenz.leutgeb@sclable.com";
+      }
+      {
+        condition = "gitdir:~/src/github.molgen.mpg.de/";
+        contents = {
+          user.email = "lorenz@mpi-inf.mpg.de";
+          sendemail.identity = "de.mpg.mpi-inf";
+        };
+      }
+      {
+        condition = "gitdir:~/src/gitlab.mpi-klsb.mpg.de/";
+        contents = {
+          user.email = "lorenz@mpi-inf.mpg.de";
+          sendemail.identity = "de.mpg.mpi-inf";
+        };
+      }
+      {
+        condition = "gitdir:~/src/gitlab.mpi-sws.org/";
+        contents = {
+          user.email = "lorenz@mpi-inf.mpg.de";
+          sendemail.identity = "de.mpg.mpi-inf";
+        };
+      }
+      {
+        condition = "gitdir:~/src/git.rg1.mpi-inf.mpg.de/";
+        contents = {
+          user.email = "lorenz@mpi-inf.mpg.de";
+          sendemail.identity = "de.mpg.mpi-inf";
+        };
+      }
+    ];
   };
 }
