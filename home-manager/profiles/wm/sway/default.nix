@@ -186,6 +186,8 @@ in {
       };
 
       bars = [ ];
+
+      input."1149:32792:Kensington_Expert_Wireless_TB_Mouse".pointer_accel = "0.7";
     };
     extraConfig = ''
       hide_edge_borders both
