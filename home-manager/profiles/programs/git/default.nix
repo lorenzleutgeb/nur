@@ -61,7 +61,7 @@ in {
       pf = "push --force-with-lease";
       pff = "push --force";
       pr =
-        "!f() { remote=\${2-origin} ; git fetch $remote refs/pull/$1/head:#$1 ; } ; f";
+        "!f() { remote=\${2:-origin} ; git fetch $remote refs/pull/$1/head:#$1 ; } ; f";
       ll =
         "log --graph --decorate --show-signature --date=iso8601-strict --use-mailmap --abbrev-commit";
       l =
@@ -71,7 +71,9 @@ in {
       ri = "rebase --interactive";
       rb =
         "!grb() { git rebase -i $(git merge-base HEAD \${@:-sandbox}) ;}; grb";
+
       rh = "reset --hard";
+      rs = "!grs() { git remote show \${1:-origin} | grep -vE \"\\stracked$\" ;}; grs";
       s = "status";
       who = "!gwho() { git log --pretty=%an $@ | sort | uniq ;}; gwho";
       tags = "tag -l";
