@@ -77,6 +77,7 @@ in {
       s = "status";
       who = "!gwho() { git log --pretty=%an $@ | sort | uniq ;}; gwho";
       tags = "tag -l";
+      suffix = "!gsuffix() { mv -v \${GIT_PREFIX}\${1} \${GIT_PREFIX}\${1}-$(git describe --abbrev=\${2:-4} --always --dirty) ;}; gsuffix";
     };
 
     extraConfig = {
