@@ -58,6 +58,10 @@ with builtins;
         "identity.fxaccounts.account.device.name" = super.networking.hostName;
 
         "intl.accept_languages" = "en,de,it,fr";
+
+        # CSS
+        # Note that backdrop-filter also requires gfx.webrender.all (above).
+        "layout.css.backdrop-filter.enabled" = true;
       };
 
       userChrome = readFile ./userChrome.css;
