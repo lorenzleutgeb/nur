@@ -1,0 +1,32 @@
+#! /usr/bin/env bash
+
+# Where to build
+REMOTE_HOST=${1}
+
+# How to build.
+COMMAND=${2:-make}
+
+# Some build ID.
+NOW=$(date +'%s')
+
+REMOTE_TARGET_TOPLEVEL="~/build/${NOW}"
+
+if [ "$(git rev-parse --is-inside-work-tree 2>/dev/null)" = "true" ]
+then
+	LOCAL_TARGET=$(git rev-parse --show-toplevel)
+	TARGET_PREFIX=$(git rev-parse --show-prefix)
+
+	echo $LOCAL_TARGET/ $REMOTE_HOST:$REMOTE_TARGET_TOPLEVEL @ $TARGET_PREFIX
+
+	git ls-files --full-name $LOCAL_TARGET | \
+	rsync --info=progress2 -az --files-from=- $LOCAL_TARGET/ $REMOTE_HOST:$REMOTE_TARGET_TOPLEVEL
+else
+	LOCAL_TARGET=$PWD
+	TARGET_PREFIX="."
+
+	echo $LOCAL_TARGET/ $REMOTE_HOST:$REMOTE_TARGET_TOPLEVEL
+
+	rsync --info=progress2 -az $LOCAL_TARGET/ $REMOTE_HOST:$REMOTE_TARGET_TOPLEVEL
+fi
+
+ssh $REMOTE_HOST "cd $REMOTE_TARGET_TOPLEVEL/$TARGET_PREFIX && $COMMAND"
