@@ -207,7 +207,6 @@ in {
 
       exec systemctl --user import-environment
       exec systemctl --user start graphical-session.target
-      #exec wayvnc
     '';
   };
 

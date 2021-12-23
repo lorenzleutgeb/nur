@@ -137,10 +137,11 @@ with builtins;
     obs-studio
     #obs-v4l2sink
     #nodejs
-    #texlive.combined.scheme-full
+    texlive.combined.scheme-full
     roboto
     roboto-mono
     roboto-slab
+    skopeo
     swiPrologWithGui
     tailscale
     tio
