@@ -1,0 +1,6 @@
+#! /usr/bin/env bash
+TMP=$(mktemp)
+fd --absolute-path --type file --glob --exact-depth=2 flake.nix ~/src/github.com/{lorenzleutgeb,alpha-asp} >> $TMP
+fd --absolute-path --type file --glob flake.nix ~/src/git{{lab.mpi-klsb,.rg1.mpi-inf}.mpg.de,.sclable.com} >> $TMP
+cat $TMP | sort
+rm $TMP

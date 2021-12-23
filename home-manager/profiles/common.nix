@@ -36,6 +36,7 @@ with builtins;
   fonts.fontconfig.enable = pkgs.lib.mkForce true;
 
   home.file."bin/ez-flash".source = ./scripts/ez-flash;
+  home.file."bin/flakes".source = ./scripts/flakes;
   home.file."bin/remote-build".source = ./scripts/remote-build;
   home.file."bin/gotty-tmux".source = ./scripts/gotty-tmux;
   home.file."bin/tunnel".source = ./scripts/tunnel;
