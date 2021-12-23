@@ -7,6 +7,7 @@ with builtins;
     ./common.nix
     ./docker.nix
     ./programs/bat
+    ./programs/direnv
     ./programs/fzf.nix
     ./programs/gh.nix
     ./programs/git
@@ -22,13 +23,6 @@ with builtins;
     ./services/keybase.nix
   ];
 
-  programs = {
-    direnv = {
-      enable = true;
-      nix-direnv.enable = true;
-    };
-  };
-
   home.packages = with pkgs; [
     aspell
     aspellDicts.en
@@ -41,7 +35,6 @@ with builtins;
     chromaprint
     curlFull
     dasel
-    direnv
     dnsutils
     docker-compose
     entr
@@ -65,7 +58,6 @@ with builtins;
     neovim-remote
     niv
     nixpkgs-review
-    nix-index
     noto-fonts
     nvme-cli
     openssl

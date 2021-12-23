@@ -42,7 +42,6 @@ with builtins;
     neovim-remote
     niv
     nixpkgs-review
-    nix-index
     noto-fonts
     obsidian
     pandoc

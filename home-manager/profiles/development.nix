@@ -42,7 +42,6 @@ with builtins;
     cmake
     #ctags
     curlFull
-    direnv
     dive
     #dockerTools
     docker-compose
