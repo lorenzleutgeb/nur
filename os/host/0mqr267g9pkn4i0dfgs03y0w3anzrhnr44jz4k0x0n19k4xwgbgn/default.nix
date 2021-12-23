@@ -1,4 +1,4 @@
-{ hardware, lib, pkgs, ... }:
+{ config, hardware, lib, pkgs, ... }:
 
 with builtins;
 
@@ -57,6 +57,9 @@ in {
         8443 # unifi
         5900 # wayvnc
       ];
+      allowedUDPPorts = [
+        9 # Debugging Wake-on-LAN
+      ];
     };
   };
 
@@ -88,6 +91,7 @@ in {
       utillinux
       which
       tpm2-tools
+      config.boot.kernelPackages.perf
     ];
     sessionVariables.LIBVA_DRIVER_NAME = "iHD";
   };
