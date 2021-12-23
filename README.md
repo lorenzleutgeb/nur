@@ -1,3 +1,5 @@
+# Nix User Repository of Lorenz Leutgeb
+
 This repo contains `*.nix` files for configuring machines and
 user homes, as well as some custom packages and overlays.
 
