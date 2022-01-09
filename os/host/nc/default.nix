@@ -18,7 +18,7 @@ in {
   imports = [
     "${modulesPath}/profiles/qemu-guest.nix"
     "${modulesPath}/virtualisation/qemu-guest-agent.nix"
-    ./jitsi.nix
+    #./jitsi.nix
   ];
 
   fileSystems."/" = {
