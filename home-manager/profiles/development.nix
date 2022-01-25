@@ -69,7 +69,6 @@ with builtins;
     ghcid
     glibcLocales
     gnumake
-    googleearth
     google-chrome
     google-cloud-sdk
     gource

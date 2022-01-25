@@ -32,7 +32,7 @@ with builtins;
     #fwupdmgr
     glibcLocales
     networkmanagerapplet
-    googleearth
+    #googleearth
     google-chrome
     google-cloud-sdk
     gource
