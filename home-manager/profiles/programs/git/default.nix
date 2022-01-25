@@ -73,11 +73,13 @@ in {
         "!grb() { git rebase -i $(git merge-base HEAD \${@:-sandbox}) ;}; grb";
 
       rh = "reset --hard";
-      rs = "!grs() { git remote show \${1:-origin} | grep -vE \"\\stracked$\" ;}; grs";
+      rs = ''
+        !grs() { git remote show ''${1:-origin} | grep -vE "\stracked$" ;}; grs'';
       s = "status";
       who = "!gwho() { git log --pretty=%an $@ | sort | uniq ;}; gwho";
       tags = "tag -l";
-      suffix = "!gsuffix() { mv -v \${GIT_PREFIX}\${1} \${GIT_PREFIX}\${1}-$(git describe --abbrev=\${2:-4} --always --dirty) ;}; gsuffix";
+      suffix =
+        "!gsuffix() { mv -v \${GIT_PREFIX}\${1} \${GIT_PREFIX}\${1}-$(git describe --abbrev=\${2:-4} --always --dirty) ;}; gsuffix";
     };
 
     extraConfig = {

@@ -104,8 +104,14 @@ in {
       ${me.email} = {
         hashedPassword =
           "$6$rJZSLnQH1hInB93$lfi4c2zxQbSJV7H9T9lrjOj6WIDhSEqP5FyjMinEE44j81E1l57hF6Epyxb02EbcWqDT9eYbyo4dBTAwewBgQ/";
-        aliases =
-          [ (localMail "root") (localMail "webmaster") (localMail "l") (alternateLocalMail "lorenz") (alternateLocalMail "lorenz.leutgeb") (alternateLocalMail "l") ];
+        aliases = [
+          (localMail "root")
+          (localMail "webmaster")
+          (localMail "l")
+          (alternateLocalMail "lorenz")
+          (alternateLocalMail "lorenz.leutgeb")
+          (alternateLocalMail "l")
+        ];
         catchAll = [ "leutgeb.xyz" ];
       };
       ${localMail "daniela"} = {
