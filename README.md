@@ -26,6 +26,27 @@ nixos-rebuild switch --flake .#$(machine-hash)
 
 # Setup Notes
 
+## Bluetooth
+
+See [NixOS Wiki][wiki-bt]. Gist is:
+
+```
+$ bluetoothctl
+power on
+agent on
+default-agent
+scan on
+pair $ADDR
+connect $ADDR
+```
+
+### Known Devices
+
+| Address             | Description |
+|---------------------|-------------|
+| `78:2B:64:CC:E4:40` | Headset     |
+| `CE:B5:52:D6:EA:8C` | Trackball   |
+
 ## SSD Partitioning
 
 `fdisk -c -u /dev/x`
@@ -33,3 +54,4 @@ nixos-rebuild switch --flake .#$(machine-hash)
 https://www.thomas-krenn.com/de/wiki/Partition_Alignment
 
 [man-machine-id]: https://man7.org/linux/man-pages/man5/machine-id.5.html
+[wiki-bt]: https://nixos.wiki/wiki/Bluetooth

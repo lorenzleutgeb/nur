@@ -90,6 +90,7 @@
   hardware = {
     video.hidpi.enable = lib.mkDefault true;
     opengl.enable = true;
+    bluetooth.enable = true;
   };
 
   environment.systemPackages = with pkgs; [ v4l-utils ];
