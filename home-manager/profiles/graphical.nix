@@ -13,6 +13,7 @@ with builtins;
     ./programs/spotify
     ./programs/signal-desktop
     ./programs/thunderbird
+    ./programs/zathura.nix
     ./services/ulauncher.nix
   ];
 
@@ -86,12 +87,7 @@ with builtins;
     yubikey-personalization-gui
     yubioath-desktop
     yq
-    zathura
     zoom-us
     zotero
   ];
-
-  xdg.mimeApps.defaultApplications = {
-    "application/pdf" = [ "org.pwmt.zathura.desktop" ];
-  };
 }

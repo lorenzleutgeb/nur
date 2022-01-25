@@ -157,7 +157,6 @@ with builtins;
     yubikey-personalization-gui
     yubioath-desktop
     yq
-    zathura
     zoom-us
   ];
 }
