@@ -36,29 +36,13 @@ in {
     resolvconf.useLocalResolver = true;
     hostName = "0mqr267g9pkn4i0dfgs03y0w3anzrhnr44jz4k0x0n19k4xwgbgn";
 
-    # Hacks in /etc/hosts for projects.
-    extraHosts = let kube = "10.98.91.27";
-    in ''
-      ${kube} postgres.x.sclable.io
-      ${kube} keycloak.x.sclable.io
-      ${kube} keycloak.x.sclable.io
-      ${kube} wildfly.x.sclable.io
-      ${kube} gateway.x.sclable.io
-      ${kube} zookeeper.x.sclable.io
-      ${kube} kafka.x.sclable.io
-      ${kube} schemaregistry.x.sclable.io
-      ${kube} nuxeo.x.sclable.io
-      ${kube} openldap.x.sclable.io
-      ${kube} phpldapadmin.x.sclable.io
-    '';
-
     firewall = {
       allowedTCPPorts = [
         8443 # unifi
         5900 # wayvnc
       ];
       allowedUDPPorts = [
-        9 # Debugging Wake-on-LAN
+        # 9 # Debugging Wake-on-LAN
       ];
     };
   };
@@ -97,6 +81,15 @@ in {
   };
 
   sound.enable = true;
+
+  environment.etc."NetworkManager/dnsmasq.d/cloudflare.conf".text = ''
+    server=1.1.1.1
+  '';
+
+  environment.etc."NetworkManager/dnsmasq.d/tailscale.conf".text = ''
+    server=/connected-dots.org.github.beta.tailscale.net/100.100.100.100
+    server=100.100.100.100@tailscale0
+  '';
 
   services = {
     blueman.enable = false;
@@ -239,12 +232,9 @@ in {
       experimental-features = nix-command flakes
       keep-outputs = true
     '';
-    binaryCaches = [
-      "https://lean4.cachix.org/"
-    ];
-    binaryCachePublicKeys = [
-      "lean4.cachix.org-1:mawtxSxcaiWE24xCXXgh3qnvlTkyU7evRRnGeAhD4Wk="
-    ];
+    binaryCaches = [ "https://lean4.cachix.org/" ];
+    binaryCachePublicKeys =
+      [ "lean4.cachix.org-1:mawtxSxcaiWE24xCXXgh3qnvlTkyU7evRRnGeAhD4Wk=" ];
   };
   nixpkgs.config = {
     allowUnfree = true;
