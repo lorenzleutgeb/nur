@@ -26,6 +26,34 @@ nixos-rebuild switch --flake .#$(machine-hash)
 
 # Setup Notes
 
+## WSL
+
+Use `wsl --import` to create the distro, then start it with `wsl --distribution`.
+
+Configure default user via [`/etc/wsl.conf`](https://docs.microsoft.com/en-us/windows/wsl/wsl-config#configuration-settings-for-wslconf):
+
+```
+[user]
+default = lorenz
+```
+
+Configure Nix via `~/.config/nix/nix.conf`:
+
+```
+sandbox = false
+use-sqlite-wal = false
+filter-syscalls = false
+experimental-features = nix-command flakes
+```
+
+Install Nix in single-user mode:
+
+```
+$ sh <(curl -L https://nixos.org/nix/install) --no-daemon
+```
+
+Install Home Manager, then import the configuration in this repository via `~/.config/nixpkgs/home.nix`
+
 ## Bluetooth
 
 See [NixOS Wiki][wiki-bt]. Gist is:
