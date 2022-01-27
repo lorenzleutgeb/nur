@@ -54,6 +54,14 @@ $ sh <(curl -L https://nixos.org/nix/install) --no-daemon
 
 Install Home Manager, then import the configuration in this repository via `~/.config/nixpkgs/home.nix`
 
+Create `/run/user/$UID`:
+
+```
+sudo mkdir /run/user/$UID
+sudo chown $UID:$GID /run/user/$UID
+sudo mount -t tmpfs -o size=4G,uid=$UID,gid=$GID /run/user/$UID
+```
+
 ## Bluetooth
 
 See [NixOS Wiki][wiki-bt]. Gist is:
