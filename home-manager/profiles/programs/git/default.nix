@@ -31,17 +31,13 @@ in {
     ignores = [ ".dir-locals.el" ".direnv/" ".envrc" ];
 
     aliases = {
-      month =
-        "! git log --no-merges --since='last month' --author=$USER --reverse --pretty=format:'%cd %s %d' --date=short";
-      yesterday =
-        "! git log --no-merges --since='yesterday' --author=$USER --reverse --pretty=format:'%cd %s %d' --date=short";
+      a = "add";
+      ap = "add --patch";
       alias =
         "! git config --get-regexp ^alias\\. | sed -e s/^alias\\.// -e s/\\ /\\ =\\ /";
-      a = "add";
       b = "branch";
       bl = ''
         git for-each-ref --format="%(align:24,left)%(committername)%(end) %(committerdate:format:%F) %(objectname:short) %(refname:lstrip=3)" --sort=committerdate --sort=committername refs/remotes/origin'';
-      ap = "add --patch";
       c = "commit";
       ca = "commit --amend";
       can = "commit --amend --no-edit";
@@ -57,10 +53,16 @@ in {
       f = "fetch";
       i = "!gi() { curl -L -s https://www.gitignore.io/api/$@ ;}; gi";
       il = ''! git config --local core.excludesfile "$HOME/gitignore"'';
+      ll =
+        "log --graph --decorate --show-signature --date=iso8601-strict --use-mailmap --abbrev-commit";
+      l =
+        "log --graph --pretty=format:'%Cred%h%Creset%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)%an%Creset' --abbrev-commit --date=relative";
       m = "merge";
+      mff = "merge --ff-only";
       mm =
         "! git branch -m master main && git fetch origin && git branch -u origin/main main && git remote set-head origin -a";
-      mff = "merge --ff-only";
+      month =
+        "! git log --no-merges --since='last month' --author=$USER --reverse --pretty=format:'%cd %s %d' --date=short";
       mr =
         "! sh -c 'git fetch $1 merge-requests/$2/head:mr-$1-$2 && git checkout mr-$1-$2' -";
       p = "push";
@@ -68,24 +70,21 @@ in {
       pff = "push --force";
       pr =
         "!f() { remote=\${2:-origin} ; git fetch $remote refs/pull/$1/head:#$1 ; } ; f";
-      ll =
-        "log --graph --decorate --show-signature --date=iso8601-strict --use-mailmap --abbrev-commit";
-      l =
-        "log --graph --pretty=format:'%Cred%h%Creset%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)%an%Creset' --abbrev-commit --date=relative";
       r = "rebase";
-      rc = "rebase --continue";
-      ri = "rebase --interactive";
       rb =
         "!grb() { git rebase -i $(git merge-base HEAD \${@:-sandbox}) ;}; grb";
-
+      rc = "rebase --continue";
       rh = "reset --hard";
+      ri = "rebase --interactive";
       rs = ''
         !grs() { git remote show ''${1:-origin} | grep -vE "\stracked$" ;}; grs'';
       s = "status";
-      who = "!gwho() { git log --pretty=%an $@ | sort | uniq ;}; gwho";
-      tags = "tag -l";
       suffix =
         "!gsuffix() { mv -v \${GIT_PREFIX}\${1} \${GIT_PREFIX}\${1}-$(git describe --abbrev=\${2:-4} --always --dirty) ;}; gsuffix";
+      tags = "tag -l";
+      who = "!gwho() { git log --pretty=%an $@ | sort | uniq ;}; gwho";
+      yesterday =
+        "! git log --no-merges --since='yesterday' --author=$USER --reverse --pretty=format:'%cd %s %d' --date=short";
     };
 
     extraConfig = {
@@ -95,104 +94,64 @@ in {
         # Automatically use rebase for new branches.
         autoSetupRebase = "always";
       };
-
-      fetch = {
-        prune = "true";
-        recurseSubmodules = "true";
+      checkout = {
+        defaultRemote = "origin";
+        guess = true;
+        thresholdForParallelism = 0;
       };
-
-      pull = { rebase = "true"; };
-
-      push = { default = "current"; };
-
-      help.autocorrect = "20";
-
-      color.ui = "true";
-
+      color.ui = true;
       core = {
         pager = "delta";
         editor = "nvim";
         autocrlf = "input";
-        commitGraph = "true";
+        commitGraph = true;
       };
-
-      interactive.diffFilter = "delta --color-only";
-
-      diff = {
-        submodule = "log";
-        tool = "ediff";
-      };
-
-      difftool = { prompt = "false"; };
-
-      rebase = {
-        # Support fixup and squash commits.
-        autoSquash = "true";
-        # Stash dirty worktree before rebase.
-        autoStash = "true";
-      };
-
-      init = { defaultBranch = "main"; };
-
-      merge = {
-        ff = "false";
-        tool = "meld";
-      };
-
-      mergetool = {
-        prompt = "false";
-        keepBackup = "false";
-      };
-
-      # Reuse recorded resolutions.
-      rerere = {
-        enabled = "true";
-        autoUpdate = "true";
-      };
-
       delta = {
         theme = "Monokai Extended";
         features = "line-numbers decorations side-by-side";
         navigate = true;
       };
-
+      diff = {
+        submodule = "log";
+        tool = "ediff";
+      };
+      difftool = { prompt = "false"; };
+      fetch = {
+        prune = true;
+        recurseSubmodules = true;
+      };
       ghq = { root = "~/src"; };
-
+      help.autocorrect = "20";
+      interactive.diffFilter = "delta --color-only";
+      init = { defaultBranch = "main"; };
+      merge = {
+        ff = false;
+        guitool = "meld";
+        conflictStyle = "zdiff3";
+      };
+      mergetool = {
+        prompt = false;
+        keepBackup = "false";
+      };
+      log.date = "iso8601";
+      pull = { rebase = true; };
+      push = { default = "current"; };
+      rebase = {
+        # Support fixup and squash commits.
+        autoSquash = true;
+        # Stash dirty worktree before rebase.
+        autoStash = true;
+      };
+      rerere = {
+        enabled = true;
+        autoUpdate = true;
+      };
       sendemail = {
         smtpEncryption = "tls";
         smtpServerPort = 587;
         annotate = true;
       };
-
-      "${sub "sendemail" "de.mpg.mpi-inf"}" = {
-        smtpUser = "lorenz";
-        smtpServer = "mail.mpi-inf.mpg.de";
-      };
-
-      "${sub "merge" "npm-merge-driver"}" = {
-        name = "Automatically merge npm lockfiles";
-        driver = "npm-merge-driver merge %A %O %B %P";
-      };
-
-      "${sub "filter" "gpg"}" = {
-        clean =
-          "gpg --encrypt --recipient EBB1C984 -o- %f | git-lfs clean -- %f";
-        smudge = "git-lfs smudge -- %f | gpg --decrypt --output %f";
-      };
-
-      "${sub "lfs" "customtransfer.ipfs"}" = {
-        path =
-          "/home/lorenz/src/github.com/lorenzleutgeb/git-lfs-ipfs/transfer.sh";
-        concurrent = false;
-      };
-
-      "${sub "lfs" "extension.ipfs"}" = {
-        clean =
-          "/home/lorenz/src/github.com/lorenzleutgeb/git-lfs-ipfs/clean.sh %f";
-        smudge =
-          "/home/lorenz/src/github.com/lorenzleutgeb/git-lfs-ipfs/smudge.sh %f";
-      };
-
+      status = { showStash = true; };
       url = {
         "ssh://git@github.com/" = { pushInsteadOf = "https://github.com/"; };
         "ssh://git@gitlab.mpi-klsb.mpg.de/" = {
@@ -210,6 +169,30 @@ in {
         "ssh://git@git.sclable.com/lorenz.leutgeb/" = {
           insteadOf = "scl:ll/";
         };
+      };
+      "${sub "filter" "gpg"}" = {
+        clean =
+          "gpg --encrypt --recipient EBB1C984 -o- %f | git-lfs clean -- %f";
+        smudge = "git-lfs smudge -- %f | gpg --decrypt --output %f";
+      };
+      "${sub "merge" "npm-merge-driver"}" = {
+        name = "Automatically merge npm lockfiles";
+        driver = "npm-merge-driver merge %A %O %B %P";
+      };
+      "${sub "lfs" "customtransfer.ipfs"}" = {
+        path =
+          "/home/lorenz/src/github.com/lorenzleutgeb/git-lfs-ipfs/transfer.sh";
+        concurrent = false;
+      };
+      "${sub "lfs" "extension.ipfs"}" = {
+        clean =
+          "/home/lorenz/src/github.com/lorenzleutgeb/git-lfs-ipfs/clean.sh %f";
+        smudge =
+          "/home/lorenz/src/github.com/lorenzleutgeb/git-lfs-ipfs/smudge.sh %f";
+      };
+      "${sub "sendemail" "de.mpg.mpi-inf"}" = {
+        smtpUser = "lorenz";
+        smtpServer = "mail.mpi-inf.mpg.de";
       };
     };
 
