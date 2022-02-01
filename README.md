@@ -30,12 +30,7 @@ nixos-rebuild switch --flake .#$(machine-hash)
 
 Use `wsl --import` to create the distro, then start it with `wsl --distribution`.
 
-Configure default user via [`/etc/wsl.conf`](https://docs.microsoft.com/en-us/windows/wsl/wsl-config#configuration-settings-for-wslconf):
-
-```
-[user]
-default = lorenz
-```
+Copy `wsl.con` from this repo to [`/etc/wsl.conf`](https://docs.microsoft.com/en-us/windows/wsl/wsl-config#configuration-settings-for-wslconf).
 
 Configure Nix via `~/.config/nix/nix.conf`:
 
