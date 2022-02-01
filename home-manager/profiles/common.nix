@@ -40,6 +40,7 @@ with builtins;
   home.file."bin/remote-build".source = ./scripts/remote-build;
   home.file."bin/gotty-tmux".source = ./scripts/gotty-tmux;
   home.file."bin/tunnel".source = ./scripts/tunnel;
+  home.file."bin/iswsl".source = ./scripts/iswsl;
 
   home.packages = with pkgs; [ xdg-utils ];
 }

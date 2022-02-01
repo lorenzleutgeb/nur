@@ -1,0 +1,2 @@
+#! /usr/bin/env bash
+grep -q 'Microsoft' /proc/sys/kernel/osrelease
