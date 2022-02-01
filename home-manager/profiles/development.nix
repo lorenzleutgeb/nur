@@ -142,7 +142,6 @@ with builtins;
     roboto-slab
     skopeo
     swiPrologWithGui
-    tailscale
     tio
     tmux
     travis

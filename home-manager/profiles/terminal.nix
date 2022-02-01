@@ -80,7 +80,6 @@ with builtins;
     sshfs-fuse
     universal-ctags
     usbutils
-    tailscale
     travis
     tree
     unzip
