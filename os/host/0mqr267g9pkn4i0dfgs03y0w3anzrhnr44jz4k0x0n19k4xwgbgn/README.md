@@ -70,7 +70,7 @@ http://www.kingston.com/dataSheets/KSM29ED8_32ME.pdf
 
 Overclock of very similar (DDR4-3200 version) memory: https://www.reddit.com/r/Amd/comments/lf3i6b/overclocked_ecc_memory_with_a_5900x_my_results/
 
-Bought on 2021-01-18 for 297.54 EUR.
+Bought on 2021-01-18 for 297.54 EUR total (148.77EUR/module, or 4.65EUR/GB).
 
 Merchant: Lemon Technologies GmbH
 Auftrag: 786919
@@ -87,3 +87,9 @@ Bought on 2021-01-18 for 317.51 EUR.
 Merchant: Lemon Technologies GmbH
 Auftrag: 786919
 Merchant Article Number: MVIY6YL
+
+## Replacement Criteria
+
+ * ATX 12VO (maybe fanless)
+ * DDR5 (or better) with ECC
+ * PCIe 4 or better
