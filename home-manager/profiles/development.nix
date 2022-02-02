@@ -148,6 +148,7 @@ with builtins;
     tmux
     travis
     tree
+    (utsushi.override { withNetworkScan = true; })
     vlc
     wally-cli
     wget

@@ -91,6 +91,10 @@
     video.hidpi.enable = lib.mkDefault true;
     opengl.enable = true;
     bluetooth.enable = true;
+    sane = {
+      enable = true;
+      extraBackends = [ (pkgs.utsushi.override { withNetworkScan = true; }) ];
+    };
   };
 
   environment.systemPackages = with pkgs; [ v4l-utils ];
@@ -111,4 +115,17 @@
       };
     };
   };
+
+  environment.etc."utsushi.conf".text = ''
+    [devices]
+    dev1.udi = esci:networkscan://192.168.0.146:1865
+    dev1.model = ES-60W
+    dev1.vendor = EPSON
+  '';
+
+  services.udev.packages = [
+
+    (pkgs.utsushi.override { withNetworkScan = true; })
+  ];
 }
+
