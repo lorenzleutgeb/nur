@@ -3,16 +3,13 @@
 with builtins;
 
 let
-  domain = "leutgeb.xyz";
-  alternateDomain = "falsum.org";
-  subdomain = name: name + "." + domain;
-  localMail = localPart: "${localPart}@${domain}";
-  alternateLocalMail = localPart: "${localPart}@${alternateDomain}";
+  leutgeb = prefix: "${prefix}leutgeb.xyz";
+  falsum = prefix: "${prefix}falsum.org";
   dnsProvider = "cloudflare";
   me = {
     name = "Lorenz Leutgeb";
     username = "lorenz";
-    email = localMail me.username;
+    email = leutgeb "${username}@";
   };
 in {
   imports = [
@@ -98,32 +95,29 @@ in {
 
   mailserver = {
     enable = true;
-    fqdn = "mx.leutgeb.xyz";
-    domains = [ "leutgeb.xyz" ];
+    fqdn = "mx.falsum.org";
+    domains = [ (falsum "") (leutgeb "")];
 
     loginAccounts = {
-      ${me.email} = {
+      ${leutgeb "lorenz@"} = {
         hashedPassword =
           "$6$rJZSLnQH1hInB93$lfi4c2zxQbSJV7H9T9lrjOj6WIDhSEqP5FyjMinEE44j81E1l57hF6Epyxb02EbcWqDT9eYbyo4dBTAwewBgQ/";
         aliases = [
-          (localMail "root")
-          (localMail "webmaster")
-          (localMail "l")
-          (alternateLocalMail "lorenz")
-          (alternateLocalMail "lorenz.leutgeb")
-          (alternateLocalMail "l")
+          (leutgeb "lorenz@")
+          (leutgeb "root@")
+          (leutgeb "webmaster@")
+          (leutgeb "l@")
+          (falsum "lorenz@")
+          (falsum "lorenz.leutgeb@")
+          (falsum "l@")
         ];
-        catchAll = [ "leutgeb.xyz" ];
-      };
-      ${localMail "daniela"} = {
-        hashedPassword =
-          "$6$C.yOR4Lf$eadC5gBRv0gb6F/X29GkwIsGioWHWSM/ztlJo4FA4bh4i6aCHMz4.Rm2ABKTS/zThIYcSz1TOj/iK5ohHJLUX/";
+        catchAll = [ (falsum "") (leutgeb "")];
       };
     };
 
     certificateScheme = 1;
-    certificateFile = "/var/lib/acme/leutgeb.xyz-wildcard/fullchain.pem";
-    keyFile = "/var/lib/acme/leutgeb.xyz-wildcard/key.pem";
+    certificateFile = "/var/lib/acme/${leutgeb ""}-wildcard/fullchain.pem";
+    keyFile = "/var/lib/acme/${leutgeb ""}-wildcard/key.pem";
 
     enableImapSsl = true;
 
@@ -145,19 +139,19 @@ in {
       daniela = "leutgeb1963@gmail.com";
       ralph = "ralph.leutgeb@gmx.at";
     in {
-      ${localMail "a"} = anna;
-      ${localMail "anna"} = anna;
-      ${localMail "d"} = daniela;
-      ${localMail "daniela"} = daniela;
-      ${localMail "dany"} = daniela;
-      ${localMail "r"} = ralph;
-      ${localMail "ralf"} = ralph;
-      ${localMail "ralph"} = ralph;
+      ${leutgeb "a@"} = anna;
+      ${leutgeb "anna@"} = anna;
+      ${leutgeb "d@"} = daniela;
+      ${leutgeb "daniela@"} = daniela;
+      ${leutgeb "dany@"} = daniela;
+      ${leutgeb "r@"} = ralph;
+      ${leutgeb "ralf@"} = ralph;
+      ${leutgeb "ralph@"} = ralph;
     };
   };
 
-  extraVirtualAliases.${localMail "theres-und-lorenz"} =
-    [ "theressophie@gmail.com" "${me.email}" ];
+  extraVirtualAliases.${leutgeb "theres-und-lorenz"} =
+    [ "theressophie@gmail.com" "${leutgeb "lorenz@"}" ];
 
   services = {
     tailscale.enable = true;
@@ -187,35 +181,35 @@ in {
     nginx = {
       enable = true;
       virtualHosts = {
-        "${domain}" = {
+        "${leutgeb ""}" = {
           serverAliases = [
-            (subdomain "www")
-            (subdomain "mta-sts")
-            (subdomain "autoconfig")
+            (leutgeb "www.")
+            (leutgeb "mta-sts.")
+            (leutgeb "autoconfig.")
           ];
           onlySSL = true;
           enableACME = false;
-          useACMEHost = "${domain}";
+          useACMEHost = "${leutgeb ""}";
           locations."/" = { root = "/var/www"; };
         };
 
-        "${alternateDomain}" = {
+        "${falsum ""}" = {
           serverAliases = [
-            (subdomain "www")
-            #(subdomain "mta-sts")
-            #(subdomain "autoconfig")
+            (falsum "www.")
+            #(falsum "mta-sts.")
+            #(falsum "autoconfig.")
           ];
           onlySSL = true;
           enableACME = false;
-          useACMEHost = "${alternateDomain}";
-          locations."/" = { root = "/var/www/falsum.org"; };
+          useACMEHost = "${falsum ""}";
+          locations."/" = { root = "/var/www/${falsum ""}"; };
         };
 
-        "${subdomain me.username}" = {
+        "${leutgeb "lorenz."}" = {
           onlySSL = true;
           enableACME = false;
-          useACMEHost = "${domain}-wildcard";
-          locations."/" = { root = "/var/www/${subdomain me.username}"; };
+          useACMEHost = "${leutgeb ""}-wildcard";
+          locations."/" = { root = "/var/www/${leutgeb "lorenz."}"; };
         };
       };
     };
@@ -391,23 +385,23 @@ in {
       certs =
         let credentialsFile = "/home/${me.username}/.config/lego/cloudflare";
         in {
-          "${domain}" = {
+          "${leutgeb ""}" = {
             inherit (me) email;
             inherit dnsProvider credentialsFile;
           };
-          "${domain}-wildcard" = {
+          "${leutgeb ""}-wildcard" = {
             inherit (me) email;
             inherit dnsProvider credentialsFile;
-            domain = subdomain "*";
+            domain = leutgeb "*.";
           };
-          "${alternateDomain}" = {
+          "${falsum ""}" = {
             inherit (me) email;
             inherit dnsProvider credentialsFile;
           };
-          "${alternateDomain}-wildcard" = {
+          "${falsum ""}-wildcard" = {
             inherit (me) email;
             inherit dnsProvider credentialsFile;
-            domain = "*.${alternateDomain}";
+            domain = falsum "*.";
           };
         };
     };
