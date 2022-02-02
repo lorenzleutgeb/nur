@@ -65,6 +65,7 @@ in {
         prefixLength = 64;
       }];
     };
+    trustedInterfaces = [ "tailscale0" ];
   };
 
   time.timeZone = "Europe/Vienna";
