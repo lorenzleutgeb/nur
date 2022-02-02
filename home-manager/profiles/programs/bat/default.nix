@@ -11,4 +11,6 @@
     #  tomorrow-night-bright = builtins.readFile ./tomorrow-night-bright.tmTheme;
     #};
   };
+
+  home.sessionVariables.BAT_STYLE = "numbers,changes";
 }

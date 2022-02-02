@@ -13,4 +13,10 @@
     #historyWidgetCommand = "fd --type f";
     historyWidgetOptions = [ "--height 40%" "--border" ];
   };
+
+  home.sessionVariables = {
+    "FZF_DEFAULT_COMMAND" = "fd";
+    "FZF_TMUX_HEIGHT" = "80%";
+    "FZF_COMPLETION_OPTS" = "--preview='batree {1}'";
+  };
 }

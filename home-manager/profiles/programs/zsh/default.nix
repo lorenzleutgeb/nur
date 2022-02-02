@@ -30,6 +30,39 @@ with builtins;
       ez-flash = "wally $(ls -t -1 ~/Downloads/ergodox*.hex | head -1)";
     };
 
+    zplug = {
+      enable = true;
+      plugins = [
+        {
+          name = "mafredri/zsh-async";
+          tags = [ "from:github" ];
+        }
+        {
+          name = "rupa/z";
+          tags = [ "use:z.sh" ];
+        }
+        { name = "zsh-users/zsh-completions"; }
+        {
+          name = "ael-code/zsh-colored-man-pages";
+          tags = [ "from:github" ];
+        }
+        {
+          name = "zsh-users/zsh-autosuggestions";
+          tags = [ "use:zsh-autosuggestions.zsh" ];
+        }
+        {
+          name = "zsh-users/zsh-syntax-highlighting";
+          tags = [ "as:plugin" "defer:2" ];
+        }
+        {
+          name = "zsh-users/zsh-history-substring-search";
+          tags = [ "as:plugin" ];
+        }
+      ];
+    };
+
     initExtra = readFile ./rc;
   };
+
+  home = { sessionPath = [ "$HOME/.nix-profile/bin" ]; };
 }

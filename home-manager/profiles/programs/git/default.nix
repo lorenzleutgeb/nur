@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 
 let sub = section: subsection: ''${section} "${subsection}"'';
 in {
@@ -13,6 +13,12 @@ in {
       git-lfs
       tig
     ];
+
+  home.sessionVariables = {
+    "GITHUB_USER" = "lorenzleutgeb";
+    "SCL_BASE" = "${config.home.homeDirectory}/src/sclable.com}";
+    "GH_BASE" = "${config.home.homeDirectory}/src/github.com}";
+  };
 
   programs.git = {
     enable = true;

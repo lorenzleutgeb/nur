@@ -18,6 +18,8 @@ with builtins;
     ./programs/password-store.nix
     ./programs/ripgrep.nix
     ./programs/ssh.nix
+    ./programs/go.nix
+    ./programs/cakeml.nix
     ./programs/vscode.nix
     ./programs/zsh
     ./jetbrains.nix

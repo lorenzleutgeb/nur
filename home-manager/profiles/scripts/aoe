@@ -1,0 +1,8 @@
+#! /usr/bin/env bash
+
+# Prints the local time for an AoE deadline.
+# Input is the day of the deadline.
+# For example, if the Deadline is on 2020-11-27
+# at 23:59 AoE, then call this as
+# aoe 2020-11-27
+date -d "${1}T00:00-12:00 +1 day" --iso-8601=minutes

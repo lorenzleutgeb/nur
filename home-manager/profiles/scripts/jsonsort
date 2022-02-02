@@ -1,0 +1,5 @@
+#! /usr/bin/env bash
+set -e
+TMP=$(mktemp --suff=jsonsort)
+jq -S < $1 > $TMP
+mv $TMP $1

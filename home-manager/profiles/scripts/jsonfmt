@@ -1,0 +1,5 @@
+#! /usr/bin/env bash
+set -e
+TMP=$(mktemp --suff=jsonfmt)
+jq < $1 > $TMP
+mv $TMP $1

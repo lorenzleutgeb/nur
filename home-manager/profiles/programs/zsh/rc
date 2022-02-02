@@ -1,18 +1,11 @@
-# Contents
-#
-# zsh Options
-# zsh Plugins
-# Overrides (cat, grep)
-# aliases and functions
-#
-
-export XDG_RUNTIME_DIR="/var/run/user/$UID"
-export XDG_CACHE_HOME="$XDG_RUNTIME_DIR/.cache"
-if [ ! -d "$XDG_CACHE_HOME" ] ; then
-    mkdir $XDG_CACHE_HOME
+if ! iswsl
+then
+	export XDG_RUNTIME_DIR="/var/run/user/$UID"
+	export XDG_CACHE_HOME="$XDG_RUNTIME_DIR/.cache"
+	if [ -d "$XDG_RUNTIME_DIR" -a ! -d "$XDG_CACHE_HOME"] ; then
+		mkdir $XDG_CACHE_HOME
+	fi
 fi
-
-zmodload zsh/zprof
 
 export CASE_SENSITIVE="true"
 export ENABLE_CORRECTION="true"
@@ -39,8 +32,6 @@ setopt HIST_BEEP                 # Beep when accessing nonexistent history.
 
 PROMPT="%# "
 
-export EDITOR=nvim
-
 # Vi Mode
 bindkey -v
 export KEYTIMEOUT=25
@@ -48,8 +39,7 @@ autoload edit-command-line
 zle -N edit-command-line
 bindkey -M vicmd v edit-command-line
 
-function zle-keymap-select zle-line-init
-{
+function zle-keymap-select zle-line-init {
     case $KEYMAP in
         vicmd)      print -n -- "\E]50;CursorShape=0\C-G";;  # block cursor
         viins|main) print -n -- "\E]50;CursorShape=1\C-G";;  # line cursor
@@ -59,8 +49,7 @@ function zle-keymap-select zle-line-init
     zle -R
 }
 
-function zle-line-finish
-{
+function zle-line-finish {
     print -n -- "\E]50;CursorShape=0\C-G"  # block cursor
 }
 
@@ -70,130 +59,24 @@ zle -N zle-keymap-select
 
 bindkey "jj" vi-cmd-mode
 
-function addp {
-	PATH="$PATH:$1"
-}
-
-# Where I symlink stuff. Also, Go tooling will use it.
-addp "$HOME/bin"
-
-# MiniZinc
-addp "/var/lib/snapd/snap/bin"
-export MZN_STDLIB_DIR=/var/lib/snapd/snap/minizinc/current/usr/share/minizinc
-
-export JENV_DIR="$HOME/src/github.com/jenv/jenv" 
-
-if [ -d "$JENV_DIR" ]
-then
-	addp "$HOME/src/github.com/jenv/jenv/bin"
-	addp "$HOME/.jenv/shims"
-export JENV_SHELL=zsh
-export JENV_LOADED=1
-unset JAVA_HOME
-source "$HOME/src/github.com/jenv/jenv/libexec/../completions/jenv.zsh"
-jenv rehash 2>/dev/null
-jenv() {
-  typeset command
-  command="$1"
-  if [ "$#" -gt 0 ]; then
-    shift
-  fi
-
-  case "$command" in
-  enable-plugin|rehash|shell|shell-options)
-    eval `jenv "sh-$command" "$@"`;;
-  *)
-    command jenv "$command" "$@";;
-  esac
-}
-fi
-
-ZPLUG_HOME=~/src/github.com/zplug/zplug
-
-if [[ ! -d "$ZPLUG_HOME" ]]; then
-	echo "zshrc: Will install zplug!"
-	git clone https://github.com/zplug/zplug $ZPLUG_HOME
-	source $ZPLUG_HOME/init.zsh && zplug update --self
-fi
-
-source $ZPLUG_HOME/init.zsh
-
-zplug "mafredri/zsh-async", from:github
-#zplug "sindresorhus/pure", use:pure.zsh, from:github, as:theme, on:"mafredri/zsh-async"
-
-zplug "rupa/z", use:z.sh
-zplug 'zsh-users/zsh-completions'
-zplug "ael-code/zsh-colored-man-pages", from:github
-zplug "zsh-users/zsh-autosuggestions", use:zsh-autosuggestions.zsh
-zplug "zsh-users/zsh-syntax-highlighting", as:plugin, defer:2
-zplug "zsh-users/zsh-history-substring-search", as:plugin, hook-build:"echo hi"
-#zplug 'BurntSushi/ripgrep', from:gh-r, as:command, rename-to:"rg"
-
-HISTDB_TABULATE_CMD=(sed -e $'s/\x1f/\t/g')
-#zplug "larkery/zsh-histdb", use:"sqlite-history.zsh"
 #autoload -Uz add-zsh-hook
 #add-zsh-hook precmd histdb-update-outcome
-
-if ! zplug check
-then
-	zplug install
-fi
-
-zplug load #--verbose
-
-if [ -f src/github.com/larkery/zsh-histdb/sqlite-history.zsh ]
-then
-	source src/github.com/larkery/zsh-histdb/sqlite-history.zsh
-	autoload -Uz add-zsh-hook
-	add-zsh-hook precmd histdb-update-outcome
-
-# https://github.com/larkery/zsh-histdb#integration-with-zsh-autosuggestions
-
-_zsh_autosuggest_strategy_histdb_top_here() {
-    local query="select commands.argv from
-history left join commands on history.command_id = commands.rowid
-left join places on history.place_id = places.rowid
-where places.dir LIKE '$(sql_escape $PWD)%'
-and commands.argv LIKE '$(sql_escape $1)%'
-group by commands.argv order by count(*) desc limit 1"
-    suggestion=$(_histdb_query "$query")
-}
-
-ZSH_AUTOSUGGEST_STRATEGY=histdb_top_here
-fi
-
-export FZF_DEFAULT_COMMAND='fd'
-export FZF_TMUX_HEIGHT='80%'
-export FZF_COMPLETION_OPTS="--preview='batree {1}'"
-export BAT_STYLE='numbers,changes'
 
 function lst {
 	exa --git --tree --long --time-style=iso --level=${1:-3}
 }
 
-if which fd > /dev/null
-then
 function f {
 	FZF_DEFAULT_COMMAND='fd' fzf-tmux
 }
-fi
 
-if which batree > /dev/null
-then
 function ff {
-	FZF_DEFAULT_COMMAND='fd -t f' fzf-tmux --delimiter=: --preview='batree {1}'
+	FZF_DEFAULT_COMMAND='fd -t f' fzf-tmux --delimiter=:
 }
 
 function cdf {
-	cd $(FZF_DEFAULT_COMMAND='fd -t d' fzf-tmux --preview='batree {1}')
+	cd $(FZF_DEFAULT_COMMAND='fd -t d' fzf-tmux)
 }
-fi
-
-export PGPASSWORD="none"
-
-export GOPATH=$HOME
-
-export GITHUB_USER="lorenzleutgeb"
 
 function unalias {
         name=$1
@@ -201,77 +84,17 @@ function unalias {
         echo ${def:${#name}+2:-1}
 }
 
-function jsonfmt {
-	(
-	set -e
-	TMP=$(mktemp --suff=jsonfmt)
-	jq < $1 > $TMP
-	mv $TMP $1
-	unset TMP
-	)
-}
-
-function jsonsort {
-	(
-	set -e
-	TMP=$(mktemp --suff=jsonsort)
-	jq -S < $1 > $TMP
-	mv $TMP $1
-	unset TMP
-	)
-}
-
-function whichi {
-	namei $(which $@)
-}
-
-function docker-recompose {
-	(
-docker-compose stop $1 && docker-compose rm --force $1
-docker-compose up --detach --build $1
-)
-}
-
-
-export SCL_BASE=$HOME/src/scl
-export GH_BASE=$HOME/src/gh
-export HOLDIR=$GH_BASE/HOL-Theorem-Prover/HOL
-export CAKEMLDIR=$GH_BASE/$GITHUB_USER/cakeml
-export CAKEML_BASIS=$CAKEMLDIR/basis
-
-# opam configuration
-test -r /home/lorenz/.opam/opam-init/init.zsh && . /home/lorenz/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
-
-function machine-hash {
-	nix-hash --type sha256 --base32 --flat /etc/machine-id
-}
-
-function link-applications {
-	find ~/.nix-profile/share/applications -type l -name '*.desktop' -exec ln -s {} ~/.local/share/applications \;
-}
-
 FLAKES=$HOME/.flakes
+
 function unflake {
 	DIR=$(readlink -f .)
 	mkdir -p ${FLAKES}${DIR}
 	mv -v flake.{nix,lock} ${FLAKES}${DIR}
 	#git rm -f --cached flake.{nix,lock}
 }
+
 function reflake {
 	DIR=$(readlink -f .)
 	cp -v ${FLAKES}${DIR}/flake.{nix,lock} .
 	git add flake.{nix,lock}
-}
-
-# Prints the local time for an AoE deadline.
-# Input is the day of the deadline.
-# For example, if the Deadline is on 2020-11-27
-# at 23:59 AoE, then call this as
-# aoe 2020-11-27
-function aoe {
-	date -d "${1}T00:00-12:00 +1 day" --iso-8601=minutes
-}
-
-function cplink {
-	[[ -L $1 ]] && cp --remove-destination --verbose $(readlink -f $1) $1
 }

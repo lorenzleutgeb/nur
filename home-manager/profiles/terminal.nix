@@ -57,6 +57,7 @@ with builtins;
     mtr
     neovim-remote
     niv
+    nixfmt
     nixpkgs-review
     noto-fonts
     nvme-cli

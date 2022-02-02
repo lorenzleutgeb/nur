@@ -1,0 +1,2 @@
+#! /usr/bin/env bash
+[[ -L $1 ]] && cp --remove-destination --verbose $(readlink -f $1) $1

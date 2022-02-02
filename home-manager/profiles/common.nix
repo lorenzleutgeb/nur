@@ -35,12 +35,12 @@ with builtins;
 
   fonts.fontconfig.enable = pkgs.lib.mkForce true;
 
-  home.file."bin/ez-flash".source = ./scripts/ez-flash;
-  home.file."bin/flakes".source = ./scripts/flakes;
-  home.file."bin/remote-build".source = ./scripts/remote-build;
-  home.file."bin/gotty-tmux".source = ./scripts/gotty-tmux;
-  home.file."bin/tunnel".source = ./scripts/tunnel;
-  home.file."bin/iswsl".source = ./scripts/iswsl;
-
-  home.packages = with pkgs; [ xdg-utils ];
+  home = {
+    sessionPath = [ "$HOME/bin" ];
+    file = (listToAttrs (map (x: {
+      name = "bin/${x}";
+      value.source = ./scripts + "/${x}";
+    }) (attrNames (readDir ./scripts))));
+    packages = [ pkgs.xdg-utils ];
+  };
 }
