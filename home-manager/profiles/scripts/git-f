@@ -7,23 +7,38 @@ DEFAULT_REMOTE=$(git config --default origin --get clone.defaultRemoteName)
 # Use first argument as remote name, fallback to default.
 REMOTE=${1:-$DEFAULT_REMOTE}
 
-git fetch $REMOTE
-
-HEAD=$(git rev-parse HEAD)
+# Resolve the rev that HEAD points at, so that we can give it
+# a special treatement.
+HEAD_REV=$(git rev-parse HEAD)
 
 # Format that allows us to easily grep for local branches that are behind,
 # and have an upstream at $REMOTE.
-FMT="%(upstream:trackshort)%(upstream:remotename)|%(refname:short)"
+FORMAT="%(upstream:trackshort)%(upstream:remotename)|%(refname:short)"
 
-for BRANCH in $(git for-each-ref refs/heads --format="$FMT" | grep -Po "<$REMOTE\|\K(.+)")
+# Get a list of revs that are checked out. We don't want to
+# update refs that are pointing at them.
+set +e
+WORKTREE_REVS=$(git worktree list --porcelain | grep -Po "HEAD \K(.+)" | grep -v "$HEAD_REV")
+set -e
+
+git fetch $REMOTE
+
+for BRANCH in $(git for-each-ref refs/heads --format="$FORMAT" | grep -Po "<$REMOTE\|\K(.+)")
 do
-	if [ "$(git rev-parse $BRANCH)" = "$HEAD" ]
+	BRANCH_REV=$(git rev-parse $BRANCH)
+	if [ "$BRANCH_REV" = "$HEAD_REV" ]
 	then
+		# This branch is currently checked out "here". Forward it carefully.
 		set +e
         	git merge --no-autostash --ff-only $BRANCH@{u}
 		set -e
+	elif grep -q "$BRANCH_REV" <<< "$WORKTREE_REVS"
+	then
+		# This branch is currently checked out by another. Leave it alone.
+		echo "$BRANCH skipped, because it is checked out in another worktree. Use 'git worktree list' to diagnose."
 	else
-		echo $BRANCH
+		# This branch is not checked out. Just update it!
 		git update-ref refs/heads/$BRANCH $BRANCH@{u}
+		echo "$BRANCH forwarded"
         fi
 done
