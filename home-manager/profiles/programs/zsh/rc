@@ -2,9 +2,7 @@ if ! iswsl
 then
 	export XDG_RUNTIME_DIR="/var/run/user/$UID"
 	export XDG_CACHE_HOME="$XDG_RUNTIME_DIR/.cache"
-	if [ -d "$XDG_RUNTIME_DIR" -a ! -d "$XDG_CACHE_HOME"] ; then
-		mkdir $XDG_CACHE_HOME
-	fi
+	mkdir -p $XDG_CACHE_HOME
 fi
 
 export CASE_SENSITIVE="true"

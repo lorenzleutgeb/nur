@@ -127,7 +127,8 @@ in {
       merge = {
         ff = false;
         guitool = "meld";
-        conflictStyle = "zdiff3";
+        # TODO: Switch to zdiff3.
+        conflictStyle = "diff3";
       };
       mergetool = {
         prompt = false;

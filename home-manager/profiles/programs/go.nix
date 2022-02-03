@@ -1,5 +1,5 @@
-{ ... }:
+{ config, ... }:
 
 {
-  home.sessionVariables.GOPATH = home.homeDirectory;
+  home.sessionVariables.GOPATH = config.home.homeDirectory;
 }
