@@ -116,8 +116,11 @@ in {
       };
       difftool = { prompt = "false"; };
       fetch = {
+        negotiationAlgorithm = "skipping";
         prune = true;
+        parallel = 0;
         recurseSubmodules = true;
+        writeCommitGraph = true;
       };
       ghq = { root = "~/src"; };
       help.autocorrect = "20";
