@@ -50,7 +50,6 @@ in {
       coc = ''! f(){ git checkout "$1" && git clean -xfd; }; f'';
       d = "diff";
       ds = "diff --staged";
-      f = "fetch";
       i = "!gi() { curl -L -s https://www.gitignore.io/api/$@ ;}; gi";
       il = ''! git config --local core.excludesfile "$HOME/gitignore"'';
       ll =
@@ -135,7 +134,7 @@ in {
         keepBackup = "false";
       };
       log.date = "iso8601";
-      pull = { rebase = true; };
+      pull.ff = "only";
       push = { default = "current"; };
       rebase = {
         # Support fixup and squash commits.

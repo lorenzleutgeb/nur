@@ -1,0 +1,20 @@
+#! /usr/bin/env bash
+set -e
+
+REMOTE=${1:-origin}
+git fetch $REMOTE
+HEAD=$(git rev-parse --abbrev-ref HEAD)
+FMT="%(upstream:trackshort)%(upstream:remotename)|%(refname:short)"
+
+for BRANCH in $(git for-each-ref refs/heads --format="$FMT" | grep -Po "<$REMOTE\|\K(.+)")
+do
+        if [ "$BRANCH" = "$HEAD" ]
+	then
+		set +e
+        	git merge --no-autostash --ff-only $BRANCH@{u}
+		set -e
+	else
+		echo $BRANCH
+		git update-ref -m "git-fwd" refs/heads/$BRANCH $BRANCH@{u}
+        fi
+done
