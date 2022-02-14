@@ -97,7 +97,7 @@ in {
   ];
 
   mailserver = {
-    enable = true;
+    enable = false;
     fqdn = "mx.leutgeb.xyz";
     domains = [ "leutgeb.xyz" ];
 
