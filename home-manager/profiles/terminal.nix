@@ -65,11 +65,15 @@ with builtins;
     pandoc
     pantheon.elementary-files
     pantheon.elementary-photos
+    parted
     pciutils
     pdfgrep
+    pdftk
+    phoronix-test-suite
     pinta
     poppler_utils
     psmisc
+    pv
     #python38Full
     #python38Packages.pyacoustid
     pwgen

@@ -252,9 +252,9 @@
        separator_powerline_right=" "
 
        # setw -g window-status-style "fg=$color_status_text,bg=$color_dark"
-       setw -g window-status-format " #I:#W "
-       setw -g window-status-current-style "fg=$color_light,bold,bg=$color_main"
-       setw -g window-status-current-format "#[fg=$color_dark,bg=$color_main]$separator_powerline_right#[default] #I:#W# #[fg=$color_main,bg=$color_dark]$separator_powerline_right#[default]"
+       setw -g window-status-format " #I>#W "
+       setw -g window-status-current-style "fg=$color_light,bold,bg=black"
+       setw -g window-status-current-format "#[fg=$color_dark]$separator_powerline_right#[default]#I>#W#[fg=$color_main,bg=$color_dark] #[default]"
 
        # when window has monitoring notification
        setw -g window-status-activity-style "fg=$color_main"
@@ -293,6 +293,7 @@
          XAUTHORITY"
 
       set -g status-bg default
+      set -g status-right "#{session_name} #{=7:host_short}"
              '';
   };
 

@@ -61,6 +61,7 @@ in {
   programs = {
     sedutil.enable = true;
     adb.enable = true;
+    dconf.enable = true;
   };
 
   environment = {
@@ -92,7 +93,12 @@ in {
   '';
 
   services = {
+    accounts-daemon.enable = true;
     blueman.enable = false;
+    cloudflared = {
+      enable = true;
+      config = {};
+    };
     cron.enable = true;
     flatpak.enable = true;
     fwupd.enable = true;

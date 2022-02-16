@@ -211,6 +211,13 @@ in {
     '';
   };
 
+  gtk = {
+    iconTheme = {
+      name = "Elementary";
+      package = pkgs.pantheon.elementary-icon-theme;
+    };
+  };
+
   home.packages = with pkgs; [
     grim # Screenshots
     imv # Image viewer
@@ -224,6 +231,37 @@ in {
     waypipe # Network transparency
     ulauncher # Applications launcher
     wayvnc # VNC Server
+
+    # Gnome
+    gsettings-desktop-schemas
+    pantheon.elementary-icon-theme
+    gnome3.adwaita-icon-theme
+    gnome.gnome-tweaks
+
+    (pkgs.writeTextFile {
+      name = "startsway";
+      destination = "/bin/startsway";
+      executable = true;
+      text = let
+        schema = pkgs.gsettings-desktop-schemas;
+        datadir = "${schema}/share/gsettings-schemas/${schema.name}";
+      in ''
+        #! ${pkgs.bash}/bin/bash
+        ${pkgs.openssh}/bin/ssh-add
+        export XDG_DATA_DIRS=${datadir}:$XDG_DATA_DIRS
+        # first import environment variables from the login manager
+        systemctl --user import-environment
+        # then start the service
+        exec systemctl --user start sway.service
+      '';
+    })
+  ];
+
+  xdg.systemDirs.data = with pkgs; let
+    schema = gsettings-desktop-schemas;
+  in [ 
+    "${gtk3}/share/gsettings-schemas/${gtk3.name}"
+    "${schema}/share/gsettings-schemas/${schema.name}"
   ];
 
   home.sessionVariables = {

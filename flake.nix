@@ -2,7 +2,8 @@
   description = "Lorenz Leutgeb's Flake";
 
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-unstable";
+    # TODO: Switch back to nixos-unstable once it advances. See https://status.nixos.org/
+    nixpkgs.url = "nixpkgs/nixos-unstable-small";
 
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -41,15 +42,6 @@
       };
       makeDiskImage = (import "${nixpkgs}/nixos/lib/make-disk-image.nix");
     in rec {
-      /* nixosConfigurations."1anm3dk20fd60zb66cv7callrv82gn2z2jjlkqdbbb0i877hh872" = nixpkgs.lib.nixosSystem {
-           inherit system;
-           modules = [
-             (import ./configuration.nix) pkgs
-             ./hardware/1anm3dk20fd60zb66cv7callrv82gn2z2jjlkqdbbb0i877hh872.nix
-           ];
-         };
-      */
-
       overlay = self.overlays.pkgs;
       overlays = {
         pkgs = import ./pkg;
@@ -68,8 +60,6 @@
         };
 
         mpi = nixosConfigurations.mpi.config.system.build.virtualBoxOVA;
-
-        wsl = nixosConfigurations.wsl.config.system.build.tarball;
 
         live = nixosConfigurations.live.config.system.build.isoImage;
       };

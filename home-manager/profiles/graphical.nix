@@ -22,6 +22,7 @@ with builtins;
 
   home.packages = with pkgs; [
     baobab
+    breitbandmessung
     brightnessctl
     evince
     fira
@@ -32,6 +33,7 @@ with builtins;
     font-awesome
     #fwupdmgr
     glibcLocales
+    gimp
     networkmanagerapplet
     #googleearth
     google-chrome
@@ -44,7 +46,6 @@ with builtins;
     niv
     nixpkgs-review
     noto-fonts
-    obsidian
     pandoc
     pantheon.elementary-files
     pantheon.elementary-photos
@@ -54,6 +55,7 @@ with builtins;
     picard
     poppler_utils
     portfolio
+    psensor
     qnotero
     ranger
     rclone-browser
@@ -66,6 +68,7 @@ with builtins;
     skypeforlinux
     sshfs-fuse
     # talon-bin # Custom package
+    teams
     teamviewer
     transmission-gtk
     universal-ctags

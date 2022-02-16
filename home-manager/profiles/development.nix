@@ -14,7 +14,7 @@ with builtins;
     ./programs/isabelle.nix
     ./programs/mkcert.nix
     ./programs/nvim
-    ./programs/libvirt
+    #./programs/libvirt
     ./programs/password-store.nix
     ./programs/ripgrep.nix
     ./programs/ssh.nix
@@ -86,6 +86,7 @@ with builtins;
     kdiff3
     kubectl
     liberation_ttf
+    libreoffice
     llvm
     #haskellPackages.miv
     material-icons
@@ -101,7 +102,6 @@ with builtins;
     nix-index
     nvme-cli
     noto-fonts
-    obsidian
     pandoc
     pantheon.elementary-files
     pantheon.elementary-photos
@@ -135,6 +135,7 @@ with builtins;
     #nodePackages.node2nix
     #nodePackages.firebase-tools # Custom package
     #nodePackages.turtle-validator # Custom package
+    #obsidian
     obs-studio
     #obs-v4l2sink
     #nodejs
