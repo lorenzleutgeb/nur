@@ -298,6 +298,7 @@
   };
 
   home.packages = [
-    (pkgs.writeScriptBin "tmux-window-name" (builtins.readFile ./window-name.sh))
+    (pkgs.writeScriptBin "tmux-window-name"
+      (builtins.readFile ./window-name.sh))
   ];
 }

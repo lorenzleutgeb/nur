@@ -262,12 +262,12 @@ in {
     (pkgs.writeScriptBin "screenshot" (builtins.readFile ./screenshot.sh))
   ];
 
-  xdg.systemDirs.data = with pkgs; let
-    schema = gsettings-desktop-schemas;
-  in [ 
-    "${gtk3}/share/gsettings-schemas/${gtk3.name}"
-    "${schema}/share/gsettings-schemas/${schema.name}"
-  ];
+  xdg.systemDirs.data = with pkgs;
+    let schema = gsettings-desktop-schemas;
+    in [
+      "${gtk3}/share/gsettings-schemas/${gtk3.name}"
+      "${schema}/share/gsettings-schemas/${schema.name}"
+    ];
 
   home.sessionVariables = {
     MOZ_ENABLE_WAYLAND = 1;

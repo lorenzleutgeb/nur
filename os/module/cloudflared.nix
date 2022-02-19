@@ -1,4 +1,4 @@
-#{ ... }:
+# { ... }:
 { config, lib, pkgs, ... }:
 
 with lib;
@@ -6,8 +6,7 @@ with lib;
 let
   cfg = config.services.cloudflared;
   settingsFormat = pkgs.formats.yaml { };
-in
-{
+in {
   options = {
     services.cloudflared = {
       enable = mkEnableOption "cloudflared";
@@ -15,11 +14,12 @@ in
         type = types.package;
         default = pkgs.cloudflared;
         description = "The cloudflared package to use";
-        example = literalExpression ''pkgs.cloudflared'';
+        example = literalExpression "pkgs.cloudflared";
       };
       config = mkOption {
         type = settingsFormat.type;
-        description = "Contents of the config.yaml as an attrset; see https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/configuration/configuration-file for documentation on the contents";
+        description =
+          "Contents of the config.yaml as an attrset; see https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/configuration/configuration-file for documentation on the contents";
         example = literalExpression ''
           {
             url = "http://localhost:3000";
@@ -39,7 +39,8 @@ in
 
   config = mkIf cfg.enable ({
     # Prefer the config file over settings if both are set.
-    services.cloudflared.configFile = mkDefault (settingsFormat.generate "cloudflared.yaml" cfg.config);
+    services.cloudflared.configFile =
+      mkDefault (settingsFormat.generate "cloudflared.yaml" cfg.config);
 
     systemd.services.cloudflared = {
       wantedBy = [ "multi-user.target" ];
@@ -48,7 +49,8 @@ in
       serviceConfig = {
         TimeoutStartSec = 0;
         Type = "notify";
-        ExecStart = "${cfg.package}/bin/cloudflared --config ${cfg.configFile} --no-autoupdate tunnel run";
+        ExecStart =
+          "${cfg.package}/bin/cloudflared --config ${cfg.configFile} --no-autoupdate tunnel run";
         Restart = "on-failure";
         RestartSec = "5s";
       };
