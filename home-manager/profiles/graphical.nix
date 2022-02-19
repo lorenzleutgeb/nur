@@ -4,6 +4,7 @@ with builtins;
 
 {
   imports = [
+    ./input-method.nix
     ./terminal.nix
     ./wm/sway
     ./programs/alacritty
@@ -92,5 +93,13 @@ with builtins;
     yq
     zoom-us
     zotero
+
+    m17n_db
+    m17n_lib
   ];
+
+  i18n.inputMethod = {
+    enabled = "fcitx5";
+    fcitx5.addons = with pkgs; [ fcitx5-m17n ];
+  };
 }
