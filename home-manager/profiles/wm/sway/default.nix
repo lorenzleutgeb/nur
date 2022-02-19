@@ -231,6 +231,8 @@ in {
     waypipe # Network transparency
     ulauncher # Applications launcher
     wayvnc # VNC Server
+    wshowkeys # Show key presses (graphical)
+    wev # Show key presses/inputs (shell)
 
     # Gnome
     gsettings-desktop-schemas
