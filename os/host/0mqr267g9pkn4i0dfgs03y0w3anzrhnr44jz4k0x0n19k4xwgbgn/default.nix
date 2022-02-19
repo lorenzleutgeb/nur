@@ -97,7 +97,7 @@ in {
     blueman.enable = false;
     cloudflared = {
       enable = true;
-      config = {};
+      config = { };
     };
     cron.enable = true;
     flatpak.enable = true;
@@ -152,6 +152,7 @@ in {
     unifi = {
       enable = true;
       unifiPackage = pkgs.unifi;
+      openFirewall = false;
     };
 
     logind.extraConfig = ''
@@ -233,14 +234,16 @@ in {
 
   nix = {
     package = pkgs.nixFlakes;
+    settings = {
+      substituters = [ "https://lean4.cachix.org/" ];
+      trusted-public-keys =
+        [ "lean4.cachix.org-1:mawtxSxcaiWE24xCXXgh3qnvlTkyU7evRRnGeAhD4Wk=" ];
+    };
     extraOptions = ''
       allow-import-from-derivation = true
       experimental-features = nix-command flakes
       keep-outputs = true
     '';
-    binaryCaches = [ "https://lean4.cachix.org/" ];
-    binaryCachePublicKeys =
-      [ "lean4.cachix.org-1:mawtxSxcaiWE24xCXXgh3qnvlTkyU7evRRnGeAhD4Wk=" ];
   };
   nixpkgs.config = {
     allowUnfree = true;
