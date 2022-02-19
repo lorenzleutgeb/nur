@@ -15,6 +15,7 @@ with builtins;
     ./programs/thunderbird
     ./programs/zathura.nix
     ./services/ulauncher.nix
+    ./services/gnome-keyring.nix
   ];
 
   home.sessionVariables =
