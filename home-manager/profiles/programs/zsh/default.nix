@@ -27,7 +27,7 @@ with builtins;
       sshfp = "ssh-keygen -r $(hostname) > sshfp.txt";
 
       # Flash new firmware to an ErgoDox EZ keyboard.
-      ez-flash = "wally $(ls -t -1 ~/Downloads/ergodox*.hex | head -1)";
+      ez-flash = "wally-cli $(exa --online --sort=oldest ~/Downloads/ergodox*.hex | head -1)";
     };
 
     zplug = {
@@ -58,11 +58,18 @@ with builtins;
           name = "zsh-users/zsh-history-substring-search";
           tags = [ "as:plugin" ];
         }
+        {
+          name = "jeffreytse/zsh-vi-mode";
+          tags = [];
+        }
       ];
     };
 
     initExtra = readFile ./rc;
   };
 
-  home = { sessionPath = [ "$HOME/.nix-profile/bin" ]; };
+  home = { 
+    packages = [ pkgs.sqlite ];
+    sessionPath = [ "$HOME/.nix-profile/bin" ];
+  };
 }

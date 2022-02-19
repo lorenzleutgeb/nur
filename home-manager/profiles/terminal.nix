@@ -94,4 +94,9 @@ with builtins;
     yubioath-desktop
     zip
   ];
+
+  programs.atuin = {
+    enable = true;
+    enableZshIntegration = true;
+  };
 }

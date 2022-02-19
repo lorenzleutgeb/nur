@@ -11,51 +11,17 @@ export COMPLETION_WAITING_DOTS="true"
 export HIST_STAMPS="yyyy-mm-dd"
 
 # Tuning history
-HISTFILE="$HOME/.zsh_history"
-HISTSIZE=2147483647
-SAVEHIST=2147483647
 setopt BANG_HIST                 # Treat the '!' character specially during expansion.
-setopt EXTENDED_HISTORY          # Write the history file in the ":start:elapsed;command" format.
 setopt INC_APPEND_HISTORY        # Write to the history file immediately, not when the shell exits.
-setopt SHARE_HISTORY             # Share history between all sessions.
 setopt HIST_EXPIRE_DUPS_FIRST    # Expire duplicate entries first when trimming history.
 setopt HIST_IGNORE_DUPS          # Do not record an entry that was just recorded again.
 #setopt HIST_IGNORE_ALL_DUPS      # Delete old recorded entry if new entry is a duplicate.
 setopt HIST_FIND_NO_DUPS         # Do not display a line previously found.
-setopt HIST_IGNORE_SPACE         # Do not record an entry starting with a space.
 setopt HIST_SAVE_NO_DUPS         # Do not write duplicate entries in the history file.
 setopt HIST_REDUCE_BLANKS        # Remove superfluous blanks before recording entry.
 setopt HIST_VERIFY               # Do not execute immediately upon history expansion.
-setopt HIST_BEEP                 # Beep when accessing nonexistent history.
 
 PROMPT="%# "
-
-# Vi Mode
-bindkey -v
-export KEYTIMEOUT=25
-autoload edit-command-line
-zle -N edit-command-line
-bindkey -M vicmd v edit-command-line
-
-function zle-keymap-select zle-line-init {
-    case $KEYMAP in
-        vicmd)      print -n -- "\E]50;CursorShape=0\C-G";;  # block cursor
-        viins|main) print -n -- "\E]50;CursorShape=1\C-G";;  # line cursor
-    esac
-
-    zle reset-prompt
-    zle -R
-}
-
-function zle-line-finish {
-    print -n -- "\E]50;CursorShape=0\C-G"  # block cursor
-}
-
-zle -N zle-line-init
-zle -N zle-line-finish
-zle -N zle-keymap-select
-
-bindkey "jj" vi-cmd-mode
 
 #autoload -Uz add-zsh-hook
 #add-zsh-hook precmd histdb-update-outcome
@@ -96,3 +62,6 @@ function reflake {
 	cp -v ${FLAKES}${DIR}/flake.{nix,lock} .
 	git add flake.{nix,lock}
 }
+
+# Not sure where this binding gets lost...
+#bindkey '^R' fzf-history-widget
