@@ -3,7 +3,10 @@
 with builtins;
 
 {
-  imports = [ ./yubikey.nix ];
+  imports = [
+    ./yubikey.nix
+    ./scripts.nix
+  ];
   # Let Home Manager install and manage itself.
   programs = { home-manager.enable = true; };
 
@@ -37,10 +40,6 @@ with builtins;
 
   home = {
     sessionPath = [ "$HOME/bin" ];
-    file = (listToAttrs (map (x: {
-      name = "bin/${x}";
-      value.source = ./scripts + "/${x}";
-    }) (attrNames (readDir ./scripts))));
     packages = [ pkgs.xdg-utils ];
   };
 }

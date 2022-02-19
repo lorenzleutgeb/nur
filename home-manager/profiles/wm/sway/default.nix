@@ -255,6 +255,9 @@ in {
         exec systemctl --user start sway.service
       '';
     })
+
+    (pkgs.writeScriptBin "lockscreen" (builtins.readFile ./lockscreen.sh))
+    (pkgs.writeScriptBin "screenshot" (builtins.readFile ./screenshot.sh))
   ];
 
   xdg.systemDirs.data = with pkgs; let
@@ -339,9 +342,6 @@ in {
     }];
     style = readFile ./waybar.css;
   };
-
-  home.file."bin/lockscreen".source = ./lockscreen.sh;
-  home.file."bin/screenshot".source = ./screenshot.sh;
 
   xdg.configFile."wayvnc/config".text = ''
     address=100.85.40.10

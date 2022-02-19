@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 
 {
   programs.tmux = {
@@ -297,5 +297,7 @@
              '';
   };
 
-  home.file."bin/tmux-window-name".source = ./window-name.sh;
+  home.packages = [
+    (pkgs.writeScriptBin "tmux-window-name" (builtins.readFile ./window-name.sh))
+  ];
 }
