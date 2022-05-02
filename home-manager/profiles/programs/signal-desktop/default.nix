@@ -10,8 +10,8 @@
       comment = "Private messaging from your desktop";
       genericName = "Messenger";
       desktopName = "Signal @1.5";
-      categories = "Network;InstantMessaging;Chat;";
-      mimeType = "x-scheme-handler/sgnl;";
+      categories = ["Network" "InstantMessaging" "Chat"];
+      mimeTypes = [ "x-scheme-handler/sgnl" ];
       terminal = false;
       icon = "signal-desktop";
       type = "Application";

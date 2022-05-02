@@ -24,7 +24,7 @@ with builtins;
 
   home.packages = with pkgs; [
     baobab
-    breitbandmessung
+    #breitbandmessung
     brightnessctl
     evince
     fira

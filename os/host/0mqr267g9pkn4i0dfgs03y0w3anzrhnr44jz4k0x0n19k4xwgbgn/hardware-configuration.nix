@@ -30,7 +30,10 @@
       "vfio_virqfd"
     ];
     kernelPackages = pkgs.linuxPackages_5_10;
-    kernelParams = [ "intel_iommu=on" ];
+    kernelParams = [
+      "intel_iommu=on"
+      "mitigations=off"
+    ];
 
     extraModulePackages = with config.boot.kernelPackages; [ v4l2loopback ];
 

@@ -69,7 +69,6 @@ in {
       coreutils-full
       dmidecode
       exfat
-      exfat-utils
       lshw
       lsof
       nfs-utils
@@ -82,6 +81,10 @@ in {
   };
 
   sound.enable = true;
+
+  environment.etc."NetworkManager/dnsmasq.d/interface.conf".text = ''
+    interface=lo
+  '';
 
   environment.etc."NetworkManager/dnsmasq.d/cloudflare.conf".text = ''
     server=1.1.1.1
@@ -121,6 +124,11 @@ in {
       pulse.enable = true;
       jack.enable = true;
       media-session.enable = true;
+      wireplumber.enable = false;
+    };
+
+    sourcehut = {
+      services = [ "man" "meta" "git" "builds" "hub" "todo" "lists" ];
     };
 
     udev = {
@@ -222,12 +230,11 @@ in {
   virtualisation = {
     docker = {
       enable = true;
-      enableOnBoot = true;
+      enableOnBoot = false;
     };
-    # Waiting for https://github.com/NixOS/nixpkgs/pull/101493
-    virtualbox.host.enable = true;
+    virtualbox.host.enable = false;
     libvirtd = {
-      enable = true;
+      enable = false;
       qemu.package = pkgs.qemu_kvm;
     };
   };

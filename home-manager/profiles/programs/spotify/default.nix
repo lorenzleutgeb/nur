@@ -20,8 +20,8 @@
       comment = "Spotify Music Player for 4K displays";
       desktopName = "Spotify @2";
       genericName = "Music Player";
-      categories = "Audio;Music;Player;AudioVideo;";
-      mimeType = "x-scheme-handler/spotify;";
+      categories = ["Audio" "Music" "Player" "AudioVideo"];
+      mimeTypes = ["x-scheme-handler/spotify"];
       terminal = false;
       icon = "spotify-client";
       type = "Application";

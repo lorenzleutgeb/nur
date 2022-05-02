@@ -90,6 +90,10 @@ Merchant Article Number: MVIY6YL
 
 ## Replacement Criteria
 
- * ATX 12VO (maybe fanless)
+ * ATX 12VO
+ * Silent
  * DDR5 (or better) with ECC
  * PCIe 4 or better
+ * Intel [Raptor Lake](https://en.wikipedia.org/wiki/Raptor_Lake) or better
+
+Maybe no Xeon required anymore? https://www.heise.de/news/Intel-Alder-Lake-Core-i-Prozessoren-mit-ECC-RAM-moeglich-6541388.html

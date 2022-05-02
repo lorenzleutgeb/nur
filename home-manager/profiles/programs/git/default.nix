@@ -167,7 +167,7 @@ in {
           insteadOf = "https://github.molgen.mpg.de/";
         };
         "ssh://git@github.com/" = { insteadOf = "gh:"; };
-        "ssh://git@github.com/lorenz.leutgeb/" = { insteadOf = "gh:ll/"; };
+        "ssh://git@github.com/lorenzleutgeb/" = { insteadOf = "gh:ll/"; };
         "ssh://git@git.sclable.com/" = { insteadOf = "scl:"; };
         "ssh://git@git.sclable.com/lorenz.leutgeb/" = {
           insteadOf = "scl:ll/";

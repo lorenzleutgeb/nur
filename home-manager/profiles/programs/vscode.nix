@@ -19,17 +19,23 @@
     extensions = with pkgs.vscode-extensions; [
       arrterian.nix-env-selector
       bbenoist.nix
+      eamodio.gitlens
       haskell.haskell
       jnoortheen.nix-ide
       justusadam.language-haskell
       matklad.rust-analyzer
-      #rust-lang.rust
+      # See https://code.visualstudio.com/docs/cpp/config-linux
+      # See https://code.visualstudio.com/docs/cpp/config-wsl
+      ms-vscode.cpptools
       vscodevim.vim
 
       # Not packaged in Nixpkgs:
       #bungcip.better-toml
       #dandric.vscode-jq
       #jq-syntax-highlighting.jq-syntax-highlighting
+      #ms-vscode.cmake-tools
+      #ms-vscode.cpptools-themes
+      #ms-vscode.cpptools-extension-pack
       #TabNine.tabnine-vscode
     ];
   };

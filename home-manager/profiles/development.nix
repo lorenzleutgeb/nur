@@ -11,7 +11,7 @@ with builtins;
     ./programs/fzf.nix
     ./programs/gh.nix
     ./programs/git
-    ./programs/isabelle.nix
+    #./programs/isabelle.nix
     ./programs/mkcert.nix
     ./programs/nvim
     #./programs/libvirt
@@ -92,7 +92,7 @@ with builtins;
     material-icons
     meld
     mupdf
-    ncat
+    nmap
     ncdu
     neovim-remote
     niv
