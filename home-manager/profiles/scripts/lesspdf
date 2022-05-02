@@ -1,2 +1,2 @@
 #! /usr/bin/env bash
-pdftotext -layout ${1:-$(ls -t '*.pdf' | head -1)} - | less
+pdftotext -layout ${1:-$(ls -t *.pdf | head -1)} - | less
