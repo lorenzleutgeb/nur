@@ -47,13 +47,21 @@ Install Nix in single-user mode:
 $ sh <(curl -L https://nixos.org/nix/install) --no-daemon
 ```
 
+Allow unfree packages in `~/.config/nixpkgs/config.nix`:
+
+```nix
+{ allowUnfree = true; }
+```
+
 Install Home Manager, then import the configuration in this repository via `~/.config/nixpkgs/home.nix`:
 
 ```nix
 { config, pkgs, ... }:
 
 {
-  imports = [ /home/lorenz/src/github.com/lorenzleutgeb/nur/home-manager/profiles/terminal.nix ];
+  imports = [
+    # Full path to desired profile(s) here.
+  ];
   programs.home-manager.enable = true;
   home = {
     username = "lorenz";
