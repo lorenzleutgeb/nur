@@ -30,7 +30,7 @@ nixos-rebuild switch --flake .#$(machine-hash)
 
 Use `wsl --import` to create the distro, then start it with `wsl --distribution`.
 
-Copy `wsl.con` from this repo to [`/etc/wsl.conf`](https://docs.microsoft.com/en-us/windows/wsl/wsl-config#configuration-settings-for-wslconf).
+Copy `wsl.conf` from this repo to [`/etc/wsl.conf`](https://docs.microsoft.com/en-us/windows/wsl/wsl-config#configuration-settings-for-wslconf).
 
 Configure Nix via `~/.config/nix/nix.conf`:
 
@@ -47,7 +47,20 @@ Install Nix in single-user mode:
 $ sh <(curl -L https://nixos.org/nix/install) --no-daemon
 ```
 
-Install Home Manager, then import the configuration in this repository via `~/.config/nixpkgs/home.nix`
+Install Home Manager, then import the configuration in this repository via `~/.config/nixpkgs/home.nix`:
+
+```nix
+{ config, pkgs, ... }:
+
+{
+  imports = [ /home/lorenz/src/github.com/lorenzleutgeb/nur/home-manager/profiles/terminal.nix ];
+  programs.home-manager.enable = true;
+  home = {
+    username = "lorenz";
+    homeDirectory = "/home/lorenz";
+  };
+}
+```
 
 Create `/run/user/$UID`:
 
