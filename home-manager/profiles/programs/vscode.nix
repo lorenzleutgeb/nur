@@ -20,6 +20,7 @@
       arrterian.nix-env-selector
       bbenoist.nix
       eamodio.gitlens
+      github.copilot
       haskell.haskell
       jnoortheen.nix-ide
       justusadam.language-haskell
