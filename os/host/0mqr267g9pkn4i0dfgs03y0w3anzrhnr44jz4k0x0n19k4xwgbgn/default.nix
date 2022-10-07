@@ -38,7 +38,7 @@ in {
 
     firewall = {
       allowedTCPPorts = [
-        8443 # unifi
+        # 8443 # unifi
         5900 # wayvnc
       ];
       allowedUDPPorts = [
@@ -99,7 +99,7 @@ in {
     accounts-daemon.enable = true;
     blueman.enable = false;
     cloudflared = {
-      enable = true;
+      enable = false;
       config = { };
     };
     cron.enable = true;
@@ -110,7 +110,7 @@ in {
       enable = true;
       forwardX11 = true;
     };
-    ipfs.enable = true;
+    ipfs.enable = false;
     pcscd.enable = true;
     printing.enable = true;
     tailscale.enable = true;
@@ -158,7 +158,7 @@ in {
     };
 
     unifi = {
-      enable = true;
+      enable = false;
       unifiPackage = pkgs.unifi;
       openFirewall = false;
     };
@@ -168,8 +168,8 @@ in {
     '';
   };
 
-  users.users.unifi.group = "unifi";
-  users.groups.unifi = { };
+  # users.users.unifi.group = "unifi";
+  # users.groups.unifi = { };
 
   users.users.tss.group = "tss";
   users.groups.tss = { };
