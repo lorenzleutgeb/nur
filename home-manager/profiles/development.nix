@@ -11,14 +11,15 @@ with builtins;
     ./programs/fzf.nix
     ./programs/gh.nix
     ./programs/git
+    ./programs/go.nix
     #./programs/isabelle.nix
     ./programs/mkcert.nix
+    ./programs/nix
     ./programs/nvim
     #./programs/libvirt
     ./programs/password-store.nix
     ./programs/ripgrep.nix
     ./programs/ssh.nix
-    ./programs/go.nix
     ./programs/cakeml.nix
     ./programs/vscode.nix
     ./programs/zsh
@@ -49,6 +50,7 @@ with builtins;
     docker-compose
     dos2unix
     droidcam
+    elan
     elfutils
     entr
     envsubst
@@ -107,7 +109,7 @@ with builtins;
     pantheon.elementary-photos
     pavucontrol
     pdfgrep
-    perl532Packages.GitAutofixup
+    #perl532Packages.GitAutofixup
     pinta
     poppler_utils
     pwgen

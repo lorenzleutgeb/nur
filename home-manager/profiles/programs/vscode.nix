@@ -28,6 +28,7 @@
       # See https://code.visualstudio.com/docs/cpp/config-linux
       # See https://code.visualstudio.com/docs/cpp/config-wsl
       ms-vscode.cpptools
+      #leanprover.lean4
       vscodevim.vim
 
       # Not packaged in Nixpkgs:
