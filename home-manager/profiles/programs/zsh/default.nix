@@ -29,6 +29,10 @@ with builtins;
       # Flash new firmware to an ErgoDox EZ keyboard.
       ez-flash =
         "wally-cli $(exa --online --sort=oldest ~/Downloads/ergodox*.hex | head -1)";
+
+      fix-interpreter = "patchelf --set-interpreter \"$(cat $NIX_CC/nix-support/dynamic-linker)\"";
+
+      poison = ". <(nix print-dev-env)"
     };
 
     zplug = {
