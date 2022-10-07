@@ -2,8 +2,7 @@
   description = "Lorenz Leutgeb's Flake";
 
   inputs = {
-    # TODO: Switch back to nixos-unstable once it advances. See https://status.nixos.org/
-    nixpkgs.url = "nixpkgs/nixos-unstable-small";
+    nixpkgs.url = "nixpkgs/nixos-unstable";
 
     home-manager = {
       url = "github:nix-community/home-manager";
