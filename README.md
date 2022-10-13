@@ -53,21 +53,11 @@ Allow unfree packages in `~/.config/nixpkgs/config.nix`:
 { allowUnfree = true; }
 ```
 
-Install Home Manager, then import the configuration in this repository via `~/.config/nixpkgs/home.nix`:
+Install Home Manager, then switch:
 
-```nix
-{ config, pkgs, ... }:
 
-{
-  imports = [
-    # Full path to desired profile(s) here.
-  ];
-  programs.home-manager.enable = true;
-  home = {
-    username = "lorenz";
-    homeDirectory = "/home/lorenz";
-  };
-}
+```
+$ home-manager -v switch --show-trace --impure --flake .#wsl
 ```
 
 Create `/run/user/$UID`:

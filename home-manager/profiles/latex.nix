@@ -19,6 +19,7 @@ with builtins;
     aspellDicts.en
     aspellDicts.en-computers
     aspellDicts.en-science
+    bibtool
     entr
     envsubst
     fd

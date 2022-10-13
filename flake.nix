@@ -78,6 +78,22 @@
             };
           };
 
+      homeConfigurations = {
+        "wsl" = home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
+          modules = [
+            ./home-manager/profiles/terminal.nix
+            ./home-manager/profiles/latex.nix
+            ./home-manager/profiles/spass.nix
+            {
+              home.username = "lorenz";
+              home.homeDirectory = "/home/lorenz";
+              programs.home-manager.enable = true;
+            }
+          ];
+        };
+      };
+
       util = rec {
         kebabCaseToCamelCase =
           replaceStrings (map (s: "-${s}") lib.lowerChars) lib.upperChars;

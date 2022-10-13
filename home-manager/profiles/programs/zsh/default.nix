@@ -32,7 +32,7 @@ with builtins;
 
       fix-interpreter = "patchelf --set-interpreter \"$(cat $NIX_CC/nix-support/dynamic-linker)\"";
 
-      poison = ". <(nix print-dev-env)"
+      poison = ". <(nix print-dev-env)";
     };
 
     zplug = {

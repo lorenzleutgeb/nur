@@ -49,8 +49,6 @@ with builtins;
     fzf
     glibcLocales
     graphviz
-    hledger
-    hledger-web
     htop
     iotop
     kbfs
