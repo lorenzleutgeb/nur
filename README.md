@@ -97,3 +97,25 @@ https://www.thomas-krenn.com/de/wiki/Partition_Alignment
 
 [man-machine-id]: https://man7.org/linux/man-pages/man5/machine-id.5.html
 [wiki-bt]: https://nixos.wiki/wiki/Bluetooth
+
+## Networking
+
+### Tailscale
+
+Look for newest `mips64` release at https://pkgs.tailscale.com/stable/#static
+
+```
+curl https://pkgs.tailscale.com/stable/tailscale_${VERSION}_mips.tgz --output tailscale.tgz
+tar xvzf tailscale.tgz
+cd tailscale*_mips
+sudo cp tailscaled.service /lib/systemd/system
+sudo cp tailscaled.defaults /etc/default/tailscaled
+sudo cp tailscale /usr/bin
+sudo cp tailscaled /usr/sbin
+sudo systemctl start tailscaled
+sudo tailscale up \
+  --advertise-exit-node \
+  --advertise-routes "192.168.1.0/24,192.168.144.0/24,192.168.156.0/24" \
+  --ssh \
+  --operator lorenz
+```
