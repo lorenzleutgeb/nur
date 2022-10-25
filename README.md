@@ -113,9 +113,28 @@ sudo cp tailscaled.defaults /etc/default/tailscaled
 sudo cp tailscale /usr/bin
 sudo cp tailscaled /usr/sbin
 sudo systemctl start tailscaled
-sudo tailscale up \
-  --advertise-exit-node \
-  --advertise-routes "192.168.1.0/24,192.168.144.0/24,192.168.156.0/24" \
-  --ssh \
-  --operator lorenz
 ```
+
+#### Vienna
+
+```
+sudo tailscale up \
+  --accept-routes=true \
+  --advertise-exit-node=true \
+  --advertise-routes=192.168.1.0/24,192.168.144.0/24,192.168.156.0/24 \
+  --operator=lorenz \
+  --snat-subnet-routes=false \
+  --ssh=true
+```
+
+#### Saarbrücken
+
+```
+sudo tailscale up \
+  --accept-routes=true \
+  --advertise-exit-node=true \
+  --advertise-routes=192.168.0.0/24 \
+  --operator=lorenz \
+  --snat-subnet-routes=false \
+  --ssh=true
+````
