@@ -122,6 +122,7 @@ sudo tailscale up \
   --accept-routes=true \
   --advertise-exit-node=true \
   --advertise-routes=192.168.1.0/24,192.168.144.0/24,192.168.156.0/24 \
+  --exit-node-allow-lan-access=true \
   --operator=lorenz \
   --snat-subnet-routes=false \
   --ssh=true
@@ -134,6 +135,7 @@ sudo tailscale up \
   --accept-routes=true \
   --advertise-exit-node=true \
   --advertise-routes=192.168.0.0/24 \
+  --exit-node-allow-lan-access=true \
   --operator=lorenz \
   --snat-subnet-routes=false \
   --ssh=true
