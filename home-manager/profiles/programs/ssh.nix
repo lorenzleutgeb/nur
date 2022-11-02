@@ -21,6 +21,11 @@
         hostname = "192.168.144.154";
         user = "root";
       };
+      "1gh3" = {
+        hostname = "100.80.204.123";
+        port = 9022;
+        user = "u0_a297";
+      };
       rg = {
         hostname = "dev.rising-gods.de";
         port = 2022;
