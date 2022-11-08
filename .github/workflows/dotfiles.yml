@@ -1,0 +1,32 @@
+name: dotfiles
+on:
+  - pull_request
+  - push
+jobs:
+  linux:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: cachix/install-nix-action@v18
+      with:
+        nix_path: "nixpkgs=channel:nixos-unstable"
+    - run: |
+        nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
+        nix-channel --update
+        nix-shell -I $HOME/.nix-defexpr/channels '<home-manager>' -A install
+    - run: home-manager -v build --show-trace --impure --flake .#wsl
+    - run: |
+        cp --verbose --dereference --recursive result dotfiles
+        chmod ug+w dotfiles
+    - working-directory: dotfiles
+      env:
+        GIT_AUTHOR_NAME: "Lorenz Leutgeb"
+        GIT_AUTHOR_EMAIL: "542154+lorenzleutgeb@users.noreply.github.com"
+        TOKEN: ${{ secrets.DOTFILES_TOKEN }}
+      run: |
+        git init --initial-branch=main
+        echo "Automatically generated. See $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" > README.md
+        git add .
+        git commit -m "$GITHUB_RUN_ID $GITHUB_RUN_ATTEMPT"
+        git remote add origin https://token:$TOKEN@github.com/lorenzleutgeb/dotfiles.git
+        git push --prune --force origin
