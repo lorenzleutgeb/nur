@@ -16,7 +16,7 @@ jobs:
         nix-shell -I $HOME/.nix-defexpr/channels '<home-manager>' -A install
     - run: home-manager -v build --show-trace --impure --flake .#wsl
     - run: |
-        cp --verbose --dereference --recursive result dotfiles
+        cp --verbose --dereference --recursive result/home-files dotfiles
         chmod ug+w dotfiles
     - working-directory: dotfiles
       env:
