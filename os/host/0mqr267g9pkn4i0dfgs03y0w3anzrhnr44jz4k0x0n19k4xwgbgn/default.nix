@@ -64,6 +64,7 @@ in {
 
   programs = {
     sedutil.enable = true;
+    nix-ld.enable = true;
     adb.enable = true;
     dconf.enable = true;
   };
