@@ -20,7 +20,11 @@ in {
       };
       efi.canTouchEfiVariables = true;
     };
-    kernel.sysctl = { "fs.inotify.max_user_watches" = 65536; };
+    kernel.sysctl = {
+      "fs.inotify.max_user_watches" = 65536;
+      "net.ipv4.ip_forward" = 1;
+      "net.ipv6.conf.all.forwarding" = 1;
+    };
   };
 
   # The global useDHCP flag is deprecated, therefore explicitly set to false here.
