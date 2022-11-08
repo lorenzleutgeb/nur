@@ -75,6 +75,6 @@ with builtins;
 
   home = {
     packages = [ pkgs.sqlite ];
-    sessionPath = [ "$HOME/.nix-profile/bin" ];
+    sessionPath = [ "$HOME/.nix-profile/bin" "/run/current-system/sw/bin" ];
   };
 }
