@@ -92,8 +92,10 @@ Merchant Article Number: MVIY6YL
 
  * ATX 12VO
  * Silent
- * DDR5 (or better) with ECC
- * PCIe 4 or better
+ * DDR5 with ECC
+ * PCIe 5
+ * USB 4
  * Intel [Raptor Lake](https://en.wikipedia.org/wiki/Raptor_Lake) or better
 
-Maybe no Xeon required anymore? https://www.heise.de/news/Intel-Alder-Lake-Core-i-Prozessoren-mit-ECC-RAM-moeglich-6541388.html
+[ECC support for Alder Lake with Intel W680](https://www.anandtech.com/show/17308/)
+
