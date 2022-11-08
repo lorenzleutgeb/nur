@@ -91,6 +91,7 @@ with builtins;
     yubikey-personalization
     yubioath-desktop
     zip
+    zola
   ];
 
   programs.atuin = {
