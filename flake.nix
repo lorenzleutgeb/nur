@@ -4,6 +4,11 @@
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-unstable";
 
+    wsl = {
+      url = "github:nix-community/nixos-wsl";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -27,7 +32,7 @@
   };
 
   outputs = inputs@{ self, nixpkgs, home-manager, simple-nixos-mailserver
-    , vscode-server, ... }:
+    , vscode-server, wsl, ... }:
     with builtins;
     with nixpkgs;
 
@@ -63,7 +68,7 @@
         live = nixosConfigurations.live.config.system.build.isoImage;
       };
 
-      nixosModules = self.util.importDirToAttrs ./os/module;
+      nixosModules = self.util.importDirToAttrs ./os/module // wsl.nixosModules;
       homeManagerModules = self.util.importDirToAttrs ./home-manager/module;
 
       nixosConfigurations =
