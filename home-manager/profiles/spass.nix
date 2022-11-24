@@ -16,11 +16,12 @@ in {
   home = {
     packages = with pkgs;
       [
+        ccache
+        doxygen
+        emacs # for etags
         gcc
         gdb
-        doxygen
         #meson ninja
-        emacs # for etags
       ] ++ libs-dynamic; # ++ libs-static;
     sessionVariables = {
       CPATH = "/home/lorenz/.nix-profile/include";
