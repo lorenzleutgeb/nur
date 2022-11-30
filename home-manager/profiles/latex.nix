@@ -4,14 +4,14 @@ with builtins;
 
 {
   imports = [
-    ./programs/bat
-    ./programs/fzf.nix
-    ./programs/gh.nix
-    ./programs/git
-    ./programs/nvim
-    ./programs/ripgrep.nix
-    ./programs/ssh.nix
-    ./programs/zsh
+    ../programs/bat
+    ../programs/fzf.nix
+    ../programs/gh.nix
+    ../programs/git
+    ../programs/nvim
+    ../programs/ripgrep.nix
+    ../programs/ssh.nix
+    ../programs/zsh
   ];
 
   home.packages = with pkgs; [

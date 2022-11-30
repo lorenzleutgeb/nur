@@ -5,22 +5,22 @@ with builtins;
 {
   imports = [
     ./common.nix
-    ./docker.nix
-    ./programs/bat
-    ./programs/direnv
-    ./programs/fzf.nix
-    ./programs/gh.nix
-    ./programs/git
-    ./programs/gpg.nix
-    ./programs/nvim
-    ./programs/password-store.nix
-    ./programs/ripgrep.nix
-    ./programs/ssh.nix
-    ./programs/tmux
-    ./programs/zsh
-    ./services/gpg-agent.nix
-    ./services/syncthing.nix
-    ./services/keybase.nix
+    ../programs/docker.nix
+    ../programs/bat
+    ../programs/direnv
+    ../programs/fzf.nix
+    ../programs/gh.nix
+    ../programs/git
+    ../programs/gpg.nix
+    ../programs/nvim
+    ../programs/password-store.nix
+    ../programs/ripgrep.nix
+    ../programs/ssh.nix
+    ../programs/tmux
+    ../programs/zsh
+    ../services/gpg-agent.nix
+    ../services/syncthing.nix
+    ../services/keybase.nix
   ];
 
   home.packages = with pkgs; [

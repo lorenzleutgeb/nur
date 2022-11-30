@@ -5,29 +5,29 @@ with builtins;
 {
   imports = [
     ./graphical.nix
-    ./programs/bat
-    ./programs/browserpass.nix
-    ./programs/firefox
-    ./programs/fzf.nix
-    ./programs/gh.nix
-    ./programs/git
-    ./programs/go.nix
-    #./programs/isabelle.nix
-    ./programs/mkcert.nix
-    ./programs/nix
-    ./programs/nvim
-    #./programs/libvirt
-    ./programs/password-store.nix
-    ./programs/ripgrep.nix
-    ./programs/ssh.nix
-    ./programs/cakeml.nix
-    ./programs/vscode.nix
-    ./programs/zsh
+    ../programs/bat
+    ../programs/browserpass.nix
+    ../programs/firefox
+    ../programs/fzf.nix
+    ../programs/gh.nix
+    ../programs/git
+    ../programs/go.nix
+    #../programs/isabelle.nix
+    ../programs/mkcert.nix
+    ../programs/nix
+    ../programs/nvim
+    #../programs/libvirt
+    ../programs/password-store.nix
+    ../programs/ripgrep.nix
+    ../programs/ssh.nix
+    ../programs/cakeml.nix
+    ../programs/vscode.nix
+    ../programs/zsh
     ./jetbrains.nix
-    ./services/flameshot.nix
-    ./services/mpris-proxy.nix
-    ./services/syncthing.nix
-    ./services/keybase.nix
+    ../services/flameshot.nix
+    ../services/mpris-proxy.nix
+    ../services/syncthing.nix
+    ../services/keybase.nix
   ];
 
   home.packages = with pkgs; [

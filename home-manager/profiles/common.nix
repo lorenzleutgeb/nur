@@ -3,7 +3,7 @@
 with builtins;
 
 {
-  imports = [ ./yubikey.nix ./scripts.nix ];
+  imports = [ ./yubikey.nix ../scripts ];
   # Let Home Manager install and manage itself.
   programs = { home-manager.enable = true; };
 

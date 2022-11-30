@@ -6,17 +6,17 @@ with builtins;
   imports = [
     ./input-method.nix
     ./terminal.nix
-    ./wm/sway
-    ./programs/alacritty
-    ./programs/browserpass.nix
-    ./programs/firefox
-    ./programs/password-store.nix
-    ./programs/spotify
-    ./programs/signal-desktop
-    ./programs/thunderbird
-    ./programs/zathura.nix
-    ./services/ulauncher.nix
-    ./services/gnome-keyring.nix
+    ./sway
+    ../programs/alacritty
+    ../programs/browserpass.nix
+    ../programs/firefox
+    ../programs/password-store.nix
+    ../programs/spotify
+    ../programs/signal-desktop
+    ../programs/thunderbird
+    ../programs/zathura.nix
+    ../services/ulauncher.nix
+    ../services/gnome-keyring.nix
   ];
 
   home.sessionVariables =

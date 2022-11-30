@@ -1,9 +1,0 @@
-!rofi.font: Anonymous Pro, Regular, 20
-rofi.font: Fira Mono, Regular, 30
-
-rofi.color-enabled: true
-
-rofi.color-normal: argb:00000000 , #ffffff       , argb:00000000 , #d4d4d4 , #000000
-rofi.color-urgent: argb:00000000 , #ffcccc       , argb:00000000 , #fba922 , #000000
-rofi.color-active: argb:00000000 , #d4d4d4       , argb:00000000 , #454545 , #000000
-rofi.color-window: argb:bb252525 , argb:ff000000 , argb:00000000
