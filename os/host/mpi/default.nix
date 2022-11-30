@@ -214,7 +214,6 @@ in {
         xdg-desktop-portal-gtk
         xdg-desktop-portal-wlr
       ];
-      gtkUsePortal = true;
     };
   };
 
