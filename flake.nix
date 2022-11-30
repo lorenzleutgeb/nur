@@ -2,7 +2,7 @@
   description = "Lorenz Leutgeb's Flake";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/release-22.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-22.11";
     wsl = {
       url = "github:nix-community/nixos-wsl";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -52,7 +52,7 @@
           config = nixosConfigurations.nc.config;
         };
 
-        mpi = nixosConfigurations.mpi.config.system.build.virtualBoxOVA;
+        #mpi = nixosConfigurations.mpi.config.system.build.virtualBoxOVA;
 
         live = nixosConfigurations.live.config.system.build.isoImage;
       };
