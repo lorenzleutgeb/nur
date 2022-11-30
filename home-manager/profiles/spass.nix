@@ -21,6 +21,7 @@ in {
         emacs # for etags
         gcc
         gdb
+        gnumake
         #meson ninja
       ] ++ libs-dynamic; # ++ libs-static;
     sessionVariables = {

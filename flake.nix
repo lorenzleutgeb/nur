@@ -20,19 +20,13 @@
       flake = false;
     };
 
-    simple-nixos-mailserver = {
-      url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     vscode-server = {
       url = "github:msteen/nixos-vscode-server";
       flake = false;
     };
   };
 
-  outputs = inputs@{ self, nixpkgs, home-manager, simple-nixos-mailserver
-    , vscode-server, wsl, ... }:
+  outputs = inputs@{ self, nixpkgs, home-manager, vscode-server, wsl, ... }:
     with builtins;
     with nixpkgs;
 
@@ -155,7 +149,6 @@
           in [
             nixpkgs.nixosModules.notDetected
             home-manager.nixosModules.home-manager
-            simple-nixos-mailserver.nixosModule
             home
             common
             local

@@ -89,7 +89,6 @@ with builtins;
     xdotool
     yubikey-personalization
     yubikey-personalization-gui
-    yubioath-desktop
     yq
     zoom-us
     zotero

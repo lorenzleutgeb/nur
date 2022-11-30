@@ -8,9 +8,9 @@ let
 in {
   enable4k = true;
 
-  imports = [];
+  imports = [ ];
 
-   wsl = {
+  wsl = {
     enable = true;
     nativeSystemd = true;
     wslConf = {
@@ -34,21 +34,20 @@ in {
   programs = {
     sedutil.enable = true;
     nix-ld.enable = true;
-    adb.enable = true;
+    adb.enable = false;
     dconf.enable = true;
   };
 
   environment = {
     systemPackages = with pkgs; [
       coreutils-full
-      dmidecode
       exfat
       lshw
       lsof
       nfs-utils
       utillinux
       which
-      tpm2-tools
+      wget
       config.boot.kernelPackages.perf
     ];
     sessionVariables.LIBVA_DRIVER_NAME = "iHD";
@@ -60,7 +59,7 @@ in {
   '';
 
   services = {
-    accounts-daemon.enable = true;
+    accounts-daemon.enable = false;
     blueman.enable = false;
     cloudflared = {
       enable = false;
@@ -91,10 +90,6 @@ in {
       #wireplumber.enable = false;
     };
 
-    sourcehut = {
-      services = [ "man" "meta" "git" "builds" "hub" "todo" "lists" ];
-    };
-
     udev = {
       packages = [ pkgs.yubikey-personalization ];
       extraRules = ''
@@ -120,16 +115,6 @@ in {
         KERNEL=="ttyACM[0-9]*", SUBSYSTEM=="tty", ATTRS{idVendor}=="1d6b", ATTRS{idProduct}=="0104", SYMLINK="ttybbb"
       '';
     };
-
-    unifi = {
-      enable = false;
-      unifiPackage = pkgs.unifi;
-      openFirewall = false;
-    };
-
-    logind.extraConfig = ''
-      RuntimeDirectorySize=24G
-    '';
   };
 
   # users.users.unifi.group = "unifi";
@@ -170,14 +155,14 @@ in {
     sudo.wheelNeedsPassword = false;
     pam = {
       u2f = {
-        enable = true;
+        enable = false;
         cue = true;
       };
       services = { "swaylock" = { }; };
     };
     rtkit.enable = true;
     tpm2 = {
-      enable = true;
+      enable = false;
       abrmd.enable = true;
     };
   };
