@@ -120,9 +120,6 @@ in {
   # users.users.unifi.group = "unifi";
   # users.groups.unifi = { };
 
-  users.users.tss.group = "tss";
-  users.groups.tss = { };
-
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.${username} = {
     isNormalUser = true;
