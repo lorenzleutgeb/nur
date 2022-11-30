@@ -2,26 +2,21 @@
   description = "Lorenz Leutgeb's Flake";
 
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-unstable";
-
+    nixpkgs.url = "github:nixos/nixpkgs/release-22.11";
     wsl = {
       url = "github:nix-community/nixos-wsl";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    # Modules
-    hardware = {
-      url = "github:NixOS/nixos-hardware";
-      flake = false;
-    };
-
     vscode-server = {
       url = "github:msteen/nixos-vscode-server";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    hardware = {
+      url = "github:NixOS/nixos-hardware";
       flake = false;
     };
   };
