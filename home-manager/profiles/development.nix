@@ -23,7 +23,7 @@ with builtins;
     ../programs/cakeml.nix
     ../programs/vscode.nix
     ../programs/zsh
-    ./jetbrains.nix
+    ../programs/jetbrains.nix
     ../services/flameshot.nix
     ../services/mpris-proxy.nix
     ../services/syncthing.nix
