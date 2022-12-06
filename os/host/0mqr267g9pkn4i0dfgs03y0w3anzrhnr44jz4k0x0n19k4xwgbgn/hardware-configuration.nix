@@ -30,10 +30,7 @@
       "vfio_virqfd"
     ];
     kernelPackages = pkgs.linuxPackages_5_10;
-    kernelParams = [
-      "intel_iommu=on"
-      "mitigations=off"
-    ];
+    kernelParams = [ "intel_iommu=on" "mitigations=off" ];
 
     extraModulePackages = with config.boot.kernelPackages; [ v4l2loopback ];
 
@@ -43,25 +40,20 @@
     '';
   };
 
-  fileSystems = {
-    "/" = {
+  fileSystems = let
+    subvol = name: {
       device = "/dev/disk/by-uuid/af3f86f8-5ca5-404e-800f-cbb4e72b953b";
       fsType = "btrfs";
-      options = [ "subvol=root" ];
+      options = [ "compress=zstd" "discard=async" "noatime" "subvol=${name}" ];
     };
+  in (builtins.listToAttrs (map (name: {
+    inherit (name)
+    ;
+    value = subvol name;
+  }) [ "root" "home" "nix" ])) // {
     "/boot" = {
       device = "/dev/disk/by-uuid/BC6E-4BA0";
       fsType = "vfat";
-    };
-    "/home" = {
-      device = "/dev/disk/by-uuid/af3f86f8-5ca5-404e-800f-cbb4e72b953b";
-      fsType = "btrfs";
-      options = [ "subvol=home" ];
-    };
-    "/nix" = {
-      device = "/dev/disk/by-uuid/af3f86f8-5ca5-404e-800f-cbb4e72b953b";
-      fsType = "btrfs";
-      options = [ "subvol=nix" ];
     };
   };
 
