@@ -48,20 +48,16 @@ with builtins;
     niv
     nixpkgs-review
     noto-fonts
-    pandoc
     pantheon.elementary-files
     pantheon.elementary-photos
     pavucontrol
-    pdfgrep
     pinta
     picard
-    poppler_utils
     portfolio
     psensor
     qnotero
     ranger
     rclone-browser
-    shellcheck
     shfmt
     siji
     skaffold
@@ -80,10 +76,7 @@ with builtins;
     #texlive.combined.scheme-full
     tmux
     #tor-browser-bundle-bin
-    travis
-    tree
     vlc
-    wally-cli
     wrangler
     xclip
     xdotool

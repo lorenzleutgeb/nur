@@ -149,7 +149,6 @@ with builtins;
     swiPrologWithGui
     tio
     tmux
-    travis
     tree
     vlc
     wally-cli

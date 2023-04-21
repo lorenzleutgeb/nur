@@ -1,4 +1,4 @@
-{ config, hardware, lib, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 with builtins;
 

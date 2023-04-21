@@ -24,10 +24,6 @@ with builtins;
   ];
 
   home.packages = with pkgs; [
-    aspell
-    aspellDicts.en
-    aspellDicts.en-computers
-    aspellDicts.en-science
     asciinema
     autojump
     beets
@@ -43,8 +39,6 @@ with builtins;
     fd
     ffmpeg
     file
-    fontconfig
-    font-awesome
     fuse
     fzf
     glibcLocales
@@ -57,7 +51,6 @@ with builtins;
     niv
     nixfmt
     nixpkgs-review
-    noto-fonts
     nvme-cli
     openssl
     pandoc
@@ -83,7 +76,6 @@ with builtins;
     sshfs-fuse
     universal-ctags
     usbutils
-    travis
     tree
     unzip
     vmtouch
