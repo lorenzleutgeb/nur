@@ -139,7 +139,14 @@ in {
     shell = pkgs.zsh;
   };
 
-  home-manager.users.${username} = import ./home-manager;
+  home-manager.users.${username}.imports = [
+    ../../../hm/profiles/latex.nix
+    ../../../hm/profiles/mpi-klsb.nix
+    ../../../hm/profiles/terminal.nix
+    ../../../hm/profiles/spass.nix
+    ../../../hm/programs/vscode.nix
+    ../../../hm/profiles/wsl.nix
+  ];
 
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).

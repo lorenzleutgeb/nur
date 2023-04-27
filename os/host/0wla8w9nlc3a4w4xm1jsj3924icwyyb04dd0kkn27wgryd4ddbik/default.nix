@@ -122,8 +122,6 @@ in {
 
   users.users.nginx.extraGroups = [ "acme" ];
 
-  home-manager.users.${username} = import ./home-manager;
-
   system.stateVersion = "20.03";
 
   security = {

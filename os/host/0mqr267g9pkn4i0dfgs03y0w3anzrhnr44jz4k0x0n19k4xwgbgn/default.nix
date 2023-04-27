@@ -201,7 +201,14 @@ in {
     shell = pkgs.zsh;
   };
 
-  home-manager.users.${username} = import ./home-manager;
+  home-manager.users.${username}.imports = [
+    ../../../hm/profiles/development.nix
+    ../../../hm/profiles/gaming.nix
+    ../../../hm/profiles/latex.nix
+    ../../../hm/profiles/mpi-klsb.nix
+    ../../../hm/profiles/services/v4lbridge.nix
+    ../../../hm/profiles/spass.nix
+  ];
 
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
@@ -280,4 +287,3 @@ in {
     };
   };
 }
-
