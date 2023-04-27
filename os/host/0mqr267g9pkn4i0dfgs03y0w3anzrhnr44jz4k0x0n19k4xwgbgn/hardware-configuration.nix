@@ -62,7 +62,6 @@
         fsType = "vfat";
       };
     };
-  };
 
   /* No swap for now, will fix later.
 
