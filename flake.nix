@@ -19,6 +19,10 @@
       url = "github:NixOS/nixos-hardware";
       flake = false;
     };
+    mpi-klsb-known-hosts = {
+      url = "https://ca.mpi-klsb.mpg.de/ssh_known_hosts";
+      flake = false;
+    };
   };
 
   outputs = inputs@{ self, nixpkgs, home-manager, vscode-server, wsl, ... }:
@@ -125,12 +129,11 @@
                   });
               };
 
-              config = {
-                home-manager = {
-                  useGlobalPkgs = true;
-                  useUserPackages = false;
-                  backupFileExtension = "bak";
-                };
+              config.home-manager = {
+                useGlobalPkgs = true;
+                useUserPackages = false;
+                backupFileExtension = "bak";
+                extraSpecialArgs.inputs = inputs;
               };
             };
             common = {

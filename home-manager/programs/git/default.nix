@@ -157,15 +157,6 @@ in {
       status = { showStash = true; };
       url = {
         "ssh://git@github.com/" = { pushInsteadOf = "https://github.com/"; };
-        "ssh://git@gitlab.mpi-klsb.mpg.de/" = {
-          insteadOf = "https://gitlab.mpi-klsb.mpg.de/";
-        };
-        "ssh://git@gitlab.mpi-sws.org/" = {
-          insteadOf = "https://gitlab.mpi-sws.org/";
-        };
-        "ssh://git@githbu.molgen.mpg.de/" = {
-          insteadOf = "https://github.molgen.mpg.de/";
-        };
         "ssh://git@github.com/" = { insteadOf = "gh:"; };
         "ssh://git@github.com/lorenzleutgeb/" = { insteadOf = "gh:ll/"; };
         "ssh://git@git.sclable.com/" = { insteadOf = "scl:"; };
@@ -193,45 +184,11 @@ in {
         smudge =
           "/home/lorenz/src/github.com/lorenzleutgeb/git-lfs-ipfs/smudge.sh %f";
       };
-      "${sub "sendemail" "de.mpg.mpi-inf"}" = {
-        smtpUser = "lorenz";
-        smtpServer = "mail.mpi-inf.mpg.de";
-      };
     };
 
-    includes = [
-      {
-        condition = "gitdir:~/src/git.sclable.com/";
-        contents.user.email = "lorenz.leutgeb@sclable.com";
-      }
-      {
-        condition = "gitdir:~/src/github.molgen.mpg.de/";
-        contents = {
-          user.email = "lorenz@mpi-inf.mpg.de";
-          sendemail.identity = "de.mpg.mpi-inf";
-        };
-      }
-      {
-        condition = "gitdir:~/src/gitlab.mpi-klsb.mpg.de/";
-        contents = {
-          user.email = "lorenz@mpi-inf.mpg.de";
-          sendemail.identity = "de.mpg.mpi-inf";
-        };
-      }
-      {
-        condition = "gitdir:~/src/gitlab.mpi-sws.org/";
-        contents = {
-          user.email = "lorenz@mpi-inf.mpg.de";
-          sendemail.identity = "de.mpg.mpi-inf";
-        };
-      }
-      {
-        condition = "gitdir:~/src/git.rg1.mpi-inf.mpg.de/";
-        contents = {
-          user.email = "lorenz@mpi-inf.mpg.de";
-          sendemail.identity = "de.mpg.mpi-inf";
-        };
-      }
-    ];
+    includes = [{
+      condition = "gitdir:~/src/git.sclable.com/";
+      contents.user.email = "lorenz.leutgeb@sclable.com";
+    }];
   };
 }

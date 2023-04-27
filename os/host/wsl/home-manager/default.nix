@@ -9,5 +9,6 @@ with builtins;
     ../../../../home-manager/programs/vscode.nix
     ../../../../home-manager/profiles/latex.nix
     ../../../../home-manager/profiles/wsl.nix
+    ../../../../home-manager/profiles/mpi-klsb.nix
   ];
 }
