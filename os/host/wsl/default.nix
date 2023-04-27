@@ -13,7 +13,13 @@ in {
   wsl = {
     enable = true;
     nativeSystemd = true;
-    wslConf.user.default = "lorenz";
+    wslConf = {
+      user.default = "lorenz";
+      network = {
+        generateHosts = false;
+        generateResolvConf = true;
+      };
+    };
     defaultUser = "lorenz";
     startMenuLaunchers = true;
 
@@ -50,11 +56,6 @@ in {
     sessionVariables.LIBVA_DRIVER_NAME = "iHD";
   };
 
-  environment.etc."NetworkManager/dnsmasq.d/tailscale.conf".text = ''
-    server=/connected-dots.org.github.beta.tailscale.net/100.100.100.100
-    server=100.100.100.100@tailscale0
-  '';
-
   services = {
     accounts-daemon.enable = false;
     blueman.enable = false;
@@ -73,19 +74,6 @@ in {
     kubo.enable = false;
     pcscd.enable = true;
     printing.enable = false;
-    tailscale.enable = true;
-
-    pipewire = {
-      enable = false;
-      alsa = {
-        enable = true;
-        support32Bit = true;
-      };
-      pulse.enable = true;
-      #jack.enable = true;
-      #media-session.enable = true;
-      #wireplumber.enable = false;
-    };
 
     udev = {
       packages = [ pkgs.yubikey-personalization ];
@@ -151,6 +139,13 @@ in {
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "20.03";
+
+  networking = {
+    networkmanager.enable = true;
+    # Configuration of DHCP per-interface was moved to hardware-configuration.nix
+    useDHCP = false;
+    hostName = "wsl";
+  };
 
   security = {
     sudo.wheelNeedsPassword = false;

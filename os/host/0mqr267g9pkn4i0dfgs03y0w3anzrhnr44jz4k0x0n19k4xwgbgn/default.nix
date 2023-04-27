@@ -8,7 +8,11 @@ let
 in {
   enable4k = true;
 
-  imports = [ ./hardware-configuration.nix ./mkcert.nix ];
+  imports = [
+    ./hardware-configuration.nix
+    ./mkcert.nix
+    ../../module/tailscale.nix
+  ];
 
   # Use the systemd-boot EFI boot loader.
   boot = {
@@ -33,11 +37,7 @@ in {
   networking = {
     # Configuration of DHCP per-interface was moved to hardware-configuration.nix
     useDHCP = false;
-    networkmanager = {
-      enable = true;
-      dns = "dnsmasq";
-    };
-    resolvconf.useLocalResolver = true;
+    networkmanager.enable = true;
     hostName = "0mqr267g9pkn4i0dfgs03y0w3anzrhnr44jz4k0x0n19k4xwgbgn";
 
     firewall = {

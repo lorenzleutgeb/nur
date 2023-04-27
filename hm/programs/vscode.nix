@@ -11,8 +11,7 @@
 
       "update.channel" = "none";
 
-      # TODO: Get rid of hardcoded Tailscale IPs
-      "remote.SSH.remotePlatform"."100.85.40.10" = "linux";
+      "remote.SSH.remotePlatform"."0mqr.fluffy-ordinal.ts.net" = "linux";
 
       "rust-analyzer.updates.askBeforeDownload" = false;
     };
