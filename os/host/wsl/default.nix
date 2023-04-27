@@ -13,10 +13,7 @@ in {
   wsl = {
     enable = true;
     nativeSystemd = true;
-    wslConf = {
-      automount.root = "/mnt";
-      user.default = "lorenz";
-    };
+    wslConf.user.default = "lorenz";
     defaultUser = "lorenz";
     startMenuLaunchers = true;
 

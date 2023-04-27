@@ -24,7 +24,8 @@ in {
 
   xdg = {
     mimeApps.defaultApplications = {
-      "*" = "explorer";
+      "*" = "explorer.desktop";
+      "application/pdf" = "explorer.desktop";
       "x-scheme-handler/http" = "explorer.desktop";
       "x-scheme-handler/https" = "explorer.desktop";
       "x-scheme-handler/about" = "explorer.desktop";
