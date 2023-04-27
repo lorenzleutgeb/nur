@@ -19,6 +19,10 @@
       url = "github:NixOS/nixos-hardware";
       flake = false;
     };
+    mpi-klsb-known-hosts = {
+      url = "https://ca.mpi-klsb.mpg.de/ssh_known_hosts";
+      flake = false;
+    };
   };
 
   outputs = inputs@{ self, nixpkgs, home-manager, vscode-server, wsl, ... }:
@@ -58,7 +62,7 @@
       };
 
       nixosModules = self.util.importDirToAttrs ./os/module // wsl.nixosModules;
-      homeManagerModules = self.util.importDirToAttrs ./home-manager/module;
+      homeManagerModules = self.util.importDirToAttrs ./hm/module;
 
       nixosConfigurations =
         ((pkgs.lib.mapAttrs (id: _: self.util.nixosSystemFor id { })
@@ -76,9 +80,9 @@
         "wsl" = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
           modules = [
-            ./home-manager/profiles/terminal.nix
-            ./home-manager/profiles/latex.nix
-            ./home-manager/profiles/spass.nix
+            ./hm/profiles/terminal.nix
+            ./hm/profiles/latex.nix
+            ./hm/profiles/spass.nix
             {
               home.username = "lorenz";
               home.homeDirectory = "/home/lorenz";
@@ -115,7 +119,7 @@
                   attrsOf (submoduleWith {
                     specialArgs = specialArgs // {
                       super = config;
-                      # profiles = self.lib.importDirToAttrs ./home-manager/profiles;
+                      # profiles = self.lib.importDirToAttrs ./hm/profiles;
                     };
                     modules = [
                       # emacs-config.homeManagerModules.emacsConfig
@@ -125,12 +129,11 @@
                   });
               };
 
-              config = {
-                home-manager = {
-                  useGlobalPkgs = true;
-                  useUserPackages = false;
-                  backupFileExtension = "bak";
-                };
+              config.home-manager = {
+                useGlobalPkgs = true;
+                useUserPackages = false;
+                backupFileExtension = "bak";
+                extraSpecialArgs.inputs = inputs;
               };
             };
             common = {

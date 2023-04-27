@@ -34,11 +34,11 @@
     "hardware": {
       "flake": false,
       "locked": {
-        "lastModified": 1669650994,
-        "narHash": "sha256-uwASLUfedIQ5q01TtMwZDEV2HCZr5nVPZjzVgCG+D5I=",
+        "lastModified": 1680876084,
+        "narHash": "sha256-eP9yxP0wc7XuVaODugh+ajgbFGaile2O1ihxiLxOuvU=",
         "owner": "NixOS",
         "repo": "nixos-hardware",
-        "rev": "7883883d135ce5b7eae5dce4bfa12262b85c1c46",
+        "rev": "3006d2860a6ed5e01b0c3e7ffb730e9b293116e2",
         "type": "github"
       },
       "original": {
@@ -51,15 +51,14 @@
       "inputs": {
         "nixpkgs": [
           "nixpkgs"
-        ],
-        "utils": "utils"
+        ]
       },
       "locked": {
-        "lastModified": 1669805139,
-        "narHash": "sha256-ry0PkAAJg09tg5Y81sNJteiU7LsiIIgGk947Xa3hzkA=",
+        "lastModified": 1682176386,
+        "narHash": "sha256-xwYjQ8PjfdHlggi8Dq0PXWby/1oXegSUuNuBvoTcnpA=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "e38ce0ae16b68515c913ab50177bc7624f65f569",
+        "rev": "6169690ae38175295605d521bd778d999fbd85cd",
         "type": "github"
       },
       "original": {
@@ -68,13 +67,25 @@
         "type": "github"
       }
     },
+    "mpi-klsb-known-hosts": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-4T5+Lnr9Tohpz+3rbDFnheVNMnaB1LbIKKJVbvmqZDU=",
+        "type": "file",
+        "url": "https://ca.mpi-klsb.mpg.de/ssh_known_hosts"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://ca.mpi-klsb.mpg.de/ssh_known_hosts"
+      }
+    },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1669735802,
-        "narHash": "sha256-qtG/o/i5ZWZLmXw108N2aPiVsxOcidpHJYNkT45ry9Q=",
+        "lastModified": 1682134069,
+        "narHash": "sha256-TnI/ZXSmRxQDt2sjRYK/8j8iha4B4zP2cnQCZZ3vp7k=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "731cc710aeebecbf45a258e977e8b68350549522",
+        "rev": "fd901ef4bf93499374c5af385b2943f5801c0833",
         "type": "github"
       },
       "original": {
@@ -88,24 +99,10 @@
       "inputs": {
         "hardware": "hardware",
         "home-manager": "home-manager",
+        "mpi-klsb-known-hosts": "mpi-klsb-known-hosts",
         "nixpkgs": "nixpkgs",
         "vscode-server": "vscode-server",
         "wsl": "wsl"
-      }
-    },
-    "utils": {
-      "locked": {
-        "lastModified": 1667395993,
-        "narHash": "sha256-nuEHfE/LcWyuSWnS8t12N1wc105Qtau+/OdUAjtQ0rA=",
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "rev": "5aed5285a952e0b949eb3ba02c12fa4fcfef535f",
-        "type": "github"
-      },
-      "original": {
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "type": "github"
       }
     },
     "vscode-server": {

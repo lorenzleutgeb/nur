@@ -8,7 +8,11 @@ let
 in {
   enable4k = true;
 
-  imports = [ ./hardware-configuration.nix ./mkcert.nix ];
+  imports = [
+    ./hardware-configuration.nix
+    ./mkcert.nix
+    ../../module/tailscale.nix
+  ];
 
   # Use the systemd-boot EFI boot loader.
   boot = {
@@ -33,11 +37,7 @@ in {
   networking = {
     # Configuration of DHCP per-interface was moved to hardware-configuration.nix
     useDHCP = false;
-    networkmanager = {
-      enable = true;
-      dns = "dnsmasq";
-    };
-    resolvconf.useLocalResolver = true;
+    networkmanager.enable = true;
     hostName = "0mqr267g9pkn4i0dfgs03y0w3anzrhnr44jz4k0x0n19k4xwgbgn";
 
     firewall = {
@@ -208,7 +208,14 @@ in {
     shell = pkgs.zsh;
   };
 
-  home-manager.users.${username} = import ./home-manager;
+  home-manager.users.${username}.imports = [
+    ../../../hm/profiles/development.nix
+    ../../../hm/profiles/gaming.nix
+    ../../../hm/profiles/latex.nix
+    ../../../hm/profiles/mpi-klsb.nix
+    ../../../hm/profiles/services/v4lbridge.nix
+    ../../../hm/profiles/spass.nix
+  ];
 
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
@@ -288,4 +295,3 @@ in {
     };
   };
 }
-

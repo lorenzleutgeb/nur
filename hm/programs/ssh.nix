@@ -2,12 +2,6 @@
 
 {
   home.file.".ssh/config_dns".text = ''
-    VerifyHostKeyDNS yes
-  '';
-
-  home.file.".ssh/config_jumphost".text = ''
-    Match host *.mpi-inf.mpg.de,!contact.mpi-inf.mpg.de !exec "ip -4 -o a show up scope global | grep 139.19."
-      ProxyJump contact.mpi-inf.mpg.de
   '';
 
   programs.ssh = {
@@ -57,7 +51,9 @@
         user = "e1127842";
       };
     };
-    includes =
-      [ "/home/lorenz/.ssh/config_dns" "/home/lorenz/.ssh/config_jumphost" ];
+    extraConfig = ''
+      VerifyHostKeyDNS yes
+      VisualHostkey yes
+    '';
   };
 }
