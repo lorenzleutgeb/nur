@@ -13,7 +13,7 @@ with builtins;
     ../programs/password-store.nix
     ../programs/spotify
     ../programs/signal-desktop
-    ../programs/thunderbird
+    ../programs/thunderbird.nix
     ../programs/zathura.nix
     ../services/ulauncher.nix
     ../services/gnome-keyring.nix
