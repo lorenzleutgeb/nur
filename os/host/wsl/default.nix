@@ -21,13 +21,8 @@ in {
       };
     };
     defaultUser = "lorenz";
-    startMenuLaunchers = true;
-
-    # Enable native Docker support
-    # docker-native.enable = true;
-
-    # Enable integration with Docker Desktop (needs to be installed)
-    # docker-desktop.enable = true;
+    startMenuLaunchers = false;
+    docker-desktop.enable = true;
   };
 
   # Set your time zone.
@@ -37,7 +32,6 @@ in {
   programs = {
     sedutil.enable = true;
     nix-ld.enable = true;
-    adb.enable = false;
     dconf.enable = true;
   };
 
@@ -53,19 +47,10 @@ in {
       wget
       config.boot.kernelPackages.perf
     ];
-    sessionVariables.LIBVA_DRIVER_NAME = "iHD";
   };
 
   services = {
-    accounts-daemon.enable = false;
-    blueman.enable = false;
-    cloudflared = {
-      enable = false;
-      config = { };
-    };
     cron.enable = true;
-    flatpak.enable = false;
-    fwupd.enable = false;
     #journald.extraConfig = "ReadKMsg=no";
     openssh = {
       enable = true;
@@ -74,32 +59,6 @@ in {
     kubo.enable = false;
     pcscd.enable = true;
     printing.enable = false;
-
-    udev = {
-      packages = [ pkgs.yubikey-personalization ];
-      extraRules = ''
-        # Teensy rules for the Ergodox EZ
-        # See https://github.com/zsa/wally/wiki/Linux-install#2-create-a-udev-rule-file
-        ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="04[789B]?", ENV{ID_MM_DEVICE_IGNORE}="1"
-        ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="04[789A]?", ENV{MTP_NO_PROBE}="1"
-        SUBSYSTEMS=="usb", ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="04[789ABCD]?", MODE:="0666"
-        KERNEL=="ttyACM*", ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="04[789B]?", MODE:="0666"
-
-        # Tobii 4C
-        SUBSYSTEM=="usb", ATTRS{idVendor}=="2104", ATTRS{idProduct}=="0118", GROUP="plugdev", MODE="0666", TAG+="uaccess"
-
-        # TODO: Find out why this does not work and re-enable.
-        # Prevent Logitech G500 Laser Mouse from waking up the system
-        # This is very fragile, since the physical port that the mouse is plugged into is hardcoded.
-        # https://wiki.archlinux.org/index.php/udev#Waking_from_suspend_with_USB_device
-        #SUBSYSTEMS=="usb", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="c068", SYMLINK+="logitech_g500"
-        #ACTION=="add", SUBSYSTEM=="usb", DRIVERS=="usb", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="c068", ATTR{driver/2-13.3.2/power/wakeup}="disabled"
-        #ACTION=="add", SUBSYSTEM=="usb", DRIVERS=="usb", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="c068", RUN+="${pkgs.bash}/bin/bash -c 'echo $env{DEVPATH} >> /home/lorenz/log'"
-
-        # BeagleBone Black gets /dev/ttybbb
-        KERNEL=="ttyACM[0-9]*", SUBSYSTEM=="tty", ATTRS{idVendor}=="1d6b", ATTRS{idProduct}=="0104", SYMLINK="ttybbb"
-      '';
-    };
   };
 
   # users.users.unifi.group = "unifi";
@@ -112,14 +71,10 @@ in {
     home = "/home/${username}";
     description = name;
     extraGroups = [
-      "adbusers"
-      "audio"
       "disk"
       "docker"
-      "libvirtd"
       "plugdev"
       "networkmanager"
-      "vboxusers"
       "video"
       "wheel"
     ];
@@ -141,9 +96,8 @@ in {
   system.stateVersion = "20.03";
 
   networking = {
+    firewall.enable = false;
     networkmanager.enable = true;
-    # Configuration of DHCP per-interface was moved to hardware-configuration.nix
-    useDHCP = false;
     hostName = "wsl";
   };
 
@@ -154,13 +108,8 @@ in {
         enable = false;
         cue = true;
       };
-      services = { "swaylock" = { }; };
     };
     rtkit.enable = true;
-    tpm2 = {
-      enable = false;
-      abrmd.enable = true;
-    };
   };
 
   # If adding a font here does not work, try running
@@ -177,7 +126,6 @@ in {
       enable = true;
       enableOnBoot = false;
     };
-    virtualbox.host.enable = false;
     libvirtd = {
       enable = false;
       qemu.package = pkgs.qemu_kvm;
@@ -197,19 +145,9 @@ in {
       keep-outputs = true
     '';
   };
+
   nixpkgs.config = {
     allowUnfree = true;
-    #allowBroken = true;
-  };
-
-  xdg = {
-    portal = {
-      enable = true;
-      extraPortals = with pkgs; [
-        xdg-desktop-portal-gtk
-        xdg-desktop-portal-wlr
-      ];
-    };
   };
 
   fonts.fontconfig = {

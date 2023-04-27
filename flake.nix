@@ -35,14 +35,64 @@
         inherit system;
         overlays = builtins.attrValues self.overlays;
         config.allowUnfree = true;
-        #config.allowBroken = true;
       };
       makeDiskImage = (import "${nixpkgs}/nixos/lib/make-disk-image.nix");
+
+      kebabCaseToCamelCase =
+        replaceStrings (map (s: "-${s}") lib.lowerChars) lib.upperChars;
+
+      importDirToAttrs = dir:
+        listToAttrs (map (name: {
+          name = kebabCaseToCamelCase (lib.removeSuffix ".nix" name);
+          value = import (dir + "/${name}");
+        }) (attrNames (readDir dir)));
+
+      nixosSystemFor = let
+        specialArgs = ;
+      in preconfig:
+      lib.nixosSystem {
+        inherit system specialArgs;
+
+        modules = let
+          home = { config, ... }: {
+            options.home-manager.users = lib.mkOption {
+              type = with lib.types;
+                attrsOf (submoduleWith {
+                  specialArgs = specialArgs // {
+                    inputs = inputs;
+                    super = config;
+                  };
+                  modules = [
+                    "${vscode-server}/modules/vscode-server/home.nix"
+                  ] ++ (builtins.attrValues (importDirToAttrs ./hm/module));
+                });
+            };
+
+            config.home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = false;
+              backupFileExtension = "bak";
+              extraSpecialArgs.inputs = inputs;
+            };
+          };
+          common = {
+            system.stateVersion = "20.03";
+            system.configurationRevision = pkgs.lib.mkIf (self ? rev) self.rev;
+            nixpkgs = { inherit pkgs; };
+            nix.registry.nixpkgs.flake = nixpkgs;
+          };
+        in [
+          nixpkgs.nixosModules.notDetected
+          home-manager.nixosModules.home-manager
+          wsl.nixosModules.wsl
+          home
+          common
+          preconfig
+        ] ++ (pkgs.lib.attrValues self.nixosModules);
+      };
+
     in rec {
-      overlay = self.overlays.pkgs;
-      overlays = {
-        pkgs = import ./pkg;
-      } // self.util.importDirToAttrs ./overlay;
+      overlays = { pkgs = import ./pkg; } // importDirToAttrs ./overlay;
 
       packages.${system} = {
         inherit (pkgs) kmonad-bin;
@@ -55,103 +105,20 @@
           format = "qcow2";
           config = nixosConfigurations.nc.config;
         };
-
-        #mpi = nixosConfigurations.mpi.config.system.build.virtualBoxOVA;
-
         live = nixosConfigurations.live.config.system.build.isoImage;
       };
 
-      nixosModules = self.util.importDirToAttrs ./os/module // wsl.nixosModules;
-      homeManagerModules = self.util.importDirToAttrs ./hm/module;
+      nixosModules = importDirToAttrs ./os/module;
 
       nixosConfigurations =
-        ((pkgs.lib.mapAttrs (id: _: self.util.nixosSystemFor id { })
-          (builtins.readDir ./os/host))) // {
+        ((mapAttrs (id: _: nixosSystemFor (import (./os/host + "/${id}")))
+          (readDir ./os/host))) // {
             live = lib.nixosSystem {
               inherit system;
               modules = [
                 "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-graphical-gnome.nix"
-                { boot.kernelPackages = pkgs.linuxPackages_5_14; }
               ];
             };
           };
-
-      homeConfigurations = {
-        "wsl" = home-manager.lib.homeManagerConfiguration {
-          inherit pkgs;
-          modules = [
-            ./hm/profiles/terminal.nix
-            ./hm/profiles/latex.nix
-            ./hm/profiles/spass.nix
-            {
-              home.username = "lorenz";
-              home.homeDirectory = "/home/lorenz";
-              programs.home-manager.enable = true;
-            }
-          ];
-        };
-      };
-
-      util = rec {
-        kebabCaseToCamelCase =
-          replaceStrings (map (s: "-${s}") lib.lowerChars) lib.upperChars;
-
-        importDirToAttrs = dir:
-          listToAttrs (map (name: {
-            name = kebabCaseToCamelCase (lib.removeSuffix ".nix" name);
-            value = import (dir + "/${name}");
-          }) (attrNames (readDir dir)));
-
-        nixosSystemFor = let
-          specialArgs = {
-            inherit (self.inputs) hardware nixpkgs;
-            # profiles = self.lib.importDirToAttrs ./nixos/profiles;
-          };
-        in id:
-        { extraModules ? [ ], ... }@args:
-        lib.nixosSystem {
-          inherit system specialArgs;
-
-          modules = let
-            home = { config, ... }: {
-              options.home-manager.users = lib.mkOption {
-                type = with lib.types;
-                  attrsOf (submoduleWith {
-                    specialArgs = specialArgs // {
-                      super = config;
-                      # profiles = self.lib.importDirToAttrs ./hm/profiles;
-                    };
-                    modules = [
-                      # emacs-config.homeManagerModules.emacsConfig
-                      # "${vsliveshare}/modules/vsliveshare/home.nix"
-                      "${vscode-server}/modules/vscode-server/home.nix"
-                    ] ++ (builtins.attrValues self.homeManagerModules);
-                  });
-              };
-
-              config.home-manager = {
-                useGlobalPkgs = true;
-                useUserPackages = false;
-                backupFileExtension = "bak";
-                extraSpecialArgs.inputs = inputs;
-              };
-            };
-            common = {
-              system.stateVersion = "20.03";
-              system.configurationRevision =
-                pkgs.lib.mkIf (self ? rev) self.rev;
-              nixpkgs = { inherit pkgs; };
-              nix.registry.nixpkgs.flake = nixpkgs;
-            };
-            local = import (./os/host + "/${id}");
-          in [
-            nixpkgs.nixosModules.notDetected
-            home-manager.nixosModules.home-manager
-            home
-            common
-            local
-          ] ++ (pkgs.lib.attrValues self.nixosModules) ++ extraModules;
-        };
-      };
     };
 }

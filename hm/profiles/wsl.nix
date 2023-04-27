@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, super, ... }:
 
 let explorer = pkgs.writeShellScriptBin "explorer" ''
   # This script assumes that it is run from within
@@ -15,6 +15,8 @@ let explorer = pkgs.writeShellScriptBin "explorer" ''
   exit 0
 '';
 in {
+  home.file."id".text = super.networking.hostName;
+
   home.sessionVariables.BROWSER = explorer;
 
   programs.zsh.shellAliases = {

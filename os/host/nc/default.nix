@@ -1,4 +1,4 @@
-{ hardware, lib, pkgs, modulesPath, ... }:
+{ lib, pkgs, modulesPath, ... }:
 
 with builtins;
 
@@ -65,7 +65,6 @@ in {
         prefixLength = 64;
       }];
     };
-    trustedInterfaces = [ "tailscale0" ];
   };
 
   time.timeZone = "Europe/Vienna";
@@ -160,7 +159,6 @@ in {
     [ "theressophie@gmail.com" "${me.email}" ];
 
   services = {
-    tailscale.enable = true;
     qemuGuest.enable = true;
     openssh = {
       enable = true;
