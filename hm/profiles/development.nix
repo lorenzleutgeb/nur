@@ -23,7 +23,7 @@ with builtins;
     ../programs/cakeml.nix
     ../programs/vscode.nix
     ../programs/zsh
-    ./jetbrains.nix
+    ../programs/jetbrains.nix
     ../services/flameshot.nix
     ../services/mpris-proxy.nix
     ../services/syncthing.nix
@@ -141,7 +141,6 @@ with builtins;
     obs-studio
     #obs-v4l2sink
     #nodejs
-    texlive.combined.scheme-full
     roboto
     roboto-mono
     roboto-slab
