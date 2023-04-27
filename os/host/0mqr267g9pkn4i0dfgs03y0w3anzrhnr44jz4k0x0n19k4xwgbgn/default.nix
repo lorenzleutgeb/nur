@@ -10,7 +10,7 @@ in {
 
   imports = [
     ./hardware-configuration.nix
-    ./mkcert.nix
+    ../../module/mkcert.nix
     ../../module/tailscale.nix
   ];
 
@@ -213,7 +213,7 @@ in {
     ../../../hm/profiles/gaming.nix
     ../../../hm/profiles/latex.nix
     ../../../hm/profiles/mpi-klsb.nix
-    ../../../hm/profiles/services/v4lbridge.nix
+    ../../../hm/services/v4lbridge.nix
     ../../../hm/profiles/spass.nix
   ];
 
