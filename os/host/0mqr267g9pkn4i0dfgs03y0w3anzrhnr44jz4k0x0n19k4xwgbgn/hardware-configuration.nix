@@ -40,22 +40,28 @@
     '';
   };
 
-  fileSystems = let
-    subvol = name: {
-      device = "/dev/disk/by-uuid/af3f86f8-5ca5-404e-800f-cbb4e72b953b";
-      fsType = "btrfs";
-      options = [ "compress=zstd" "discard=async" "noatime" "subvol=${name}" ];
+  fileSystems = (builtins.listToAttrs (map
+    ({ subvol, mountpoint ? "/${subvol}" }: {
+      name = mountpoint;
+      value = {
+        device = "/dev/disk/by-uuid/af3f86f8-5ca5-404e-800f-cbb4e72b953b";
+        fsType = "btrfs";
+        options =
+          [ "compress=zstd" "discard=async" "noatime" "subvol=${subvol}" ];
+      };
+    }) [
+      {
+        mountpoint = "/";
+        subvol = "root";
+      }
+      { subvol = "home"; }
+      { subvol = "nix"; }
+    ])) // {
+      "/boot" = {
+        device = "/dev/disk/by-uuid/BC6E-4BA0";
+        fsType = "vfat";
+      };
     };
-  in (builtins.listToAttrs (map (name: {
-    inherit (name)
-    ;
-    value = subvol name;
-  }) [ "root" "home" "nix" ])) // {
-    "/boot" = {
-      device = "/dev/disk/by-uuid/BC6E-4BA0";
-      fsType = "vfat";
-    };
-  };
 
   /* No swap for now, will fix later.
 

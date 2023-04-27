@@ -44,10 +44,14 @@ in {
       allowedTCPPorts = [
         # 8443 # unifi
         5900 # wayvnc
+        8384 # syncthing
       ];
       allowedUDPPorts = [
         # 9 # Debugging Wake-on-LAN
       ];
+      # Strict reverse path filtering breaks Tailscale exit node use and
+      # some subnet routing setups.
+      checkReversePath = "loose";
     };
   };
 
@@ -85,8 +89,6 @@ in {
     sessionVariables.LIBVA_DRIVER_NAME = "iHD";
   };
 
-  sound.enable = true;
-
   environment.etc."NetworkManager/dnsmasq.d/interface.conf".text = ''
     interface=lo
   '';
@@ -120,7 +122,7 @@ in {
       enable = true;
       forwardX11 = true;
     };
-    ipfs.enable = false;
+    kubo.enable = false;
     pcscd.enable = true;
     printing.enable = true;
     tailscale.enable = true;
@@ -132,9 +134,9 @@ in {
         support32Bit = true;
       };
       pulse.enable = true;
-      jack.enable = true;
-      media-session.enable = true;
-      wireplumber.enable = false;
+      #jack.enable = true;
+      #media-session.enable = true;
+      #wireplumber.enable = false;
     };
 
     sourcehut = {
@@ -253,6 +255,7 @@ in {
     package = pkgs.nixFlakes;
     settings = {
       substituters = [ "https://lean4.cachix.org/" ];
+      trusted-users = [ username ];
       trusted-public-keys =
         [ "lean4.cachix.org-1:mawtxSxcaiWE24xCXXgh3qnvlTkyU7evRRnGeAhD4Wk=" ];
     };
