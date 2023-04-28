@@ -47,19 +47,16 @@
           value = import (dir + "/${name}");
         }) (attrNames (readDir dir)));
 
-      nixosSystemFor = let
-        specialArgs = ;
-      in preconfig:
+      nixosSystemFor = preconfig:
       lib.nixosSystem {
-        inherit system specialArgs;
+        inherit system;
 
         modules = let
           home = { config, ... }: {
             options.home-manager.users = lib.mkOption {
               type = with lib.types;
                 attrsOf (submoduleWith {
-                  specialArgs = specialArgs // {
-                    inputs = inputs;
+                  specialArgs = {
                     super = config;
                   };
                   modules = [
@@ -106,6 +103,7 @@
           config = nixosConfigurations.nc.config;
         };
         live = nixosConfigurations.live.config.system.build.isoImage;
+        wsl = nixosConfigurations.wsl.config.system.build.installer;
       };
 
       nixosModules = importDirToAttrs ./os/module;
