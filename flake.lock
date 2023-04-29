@@ -70,7 +70,7 @@
     "mpi-klsb-known-hosts": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-4T5+Lnr9Tohpz+3rbDFnheVNMnaB1LbIKKJVbvmqZDU=",
+        "narHash": "sha256-wdmflehkJKQGm4ELrxcuFQYC7vwYEicueaMCi2bjSeg=",
         "type": "file",
         "url": "https://ca.mpi-klsb.mpg.de/ssh_known_hosts"
       },

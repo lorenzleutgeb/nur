@@ -9,13 +9,12 @@ in {
     tailscale.enable = true;
     resolved = {
       enable = true;
-      domains = [ tailnetName ];
-      fallbackDns = builtins.map (ip: "${ip}#${nextDns.hostname}") [
+      fallbackDns = (builtins.map (ip: "${ip}#${nextDns.hostname}") [
         "45.90.28.0"
         "2a07:a8c0::"
         "45.90.30.0"
         "2a07:a8c1::"
-      ];
+      ]) ++ [ "1.1.1.1#one.one.one.one." "1.1.1.1" ];
       extraConfig = ''
         DNSOverTLS=yes
       '';
@@ -25,5 +24,21 @@ in {
   networking = {
     search = [ tailnetName ];
     firewall.trustedInterfaces = [ "tailscale0" ];
+  };
+
+  systemd = {
+    services.systemd-resolved = {
+      enable = true;
+      #serviceConfig.Environment = "SYSTEMD_LOG_LEVEL=debug";
+    };
+    network = {
+      enable = false; # TODO: Work out how networkd is compatible with WSL.
+      networks."tailscale0" = {
+        enable = true;
+        name = "tailscale0";
+        dns = [ "100.100.100.100" ];
+        domains = [ tailnetName ];
+      };
+    };
   };
 }

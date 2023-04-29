@@ -8,7 +8,7 @@ let
 in {
   enable4k = true;
 
-  imports = [ ];
+  imports = [ ../../module/tailscale.nix ];
 
   wsl = {
     enable = true;
@@ -17,12 +17,12 @@ in {
       user.default = "lorenz";
       network = {
         generateHosts = false;
-        generateResolvConf = true;
+        generateResolvConf = false;
       };
     };
     defaultUser = "lorenz";
     startMenuLaunchers = false;
-    docker-desktop.enable = true;
+    #docker-desktop.enable = true;
   };
 
   # Set your time zone.
@@ -70,14 +70,8 @@ in {
     createHome = true;
     home = "/home/${username}";
     description = name;
-    extraGroups = [
-      "disk"
-      "docker"
-      "plugdev"
-      "networkmanager"
-      "video"
-      "wheel"
-    ];
+    extraGroups =
+      [ "disk" "docker" "plugdev" "networkmanager" "video" "wheel" ];
     uid = 1000;
     shell = pkgs.zsh;
   };
@@ -146,9 +140,7 @@ in {
     '';
   };
 
-  nixpkgs.config = {
-    allowUnfree = true;
-  };
+  nixpkgs.config = { allowUnfree = true; };
 
   fonts.fontconfig = {
     allowBitmaps = false;
