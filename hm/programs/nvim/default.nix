@@ -5,11 +5,11 @@ with builtins;
 {
   home = {
     packages = with pkgs; [ neovim-remote haskellPackages.miv powerline-fonts ];
-    sessionVariables.EDITOR = "${config.programs.neovim.package}/bin/nvim";
   };
 
   programs.neovim = {
     enable = true;
+    defaultEditor = true;
     vimAlias = true;
     extraConfig = readFile ./init.vim;
     plugins = with pkgs.vimPlugins; [ ];
