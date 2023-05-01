@@ -15,6 +15,10 @@
       url = "github:msteen/nixos-vscode-server";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    sops = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     hardware = {
       url = "github:NixOS/nixos-hardware";
       flake = false;
@@ -25,7 +29,8 @@
     };
   };
 
-  outputs = inputs@{ self, nixpkgs, home-manager, vscode-server, wsl, ... }:
+  outputs =
+    inputs@{ self, nixpkgs, home-manager, vscode-server, wsl, sops, ... }:
     with builtins;
     with nixpkgs;
 
@@ -48,45 +53,45 @@
         }) (attrNames (readDir dir)));
 
       nixosSystemFor = preconfig:
-      lib.nixosSystem {
-        inherit system;
+        lib.nixosSystem {
+          inherit system;
 
-        modules = let
-          home = { config, ... }: {
-            options.home-manager.users = lib.mkOption {
-              type = with lib.types;
-                attrsOf (submoduleWith {
-                  specialArgs = {
-                    super = config;
-                  };
-                  modules = [
-                    "${vscode-server}/modules/vscode-server/home.nix"
-                  ] ++ (builtins.attrValues (importDirToAttrs ./hm/module));
-                });
-            };
+          modules = let
+            home = { config, ... }: {
+              options.home-manager.users = lib.mkOption {
+                type = with lib.types;
+                  attrsOf (submoduleWith {
+                    specialArgs = { super = config; };
+                    modules =
+                      [ "${vscode-server}/modules/vscode-server/home.nix" ]
+                      ++ (builtins.attrValues (importDirToAttrs ./hm/module));
+                  });
+              };
 
-            config.home-manager = {
-              useGlobalPkgs = true;
-              useUserPackages = false;
-              backupFileExtension = "bak";
-              extraSpecialArgs.inputs = inputs;
+              config.home-manager = {
+                useGlobalPkgs = true;
+                useUserPackages = false;
+                backupFileExtension = "bak";
+                extraSpecialArgs.inputs = inputs;
+              };
             };
-          };
-          common = {
-            system.stateVersion = "20.03";
-            system.configurationRevision = pkgs.lib.mkIf (self ? rev) self.rev;
-            nixpkgs = { inherit pkgs; };
-            nix.registry.nixpkgs.flake = nixpkgs;
-          };
-        in [
-          nixpkgs.nixosModules.notDetected
-          home-manager.nixosModules.home-manager
-          wsl.nixosModules.wsl
-          home
-          common
-          preconfig
-        ] ++ (pkgs.lib.attrValues self.nixosModules);
-      };
+            common = {
+              system.stateVersion = "20.03";
+              system.configurationRevision =
+                pkgs.lib.mkIf (self ? rev) self.rev;
+              nixpkgs = { inherit pkgs; };
+              nix.registry.nixpkgs.flake = nixpkgs;
+            };
+          in [
+            nixpkgs.nixosModules.notDetected
+            home-manager.nixosModules.home-manager
+            sops.nixosModules.sops
+            wsl.nixosModules.wsl
+            home
+            common
+            preconfig
+          ] ++ (pkgs.lib.attrValues self.nixosModules);
+        };
 
     in rec {
       overlays = { pkgs = import ./pkg; } // importDirToAttrs ./overlay;

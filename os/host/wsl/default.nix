@@ -42,10 +42,13 @@ in {
       lshw
       lsof
       nfs-utils
+      age
       utillinux
       which
       wget
       config.boot.kernelPackages.perf
+      sops
+      ssh-to-age
     ];
   };
 
@@ -55,6 +58,10 @@ in {
     openssh = {
       enable = true;
       forwardX11 = true;
+      hostKeys = [{
+        path = config.sops.secrets."ssh/key".path;
+        type = "ed25519";
+      }];
     };
     kubo.enable = false;
     pcscd.enable = true;
@@ -148,6 +155,11 @@ in {
       sansSerif = [ "Fira Sans" "DejaVu Sans" ];
       monospace = [ "Fira Mono" "DejaVu Sans Mono" ];
     };
+  };
+
+  sops = {
+    age.sshKeyPaths = [ config.sops.secrets."ssh/key".path ];
+    secrets."ssh/key" = { sopsFile = ./sops/ssh.yaml; };
   };
 }
 
