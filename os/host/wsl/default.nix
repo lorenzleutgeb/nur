@@ -59,10 +59,6 @@ in {
     openssh = {
       enable = true;
       forwardX11 = true;
-      hostKeys = [{
-        path = config.sops.secrets."ssh/key".path;
-        type = "ed25519";
-      }];
     };
     kubo.enable = false;
     pcscd.enable = true;
