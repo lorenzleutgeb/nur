@@ -13,7 +13,6 @@ with builtins;
     ../programs/git
     ../programs/go.nix
     #../programs/isabelle.nix
-    ../programs/mkcert.nix
     ../programs/nix
     ../programs/nvim
     #../programs/libvirt

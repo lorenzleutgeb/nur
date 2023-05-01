@@ -8,7 +8,11 @@ let
 in {
   enable4k = true;
 
-  imports = [ ../../module/tailscale.nix ];
+  imports = [
+    ../../module/mkcert
+    ../../module/sops.nix
+    ../../module/tailscale.nix
+  ];
 
   wsl = {
     enable = true;
@@ -42,13 +46,10 @@ in {
       lshw
       lsof
       nfs-utils
-      age
       utillinux
       which
       wget
       config.boot.kernelPackages.perf
-      sops
-      ssh-to-age
     ];
   };
 
@@ -158,7 +159,7 @@ in {
   };
 
   sops = {
-    age.sshKeyPaths = [ config.sops.secrets."ssh/key".path ];
+    age.sshKeyPaths = map (x: x.path) config.services.openssh.hostKeys;
     secrets."ssh/key" = { sopsFile = ./sops/ssh.yaml; };
   };
 }

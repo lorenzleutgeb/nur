@@ -10,7 +10,8 @@ in {
 
   imports = [
     ./hardware-configuration.nix
-    ../../module/mkcert.nix
+    ../../module/mkcert
+    ../../module/sops.nix
     ../../module/tailscale.nix
   ];
 
@@ -121,6 +122,10 @@ in {
     openssh = {
       enable = true;
       forwardX11 = true;
+      hostKeys = [{
+        path = config.sops.secrets."ssh/key".path;
+        type = "ed25519";
+      }];
     };
     kubo.enable = false;
     pcscd.enable = true;
@@ -198,6 +203,7 @@ in {
       "disk"
       "docker"
       "libvirtd"
+      "mkcert"
       "plugdev"
       "networkmanager"
       "vboxusers"
@@ -293,5 +299,10 @@ in {
       sansSerif = [ "Fira Sans" "DejaVu Sans" ];
       monospace = [ "Fira Mono" "DejaVu Sans Mono" ];
     };
+  };
+
+  sops = {
+    age.sshKeyPaths = map (x: x.path) config.services.openssh.hostKeys;
+    secrets."ssh/key" = { sopsFile = ./sops/ssh.yaml; };
   };
 }

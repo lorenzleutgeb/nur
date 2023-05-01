@@ -1,9 +1,25 @@
 keys:
-   - &lorenz age14zcgmvkzkmccjf4jwrp4hhlww9qs600zdmyp8gar5djwh5yrg48sgvscpk
-   - &wsl    age16yswachju798a8tr53ezsdrxfam3dstgag2g3mtv0jk7hfv6r9dqvekh2h
+  - &lorenz     age14zcgmvkzkmccjf4jwrp4hhlww9qs600zdmyp8gar5djwh5yrg48sgvscpk
+  - &lorenz-ssh age10z99ypa79plhltqd9jmhx0rra6mmuxvuwxne4n3ycf0numg3tf7qy4kkwk
+  - &wsl        age16yswachju798a8tr53ezsdrxfam3dstgag2g3mtv0jk7hfv6r9dqvekh2h
+  - &0mqr       age1k6udupm4ylkg3qgl096wytjj8m879r7qp02suhmsu27wdledr92se9kwqp
 creation_rules:
+  - path_regex: os/host/0mqr[^/]+/sops/[^/]+\.yaml$
+    key_groups:
+    - age:
+      - *lorenz
+      - *0mqr
+      - *lorenz-ssh
   - path_regex: os/host/wsl/sops/[^/]+\.yaml$
     key_groups:
     - age:
       - *lorenz
+      - *wsl
+      - *lorenz-ssh
+  - path_regex: os/module/mkcert/sops/[^/]+\.yaml$
+    key_groups:
+    - age:
+      - *lorenz
+      - *0mqr
+      - *lorenz-ssh
       - *wsl
