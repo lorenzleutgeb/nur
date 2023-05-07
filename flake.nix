@@ -63,7 +63,7 @@
                   attrsOf (submoduleWith {
                     specialArgs = { super = config; };
                     modules =
-                      [ "${vscode-server}/modules/vscode-server/home.nix" ]
+                      [ vscode-server.homeModules.default ]
                       ++ (builtins.attrValues (importDirToAttrs ./hm/module));
                   });
               };
