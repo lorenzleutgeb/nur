@@ -1,2 +1,2 @@
 #! /usr/bin/env bash
-grep -q 'Microsoft' /proc/sys/kernel/osrelease
+grep --ignore-case --quiet 'microsoft' /proc/sys/kernel/osrelease
