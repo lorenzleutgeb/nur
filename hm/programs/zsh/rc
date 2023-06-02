@@ -1,9 +1,6 @@
-if ! iswsl
-then
-	export XDG_RUNTIME_DIR="/var/run/user/$UID"
-	export XDG_CACHE_HOME="$XDG_RUNTIME_DIR/.cache"
-	mkdir -p $XDG_CACHE_HOME
-fi
+export XDG_RUNTIME_DIR="/var/run/user/$UID"
+#export XDG_CACHE_HOME="$XDG_RUNTIME_DIR/.cache"
+#mkdir -p $XDG_CACHE_HOME
 
 export CASE_SENSITIVE="true"
 export ENABLE_CORRECTION="true"

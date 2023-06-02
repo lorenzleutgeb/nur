@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ pkgs, inputs, ... }:
 
 let
   sub = section: subsection: ''${section} "${subsection}"'';
@@ -18,16 +18,19 @@ let
     value.insteadOf = "https://${hostname}/";
   };
 in {
-  home.file = {
-    ".ssh/config_mpi-klsb".text = ''
-      Match host *.mpi-inf.mpg.de,*.mpi-sws.org,*.mpi-klsb.mpg.de
-        UserKnownHostsFile ~/.ssh/known_hosts_mpi-klsb
+  home = {
+    file = {
+      ".ssh/config_mpi-klsb".text = ''
+        Match host *.mpi-inf.mpg.de,*.mpi-sws.org,*.mpi-klsb.mpg.de
+          UserKnownHostsFile ~/.ssh/known_hosts_mpi-klsb
 
-      Match host *.mpi-inf.mpg.de,!contact.mpi-inf.mpg.de !exec "ip -4 -o a show up scope global | grep 139.19."
-        ProxyJump contact.mpi-inf.mpg.de
-    '';
+        Match host *.mpi-inf.mpg.de,!contact.mpi-inf.mpg.de !exec "ip -4 -o a show up scope global | grep 139.19."
+          ProxyJump contact.mpi-inf.mpg.de
+      '';
 
-    ".ssh/known_hosts_mpi-klsb".source = inputs.mpi-klsb-known-hosts;
+      ".ssh/known_hosts_mpi-klsb".source = inputs.mpi-klsb-known-hosts;
+    };
+    packages = with pkgs; [ subversion ];
   };
 
   programs = {

@@ -15,13 +15,9 @@ with builtins;
     mime.enable = true;
     mimeApps.enable = true;
     userDirs.enable = true;
-
-    cacheHome = "/.cache";
   };
 
   manual.html.enable = true;
-
-  #nixpkgs.config.allowUnfree = true;
 
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage

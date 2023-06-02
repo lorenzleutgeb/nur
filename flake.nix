@@ -2,7 +2,7 @@
   description = "Lorenz Leutgeb's Flake";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-22.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-23.05";
     wsl = {
       url = "github:nix-community/nixos-wsl";
       inputs.nixpkgs.follows = "nixpkgs";

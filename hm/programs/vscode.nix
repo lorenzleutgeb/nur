@@ -24,6 +24,8 @@
       jnoortheen.nix-ide
       justusadam.language-haskell
       matklad.rust-analyzer
+      mkhl.direnv
+      ms-python.python
       # See https://code.visualstudio.com/docs/cpp/config-linux
       # See https://code.visualstudio.com/docs/cpp/config-wsl
       ms-vscode.cpptools
@@ -34,6 +36,7 @@
       #bungcip.better-toml
       #dandric.vscode-jq
       #jq-syntax-highlighting.jq-syntax-highlighting
+      #ms-python.flake8
       #ms-vscode.cmake-tools
       #ms-vscode.cpptools-themes
       #ms-vscode.cpptools-extension-pack

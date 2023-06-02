@@ -5,7 +5,7 @@ with builtins;
 {
   imports = [
     ./common.nix
-    ../programs/docker.nix
+    #../programs/docker.nix
     ../programs/bat
     ../programs/direnv
     ../programs/fzf.nix
@@ -19,8 +19,8 @@ with builtins;
     ../programs/tmux
     ../programs/zsh
     ../services/gpg-agent.nix
-    ../services/syncthing.nix
-    ../services/keybase.nix
+    #../services/syncthing.nix
+    #../services/keybase.nix
   ];
 
   home.packages = with pkgs; [

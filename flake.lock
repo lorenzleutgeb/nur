@@ -72,11 +72,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1682176386,
-        "narHash": "sha256-xwYjQ8PjfdHlggi8Dq0PXWby/1oXegSUuNuBvoTcnpA=",
+        "lastModified": 1685480784,
+        "narHash": "sha256-pkk3J9gX745LEkkeTGhSRJqPJkmCPQzwI/q7a720XaY=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "6169690ae38175295605d521bd778d999fbd85cd",
+        "rev": "54a9d6456eaa6195998a0f37bdbafee9953ca0fb",
         "type": "github"
       },
       "original": {
@@ -88,7 +88,7 @@
     "mpi-klsb-known-hosts": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-M1PigOhQqHKEJL7ebyjxMtZDQTMxyvLbWUuSSRbXzyc=",
+        "narHash": "sha256-b/EzYmYI8fRiQjn3pPt1ALIsjSAuxqytUMMjUy+XBqo=",
         "type": "file",
         "url": "https://ca.mpi-klsb.mpg.de/ssh_known_hosts"
       },
@@ -99,16 +99,16 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1682134069,
-        "narHash": "sha256-TnI/ZXSmRxQDt2sjRYK/8j8iha4B4zP2cnQCZZ3vp7k=",
+        "lastModified": 1685620773,
+        "narHash": "sha256-iQ+LmporQNdLz8uMJdP62TaAWeLUwl43/MYUBtWqulM=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "fd901ef4bf93499374c5af385b2943f5801c0833",
+        "rev": "f0ba8235153dd2e25cf06cbf70d43efdd4443592",
         "type": "github"
       },
       "original": {
         "owner": "nixos",
-        "ref": "nixos-22.11",
+        "ref": "nixos-23.05",
         "repo": "nixpkgs",
         "type": "github"
       }
