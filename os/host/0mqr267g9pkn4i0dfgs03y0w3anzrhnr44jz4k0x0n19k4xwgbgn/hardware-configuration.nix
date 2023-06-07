@@ -89,7 +89,6 @@
   powerManagement.cpuFreqGovernor = lib.mkDefault "performance";
   # high-resolution display
   hardware = {
-    video.hidpi.enable = lib.mkDefault true;
     opengl.enable = true;
     bluetooth.enable = true;
   };

@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 
 {
   home.file.".ssh/config_dns".text = ''
@@ -50,6 +50,8 @@
         hostname = "behemoth.ads.tuwien.ac.at";
         user = "e1127842";
       };
+
+      "0mqr.falsum.org".proxyCommand = "${pkgs.cloudflared}/bin/cloudflared access ssh --hostname %h";
     };
     extraConfig = ''
       VerifyHostKeyDNS yes

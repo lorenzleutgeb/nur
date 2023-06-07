@@ -36,6 +36,7 @@ let
     };
 in {
   security.pki.certificateFiles = [
+
     # https://plex.mpi-klsb.mpg.de/display/Documentation/UntrustedCertificates#UntrustedCertificates-InternalRoot-CADownload
     (fetchcert {
       url = "https://ca.mpi-klsb.mpg.de/klsb.crt";
@@ -43,7 +44,9 @@ in {
       certHash =
         "FE:F6:82:83:A9:10:34:D0:7C:19:BE:BF:F7:04:8B:C4:D5:E6:CF:D9:F4:A4:5C:EB:46:79:33:65:BD:94:CF:44";
     })
+
     # https://plex.mpi-klsb.mpg.de/display/Documentation/eduroam#eduroam-Servercertificates
+    # nix store add-file IST_Radius_CA_2.crt
     (fetchcert {
       url = "https://plex.mpi-klsb.mpg.de/download/attachments/13908369/IST_Radius_CA_2.crt";
       fileHash = "0jmc8762fhswh3lhbbw0mkkc6irdba2cg4xjc8wbcj7i54j2zqj8";

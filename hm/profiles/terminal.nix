@@ -45,8 +45,9 @@ with builtins;
     graphviz
     htop
     iotop
-    kbfs
+    #kbfs
     mtr
+    ngrok
     neovim-remote
     niv
     nixfmt

@@ -5,6 +5,7 @@ with builtins;
 let
   name = "Lorenz Leutgeb";
   username = "lorenz";
+  tunnelId = "2e5b6e6f-6236-4e44-ac82-5a10fdba61ac";
 in {
   enable4k = true;
 
@@ -72,6 +73,7 @@ in {
     nix-ld.enable = true;
     adb.enable = true;
     dconf.enable = true;
+    zsh.enable = true;
   };
 
   environment = {
@@ -112,8 +114,13 @@ in {
     };
     blueman.enable = false;
     cloudflared = {
-      enable = false;
-      config = { };
+      enable = true;
+      tunnels."${tunnelId}" = {
+        credentialsFile =
+          config.sops.secrets."cloudflared/tunnel/${tunnelId}.json".path;
+        default = "http_status:404";
+        ingress."0mqr.falsum.org" = "ssh://localhost:22";
+      };
     };
     cron.enable = true;
     flatpak.enable = true;
@@ -122,6 +129,10 @@ in {
     openssh = {
       enable = true;
       forwardX11 = true;
+      hostKeys = [{
+        path = "/etc/ssh/ssh_host_ed25519_key";
+        type = "ed25519";
+      }];
     };
     kubo.enable = false;
     pcscd.enable = true;
@@ -299,6 +310,14 @@ in {
 
   sops = {
     age.sshKeyPaths = map (x: x.path) config.services.openssh.hostKeys;
-    secrets."ssh/key" = { sopsFile = ./sops/ssh.yaml; };
+    secrets = {
+      "ssh/key".sopsFile = ./sops/ssh.yaml;
+      "cloudflared/tunnel/${tunnelId}.json" = {
+        sopsFile = ./sops/tunnel.bin;
+        format = "binary";
+        owner = config.services.cloudflared.user;
+        group = config.services.cloudflared.group;
+      };
+    };
   };
 }

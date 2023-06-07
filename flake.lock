@@ -88,7 +88,7 @@
     "mpi-klsb-known-hosts": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-b/EzYmYI8fRiQjn3pPt1ALIsjSAuxqytUMMjUy+XBqo=",
+        "narHash": "sha256-xiTqoNbYuLHZfTzDtHBFAti9n3gU0cvxuhhi3fbPl4c=",
         "type": "file",
         "url": "https://ca.mpi-klsb.mpg.de/ssh_known_hosts"
       },

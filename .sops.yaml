@@ -4,7 +4,7 @@ keys:
   - &wsl        age16yswachju798a8tr53ezsdrxfam3dstgag2g3mtv0jk7hfv6r9dqvekh2h
   - &0mqr       age1k6udupm4ylkg3qgl096wytjj8m879r7qp02suhmsu27wdledr92se9kwqp
 creation_rules:
-  - path_regex: os/host/0mqr[^/]+/sops/[^/]+\.yaml$
+  - path_regex: os/host/0mqr[^/]+/sops/[^/]+\.(yaml|json|bin)$
     key_groups:
     - age:
       - *lorenz
