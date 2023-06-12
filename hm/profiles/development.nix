@@ -97,9 +97,6 @@ with builtins;
     ncdu
     neovim-remote
     niv
-    nixfmt
-    #nixops
-    nixpkgs-review
     nix-index
     nvme-cli
     noto-fonts

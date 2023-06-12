@@ -12,6 +12,7 @@ in {
   imports = [
     ./hardware-configuration.nix
     ../../module/mkcert
+    ../../module/nix.nix
     ../../module/sops.nix
     ../../module/tailscale.nix
   ];
@@ -70,7 +71,6 @@ in {
 
   programs = {
     sedutil.enable = true;
-    nix-ld.enable = true;
     adb.enable = true;
     dconf.enable = true;
     zsh.enable = true;
@@ -230,8 +230,6 @@ in {
     ../../../hm/profiles/spass.nix
   ];
 
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "20.03";
 
   security = {
@@ -269,25 +267,6 @@ in {
       enable = false;
       qemu.package = pkgs.qemu_kvm;
     };
-  };
-
-  nix = {
-    package = pkgs.nixFlakes;
-    settings = {
-      substituters = [ "https://lean4.cachix.org/" ];
-      trusted-users = [ username ];
-      trusted-public-keys =
-        [ "lean4.cachix.org-1:mawtxSxcaiWE24xCXXgh3qnvlTkyU7evRRnGeAhD4Wk=" ];
-    };
-    extraOptions = ''
-      allow-import-from-derivation = true
-      experimental-features = nix-command flakes
-      keep-outputs = true
-    '';
-  };
-  nixpkgs.config = {
-    allowUnfree = true;
-    #allowBroken = true;
   };
 
   xdg = {

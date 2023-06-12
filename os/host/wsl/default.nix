@@ -16,10 +16,9 @@ let
     "2a07:a8c1::"
   ]) ++ [ "1.1.1.1#one.one.one.one" ];
 in {
-  enable4k = true;
-
   imports = [
     ../../module/mkcert
+    ../../module/nix.nix
     ../../module/sops.nix
     ../../module/tailscale.nix
     ../../module/mpi-klsb.nix
@@ -46,8 +45,8 @@ in {
 
   programs = {
     sedutil.enable = true;
-    nix-ld.enable = true;
     dconf.enable = true;
+    zsh.enable = true;
   };
 
   environment = {
@@ -62,6 +61,8 @@ in {
       wget
       config.boot.kernelPackages.perf
     ];
+
+    variables = { };
   };
 
   services = {
@@ -100,8 +101,6 @@ in {
     ../../../hm/profiles/wsl.nix
   ];
 
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "20.03";
 
   networking = {
@@ -141,22 +140,6 @@ in {
     };
   };
 
-  nix = {
-    package = pkgs.nixFlakes;
-    settings = {
-      substituters = [ "https://lean4.cachix.org/" ];
-      trusted-public-keys =
-        [ "lean4.cachix.org-1:mawtxSxcaiWE24xCXXgh3qnvlTkyU7evRRnGeAhD4Wk=" ];
-    };
-    extraOptions = ''
-      allow-import-from-derivation = true
-      experimental-features = nix-command flakes
-      keep-outputs = true
-    '';
-  };
-
-  nixpkgs.config = { allowUnfree = true; };
-
   fonts.fontconfig = {
     allowBitmaps = false;
     defaultFonts = {
@@ -187,25 +170,26 @@ in {
       };
     };
     services.systemd-resolved.enable = true;
-    network = {
-      networks."eth0" = {
-        enable = true;
-        name = "eth0";
-        dns = dns;
-        extraConfig = ''
-	  DNSOverTLS=yes
-	  DNSSEC=yes
-	'';
-        DHCP = "no";
-        address = [ "172.24.160.2" ];
-        gateway = [ "172.24.160.1" ];
-        dhcpV4Config = {
-          UseDNS = false;
-          UseRoutes = true;
-          UseHostname = false;
-          UseDomains = true;
-        };
-      };
-    };
+    /* network = {
+             networks."eth0" = {
+               enable = true;
+               name = "eth0";
+               dns = dns;
+               extraConfig = ''
+       	  DNSOverTLS=yes
+       	  DNSSEC=yes
+       	'';
+               DHCP = "yes";
+               #address = [ "172.24.160.2" ];
+               #gateway = [ "172.24.160.1" ];
+               dhcpV4Config = {
+                 UseDNS = false;
+                 UseRoutes = true;
+                 UseHostname = false;
+                 UseDomains = true;
+               };
+             };
+           };
+    */
   };
 }

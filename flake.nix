@@ -1,7 +1,6 @@
 {
   description = "Lorenz Leutgeb's Flake";
-
-  inputs = {
+inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-23.05";
     wsl = {
       url = "github:nix-community/nixos-wsl";
@@ -29,15 +28,13 @@
     };
   };
 
-  outputs =
-    inputs@{ self, nixpkgs, home-manager, vscode-server, wsl, sops, ... }:
+  outputs = inputs@{ self, nixpkgs, home-manager, vscode-server, wsl, sops, ... }:
     with builtins;
     with nixpkgs;
 
     let
       system = "x86_64-linux";
-      pkgs = import nixpkgs {
-        inherit system;
+      pkgs = import nixpkgs { inherit system;
         overlays = builtins.attrValues self.overlays;
         config.allowUnfree = true;
       };
@@ -79,8 +76,8 @@
               system.stateVersion = "20.03";
               system.configurationRevision =
                 pkgs.lib.mkIf (self ? rev) self.rev;
-              nixpkgs = { inherit pkgs; };
-              nix.registry.nixpkgs.flake = nixpkgs;
+              #nixpkgs = { inherit pkgs; };
+              #nix.registry.nixpkgs.flake = nixpkgs;
             };
           in [
             nixpkgs.nixosModules.notDetected
@@ -90,7 +87,7 @@
             home
             common
             preconfig
-          ] ++ (pkgs.lib.attrValues self.nixosModules);
+          ];
         };
 
     in rec {

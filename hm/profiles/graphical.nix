@@ -46,7 +46,6 @@ with builtins;
     insomnia
     neovim-remote
     niv
-    nixpkgs-review
     noto-fonts
     pantheon.elementary-files
     pantheon.elementary-photos

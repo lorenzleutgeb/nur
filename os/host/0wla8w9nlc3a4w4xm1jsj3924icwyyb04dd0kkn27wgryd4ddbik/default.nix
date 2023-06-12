@@ -41,8 +41,6 @@ in {
   time.timeZone = "Europe/Vienna";
   i18n.defaultLocale = "en_US.UTF-8";
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
   environment.systemPackages = with pkgs; [
     binutils
     coreutils
@@ -52,7 +50,6 @@ in {
     gcc
     gnumake
     lsof
-    nixFlakes
     utillinux
     vim
     wirelesstools
@@ -152,13 +149,6 @@ in {
       enableOnBoot = true;
     };
   };
-
-  nix = {
-    package = pkgs.nixFlakes;
-    extraOptions = "experimental-features = nix-command flakes";
-    maxJobs = lib.mkDefault 8;
-  };
-  nixpkgs.config.allowUnfree = true;
 
   xdg.portal.enable = true;
   xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];

@@ -88,7 +88,7 @@
     "mpi-klsb-known-hosts": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-xiTqoNbYuLHZfTzDtHBFAti9n3gU0cvxuhhi3fbPl4c=",
+        "narHash": "sha256-T2ZjuAsiRRIiTNfj7IuHuKFKUVNffOEF23bM4fKlbAU=",
         "type": "file",
         "url": "https://ca.mpi-klsb.mpg.de/ssh_known_hosts"
       },
@@ -99,11 +99,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1685620773,
-        "narHash": "sha256-iQ+LmporQNdLz8uMJdP62TaAWeLUwl43/MYUBtWqulM=",
+        "lastModified": 1686331006,
+        "narHash": "sha256-hElRDWUNG655aqF0awu+h5cmDN+I/dQcChRt2tGuGGU=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "f0ba8235153dd2e25cf06cbf70d43efdd4443592",
+        "rev": "85bcb95aa83be667e562e781e9d186c57a07d757",
         "type": "github"
       },
       "original": {

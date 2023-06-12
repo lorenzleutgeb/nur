@@ -46,7 +46,6 @@ in {
     };
   };
 
-  nix.maxJobs = lib.mkDefault 8;
   powerManagement.cpuFreqGovernor = lib.mkDefault "performance";
 
   # The global useDHCP flag is deprecated, therefore explicitly set to false here.
@@ -76,7 +75,6 @@ in {
     exfat
     fuse
     lsof
-    nixFlakes
     pflogsumm
     utillinux
     vim
@@ -374,8 +372,6 @@ in {
   users.users."nginx".extraGroups = [ "acme" ];
   users.users."postfix".extraGroups = [ "acme" ];
 
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "20.03";
 
   programs.ssh.startAgent = true;
@@ -414,12 +410,5 @@ in {
 
   #virtualisation.docker.enable = true;
   #virtualisation.docker.enableOnBoot = true;
-
-  nixpkgs.config.allowUnfree = true;
-
-  nix = {
-    package = pkgs.nixFlakes;
-    extraOptions = "experimental-features = nix-command flakes";
-  };
 }
 
