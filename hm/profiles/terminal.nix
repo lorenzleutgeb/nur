@@ -5,6 +5,7 @@ with builtins;
 {
   imports = [
     ./common.nix
+    ./nixbuild.nix
     #../programs/docker.nix
     ../programs/bat
     ../programs/direnv
