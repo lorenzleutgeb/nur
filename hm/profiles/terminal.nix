@@ -45,7 +45,9 @@ with builtins;
     graphviz
     htop
     iotop
+    jq
     #kbfs
+    miller
     mtr
     ngrok
     neovim-remote
