@@ -4,7 +4,8 @@ set -euo pipefail
 
 if [ $# -lt 2 ]
 then
-	echo "Usage: cachix-push-flake CACHE-NAME INSTALLABLES..."
+	echo "Usage: cachix-build CACHE-NAME INSTALLABLES..."
+	echo "nix build INSTALLABLES... | cachix push CACHE-NAME"
 	exit 1
 fi
 
