@@ -97,7 +97,6 @@ with builtins;
     ncdu
     neovim-remote
     niv
-    nix-index
     nvme-cli
     noto-fonts
     pandoc
