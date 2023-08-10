@@ -15,6 +15,7 @@ in {
     ../../module/nix.nix
     ../../module/sops.nix
     ../../module/tailscale.nix
+    ../../module/dns.nix
   ];
 
   # Use the systemd-boot EFI boot loader.
@@ -40,7 +41,6 @@ in {
   networking = {
     # Configuration of DHCP per-interface was moved to hardware-configuration.nix
     useDHCP = false;
-    networkmanager.enable = true;
     hostName = "0mqr267g9pkn4i0dfgs03y0w3anzrhnr44jz4k0x0n19k4xwgbgn";
 
     firewall = {
@@ -92,19 +92,6 @@ in {
     sessionVariables.LIBVA_DRIVER_NAME = "iHD";
   };
 
-  environment.etc."NetworkManager/dnsmasq.d/interface.conf".text = ''
-    interface=lo
-  '';
-
-  environment.etc."NetworkManager/dnsmasq.d/cloudflare.conf".text = ''
-    server=1.1.1.1
-  '';
-
-  environment.etc."NetworkManager/dnsmasq.d/tailscale.conf".text = ''
-    server=/connected-dots.org.github.beta.tailscale.net/100.100.100.100
-    server=100.100.100.100@tailscale0
-  '';
-
   services = {
     accounts-daemon.enable = true;
     beesd.filesystems."root" = {
@@ -128,7 +115,7 @@ in {
     #journald.extraConfig = "ReadKMsg=no";
     openssh = {
       enable = true;
-      forwardX11 = true;
+      settings.X11Forwarding = true;
       hostKeys = [{
         path = "/etc/ssh/ssh_host_ed25519_key";
         type = "ed25519";
@@ -190,6 +177,8 @@ in {
     logind.extraConfig = ''
       RuntimeDirectorySize=24G
     '';
+
+    resolved.enable = true;
   };
 
   # users.users.unifi.group = "unifi";

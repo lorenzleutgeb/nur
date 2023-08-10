@@ -5,23 +5,14 @@ with builtins;
 let
   name = "Lorenz Leutgeb";
   username = "lorenz";
-  nextDns = rec {
-    id = "9bd4a2";
-    hostname = "${id}.dns.nextdns.io";
-  };
-  dns = (builtins.map (ip: "${ip}#${nextDns.hostname}") [
-    "45.90.28.0"
-    "2a07:a8c0::"
-    "45.90.30.0"
-    "2a07:a8c1::"
-  ]) ++ [ "1.1.1.1#one.one.one.one" ];
 in {
   imports = [
     ../../module/mkcert
     ../../module/nix.nix
     ../../module/sops.nix
-    ../../module/tailscale.nix
+    #../../module/tailscale.nix
     ../../module/mpi-klsb.nix
+    ../../module/dns.nix
   ];
 
   wsl = {
@@ -70,11 +61,12 @@ in {
     #journald.extraConfig = "ReadKMsg=no";
     openssh = {
       enable = true;
-      forwardX11 = true;
+      settings.X11Forwarding = true;
     };
     kubo.enable = false;
     pcscd.enable = true;
     printing.enable = false;
+    resolved.enable = true;
   };
 
   # users.users.unifi.group = "unifi";
@@ -105,8 +97,12 @@ in {
 
   networking = {
     firewall.enable = false;
-    networkmanager.enable = true;
+    networkmanager = {
+      enable = true;
+      dns = "systemd-resolved";
+    };
     hostName = "wsl";
+    nameservers = [ ];
   };
 
   security = {
@@ -171,25 +167,26 @@ in {
     };
     services.systemd-resolved.enable = true;
     /* network = {
-             networks."eth0" = {
-               enable = true;
-               name = "eth0";
-               dns = dns;
-               extraConfig = ''
-       	  DNSOverTLS=yes
-       	  DNSSEC=yes
-       	'';
-               DHCP = "yes";
-               #address = [ "172.24.160.2" ];
-               #gateway = [ "172.24.160.1" ];
-               dhcpV4Config = {
-                 UseDNS = false;
-                 UseRoutes = true;
-                 UseHostname = false;
-                 UseDomains = true;
-               };
-             };
+         enable = true;
+         networks."eth0" = {
+           enable = true;
+           name = "eth0";
+           dns = dns;
+           extraConfig = ''
+             DNSOverTLS=yes
+             DNSSEC=yes
+           '';
+           DHCP = "yes";
+           #address = [ "172.24.160.2" ];
+           #gateway = [ "172.24.160.1" ];
+           dhcpV4Config = {
+             UseDNS = false;
+             UseRoutes = true;
+             UseHostname = false;
+             UseDomains = true;
            };
+         };
+       };
     */
   };
 }

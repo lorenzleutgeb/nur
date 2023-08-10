@@ -1,30 +1,27 @@
-let tailnetName = "fluffy-ordinal.ts.net";
+{ config, lib, ... }:
+
+let
+  tailnetName = "fluffy-ordinal.ts.net";
+  tailscaleDns = "100.100.100.100";
 in {
-  services = {
-    tailscale.enable = true;
-    resolved = {
+  services.tailscale.enable = true;
+
+  networking.firewall.trustedInterfaces =
+    [ config.services.tailscale.interfaceName ];
+
+  systemd.network.networks.${config.services.tailscale.interfaceName} =
+    lib.mkIf config.systemd.network.enabled {
       enable = true;
-      extraConfig = ''
-        DNSOverTLS=yes
+      name = config.services.tailscale.interfaceName;
+      dns = [ tailscaleDns ];
+      domains = [ tailnetName ];
+    };
+
+  environment.etc."NetworkManager/dnsmasq.d/${tailnetName}.conf" =
+    lib.mkIf (config.networking.networkmanager.dns == "dnsmasq") {
+      text = ''
+        server=/${tailnetName}/${tailscaleDns}
+        server=${tailscaleDns}@${config.services.tailscale.interfaceName}
       '';
     };
-  };
-
-  networking = { firewall.trustedInterfaces = [ "tailscale0" ]; };
-
-  systemd = {
-    services.systemd-resolved = {
-      enable = true;
-      #serviceConfig.Environment = "SYSTEMD_LOG_LEVEL=debug";
-    };
-    network = {
-      enable = true;
-      networks."tailscale0" = {
-        enable = true;
-        name = "tailscale0";
-        dns = [ "100.100.100.100" ];
-        domains = [ tailnetName ];
-      };
-    };
-  };
 }
