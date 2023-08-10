@@ -1,8 +1,10 @@
-{ config, lib, pkgs, ... }:
-
-with builtins;
-
-let
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+with builtins; let
   name = "Lorenz Leutgeb";
   username = "lorenz";
   tunnelId = "2e5b6e6f-6236-4e44-ac82-5a10fdba61ac";
@@ -97,7 +99,7 @@ in {
     beesd.filesystems."root" = {
       spec = "/";
       hashTableSizeMB = 2048;
-      extraOptions = [ "--thread-count" "4" ];
+      extraOptions = ["--thread-count" "4"];
     };
     blueman.enable = false;
     cloudflared = {
@@ -116,10 +118,12 @@ in {
     openssh = {
       enable = true;
       settings.X11Forwarding = true;
-      hostKeys = [{
-        path = "/etc/ssh/ssh_host_ed25519_key";
-        type = "ed25519";
-      }];
+      hostKeys = [
+        {
+          path = "/etc/ssh/ssh_host_ed25519_key";
+          type = "ed25519";
+        }
+      ];
     };
     kubo.enable = false;
     pcscd.enable = true;
@@ -139,11 +143,11 @@ in {
     };
 
     sourcehut = {
-      services = [ "man" "meta" "git" "builds" "hub" "todo" "lists" ];
+      services = ["man" "meta" "git" "builds" "hub" "todo" "lists"];
     };
 
     udev = {
-      packages = [ pkgs.yubikey-personalization ];
+      packages = [pkgs.yubikey-personalization];
       extraRules = ''
         # Teensy rules for the Ergodox EZ
         # See https://github.com/zsa/wally/wiki/Linux-install#2-create-a-udev-rule-file
@@ -185,7 +189,7 @@ in {
   # users.groups.unifi = { };
 
   users.users.tss.group = "tss";
-  users.groups.tss = { };
+  users.groups.tss = {};
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.${username} = {
@@ -228,7 +232,7 @@ in {
         enable = true;
         cue = true;
       };
-      services = { "swaylock" = { }; };
+      services = {"swaylock" = {};};
     };
     rtkit.enable = true;
     tpm2 = {
@@ -271,8 +275,8 @@ in {
   fonts.fontconfig = {
     allowBitmaps = false;
     defaultFonts = {
-      sansSerif = [ "Fira Sans" "DejaVu Sans" ];
-      monospace = [ "Fira Mono" "DejaVu Sans Mono" ];
+      sansSerif = ["Fira Sans" "DejaVu Sans"];
+      monospace = ["Fira Mono" "DejaVu Sans Mono"];
     };
   };
 

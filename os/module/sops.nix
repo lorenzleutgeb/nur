@@ -1,8 +1,7 @@
-{ pkgs, ... }:
-{
+{pkgs, ...}: {
   environment.systemPackages = with pkgs; [
-      age
-      sops
-      ssh-to-age
+    age
+    sops
+    ssh-to-age
   ];
 }

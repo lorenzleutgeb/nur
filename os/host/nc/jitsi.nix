@@ -1,9 +1,10 @@
-let hostname = "jitsi.leutgeb.xyz";
+let
+  hostname = "jitsi.leutgeb.xyz";
 in {
   networking.firewall = {
-    allowedUDPPorts = [ 5349 5350 ];
+    allowedUDPPorts = [5349 5350];
 
-    allowedTCPPorts = [ 3478 3479 ];
+    allowedTCPPorts = [3478 3479];
   };
 
   services = {
@@ -16,6 +17,6 @@ in {
       enable = true;
       hostName = hostname;
     };
-    jitsi-videobridge = { openFirewall = true; };
+    jitsi-videobridge = {openFirewall = true;};
   };
 }

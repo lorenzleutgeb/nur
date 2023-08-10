@@ -1,7 +1,5 @@
-{ ... }:
-
-{
-  programs.opam = { enable = true; };
+{...}: {
+  programs.opam = {enable = true;};
 
   # TODO: Not sure if I really need a global opam...
 

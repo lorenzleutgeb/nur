@@ -1,8 +1,9 @@
-{ lib, pkgs, ... }:
-
-with builtins;
-
 {
+  lib,
+  pkgs,
+  ...
+}:
+with builtins; {
   home.packages = with pkgs; [
     aspell
     aspellDicts.de

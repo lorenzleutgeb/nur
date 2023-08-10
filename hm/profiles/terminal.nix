@@ -1,8 +1,9 @@
-{ lib, pkgs, ... }:
-
-with builtins;
-
 {
+  lib,
+  pkgs,
+  ...
+}:
+with builtins; {
   imports = [
     ./common.nix
     ./nixbuild.nix

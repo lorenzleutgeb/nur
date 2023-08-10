@@ -1,6 +1,4 @@
-final: prev:
-
-{
+final: prev: {
   polybar = prev.polybar.override {
     pulseSupport = true;
     libpulseaudio = prev.libpulseaudio;

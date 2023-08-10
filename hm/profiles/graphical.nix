@@ -1,8 +1,10 @@
-{ lib, pkgs, super, ... }:
-
-with builtins;
-
 {
+  lib,
+  pkgs,
+  super,
+  ...
+}:
+with builtins; {
   imports = [
     ./input-method.nix
     ./terminal.nix
@@ -20,7 +22,9 @@ with builtins;
   ];
 
   home.sessionVariables =
-    if super.enable4k then { GDK_DPI_SCALE = "1.5"; } else { };
+    if super.enable4k
+    then {GDK_DPI_SCALE = "1.5";}
+    else {};
 
   home.packages = with pkgs; [
     baobab
@@ -91,6 +95,6 @@ with builtins;
 
   i18n.inputMethod = {
     enabled = "fcitx5";
-    fcitx5.addons = with pkgs; [ fcitx5-m17n ];
+    fcitx5.addons = with pkgs; [fcitx5-m17n];
   };
 }

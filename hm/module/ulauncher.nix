@@ -1,8 +1,11 @@
-{ config, lib, pkgs, ... }:
-
-with lib;
-
-let cfg = config.services.ulauncher;
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+with lib; let
+  cfg = config.services.ulauncher;
 in {
   options = {
     services.ulauncher = {
@@ -19,18 +22,18 @@ in {
         # TODO: Default shortcuts, according to https://github.com/Ulauncher/Ulauncher/blob/4833e779332ac1a439e3fce1f96af684214683b8/ulauncher/config.py#L105-L135
         shortcuts = mkOption {
           type = types.anything;
-          default = { };
+          default = {};
         };
 
         settings = mkOption {
           type = with types;
             attrsOf (either (either (either str int) bool) float);
-          default = { };
+          default = {};
         };
 
         extensions = mkOption {
           type = types.attrsOf types.package;
-          default = { };
+          default = {};
 
           # TODO: Extension preferences are stored
           # https://github.com/Ulauncher/Ulauncher/blob/4833e779332ac1a439e3fce1f96af684214683b8/ulauncher/api/server/ExtensionPreferences.py
@@ -42,7 +45,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    home.packages = [ cfg.package ];
+    home.packages = [cfg.package];
 
     systemd.user.services.ulauncher = {
       # https://github.com/Ulauncher/Ulauncher/blob/dev/contrib/systemd/ulauncher.service
@@ -60,12 +63,12 @@ in {
         ExecStart = "${cfg.package}/bin/ulauncher --hide-window";
       };
 
-      Install = { WantedBy = [ "graphical.target" ]; };
+      Install = {WantedBy = ["graphical.target"];};
     };
 
     xdg.dataFile = mapAttrs' (name: value:
-      nameValuePair ("ulauncher2/extensions/${name}") { source = value.out; })
-      cfg.config.extensions;
+      nameValuePair "ulauncher2/extensions/${name}" {source = value.out;})
+    cfg.config.extensions;
 
     xdg.configFile = {
       "ulauncher/settings.json".text = builtins.toJSON cfg.config.settings;
@@ -77,7 +80,8 @@ in {
           last_commit_time = "1970-01-01T00:00:00Z";
           updated_at = "1970-01-01T00:00:00Z";
           url = value.meta.homepage;
-        }) cfg.config.extensions);
+        })
+        cfg.config.extensions);
     };
   };
 }

@@ -1,9 +1,11 @@
-{ config, lib, pkgs, ... }:
-
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 with pkgs;
-with lib;
-
-let
+with lib; let
   cfg = config.services.kmonad;
   configFile = writeTextFile {
     name = "default.kbd";
@@ -39,7 +41,7 @@ in {
   config = mkIf cfg.enable {
     systemd.services.kmonad = {
       description = "KMonad advanced keyboard manager";
-      wantedBy = [ "multi-user.target" ];
+      wantedBy = ["multi-user.target"];
 
       serviceConfig = {
         ExecStart = "${cfg.package}/bin/kmonad ${configFile}";

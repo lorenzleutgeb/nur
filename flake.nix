@@ -28,19 +28,25 @@
     };
   };
 
-  outputs =
-    inputs@{ self, home-manager, nixpkgs, nix-index-database, sops, vscode-server, wsl, ... }:
+  outputs = inputs @ {
+    self,
+    home-manager,
+    nixpkgs,
+    nix-index-database,
+    sops,
+    vscode-server,
+    wsl,
+    ...
+  }:
     with builtins;
-    with nixpkgs;
-
-    let
+    with nixpkgs; let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
         inherit system;
         overlays = builtins.attrValues self.overlays;
         config.allowUnfree = true;
       };
-      makeDiskImage = (import "${nixpkgs}/nixos/lib/make-disk-image.nix");
+      makeDiskImage = import "${nixpkgs}/nixos/lib/make-disk-image.nix";
 
       kebabCaseToCamelCase =
         replaceStrings (map (s: "-${s}") lib.lowerChars) lib.upperChars;
@@ -56,15 +62,17 @@
           inherit system;
 
           modules = let
-            home = { config, ... }: {
+            home = {config, ...}: {
               options.home-manager.users = lib.mkOption {
                 type = with lib.types;
                   attrsOf (submoduleWith {
-                    specialArgs = { super = config; };
-                    modules = [
-                      vscode-server.homeModules.default
-                      nix-index-database.hmModules.nix-index
-                    ] ++ (builtins.attrValues (importDirToAttrs ./hm/module));
+                    specialArgs = {super = config;};
+                    modules =
+                      [
+                        vscode-server.homeModules.default
+                        nix-index-database.hmModules.nix-index
+                      ]
+                      ++ (builtins.attrValues (importDirToAttrs ./hm/module));
                   });
               };
 
@@ -92,9 +100,8 @@
             preconfig
           ];
         };
-
     in rec {
-      overlays = { pkgs = import ./pkg; } // importDirToAttrs ./overlay;
+      overlays = {pkgs = import ./pkg;} // importDirToAttrs ./overlay;
 
       packages.${system} = {
         inherit (pkgs) kmonad-bin;
@@ -114,15 +121,16 @@
       nixosModules = importDirToAttrs ./os/module;
 
       nixosConfigurations =
-        ((mapAttrs (id: _: nixosSystemFor (import (./os/host + "/${id}")))
-          (readDir ./os/host))) // {
-            live = lib.nixosSystem {
-              inherit system;
-              modules = [
-                "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-graphical-gnome.nix"
-              ];
-            };
+        (mapAttrs (id: _: nixosSystemFor (import (./os/host + "/${id}")))
+          (readDir ./os/host))
+        // {
+          live = lib.nixosSystem {
+            inherit system;
+            modules = [
+              "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-graphical-gnome.nix"
+            ];
           };
+        };
 
       formatter.${system} = pkgs.alejandra;
     };

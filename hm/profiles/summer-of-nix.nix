@@ -1,5 +1,3 @@
-{ pkgs, ... }:
-
-{
-  home.packages = with pkgs; [ alejandra espeak-classic mob ];
+{pkgs, ...}: {
+  home.packages = with pkgs; [alejandra espeak-classic mob];
 }

@@ -1,8 +1,9 @@
-{ pkgs, lib, ... }:
-
-with builtins;
-
-let
+{
+  pkgs,
+  lib,
+  ...
+}:
+with builtins; let
   theme = {
     font = {
       sans = "Fira Sans";
@@ -48,7 +49,7 @@ let
 in {
   gtk.enable = true;
 
-  services.mpd = { enable = true; };
+  services.mpd = {enable = true;};
 
   services.gammastep = {
     enable = true;
@@ -56,14 +57,15 @@ in {
     longitude = "16.363449";
   };
 
-  wayland.windowManager.sway = let modifier = "Mod4";
+  wayland.windowManager.sway = let
+    modifier = "Mod4";
   in {
     enable = true;
     wrapperFeatures.gtk = true;
     config = {
       inherit modifier;
       fonts = {
-        names = [ "${theme.font.mono}" ];
+        names = ["${theme.font.mono}"];
         size = 10.0;
       };
       terminal = "alacritty";
@@ -115,7 +117,7 @@ in {
         };
       };
 
-      output = { "*" = { "background" = "~/Pictures/nix-color.png fill"; }; };
+      output = {"*" = {"background" = "~/Pictures/nix-color.png fill";};};
 
       # Idea for workspaces:
       #   1 ?
@@ -130,21 +132,21 @@ in {
       #  10 ?
       assigns = {
         "2" = [
-          { app_id = "Signal"; }
-          { app_id = "Skype"; }
-          { app_id = "Slack"; }
-          { app_id = "^.*Thunderbird.*$"; }
+          {app_id = "Signal";}
+          {app_id = "Skype";}
+          {app_id = "Slack";}
+          {app_id = "^.*Thunderbird.*$";}
         ];
-        "4" = [{ app_id = "^[F|f]irefox$"; }];
-        "7" = [{ app_id = "^[A|a]lacritty$"; }];
-        "8" = [ { app_id = "Code"; } { app_id = "^.*jetbrains-.*$"; } ];
-        "9" = [{ app_id = "^[S|s]potify.*"; }];
+        "4" = [{app_id = "^[F|f]irefox$";}];
+        "7" = [{app_id = "^[A|a]lacritty$";}];
+        "8" = [{app_id = "Code";} {app_id = "^.*jetbrains-.*$";}];
+        "9" = [{app_id = "^[S|s]potify.*";}];
       };
 
       floating.criteria = [
-        { "app_id" = "Ibus-ui-gtk3"; }
-        { "app_id" = "Nm-connection-editor"; }
-        { "app_id" = "Pinentry"; }
+        {"app_id" = "Ibus-ui-gtk3";}
+        {"app_id" = "Nm-connection-editor";}
+        {"app_id" = "Pinentry";}
       ];
 
       colors = {
@@ -185,10 +187,9 @@ in {
         };
       };
 
-      bars = [ ];
+      bars = [];
 
-      input."1149:32792:Kensington_Expert_Wireless_TB_Mouse".pointer_accel =
-        "0.7";
+      input."1149:32792:Kensington_Expert_Wireless_TB_Mouse".pointer_accel = "0.7";
     };
     extraConfig = ''
       hide_edge_borders both
@@ -262,12 +263,12 @@ in {
     (pkgs.writeScriptBin "screenshot" (builtins.readFile ./screenshot.sh))
   ];
 
-  xdg.systemDirs.data = with pkgs;
-    let schema = gsettings-desktop-schemas;
-    in [
-      "${gtk3}/share/gsettings-schemas/${gtk3.name}"
-      "${schema}/share/gsettings-schemas/${schema.name}"
-    ];
+  xdg.systemDirs.data = with pkgs; let
+    schema = gsettings-desktop-schemas;
+  in [
+    "${gtk3}/share/gsettings-schemas/${gtk3.name}"
+    "${schema}/share/gsettings-schemas/${schema.name}"
+  ];
 
   home.sessionVariables = {
     MOZ_ENABLE_WAYLAND = 1;
@@ -302,46 +303,47 @@ in {
   programs.waybar = {
     enable = true;
     systemd.enable = true;
-    settings = [{
-      layer = "top";
-      position = "top";
-      height = 10;
-      output = [ "DP-1" ];
-      modules-left = [ "sway/workspaces" "sway/mode" ];
-      modules-center = [ "sway/window" ];
-      modules-right = [ "cpu" "memory" "network" "temperature" "clock" "tray" ];
-      modules = {
-        "sway/workspaces" = {
-          disable-scroll = true;
-          all-outputs = true;
-          format = "{icon}";
-          format-icons = {
-
-            "7" = "";
-            "4" = "";
-            "0" = "";
-            "8" = "";
-            "9" = "";
-            "2" = "";
-            "urgent" = "";
-            "focused" = "";
-            "default" = "";
+    settings = [
+      {
+        layer = "top";
+        position = "top";
+        height = 10;
+        output = ["DP-1"];
+        modules-left = ["sway/workspaces" "sway/mode"];
+        modules-center = ["sway/window"];
+        modules-right = ["cpu" "memory" "network" "temperature" "clock" "tray"];
+        modules = {
+          "sway/workspaces" = {
+            disable-scroll = true;
+            all-outputs = true;
+            format = "{icon}";
+            format-icons = {
+              "7" = "";
+              "4" = "";
+              "0" = "";
+              "8" = "";
+              "9" = "";
+              "2" = "";
+              "urgent" = "";
+              "focused" = "";
+              "default" = "";
+            };
+          };
+          "memory" = {
+            format = "mem {}%";
+            interval = 5;
+          };
+          "cpu" = {
+            format = "cpu {}%";
+            interval = 1;
+          };
+          "clock" = {
+            format = "{:%Y-%m-%d %H:%M:%S}";
+            interval = 1;
           };
         };
-        "memory" = {
-          format = "mem {}%";
-          interval = 5;
-        };
-        "cpu" = {
-          format = "cpu {}%";
-          interval = 1;
-        };
-        "clock" = {
-          format = "{:%Y-%m-%d %H:%M:%S}";
-          interval = 1;
-        };
-      };
-    }];
+      }
+    ];
     style = readFile ./waybar.css;
   };
 

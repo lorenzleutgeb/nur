@@ -1,6 +1,8 @@
-{ pkgs, inputs, ... }:
-
-let
+{
+  pkgs,
+  inputs,
+  ...
+}: let
   sub = section: subsection: ''${section} "${subsection}"'';
   user = "lorenz";
   domain = "mpi-inf.mpg.de";
@@ -33,11 +35,11 @@ in {
         sha256 = "sha256:0fi5k53rg215zz3zf9dkjribwmpzhbfgspm3ypailcxyr98hqvsf";
       };
     };
-    packages = with pkgs; [ subversion ];
+    packages = with pkgs; [subversion];
   };
 
   programs = {
-    ssh.includes = [ "~/.ssh/config_mpi-klsb" ];
+    ssh.includes = ["~/.ssh/config_mpi-klsb"];
     git = {
       includes = builtins.map dir [
         "gitlab.mpi-klsb.mpg.de"

@@ -1,7 +1,5 @@
-{ pkgs, ... }:
-
-{
-  home.packages = with pkgs; [ isabelle ];
+{pkgs, ...}: {
+  home.packages = with pkgs; [isabelle];
 
   # Each line contains one directory entry in Isabelle path notation.
   # TODO: Avoid hardcoding this.

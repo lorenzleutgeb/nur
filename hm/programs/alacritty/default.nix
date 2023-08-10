@@ -1,6 +1,4 @@
-{ ... }:
-
-{
+{...}: {
   programs.alacritty.enable = true;
 
   # Too lazy to use programs.alacritty.settings

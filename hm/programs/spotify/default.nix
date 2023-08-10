@@ -1,17 +1,16 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   home.packages = with pkgs; [
     spotify
 
-    /* (makeDesktopItem {
-         name = "spotify";
-         exec = "${spotify}/bin/spotify";
-         comment = "Spotify Music Player";
-         desktopName = "Spotify";
-         genericName = "Music Player";
-         categories = "Audio";
-       })
+    /*
+    (makeDesktopItem {
+      name = "spotify";
+      exec = "${spotify}/bin/spotify";
+      comment = "Spotify Music Player";
+      desktopName = "Spotify";
+      genericName = "Music Player";
+      categories = "Audio";
+    })
     */
 
     (makeDesktopItem {

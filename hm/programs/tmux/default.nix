@@ -1,6 +1,4 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   programs.tmux = {
     enable = true;
 
@@ -27,7 +25,7 @@
        unbind C-b
        set -g prefix C-a
 
-       # Set parent terminal title to reflect current window in tmux session 
+       # Set parent terminal title to reflect current window in tmux session
        set -g set-titles on
        set -g set-titles-string "#I:#W"
 
@@ -68,9 +66,7 @@
        #unbind M-Left # resize 5 rows left
 
        # Edit configuration and reload
-       bind C-e new-window -n 'tmux.conf' "sh -c '\${
-         "EDITOR:-vim"
-       } ~/.tmux.conf && tmux source ~/.tmux.conf && tmux display \"Config reloaded\"'"
+       bind C-e new-window -n 'tmux.conf' "sh -c '\${"EDITOR:-vim"} ~/.tmux.conf && tmux source ~/.tmux.conf && tmux display \"Config reloaded\"'"
 
        # Reload tmux configuration
        bind C-r source-file ~/.tmux.conf \; display "Config reloaded"
@@ -294,7 +290,7 @@
 
       set -g status-bg default
       set -g status-right "#{session_name} #{=7:host_short}"
-             '';
+    '';
   };
 
   home.packages = [

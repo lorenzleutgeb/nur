@@ -1,8 +1,10 @@
-{ config, lib, pkgs, ... }:
-
-with builtins;
-
-let
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+with builtins; let
   name = "Lorenz Leutgeb";
   username = "lorenz";
 in {
@@ -53,7 +55,7 @@ in {
       config.boot.kernelPackages.perf
     ];
 
-    variables = { };
+    variables = {};
   };
 
   services = {
@@ -78,8 +80,7 @@ in {
     createHome = true;
     home = "/home/${username}";
     description = name;
-    extraGroups =
-      [ "disk" "docker" "plugdev" "networkmanager" "video" "wheel" ];
+    extraGroups = ["disk" "docker" "plugdev" "networkmanager" "video" "wheel"];
     uid = 1000;
     shell = pkgs.zsh;
   };
@@ -103,7 +104,7 @@ in {
       dns = "systemd-resolved";
     };
     hostName = "wsl";
-    nameservers = [ ];
+    nameservers = [];
   };
 
   security = {
@@ -140,15 +141,16 @@ in {
   fonts.fontconfig = {
     allowBitmaps = false;
     defaultFonts = {
-      sansSerif = [ "Fira Sans" "DejaVu Sans" ];
-      monospace = [ "Fira Mono" "DejaVu Sans Mono" ];
+      sansSerif = ["Fira Sans" "DejaVu Sans"];
+      monospace = ["Fira Mono" "DejaVu Sans Mono"];
     };
   };
 
   sops = {
-    age.sshKeyPaths = map (x: x.path)
+    age.sshKeyPaths =
+      map (x: x.path)
       (filter (x: x.type == "ed25519") config.services.openssh.hostKeys);
-    secrets."ssh/key" = { sopsFile = ./sops/ssh.yaml; };
+    secrets."ssh/key" = {sopsFile = ./sops/ssh.yaml;};
   };
 
   systemd = {
@@ -167,27 +169,28 @@ in {
       };
     };
     services.systemd-resolved.enable = true;
-    /* network = {
-         enable = true;
-         networks."eth0" = {
-           enable = true;
-           name = "eth0";
-           dns = dns;
-           extraConfig = ''
-             DNSOverTLS=yes
-             DNSSEC=yes
-           '';
-           DHCP = "yes";
-           #address = [ "172.24.160.2" ];
-           #gateway = [ "172.24.160.1" ];
-           dhcpV4Config = {
-             UseDNS = false;
-             UseRoutes = true;
-             UseHostname = false;
-             UseDomains = true;
-           };
-         };
-       };
+    /*
+    network = {
+      enable = true;
+      networks."eth0" = {
+        enable = true;
+        name = "eth0";
+        dns = dns;
+        extraConfig = ''
+          DNSOverTLS=yes
+          DNSSEC=yes
+        '';
+        DHCP = "yes";
+        #address = [ "172.24.160.2" ];
+        #gateway = [ "172.24.160.1" ];
+        dhcpV4Config = {
+          UseDNS = false;
+          UseRoutes = true;
+          UseHostname = false;
+          UseDomains = true;
+        };
+      };
+    };
     */
   };
 }

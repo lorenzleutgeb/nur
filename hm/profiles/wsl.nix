@@ -1,6 +1,8 @@
-{ pkgs, super, ... }:
-
-let
+{
+  pkgs,
+  super,
+  ...
+}: let
   explorer = pkgs.writeShellScriptBin "explorer" ''
     # This script assumes that it is run from within
     # Windows Subsystem for Linux and invokes
@@ -40,7 +42,7 @@ in {
       name = "Windows Explorer";
       genericName = "Filesystem Browser";
       exec = "${explorer}/bin/explorer";
-      categories = [ "Application" ];
+      categories = ["Application"];
     };
   };
 }

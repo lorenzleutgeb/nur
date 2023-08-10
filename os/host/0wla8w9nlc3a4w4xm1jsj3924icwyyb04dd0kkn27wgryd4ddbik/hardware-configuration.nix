@@ -1,6 +1,9 @@
-{ config, lib, pkgs, ... }:
-
 {
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
   boot.initrd.availableKernelModules = [
     "ata_generic"
     "ehci_pci"
@@ -11,9 +14,9 @@
     "usbhid"
     "sd_mod"
   ];
-  boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-intel" ];
-  boot.extraModulePackages = [ ];
+  boot.initrd.kernelModules = [];
+  boot.kernelModules = ["kvm-intel"];
+  boot.extraModulePackages = [];
 
   # Copied over from configuration.nix
   boot.loader.grub.enable = true;
@@ -32,19 +35,18 @@
     fsType = "vfat";
   };
 
-  swapDevices =
-    [{ device = "/dev/disk/by-uuid/1db3ad88-94b8-4e08-826b-e8b3b22ab937"; }];
+  swapDevices = [{device = "/dev/disk/by-uuid/1db3ad88-94b8-4e08-826b-e8b3b22ab937";}];
 
   fileSystems."/home" = {
     device = "/dev/disk/by-uuid/0614c2cb-362d-4746-a8fd-901df900950a";
     fsType = "btrfs";
-    options = [ "subvol=home" ];
+    options = ["subvol=home"];
   };
 
   fileSystems."/srv-backup" = {
     device = "/dev/disk/by-uuid/0614c2cb-362d-4746-a8fd-901df900950a";
     fsType = "btrfs";
-    options = [ "subvol=srv" "ro" ];
+    options = ["subvol=srv" "ro"];
   };
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";

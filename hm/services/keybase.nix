@@ -1,8 +1,13 @@
-{ config, lib, pkgs, ... }: {
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
   services = {
     kbfs.enable = true;
     keybase.enable = true;
   };
 
-  home.packages = [ pkgs.keybase-gui ];
+  home.packages = [pkgs.keybase-gui];
 }

@@ -1,8 +1,10 @@
-{ pkgs, config, ... }:
-
-let
+{
+  pkgs,
+  config,
+  ...
+}: let
   mkcert = pkgs.mkcert;
-  root = pkgs.runCommand "root" { buildInputs = [ mkcert ]; } ''
+  root = pkgs.runCommand "root" {buildInputs = [mkcert];} ''
     CAROOT=$out TRUST_STORES=system mkcert -install
   '';
   secretPath = "/run/secrets/mkcert";
@@ -12,11 +14,10 @@ let
     group = config.users.groups.mkcert.name;
     mode = "0440";
   };
-
 in {
-  imports = [ ../sops.nix ];
+  imports = [../sops.nix];
 
-  users.groups.mkcert = { name = "mkcert"; };
+  users.groups.mkcert = {name = "mkcert";};
 
   sops.secrets = {
     "mkcert/rootCA.pem" = secretConfig;
@@ -24,10 +25,10 @@ in {
   };
 
   environment = {
-    systemPackages = [ mkcert ];
+    systemPackages = [mkcert];
     variables.CAROOT = secretPath;
   };
-  security.pki.certificateFiles = [ "${secretPath}/rootCA.pem" ];
+  security.pki.certificateFiles = ["${secretPath}/rootCA.pem"];
 
   # NOTE: For bootstrapping, mkcert can be used to generate the root CA.
   # comment out the two respective lines above, and nixos-rebuild switch

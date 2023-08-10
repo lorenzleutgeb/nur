@@ -1,10 +1,11 @@
-{ pkgs, config, ... }:
-
-with builtins;
-
 {
+  pkgs,
+  config,
+  ...
+}:
+with builtins; {
   home = {
-    packages = with pkgs; [ neovim-remote haskellPackages.miv powerline-fonts ];
+    packages = with pkgs; [neovim-remote haskellPackages.miv powerline-fonts];
   };
 
   programs.neovim = {
@@ -12,7 +13,7 @@ with builtins;
     defaultEditor = true;
     vimAlias = true;
     extraConfig = readFile ./init.vim;
-    plugins = with pkgs.vimPlugins; [ ];
+    plugins = with pkgs.vimPlugins; [];
   };
 
   xdg.configFile."miv/config.yaml".source = ./config.yaml;

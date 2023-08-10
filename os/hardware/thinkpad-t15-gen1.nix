@@ -1,8 +1,11 @@
 # See also https://github.com/NixOS/nixos-hardware/tree/master/lenovo/thinkpad
-{ config, lib, pkgs, ... }:
-
 {
-  imports = [ <nixos-hardware/lenovo/thinkpad> ];
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
+  imports = [<nixos-hardware/lenovo/thinkpad>];
 
   # Configure boot
 

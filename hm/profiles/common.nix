@@ -1,11 +1,12 @@
-{ lib, pkgs, ... }:
-
-with builtins;
-
 {
-  imports = [ ./yubikey.nix ../scripts ];
+  lib,
+  pkgs,
+  ...
+}:
+with builtins; {
+  imports = [./yubikey.nix ../scripts];
   # Let Home Manager install and manage itself.
-  programs = { home-manager.enable = true; };
+  programs = {home-manager.enable = true;};
 
   xdg = let
     # TODO: Get UID programmatically.
@@ -32,7 +33,7 @@ with builtins;
   fonts.fontconfig.enable = pkgs.lib.mkForce true;
 
   home = {
-    sessionPath = [ "$HOME/bin" ];
-    packages = [ pkgs.xdg-utils ];
+    sessionPath = ["$HOME/bin"];
+    packages = [pkgs.xdg-utils];
   };
 }

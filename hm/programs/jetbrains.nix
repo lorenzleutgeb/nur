@@ -1,7 +1,5 @@
-{ pkgs, ... }:
-
-{
-  home.packages = with pkgs.jetbrains; [ idea-ultimate clion ];
+{pkgs, ...}: {
+  home.packages = with pkgs.jetbrains; [idea-ultimate clion];
 
   xdg.configFile."ideavim/ideavimrc".text = ''
     source ~/.config/nvim/simple.vim
@@ -33,5 +31,5 @@
     map <leader>gr :action GotoRelated<cr>
     map <leader>gs :action GotoSymbol<cr>
     map <leader>gt :action GotoTest<cr>
-      '';
+  '';
 }

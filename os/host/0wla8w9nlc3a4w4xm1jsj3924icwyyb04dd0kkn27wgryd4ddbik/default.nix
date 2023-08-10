@@ -1,12 +1,13 @@
-{ lib, pkgs, ... }:
-
-with builtins;
-
-let
+{
+  lib,
+  pkgs,
+  ...
+}:
+with builtins; let
   name = "Lorenz Leutgeb";
   username = "lorenz";
 in {
-  imports = [ ./hardware-configuration.nix ];
+  imports = [./hardware-configuration.nix];
 
   # Use the systemd-boot EFI boot loader.
   boot.loader = {
@@ -27,7 +28,7 @@ in {
     hostName = "0wla8w9nlc3a4w4xm1jsj3924icwyyb04dd0kkn27wgryd4ddbik";
     interfaces.eno1.useDHCP = true;
 
-    firewall.allowedTCPPorts = [ 80 443 ];
+    firewall.allowedTCPPorts = [80 443];
   };
 
   # Select internationalisation properties.
@@ -89,7 +90,7 @@ in {
     '';
 
     udev = {
-      packages = [ pkgs.yubikey-personalization ];
+      packages = [pkgs.yubikey-personalization];
       extraRules = ''
         # Teensy rules for the Ergodox EZ
         # See https://github.com/zsa/wally/wiki/Linux-install#2-create-a-udev-rule-file
@@ -111,13 +112,12 @@ in {
     createHome = true;
     home = "/home/${username}";
     description = name;
-    extraGroups =
-      [ "audio" "disk" "docker" "plugdev" "networkmanager" "video" "wheel" ];
+    extraGroups = ["audio" "disk" "docker" "plugdev" "networkmanager" "video" "wheel"];
     uid = 1000;
     shell = pkgs.zsh;
   };
 
-  users.users.nginx.extraGroups = [ "acme" ];
+  users.users.nginx.extraGroups = ["acme"];
 
   system.stateVersion = "20.03";
 
@@ -151,6 +151,5 @@ in {
   };
 
   xdg.portal.enable = true;
-  xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+  xdg.portal.extraPortals = [pkgs.xdg-desktop-portal-gtk];
 }
-
