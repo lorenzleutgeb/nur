@@ -1,40 +1,46 @@
 {
   description = "Lorenz Leutgeb's Flake";
-inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-23.05";
-    wsl = {
-      url = "github:nix-community/nixos-wsl";
-      inputs.nixpkgs.follows = "nixpkgs";
+  inputs = {
+    hardware = {
+      url = "github:NixOS/nixos-hardware";
+      flake = false;
     };
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    vscode-server = {
-      url = "github:msteen/nixos-vscode-server";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-23.05";
+    nix-index-database = {
+      url = "github:Mic92/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     sops = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    hardware = {
-      url = "github:NixOS/nixos-hardware";
-      flake = false;
-    };
     mpi-klsb-known-hosts = {
       url = "https://ca.mpi-klsb.mpg.de/ssh_known_hosts";
       flake = false;
     };
+    vscode-server = {
+      url = "github:msteen/nixos-vscode-server";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    wsl = {
+      url = "github:nix-community/nixos-wsl";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = inputs@{ self, nixpkgs, home-manager, vscode-server, wsl, sops, ... }:
+  outputs =
+    inputs@{ self, home-manager, nixpkgs, nix-index-database, sops, vscode-server, wsl, ... }:
     with builtins;
     with nixpkgs;
 
     let
       system = "x86_64-linux";
-      pkgs = import nixpkgs { inherit system;
+      pkgs = import nixpkgs {
+        inherit system;
         overlays = builtins.attrValues self.overlays;
         config.allowUnfree = true;
       };
@@ -59,9 +65,10 @@ inputs = {
                 type = with lib.types;
                   attrsOf (submoduleWith {
                     specialArgs = { super = config; };
-                    modules =
-                      [ vscode-server.homeModules.default ]
-                      ++ (builtins.attrValues (importDirToAttrs ./hm/module));
+                    modules = [
+                      vscode-server.homeModules.default
+                      nix-index-database.hmModules.nix-index
+                    ] ++ (builtins.attrValues (importDirToAttrs ./hm/module));
                   });
               };
 
