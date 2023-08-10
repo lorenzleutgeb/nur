@@ -25,6 +25,7 @@ with builtins;
   ];
 
   home.packages = with pkgs; [
+    alejandra
     asciinema
     autojump
     beets
@@ -53,7 +54,6 @@ with builtins;
     ngrok
     neovim-remote
     niv
-    nixfmt
     nixpkgs-review
     nvme-cli
     openssl

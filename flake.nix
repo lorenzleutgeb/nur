@@ -123,5 +123,7 @@
               ];
             };
           };
+
+      formatter.${system} = pkgs.alejandra;
     };
 }
