@@ -85,6 +85,7 @@ with builtins;
     vmtouch
     xxHash
     yubikey-personalization
+    yq
     zip
     zola
   ];
