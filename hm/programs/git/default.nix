@@ -7,10 +7,8 @@ in {
       delta
       gh
       ghq
-      gitFull
       git-crypt
       git-imerge
-      git-lfs
       tig
     ];
 
