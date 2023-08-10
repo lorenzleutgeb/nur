@@ -28,7 +28,10 @@ in {
           ProxyJump contact.mpi-inf.mpg.de
       '';
 
-      ".ssh/known_hosts_mpi-klsb".source = inputs.mpi-klsb-known-hosts;
+      ".ssh/known_hosts_mpi-klsb".source = builtins.fetchurl {
+        url = "https://ca.mpi-klsb.mpg.de/ssh_known_hosts";
+        sha256 = "sha256:0fi5k53rg215zz3zf9dkjribwmpzhbfgspm3ypailcxyr98hqvsf";
+      };
     };
     packages = with pkgs; [ subversion ];
   };

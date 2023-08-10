@@ -18,10 +18,6 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    mpi-klsb-known-hosts = {
-      url = "https://ca.mpi-klsb.mpg.de/ssh_known_hosts";
-      flake = false;
-    };
     vscode-server = {
       url = "github:msteen/nixos-vscode-server";
       inputs.nixpkgs.follows = "nixpkgs";
