@@ -17,6 +17,7 @@
       ];
     };
     extraOptions = ''
+      allow-import-from-derivation = true
       experimental-features = nix-command flakes no-url-literals repl-flake
       builders-use-substitutes = true
       log-lines = 30

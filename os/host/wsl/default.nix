@@ -89,6 +89,7 @@ in {
     ../../../hm/profiles/mpi-klsb.nix
     ../../../hm/profiles/terminal.nix
     ../../../hm/profiles/spass.nix
+    ../../../hm/profiles/summer-of-nix.nix
     ../../../hm/programs/vscode.nix
     ../../../hm/profiles/wsl.nix
   ];
