@@ -9,7 +9,7 @@ with builtins; let
   username = "lorenz";
   tunnelId = "2e5b6e6f-6236-4e44-ac82-5a10fdba61ac";
 in {
-  enable4k = true;
+  #enable4k = true;
 
   imports = [
     ./hardware-configuration.nix
@@ -22,7 +22,7 @@ in {
 
   # Use the systemd-boot EFI boot loader.
   boot = {
-    tmpOnTmpfs = true;
+    tmp.useTmpfs = true;
     loader = {
       systemd-boot = {
         enable = true;
@@ -34,6 +34,27 @@ in {
       "fs.inotify.max_user_watches" = 65536;
       "net.ipv4.ip_forward" = 1;
       "net.ipv6.conf.all.forwarding" = 1;
+    };
+  };
+
+  systemd.network = let
+    mkConfig = name: {
+      matchConfig.Name = name;
+      networkConfig = {
+        DHCP = "ipv4";
+        IPv6AcceptRA = true;
+      };
+      dns = config.services.resolved.fallbackDns;
+      dhcpV4Config = {
+        UseDNS = false;
+        UseRoutes = true;
+      };
+    };
+  in {
+    enable = true;
+    networks = {
+      "enp111s0f1" = mkConfig "enp111s0f1";
+      #"enp110s0" = mkConfig "enp110s0";
     };
   };
 
@@ -94,6 +115,17 @@ in {
     sessionVariables.LIBVA_DRIVER_NAME = "iHD";
   };
 
+  environment.etc = {
+    "wireplumber/bluetooth.lua.d/50-bluez-config.lua".text = ''
+      bluez_monitor.properties = {
+      	["bluez5.enable-sbc-xq"] = true,
+      	["bluez5.enable-msbc"] = true,
+      	["bluez5.enable-hw-volume"] = true,
+      	["bluez5.headset-roles"] = "[ hsp_hs hsp_ag hfp_hf hfp_ag ]"
+      }
+    '';
+  };
+
   services = {
     accounts-daemon.enable = true;
     beesd.filesystems."root" = {
@@ -137,9 +169,6 @@ in {
         support32Bit = true;
       };
       pulse.enable = true;
-      #jack.enable = true;
-      #media-session.enable = true;
-      #wireplumber.enable = false;
     };
 
     sourcehut = {
@@ -219,7 +248,7 @@ in {
     ../../../hm/profiles/gaming.nix
     ../../../hm/profiles/latex.nix
     ../../../hm/profiles/mpi-klsb.nix
-    ../../../hm/services/v4lbridge.nix
+    #../../../hm/services/v4lbridge.nix
     ../../../hm/profiles/spass.nix
   ];
 

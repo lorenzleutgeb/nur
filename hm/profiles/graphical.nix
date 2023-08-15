@@ -22,7 +22,11 @@ with builtins; {
   ];
 
   home.sessionVariables =
-    if super.enable4k
+    if
+      /*
+      super.enable4k
+      */
+      true
     then {GDK_DPI_SCALE = "1.5";}
     else {};
 

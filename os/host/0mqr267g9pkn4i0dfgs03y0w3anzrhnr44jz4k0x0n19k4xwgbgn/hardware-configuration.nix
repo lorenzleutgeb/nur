@@ -24,7 +24,7 @@
     };
     kernelModules = [
       "kvm-intel" # https://wiki.archlinux.org/index.php/KVM@
-      "v4l2loopback"
+      # "v4l2loopback" for screen recording
 
       "vfio"
       "vfio_iommu_type1"
@@ -34,12 +34,15 @@
     kernelPackages = pkgs.linuxPackages_5_10;
     kernelParams = ["intel_iommu=on" "mitigations=off"];
 
-    extraModulePackages = with config.boot.kernelPackages; [v4l2loopback];
+    /*
+       for screen recording
+    extraModulePackages = with config.boot.kernelPackages; [ v4l2loopback ];
 
     # Add two v4l devices "v4l-0" and "v4l-1" that map to /dev/video1{0,1}.
     extraModprobeConfig = ''
       options v4l2loopback exclusive_caps=1 video_nr=10,11 card_label=v4l-0,v4l-1
     '';
+    */
   };
 
   fileSystems =

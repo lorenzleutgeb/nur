@@ -59,6 +59,13 @@ in {
 
   wayland.windowManager.sway = let
     modifier = "Mod4";
+    zoomWindows = [
+      {"title" = "^Zoom Cloud Meetings$";}
+      {"title" = "^Zoom Meeting$";}
+      {"title" = "^Zoom - Licensed Account$";}
+      {"title" = "^zoom$";}
+      {"title" = "^as_toolbar$";}
+    ];
   in {
     enable = true;
     wrapperFeatures.gtk = true;
@@ -121,7 +128,7 @@ in {
 
       # Idea for workspaces:
       #   1 ?
-      #   2 Messaging    Thunderbird, Skype, Signal
+      #   2 Messaging    Thunderbird, Skype, Signal, Zoom
       #   3 ?
       #   4 Browsers     Firefox
       #   5 avoided since key is not directly above home row
@@ -131,23 +138,27 @@ in {
       #   9 Music        Spotify
       #  10 ?
       assigns = {
-        "2" = [
-          {app_id = "Signal";}
-          {app_id = "Skype";}
-          {app_id = "Slack";}
-          {app_id = "^.*Thunderbird.*$";}
-        ];
+        "2" =
+          [
+            {app_id = "Signal";}
+            {app_id = "Skype";}
+            {app_id = "Slack";}
+            {app_id = "^.*Thunderbird.*$";}
+          ]
+          ++ zoomWindows;
         "4" = [{app_id = "^[F|f]irefox$";}];
         "7" = [{app_id = "^[A|a]lacritty$";}];
         "8" = [{app_id = "Code";} {app_id = "^.*jetbrains-.*$";}];
         "9" = [{app_id = "^[S|s]potify.*";}];
       };
 
-      floating.criteria = [
-        {"app_id" = "Ibus-ui-gtk3";}
-        {"app_id" = "Nm-connection-editor";}
-        {"app_id" = "Pinentry";}
-      ];
+      floating.criteria =
+        [
+          {"app_id" = "Ibus-ui-gtk3";}
+          {"app_id" = "Nm-connection-editor";}
+          {"app_id" = "Pinentry";}
+        ]
+        ++ zoomWindows;
 
       colors = {
         focused = {
@@ -277,7 +288,12 @@ in {
     _JAVA_AWT_WM_NONREPARENTING = "1";
   };
 
-  programs.mako = {
+  systemd.user.sessionVariables = {
+    XDG_CURRENT_DESKTOP = "sway";
+    XDG_SESSION_TYPE = "wayland";
+  };
+
+  services.mako = {
     enable = true;
     anchor = "bottom-center";
     backgroundColor = "#00000033";

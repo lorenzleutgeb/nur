@@ -10,7 +10,7 @@ in {
 
   networking.firewall.trustedInterfaces = [config.services.tailscale.interfaceName];
 
-  systemd.network.networks.${config.services.tailscale.interfaceName} = lib.mkIf config.systemd.network.enabled {
+  systemd.network.networks.${config.services.tailscale.interfaceName} = lib.mkIf config.systemd.network.enable {
     enable = true;
     name = config.services.tailscale.interfaceName;
     dns = [tailscaleDns];
