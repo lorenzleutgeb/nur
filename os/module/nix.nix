@@ -31,4 +31,8 @@
     '';
     gc.automatic = true;
   };
+
+  environment.systemPackages = [
+    pkgs.nil
+  ];
 }

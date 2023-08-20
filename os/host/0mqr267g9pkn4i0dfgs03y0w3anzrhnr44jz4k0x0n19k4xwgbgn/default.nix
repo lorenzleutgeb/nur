@@ -104,6 +104,7 @@ in {
       coreutils-full
       dmidecode
       exfat
+      libvirt
       lshw
       lsof
       nfs-utils
@@ -250,6 +251,7 @@ in {
     ../../../hm/profiles/mpi-klsb.nix
     #../../../hm/services/v4lbridge.nix
     ../../../hm/profiles/spass.nix
+    ../../../hm/profiles/summer-of-nix.nix
   ];
 
   system.stateVersion = "20.03";
@@ -286,7 +288,7 @@ in {
     };
     virtualbox.host.enable = false;
     libvirtd = {
-      enable = false;
+      enable = true;
       qemu.package = pkgs.qemu_kvm;
     };
   };
