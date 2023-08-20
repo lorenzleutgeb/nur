@@ -157,7 +157,7 @@ in {
     };
   };
 
-  extraVirtualAliases.${localMail "theres-und-lorenz"} = ["theressophie@gmail.com" "${me.email}"];
+  #extraVirtualAliases.${localMail "theres-und-lorenz"} = ["theressophie@gmail.com" "${me.email}"];
 
   services = {
     qemuGuest.enable = true;
@@ -376,7 +376,12 @@ in {
   };
   users.mutableUsers = false;
   users.users."nginx".extraGroups = ["acme"];
-  users.users."postfix".extraGroups = ["acme"];
+  users.users."postfix" = {
+    group = "postfix";
+    extraGroups = ["acme"];
+    isSystemUser = true;
+  };
+  users.groups.postfix = {};
 
   system.stateVersion = "20.03";
 
@@ -385,26 +390,24 @@ in {
   security = {
     sudo.wheelNeedsPassword = false;
     acme = {
-      inherit (me) email;
       acceptTerms = true;
+      defaults = {
+        inherit (me) email;
+      };
       certs = let
         credentialsFile = "/home/${me.username}/.config/lego/cloudflare";
       in {
         "${domain}" = {
-          inherit (me) email;
           inherit dnsProvider credentialsFile;
         };
         "${domain}-wildcard" = {
-          inherit (me) email;
           inherit dnsProvider credentialsFile;
           domain = subdomain "*";
         };
         "${alternateDomain}" = {
-          inherit (me) email;
           inherit dnsProvider credentialsFile;
         };
         "${alternateDomain}-wildcard" = {
-          inherit (me) email;
           inherit dnsProvider credentialsFile;
           domain = "*.${alternateDomain}";
         };

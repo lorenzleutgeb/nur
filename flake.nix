@@ -9,6 +9,10 @@
       url = "github:nix-community/home-manager/release-23.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nil = {
+      url = "github:oxalica/nil";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nixpkgs.url = "github:nixos/nixpkgs/nixos-23.05";
     nix-index-database = {
       url = "github:Mic92/nix-index-database";
@@ -18,6 +22,11 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    treefmt-nix = {
+      url = "github:numtide/treefmt-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    utils.url = "github:numtide/flake-utils";
     vscode-server = {
       url = "github:msteen/nixos-vscode-server";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -26,14 +35,25 @@
       url = "github:nix-community/nixos-wsl";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    mailserver = {
+      url = "git+https://gitlab.com/simple-nixos-mailserver/nixos-mailserver/";
+      inputs = {
+        utils.follows = "utils";
+        nixpkgs.follows = "nixpkgs";
+        nixpkgs-23_05.follows = "nixpkgs";
+      };
+    };
   };
 
   outputs = inputs @ {
     self,
     home-manager,
+    mailserver,
+    nil,
     nixpkgs,
     nix-index-database,
     sops,
+    treefmt-nix,
     vscode-server,
     wsl,
     ...
@@ -43,7 +63,7 @@
       system = "x86_64-linux";
       pkgs = import nixpkgs {
         inherit system;
-        overlays = builtins.attrValues self.overlays;
+        overlays = (builtins.attrValues self.overlays) ++ [(_: _: {inherit (nil.packages.${system}) nil;})];
         config.allowUnfree = true;
       };
       makeDiskImage = import "${nixpkgs}/nixos/lib/make-disk-image.nix";
@@ -56,6 +76,8 @@
           name = kebabCaseToCamelCase (lib.removeSuffix ".nix" name);
           value = import (dir + "/${name}");
         }) (attrNames (readDir dir)));
+
+      treefmt = treefmt-nix.lib.evalModule pkgs ./treefmt.nix;
 
       nixosSystemFor = preconfig:
         lib.nixosSystem {
@@ -93,6 +115,7 @@
           in [
             nixpkgs.nixosModules.notDetected
             home-manager.nixosModules.home-manager
+            mailserver.nixosModules.default
             sops.nixosModules.sops
             wsl.nixosModules.wsl
             home
@@ -102,6 +125,8 @@
         };
     in rec {
       overlays = {pkgs = import ./pkg;} // importDirToAttrs ./overlay;
+
+      formatter.${system} = treefmt.config.build.wrapper;
 
       packages.${system} = {
         inherit (pkgs) kmonad-bin;
@@ -132,6 +157,10 @@
           };
         };
 
-      formatter.${system} = pkgs.alejandra;
+      checks.${system} =
+        self.packages.${system}
+        // {
+          formatting = treefmt.config.build.check self;
+        };
     };
 }

@@ -19,11 +19,12 @@
   boot.extraModulePackages = [];
 
   # Copied over from configuration.nix
-  boot.loader.grub.enable = true;
-  boot.loader.grub.version = 2;
-  boot.loader.grub.efiSupport = true;
-  boot.loader.grub.efiInstallAsRemovable = true;
-  boot.loader.grub.device = "nodev";
+  boot.loader.grub = {
+    enable = true;
+    efiSupport = true;
+    efiInstallAsRemovable = true;
+    device = "nodev";
+  };
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/eccddb77-effe-4498-884a-32fcb9e5638e";

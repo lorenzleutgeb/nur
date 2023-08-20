@@ -117,7 +117,12 @@ in {
     shell = pkgs.zsh;
   };
 
-  users.users.nginx.extraGroups = ["acme"];
+  users.users.nginx = {
+    extraGroups = ["acme"];
+    isSystemUser = true;
+    group = "nginx";
+  };
+  users.groups.nginx = {};
 
   system.stateVersion = "20.03";
 
@@ -128,11 +133,10 @@ in {
       cue = true;
     };
     acme = {
-      email = "lorenz@leutgeb.xyz";
+      defaults.email = "lorenz@leutgeb.xyz";
       acceptTerms = true;
       certs = {
         "0wla8w9nlc3a4w4xm1jsj3924icwyyb04dd0kkn27wgryd4ddbik.leutgeb.xyz" = {
-          email = "lorenz@leutgeb.xyz";
           dnsProvider = "cloudflare";
           credentialsFile = "/home/lorenz/.config/lego/cloudflare";
           extraDomainNames = [
@@ -152,4 +156,6 @@ in {
 
   xdg.portal.enable = true;
   xdg.portal.extraPortals = [pkgs.xdg-desktop-portal-gtk];
+
+  programs.zsh.enable = true;
 }
