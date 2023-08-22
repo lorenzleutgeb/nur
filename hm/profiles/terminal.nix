@@ -1,13 +1,17 @@
 {
   lib,
   pkgs,
+  config,
+  osConfig,
   ...
 }:
 with builtins; {
   imports = [
     ./common.nix
     ./nixbuild.nix
+    ./sops
     #../programs/docker.nix
+    ../programs/atuin.nix
     ../programs/bat
     ../programs/direnv
     ../programs/fzf.nix
@@ -90,9 +94,4 @@ with builtins; {
     zip
     zola
   ];
-
-  programs.atuin = {
-    enable = true;
-    enableZshIntegration = true;
-  };
 }

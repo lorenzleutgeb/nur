@@ -9,27 +9,27 @@ with builtins; let
   username = "lorenz";
 in {
   imports = [
-    ../../module/mkcert
-    ../../module/nix.nix
-    ../../module/sops.nix
-    #../../module/tailscale.nix
-    ../../module/mpi-klsb.nix
-    ../../module/dns.nix
+    ../../mixin/mkcert
+    ../../mixin/nix.nix
+    ../../mixin/sops.nix
+    ../../mixin/ssh.nix
+    #../../mixin/tailscale.nix
+    ../../mixin/mpi-klsb.nix
+    ../../mixin/dns.nix
   ];
 
   wsl = {
     enable = true;
     nativeSystemd = true;
     wslConf = {
-      user.default = "lorenz";
+      user.default = username;
       network = {
         generateHosts = false;
         generateResolvConf = false;
       };
     };
-    defaultUser = "lorenz";
+    defaultUser = username;
     startMenuLaunchers = false;
-    #docker-desktop.enable = true;
   };
 
   # Set your time zone.
@@ -85,17 +85,9 @@ in {
     shell = pkgs.zsh;
   };
 
-  home-manager.users.${username}.imports = [
-    ../../../hm/profiles/latex.nix
-    ../../../hm/profiles/mpi-klsb.nix
-    ../../../hm/profiles/terminal.nix
-    ../../../hm/profiles/spass.nix
-    ../../../hm/profiles/summer-of-nix.nix
-    ../../../hm/programs/vscode.nix
-    ../../../hm/profiles/wsl.nix
-  ];
-
   system.stateVersion = "20.03";
+
+  nixpkgs.hostPlatform = "x86_64-linux";
 
   networking = {
     firewall.enable = false;

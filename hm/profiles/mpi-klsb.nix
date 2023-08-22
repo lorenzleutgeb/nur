@@ -24,6 +24,8 @@ in {
     file = {
       ".ssh/config_mpi-klsb".text = ''
         Match host *.mpi-inf.mpg.de,*.mpi-sws.org,*.mpi-klsb.mpg.de
+          # Do not blindly accept known hosts for any domain,
+          # but restrict to well-known domains.
           UserKnownHostsFile ~/.ssh/known_hosts_mpi-klsb
 
         Match host *.mpi-inf.mpg.de,!contact.mpi-inf.mpg.de !exec "ip -4 -o a show up scope global | grep 139.19."

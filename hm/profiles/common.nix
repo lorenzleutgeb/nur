@@ -1,17 +1,10 @@
-{
-  lib,
-  pkgs,
-  ...
-}:
-with builtins; {
+{pkgs, ...}: {
   imports = [./yubikey.nix ../scripts];
-  # Let Home Manager install and manage itself.
-  programs = {home-manager.enable = true;};
 
-  xdg = let
-    # TODO: Get UID programmatically.
-    runtimeDir = "/var/run/user/1000";
-  in {
+  # Let Home Manager install and manage itself.
+  programs.home-manager.enable = true;
+
+  xdg = {
     enable = true;
     mime.enable = true;
     mimeApps.enable = true;
@@ -20,19 +13,19 @@ with builtins; {
 
   manual.html.enable = true;
 
-  # This value determines the Home Manager release that your
-  # configuration is compatible with. This helps avoid breakage
-  # when a new Home Manager release introduces backwards
-  # incompatible changes.
-  #
-  # You can update Home Manager without changing this value. See
-  # the Home Manager release notes for a list of state version
-  # changes in each release.
-  home.stateVersion = "20.03";
-
   fonts.fontconfig.enable = pkgs.lib.mkForce true;
 
   home = {
+    # This value determines the Home Manager release that your
+    # configuration is compatible with. This helps avoid breakage
+    # when a new Home Manager release introduces backwards
+    # incompatible changes.
+    #
+    # You can update Home Manager without changing this value. See
+    # the Home Manager release notes for a list of state version
+    # changes in each release.
+    stateVersion = "20.03";
+
     sessionPath = ["$HOME/bin"];
     packages = [pkgs.xdg-utils];
   };

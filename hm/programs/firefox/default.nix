@@ -1,6 +1,6 @@
 {
   pkgs,
-  super,
+  osConfig,
   ...
 }:
 with builtins; {
@@ -56,7 +56,7 @@ with builtins; {
         "toolkit.telemetry.enabled" = false;
         "geo.enabled" = false;
 
-        "identity.fxaccounts.account.device.name" = super.networking.hostName;
+        "identity.fxaccounts.account.device.name" = osConfig.networking.hostName;
 
         "intl.accept_languages" = "en,de,it,fr";
 

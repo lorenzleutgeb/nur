@@ -63,7 +63,7 @@
       system = "x86_64-linux";
       pkgs = import nixpkgs {
         inherit system;
-        overlays = (builtins.attrValues self.overlays) ++ [(_: _: {inherit (nil.packages.${system}) nil;})];
+        overlays = (attrValues self.overlays) ++ [(_: _: {inherit (nil.packages.${system}) nil;})];
         config.allowUnfree = true;
       };
       makeDiskImage = import "${nixpkgs}/nixos/lib/make-disk-image.nix";
@@ -79,38 +79,42 @@
 
       treefmt = treefmt-nix.lib.evalModule pkgs ./treefmt.nix;
 
-      nixosSystemFor = preconfig:
+      hm = import ./hm;
+
+      host = name: preconfig:
         lib.nixosSystem {
-          inherit system;
-
           modules = let
-            home = {config, ...}: {
-              options.home-manager.users = lib.mkOption {
-                type = with lib.types;
-                  attrsOf (submoduleWith {
-                    specialArgs = {super = config;};
-                    modules =
-                      [
-                        vscode-server.homeModules.default
-                        nix-index-database.hmModules.nix-index
-                      ]
-                      ++ (builtins.attrValues (importDirToAttrs ./hm/module));
-                  });
-              };
+            home =
+              if hm ? ${name}
+              then {
+                home-manager = {
+                  users.lorenz.imports =
+                    hm.${name}
+                    ++ [
+                      vscode-server.homeModules.default
+                      nix-index-database.hmModules.nix-index
+                      sops.homeManagerModule
+                    ]
+                    ++ (attrValues (importDirToAttrs ./hm/module));
 
-              config.home-manager = {
-                useGlobalPkgs = true;
-                useUserPackages = false;
-                backupFileExtension = "bak";
-                extraSpecialArgs.inputs = inputs;
-              };
-            };
+                  useGlobalPkgs = true;
+                  useUserPackages = false;
+                  backupFileExtension = "bak";
+                  extraSpecialArgs.inputs = inputs;
+                };
+              }
+              else {};
             common = {
               system.stateVersion = "20.03";
               system.configurationRevision =
                 pkgs.lib.mkIf (self ? rev) self.rev;
-              #nixpkgs = { inherit pkgs; };
-              #nix.registry.nixpkgs.flake = nixpkgs;
+              nix.registry.nixpkgs = {
+                from = {
+                  id = "nixpkgs";
+                  type = "indirect";
+                };
+                flake = nixpkgs;
+              };
             };
           in [
             nixpkgs.nixosModules.notDetected
@@ -124,7 +128,7 @@
           ];
         };
     in rec {
-      overlays = {pkgs = import ./pkg;} // importDirToAttrs ./overlay;
+      overlays = {default = import ./pkg;} // importDirToAttrs ./overlay;
 
       formatter.${system} = treefmt.config.build.wrapper;
 
@@ -145,22 +149,27 @@
 
       nixosModules = importDirToAttrs ./os/module;
 
-      nixosConfigurations =
-        (mapAttrs (id: _: nixosSystemFor (import (./os/host + "/${id}")))
-          (readDir ./os/host))
-        // {
-          live = lib.nixosSystem {
-            inherit system;
-            modules = [
-              "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-graphical-gnome.nix"
-            ];
-          };
-        };
+      nixosConfigurations = let dir = ./os/host; in mapAttrs (id: _: host id (import (dir + "/${id}"))) (readDir dir);
 
       checks.${system} =
         self.packages.${system}
         // {
           formatting = treefmt.config.build.check self;
         };
+
+      /*
+      homeConfigurations = mapAttrs (_: config:
+        home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.${system};
+          extraSpecialArgs = {inherit inputs;};
+          modules =
+            [
+              config
+              vscode-server.homeModules.default
+              nix-index-database.hmModules.nix-index
+            ]
+            ++ (attrValues (importDirToAttrs ./hm/module));
+        }) (import ./hm);
+      */
     };
 }

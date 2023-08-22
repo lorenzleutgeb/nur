@@ -1,6 +1,6 @@
 {
   pkgs,
-  super,
+  osConfig,
   ...
 }: let
   explorer = pkgs.writeShellScriptBin "explorer" ''
@@ -19,7 +19,7 @@
   '';
 in {
   home = {
-    file."id".text = super.networking.hostName;
+    file."id".text = osConfig.networking.hostName;
     sessionVariables.BROWSER = explorer;
   };
 
