@@ -13,6 +13,7 @@ in {
 
   imports = [
     ./hardware-configuration.nix
+    ../../mixin/kmscon.nix
     ../../mixin/mkcert
     ../../mixin/nix.nix
     ../../mixin/sops.nix
