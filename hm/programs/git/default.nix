@@ -29,7 +29,7 @@ in {
     userName = "Lorenz Leutgeb";
     userEmail = "lorenz@leutgeb.xyz";
 
-    ignores = [".dir-locals.el" ".direnv/" ".envrc"];
+    ignores = [".dir-locals.el" ".direnv/" ".envrc" ".mob"];
 
     aliases = {
       a = "add";
