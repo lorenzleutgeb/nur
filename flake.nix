@@ -9,6 +9,14 @@
       url = "github:nix-community/home-manager/release-23.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    ngipkgs = {
+      url = "github:ngi-nix/ngipkgs";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "utils";
+        sops-nix.follows = "sops";
+      };
+    };
     nil = {
       url = "github:oxalica/nil";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -49,6 +57,7 @@
     self,
     home-manager,
     mailserver,
+    ngipkgs,
     nil,
     nixpkgs,
     nix-index-database,
@@ -122,6 +131,7 @@
             mailserver.nixosModules.default
             sops.nixosModules.sops
             wsl.nixosModules.wsl
+            ngipkgs.nixosModules.default
             home
             common
             preconfig

@@ -5,7 +5,7 @@
 }: let
   cache = "mob";
 in {
-  home.packages = with pkgs; [alejandra espeak-classic mob];
+  home.packages = with pkgs; [alejandra espeak-classic mob gnunet-messenger-cli];
 
   systemd.user.services.cachix-watch-store = {
     Unit = {
