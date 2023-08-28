@@ -18,6 +18,13 @@
       url = "github:Mic92/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    sbt = {
+      url = "github:zaninime/sbt-derivation";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "utils";
+      };
+    };
     sops = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -52,6 +59,7 @@
     nil,
     nixpkgs,
     nix-index-database,
+    sbt,
     sops,
     treefmt-nix,
     vscode-server,
@@ -61,9 +69,16 @@
     with builtins;
     with nixpkgs; let
       system = "x86_64-linux";
+      overlays = {
+        input = [
+          sbt.overlays.default
+          (_: _: {inherit (nil.packages.${system}) nil;})
+        ];
+        self = attrValues self.overlays;
+      };
       pkgs = import nixpkgs {
         inherit system;
-        overlays = (attrValues self.overlays) ++ [(_: _: {inherit (nil.packages.${system}) nil;})];
+        overlays = overlays.input ++ overlays.self;
         config.allowUnfree = true;
       };
       makeDiskImage = import "${nixpkgs}/nixos/lib/make-disk-image.nix";
@@ -115,6 +130,9 @@
                 };
                 flake = nixpkgs;
               };
+              nixpkgs = {
+                overlays = overlays.input ++ overlays.self;
+              };
             };
           in [
             nixpkgs.nixosModules.notDetected
@@ -133,7 +151,7 @@
       formatter.${system} = treefmt.config.build.wrapper;
 
       packages.${system} = {
-        inherit (pkgs) kmonad-bin;
+        inherit (pkgs) apalache kmonad-bin quint;
         inherit (pkgs.nodePackages) firebase-tools; # turtle-validator;
 
         nc = makeDiskImage {

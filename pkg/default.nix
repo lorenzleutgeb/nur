@@ -6,4 +6,8 @@ final: prev: {
       lib = prev.lib;
     });
   kmonad-bin = prev.callPackage ./kmonad-bin {};
+
+  quint = prev.callPackage ./quint.nix {};
+
+  apalache = prev.callPackage ./apalache.nix {};
 }
