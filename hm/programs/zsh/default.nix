@@ -20,6 +20,8 @@ with builtins; {
       g = "git";
       d = "docker";
 
+      nix = "nix-nom";
+
       machine-hash = "nix-hash --type sha256 --base32 --flat /etc/machine-id";
       lngc = "find . -xtype l -delete";
 
