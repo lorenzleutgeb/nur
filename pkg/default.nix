@@ -1,13 +1,9 @@
-final: prev: {
-  nodePackages =
-    prev.nodePackages
-    // (import ./node {
-      pkgs = prev;
-      lib = prev.lib;
-    });
-  kmonad-bin = prev.callPackage ./kmonad-bin {};
-
-  quint = prev.callPackage ./quint.nix {};
-
-  apalache = prev.callPackage ./apalache.nix {};
-}
+{newScope, ...}: let
+  self = {
+    kmonad-bin = callPackage ./kmonad-bin {};
+    quint = callPackage ./quint.nix {};
+    apalache = callPackage ./apalache.nix {};
+  };
+  callPackage = newScope (self // {inherit callPackage;});
+in
+  self

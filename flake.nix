@@ -5,18 +5,25 @@
       url = "github:NixOS/nixos-hardware";
       flake = false;
     };
-    home-manager = {
+    hm = {
       url = "github:nix-community/home-manager/release-23.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nil = {
       url = "github:oxalica/nil";
-      inputs.nixpkgs.follows = "nixpkgs";
+      #inputs.nixpkgs.follows = "nixpkgs"; Stopped following nixpkgs since nil's Rust version is too far ahead.
     };
     nixpkgs.url = "github:nixos/nixpkgs/nixos-23.05";
     nix-index-database = {
       url = "github:Mic92/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+    rust = {
+      url = "github:oxalica/rust-overlay";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "utils";
+      };
     };
     sbt = {
       url = "github:zaninime/sbt-derivation";
@@ -42,7 +49,7 @@
       };
     };
     wsl = {
-      url = "github:nix-community/nixos-wsl";
+      url = "github:nix-community/nixos-wsl/22.05-5c211b47";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         flake-utils.follows = "utils";
@@ -60,13 +67,14 @@
 
   outputs = inputs @ {
     self,
-    home-manager,
+    hm,
     mailserver,
     nil,
     nixpkgs,
     nix-index-database,
     sbt,
     sops,
+    rust,
     treefmt-nix,
     vscode-server,
     wsl,
@@ -77,11 +85,18 @@
       system = "x86_64-linux";
       overlays = {
         input = [
+          rust.overlays.default
           sbt.overlays.default
           (_: _: {inherit (nil.packages.${system}) nil;})
         ];
         self = attrValues self.overlays;
       };
+
+      importPackages = pkgs:
+        import ./pkg {
+          inherit (pkgs) newScope;
+        };
+
       pkgs = import nixpkgs {
         inherit system;
         overlays = overlays.input ++ overlays.self;
@@ -100,31 +115,33 @@
 
       treefmt = treefmt-nix.lib.evalModule pkgs ./treefmt.nix;
 
-      hm = import ./hm;
+      hmConfig = path: user: host: let
+        hm = import path;
+      in
+        if hm ? ${host}
+        then {
+          home-manager = {
+            users.${user}.imports =
+              hm.${host}
+              ++ [
+                vscode-server.homeModules.default
+                nix-index-database.hmModules.nix-index
+                sops.homeManagerModule
+              ]
+              ++ (attrValues (importDirToAttrs "${path}/module"));
+
+            useGlobalPkgs = true;
+            useUserPackages = false;
+            backupFileExtension = "bak";
+            extraSpecialArgs.inputs = inputs;
+          };
+        }
+        else {};
 
       host = name: preconfig:
         lib.nixosSystem {
           modules = let
-            home =
-              if hm ? ${name}
-              then {
-                home-manager = {
-                  users.lorenz.imports =
-                    hm.${name}
-                    ++ [
-                      vscode-server.homeModules.default
-                      nix-index-database.hmModules.nix-index
-                      sops.homeManagerModule
-                    ]
-                    ++ (attrValues (importDirToAttrs ./hm/module));
-
-                  useGlobalPkgs = true;
-                  useUserPackages = false;
-                  backupFileExtension = "bak";
-                  extraSpecialArgs.inputs = inputs;
-                };
-              }
-              else {};
+            home = hmConfig ./hm "lorenz" name;
             common = {
               system.stateVersion = "20.03";
               system.configurationRevision =
@@ -142,7 +159,7 @@
             };
           in [
             nixpkgs.nixosModules.notDetected
-            home-manager.nixosModules.home-manager
+            hm.nixosModules.home-manager
             mailserver.nixosModules.default
             sops.nixosModules.sops
             wsl.nixosModules.wsl
@@ -152,24 +169,23 @@
           ];
         };
     in rec {
-      overlays = {default = import ./pkg;} // importDirToAttrs ./overlay;
+      overlays = {default = final: prev: importPackages prev;} // importDirToAttrs ./overlay;
 
       formatter.${system} = treefmt.config.build.wrapper;
 
-      packages.${system} = {
-        inherit (pkgs) apalache kmonad-bin quint;
-        inherit (pkgs.nodePackages) firebase-tools; # turtle-validator;
-
-        nc = makeDiskImage {
-          inherit pkgs;
-          inherit (pkgs) lib;
-          diskSize = "auto"; # 240 * 1000 * 1000 * 1000; # 240GB
-          format = "qcow2";
-          config = nixosConfigurations.nc.config;
+      packages.${system} =
+        importPackages pkgs
+        // {
+          nc = makeDiskImage {
+            inherit pkgs;
+            inherit (pkgs) lib;
+            diskSize = "auto"; # 240 * 1000 * 1000 * 1000; # 240GB
+            format = "qcow2";
+            config = nixosConfigurations.nc.config;
+          };
+          live = nixosConfigurations.live.config.system.build.isoImage;
+          wsl = nixosConfigurations.wsl.config.system.build.tarball;
         };
-        live = nixosConfigurations.live.config.system.build.isoImage;
-        wsl = nixosConfigurations.wsl.config.system.build.installer;
-      };
 
       nixosModules = importDirToAttrs ./os/module;
 
@@ -183,7 +199,7 @@
 
       /*
       homeConfigurations = mapAttrs (_: config:
-        home-manager.lib.homeManagerConfiguration {
+        hm.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.${system};
           extraSpecialArgs = {inherit inputs;};
           modules =
