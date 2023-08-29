@@ -36,11 +36,17 @@
     utils.url = "github:numtide/flake-utils";
     vscode-server = {
       url = "github:msteen/nixos-vscode-server";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "utils";
+      };
     };
     wsl = {
       url = "github:nix-community/nixos-wsl";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "utils";
+      };
     };
     mailserver = {
       url = "git+https://gitlab.com/simple-nixos-mailserver/nixos-mailserver/";
