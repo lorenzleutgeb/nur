@@ -243,36 +243,12 @@
         "nil": "nil",
         "nix-index-database": "nix-index-database",
         "nixpkgs": "nixpkgs_2",
-        "rust": "rust",
         "sbt": "sbt",
         "sops": "sops",
         "treefmt-nix": "treefmt-nix",
         "utils": "utils",
         "vscode-server": "vscode-server",
         "wsl": "wsl"
-      }
-    },
-    "rust": {
-      "inputs": {
-        "flake-utils": [
-          "utils"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1693276701,
-        "narHash": "sha256-rz1vcG4UyxLTgJDHOnU/9Z0LthXi9o7YQxRV/m+LJ+U=",
-        "owner": "oxalica",
-        "repo": "rust-overlay",
-        "rev": "29d5b70c1fa6e1f9f3aa8f69361e09e95c609ab4",
-        "type": "github"
-      },
-      "original": {
-        "owner": "oxalica",
-        "repo": "rust-overlay",
-        "type": "github"
       }
     },
     "rust-overlay": {
@@ -446,16 +422,15 @@
         ]
       },
       "locked": {
-        "lastModified": 1660838518,
-        "narHash": "sha256-wcOR7nKEWx1kfrdNeb7kS2hqmCqFCp86G3mblJxrgrA=",
+        "lastModified": 1692543835,
+        "narHash": "sha256-1fR7+IhSSEHRbRW1w3nXb38/4kFfpmCDzMsK+ApqZCk=",
         "owner": "nix-community",
         "repo": "nixos-wsl",
-        "rev": "0b29fc7500d3222c396556661276b98f060d6838",
+        "rev": "faab3194692c5b6b351e33fc8d5e7f15f22d1d15",
         "type": "github"
       },
       "original": {
         "owner": "nix-community",
-        "ref": "22.05-5c211b47",
         "repo": "nixos-wsl",
         "type": "github"
       }

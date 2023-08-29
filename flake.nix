@@ -18,13 +18,6 @@
       url = "github:Mic92/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    rust = {
-      url = "github:oxalica/rust-overlay";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        flake-utils.follows = "utils";
-      };
-    };
     sbt = {
       url = "github:zaninime/sbt-derivation";
       inputs = {
@@ -49,7 +42,7 @@
       };
     };
     wsl = {
-      url = "github:nix-community/nixos-wsl/22.05-5c211b47";
+      url = "github:nix-community/nixos-wsl";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         flake-utils.follows = "utils";
@@ -74,7 +67,6 @@
     nix-index-database,
     sbt,
     sops,
-    rust,
     treefmt-nix,
     vscode-server,
     wsl,
@@ -84,12 +76,38 @@
     with nixpkgs; let
       system = "x86_64-linux";
       overlays = {
+        # Overlays defined in flake inputs.
         input = [
-          rust.overlays.default
           sbt.overlays.default
           (_: _: {inherit (nil.packages.${system}) nil;})
         ];
+        # Overlays that are outputs of self;
         self = attrValues self.overlays;
+      };
+
+      modules = {
+        input = [
+          nixpkgs.nixosModules.notDetected
+          hm.nixosModules.home-manager
+          mailserver.nixosModules.default
+          sops.nixosModules.sops
+          wsl.nixosModules.wsl
+        ];
+        self = attrValues self.nixosModules;
+      };
+
+      homeModules = {
+        input = [
+          vscode-server.homeModules.default
+          nix-index-database.hmModules.nix-index
+          sops.homeManagerModule
+        ];
+        self = attrValues (importDirToAttrs ./hm/module);
+      };
+
+      pkgs = import nixpkgs {
+        inherit system;
+        overlays = overlays.input ++ overlays.self;
       };
 
       importPackages = pkgs:
@@ -97,11 +115,6 @@
           inherit (pkgs) newScope;
         };
 
-      pkgs = import nixpkgs {
-        inherit system;
-        overlays = overlays.input ++ overlays.self;
-        config.allowUnfree = true;
-      };
       makeDiskImage = import "${nixpkgs}/nixos/lib/make-disk-image.nix";
 
       kebabCaseToCamelCase =
@@ -123,12 +136,8 @@
           home-manager = {
             users.${user}.imports =
               hm.${host}
-              ++ [
-                vscode-server.homeModules.default
-                nix-index-database.hmModules.nix-index
-                sops.homeManagerModule
-              ]
-              ++ (attrValues (importDirToAttrs "${path}/module"));
+              ++ homeModules.input
+              ++ homeModules.self;
 
             useGlobalPkgs = true;
             useUserPackages = false;
@@ -140,33 +149,29 @@
 
       host = name: preconfig:
         lib.nixosSystem {
-          modules = let
-            home = hmConfig ./hm "lorenz" name;
-            common = {
-              system.stateVersion = "20.03";
-              system.configurationRevision =
-                pkgs.lib.mkIf (self ? rev) self.rev;
-              nix.registry.nixpkgs = {
-                from = {
-                  id = "nixpkgs";
-                  type = "indirect";
+          modules =
+            modules.input
+            ++ [
+              (hmConfig ./hm "lorenz" name)
+              {
+                system.stateVersion = "20.03";
+                system.configurationRevision =
+                  pkgs.lib.mkIf (self ? rev) self.rev;
+                nix.registry.nixpkgs = {
+                  from = {
+                    id = "nixpkgs";
+                    type = "indirect";
+                  };
+                  flake = nixpkgs;
                 };
-                flake = nixpkgs;
-              };
-              nixpkgs = {
-                overlays = overlays.input ++ overlays.self;
-              };
-            };
-          in [
-            nixpkgs.nixosModules.notDetected
-            hm.nixosModules.home-manager
-            mailserver.nixosModules.default
-            sops.nixosModules.sops
-            wsl.nixosModules.wsl
-            home
-            common
-            preconfig
-          ];
+                nixpkgs = {
+                  overlays = overlays.input ++ overlays.self;
+                  config.allowUnfree = true;
+                };
+              }
+              preconfig
+            ]
+            ++ modules.self;
         };
     in rec {
       overlays = {default = final: prev: importPackages prev;} // importDirToAttrs ./overlay;
