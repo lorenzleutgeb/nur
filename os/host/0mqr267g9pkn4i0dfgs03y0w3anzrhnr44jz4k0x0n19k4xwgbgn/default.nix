@@ -138,7 +138,7 @@ in {
     };
     blueman.enable = false;
     cloudflared = {
-      enable = true;
+      enable = false;
       tunnels."${tunnelId}" = {
         credentialsFile =
           config.sops.secrets."cloudflared/tunnel/${tunnelId}.json".path;
