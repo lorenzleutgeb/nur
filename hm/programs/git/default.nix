@@ -8,7 +8,6 @@ in {
   home.packages = with pkgs;
   with gitAndTools; [
     delta
-    gh
     ghq
     git-crypt
     git-imerge
@@ -146,15 +145,38 @@ in {
         annotate = true;
       };
       status = {showStash = true;};
-      url = {
-        "ssh://git@github.com/" = {pushInsteadOf = "https://github.com/";};
-        "ssh://git@github.com/" = {insteadOf = "gh:";};
-        "ssh://git@github.com/lorenzleutgeb/" = {insteadOf = "gh:ll/";};
-        "ssh://git@git.sclable.com/" = {insteadOf = "scl:";};
-        "ssh://git@git.sclable.com/lorenz.leutgeb/" = {
-          insteadOf = "scl:ll/";
+      url = let
+        mk = {
+          base,
+          short,
+        }: {
+          name = "ssh://git@${base}";
+          value = {
+            # See <https://git-scm.com/docs/git-config#Documentation/git-config.txt-urlltbasegtinsteadOf>.
+            insteadOf = short;
+            # See <https://git-scm.com/docs/git-config#Documentation/git-config.txt-urlltbasegtpushInsteadOf>.
+            pushInsteadOf = "https://${base}";
+          };
         };
-      };
+      in
+        builtins.listToAttrs (map mk [
+          {
+            short = "gh:";
+            base = "github.com/";
+          }
+          {
+            short = "gh:ll/";
+            base = "github.com/lorenzleutgeb/";
+          }
+          {
+            short = "scl:";
+            base = "git.sclable.com/";
+          }
+          {
+            short = "scl:ll/";
+            base = "git.sclable.com/lorenz.leutgeb/";
+          }
+        ]);
       "${sub "filter" "gpg"}" = {
         clean = "gpg --encrypt --recipient EBB1C984 -o- %f | git-lfs clean -- %f";
         smudge = "git-lfs smudge -- %f | gpg --decrypt --output %f";
