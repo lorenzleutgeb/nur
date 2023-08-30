@@ -1,5 +1,5 @@
 {pkgs, ...}: {
-  home.packages = with pkgs; [quint apalache];
+  home.packages = with pkgs; [quint apalache tessla];
 
   systemd.user.services.apalache = {
     Unit = {

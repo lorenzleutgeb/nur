@@ -2,7 +2,7 @@
   lib,
   fetchFromGitHub,
   mkSbtDerivation,
-  jdk,
+  jre,
 }: let
   owner = "informalsystems";
   version = "0.42.0";
@@ -20,7 +20,7 @@ in
 
     postPatch = ''
       substituteInPlace ./src/universal/bin/apalache-mc \
-        --replace 'exec java' 'exec ${jdk}/bin/java' \
+        --replace 'exec java' 'exec ${jre}/bin/java' \
         --replace '$DIR/../lib/apalache.jar' "$out/lib/apalache.jar"
 
       # Instead of using `git` to get the revision,
