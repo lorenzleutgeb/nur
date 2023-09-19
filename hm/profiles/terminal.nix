@@ -55,6 +55,7 @@ with builtins; {
     jq
     #kbfs
     miller
+    mosh
     mtr
     ngrok
     neovim-remote

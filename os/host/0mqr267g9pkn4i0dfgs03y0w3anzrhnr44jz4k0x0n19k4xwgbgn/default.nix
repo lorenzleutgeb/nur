@@ -95,9 +95,10 @@ in {
   i18n.defaultLocale = "en_US.UTF-8";
 
   programs = {
-    sedutil.enable = true;
     adb.enable = true;
     dconf.enable = true;
+    mosh.enable = true;
+    sedutil.enable = true;
     zsh.enable = true;
   };
 
