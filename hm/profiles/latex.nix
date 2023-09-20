@@ -21,6 +21,7 @@ with builtins; {
     font-awesome
     gnumake
     liberation_ttf
+    ltex-ls
     mupdf
     noto-fonts
     pandoc
