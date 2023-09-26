@@ -1,0 +1,45 @@
+#! /usr/bin/env bash
+set -euo pipefail
+
+IFS=$'\n'
+REPOS=$(</dev/stdin)
+
+if [ "$REPOS" = "" ]
+then
+	echo "Input is empty. Provide one repository per line."
+	echo -e "For example, execute\n\n\tghq list --full-path <name>\n"
+	echo -e "or\n\n\tfind -type d -name '<name>'\n"
+	echo "to get a list of repositories with matching name."
+	exit 1
+fi
+
+for REPO in $REPOS
+do
+	if ! git -C $REPO rev-parse --absolute-git-dir 2>&1 > /dev/null
+	then
+		echo "Not a repository: $REPO"
+		exit 1
+	fi
+done
+
+echo "Will link and repack following repo(s):"
+printf '%s\n' "${REPOS[@]}"
+
+for REPO in $REPOS
+do
+	ALTERNATES=$(git -C ${REPO} rev-parse --absolute-git-dir)/objects/info/alternates
+	cat /dev/null > $ALTERNATES
+	for OTHER in $REPOS
+	do
+		if [ "$REPO" = "$OTHER" ]
+		then
+			continue
+		fi
+		echo "$(git -C ${OTHER} rev-parse --absolute-git-dir)/objects" >> $ALTERNATES
+	done
+done
+
+for REPO in $REPOS
+do
+	git -C $REPO repack -a -d -l
+done
