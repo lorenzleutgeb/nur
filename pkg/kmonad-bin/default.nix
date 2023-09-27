@@ -12,9 +12,9 @@
     };
   };
 in
-  stdenv.mkDerivation rec {
-    pname = "kmonad-bin";
+  stdenv.mkDerivation {
     inherit version;
+    pname = "kmonad-bin";
 
     src =
       srcs.${stdenv.hostPlatform.system}
@@ -23,14 +23,13 @@ in
 
     buildCommand = ''
       mkdir -p $out/bin
-      install -Dm755 $src "$out"/bin/kmonad
+      install -Dm755 $src "$out/bin/kmonad"
     '';
 
     meta = with lib; {
       description = "An advanced keyboard manager";
       homepage = "https://github.com/david-janssen/kmonad";
       platforms = attrNames srcs;
-      maintainers = with maintainers; [terlar];
       license = licenses.mit;
     };
   }

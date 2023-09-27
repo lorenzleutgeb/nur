@@ -4,7 +4,7 @@
   pkgs,
   ...
 }: {
-  imports = [../../hardware/intel-graphics.nix];
+  imports = [../../mixin/intel-graphics.nix];
 
   boot = {
     initrd = {
