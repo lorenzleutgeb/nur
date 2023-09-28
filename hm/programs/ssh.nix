@@ -53,7 +53,6 @@
     };
     extraConfig = ''
       VerifyHostKeyDNS yes
-      VisualHostkey yes
     '';
   };
 }

@@ -69,7 +69,7 @@ in {
       ri = "rebase --interactive";
       rs = ''
         !grs() { git remote show ''${1:-origin} | grep -vE "\stracked$" ;}; grs'';
-      s = "status";
+      s = "status --short --branch";
       suffix = "!gsuffix() { mv -v \${GIT_PREFIX}\${1} \${GIT_PREFIX}\${1}-$(git describe --abbrev=\${2:-4} --always --dirty) ;}; gsuffix";
       tags = "tag -l";
       who = "!gwho() { git log --pretty=%an $@ | sort | uniq ;}; gwho";
