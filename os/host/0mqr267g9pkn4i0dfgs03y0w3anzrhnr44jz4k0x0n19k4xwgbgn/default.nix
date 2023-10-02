@@ -20,6 +20,7 @@ in {
     ../../mixin/ssh.nix
     ../../mixin/tailscale.nix
     ../../mixin/dns.nix
+    ../../mixin/harmonia.nix
   ];
 
   # Use the systemd-boot EFI boot loader.

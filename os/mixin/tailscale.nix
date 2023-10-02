@@ -6,7 +6,10 @@
   tailnetName = "fluffy-ordinal.ts.net";
   tailscaleDns = "100.100.100.100";
 in {
-  services.tailscale.enable = true;
+  services.tailscale = {
+    enable = true;
+    useRoutingFeatures = "both";
+  };
 
   networking.firewall.trustedInterfaces = [config.services.tailscale.interfaceName];
 
