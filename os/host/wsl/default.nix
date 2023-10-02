@@ -9,13 +9,15 @@ with builtins; let
   username = "lorenz";
 in {
   imports = [
+    ../../mixin/dns.nix
+    ../../mixin/fonts.nix
+    ../../mixin/lorenz.nix
     ../../mixin/mkcert
+    ../../mixin/mpi-klsb.nix
     ../../mixin/nix.nix
     ../../mixin/sops.nix
     ../../mixin/ssh.nix
     #../../mixin/tailscale.nix
-    ../../mixin/mpi-klsb.nix
-    ../../mixin/dns.nix
   ];
 
   wsl = {
@@ -71,19 +73,8 @@ in {
     resolved.enable = true;
   };
 
-  # users.users.unifi.group = "unifi";
-  # users.groups.unifi = { };
-
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.${username} = {
-    isNormalUser = true;
-    createHome = true;
-    home = "/home/${username}";
-    description = name;
-    extraGroups = ["disk" "docker" "plugdev" "networkmanager" "video" "wheel"];
-    uid = 1000;
-    shell = pkgs.zsh;
-  };
+  users.users.lorenz.extraGroups = ["docker" "networkmanager"];
 
   system.stateVersion = "20.03";
 
@@ -112,15 +103,6 @@ in {
     rtkit.enable = true;
   };
 
-  # If adding a font here does not work, try running
-  # fc-cache -f -v
-  fonts.fonts = with pkgs; [
-    dejavu_fonts
-    fira-code
-    fira-code-symbols
-    noto-fonts
-  ];
-
   virtualisation = {
     docker = {
       enable = true;
@@ -129,14 +111,6 @@ in {
     libvirtd = {
       enable = false;
       qemu.package = pkgs.qemu_kvm;
-    };
-  };
-
-  fonts.fontconfig = {
-    allowBitmaps = false;
-    defaultFonts = {
-      sansSerif = ["Fira Sans" "DejaVu Sans"];
-      monospace = ["Fira Mono" "DejaVu Sans Mono"];
     };
   };
 

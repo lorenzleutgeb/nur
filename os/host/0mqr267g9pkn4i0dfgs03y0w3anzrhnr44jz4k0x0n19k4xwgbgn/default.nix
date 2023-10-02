@@ -1,31 +1,27 @@
 {
   config,
-  lib,
   pkgs,
   ...
-}:
-with builtins; let
-  name = "Lorenz Leutgeb";
-  username = "lorenz";
-  tunnelId = "2e5b6e6f-6236-4e44-ac82-5a10fdba61ac";
-in {
-  #enable4k = true;
-
+}: {
   imports = [
-    ./hardware-configuration.nix
+    ../../fonts.nix
+    ../../mixin/dns.nix
     ../../mixin/kmscon.nix
+    ../../mixin/lorenz.nix
     ../../mixin/mkcert
     ../../mixin/nix.nix
+    ../../mixin/progressive.nix
     ../../mixin/sops.nix
     ../../mixin/ssh.nix
     ../../mixin/tailscale.nix
-    ../../mixin/dns.nix
-    ../../mixin/harmonia.nix
+    ./hardware-configuration.nix
+    ./bluetooth.nix
   ];
 
   # Use the systemd-boot EFI boot loader.
   boot = {
-    tmp.useTmpfs = true;
+    binfmt.emulatedSystems = [ "aarch64-linux" ];
+
     loader = {
       systemd-boot = {
         enable = true;
@@ -33,16 +29,52 @@ in {
       };
       efi.canTouchEfiVariables = true;
     };
+
+    initrd = {
+      # TODO: Try booting without default modules.
+      #includeDefaultModules = false;
+      availableKernelModules = [
+        "xhci_pci"
+        "ahci"
+        "ehci_pci"
+        "nvme"
+        "usbhid"
+        "usb_storage"
+        "sd_mod"
+        "sr_mod"
+      ];
+      luks.devices."root".device = "/dev/disk/by-uuid/75533fca-c17b-4b54-b67d-e24053b1dbe2";
+    };
+
     kernel.sysctl = {
       "fs.inotify.max_user_watches" = 65536;
-      "net.ipv4.ip_forward" = 1;
-      "net.ipv6.conf.all.forwarding" = 1;
     };
+
+    kernelModules = [
+      "kvm-intel" # https://wiki.archlinux.org/index.php/KVM@
+      # "v4l2loopback" for screen recording
+
+      "vfio"
+      "vfio_iommu_type1"
+      "vfio_pci"
+      "vfio_virqfd"
+    ];
+    tmp.useTmpfs = true;
   };
 
   systemd.network = let
-    mkConfig = name: {
-      matchConfig.Name = name;
+    intel = "enp110s0";
+    #broadcom = "enp111s0f1";
+    device = intel;
+    matchConfig.Name = device;
+  in {
+    enable = true;
+    links.${device} = {
+      inherit matchConfig;
+      linkConfig.WakeOnLan = "magic";
+    };
+    networks."" = {
+      inherit matchConfig;
       networkConfig = {
         DHCP = "ipv4";
         IPv6AcceptRA = true;
@@ -53,20 +85,12 @@ in {
         UseRoutes = true;
       };
     };
-  in {
-    enable = true;
-    networks = {
-      "enp111s0f1" = mkConfig "enp111s0f1";
-      #"enp110s0" = mkConfig "enp110s0";
-    };
   };
 
   # The global useDHCP flag is deprecated, therefore explicitly set to false here.
   # Per-interface useDHCP will be mandatory in the future, so this generated config
   # replicates the default behaviour.
   networking = {
-    # Configuration of DHCP per-interface was moved to hardware-configuration.nix
-    useDHCP = false;
     hostName = "0mqr267g9pkn4i0dfgs03y0w3anzrhnr44jz4k0x0n19k4xwgbgn";
 
     firewall = {
@@ -78,9 +102,6 @@ in {
       allowedUDPPorts = [
         # 9 # Debugging Wake-on-LAN
       ];
-      # Strict reverse path filtering breaks Tailscale exit node use and
-      # some subnet routing setups.
-      checkReversePath = "loose";
     };
   };
 
@@ -98,6 +119,10 @@ in {
   programs = {
     adb.enable = true;
     dconf.enable = true;
+    java = {
+      enable = true;
+      binfmt = true;
+    };
     mosh.enable = true;
     sedutil.enable = true;
     zsh.enable = true;
@@ -120,17 +145,6 @@ in {
     sessionVariables.LIBVA_DRIVER_NAME = "iHD";
   };
 
-  environment.etc = {
-    "wireplumber/bluetooth.lua.d/50-bluez-config.lua".text = ''
-      bluez_monitor.properties = {
-      	["bluez5.enable-sbc-xq"] = true,
-      	["bluez5.enable-msbc"] = true,
-      	["bluez5.enable-hw-volume"] = true,
-      	["bluez5.headset-roles"] = "[ hsp_hs hsp_ag hfp_hf hfp_ag ]"
-      }
-    '';
-  };
-
   services = {
     accounts-daemon.enable = true;
     beesd.filesystems."root" = {
@@ -139,15 +153,6 @@ in {
       extraOptions = ["--thread-count" "4"];
     };
     blueman.enable = false;
-    cloudflared = {
-      enable = false;
-      tunnels."${tunnelId}" = {
-        credentialsFile =
-          config.sops.secrets."cloudflared/tunnel/${tunnelId}.json".path;
-        default = "http_status:404";
-        ingress."0mqr.falsum.org" = "ssh://localhost:22";
-      };
-    };
     cron.enable = true;
     flatpak.enable = true;
     fwupd.enable = true;
@@ -219,34 +224,14 @@ in {
     resolved.enable = true;
   };
 
-  # users.users.unifi.group = "unifi";
-  # users.groups.unifi = { };
-
-  users.users.tss.group = "tss";
-  users.groups.tss = {};
-
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.${username} = {
-    isNormalUser = true;
-    createHome = true;
-    home = "/home/${username}";
-    description = name;
-    extraGroups = [
-      "adbusers"
-      "audio"
-      "disk"
-      "docker"
-      "libvirtd"
-      "mkcert"
-      "plugdev"
-      "networkmanager"
-      "vboxusers"
-      "video"
-      "wheel"
-    ];
-    uid = 1000;
-    shell = pkgs.zsh;
-  };
+  users.users.lorenz.extraGroups = [
+    "adbusers"
+    "docker"
+    "libvirtd"
+    "mkcert"
+    "networkmanager"
+    "vboxusers"
+  ];
 
   system.stateVersion = "20.03";
 
@@ -267,15 +252,6 @@ in {
       abrmd.enable = true;
     };
   };
-
-  # If adding a font here does not work, try running
-  # fc-cache -f -v
-  fonts.fonts = with pkgs; [
-    dejavu_fonts
-    fira-code
-    fira-code-symbols
-    noto-fonts
-  ];
 
   virtualisation = {
     docker = {
@@ -299,24 +275,10 @@ in {
     };
   };
 
-  fonts.fontconfig = {
-    allowBitmaps = false;
-    defaultFonts = {
-      sansSerif = ["Fira Sans" "DejaVu Sans"];
-      monospace = ["Fira Mono" "DejaVu Sans Mono"];
-    };
-  };
-
   sops = {
     age.sshKeyPaths = map (x: x.path) config.services.openssh.hostKeys;
     secrets = {
       "ssh/key".sopsFile = ./sops/ssh.yaml;
-      "cloudflared/tunnel/${tunnelId}.json" = {
-        sopsFile = ./sops/tunnel.bin;
-        format = "binary";
-        owner = config.services.cloudflared.user;
-        group = config.services.cloudflared.group;
-      };
     };
   };
 }
