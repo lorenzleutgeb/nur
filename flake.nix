@@ -190,10 +190,11 @@
           };
           live = nixosConfigurations.live.config.system.build.isoImage;
           wsl = nixosConfigurations.wsl.config.system.build.tarball;
-          pi-sd = (host "pi" ({modulesPath, ...}: {
-            imports = [ ./os/host/pi "${modulesPath}/installer/sd-card/sd-image-raspberrypi.nix" ];
-          })).config.system.build.sdImage;
         };
+
+      packages."aarch64-linux".pi-sd = (host "pi" ({modulesPath, ...}: {
+        imports = [ ./os/host/pi "${modulesPath}/installer/sd-card/sd-image-raspberrypi.nix" ];
+      })).config.system.build.sdImage;
 
       nixosModules = importDirToAttrs ./os/module;
 
