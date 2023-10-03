@@ -20,7 +20,7 @@
 
   # Use the systemd-boot EFI boot loader.
   boot = {
-    binfmt.emulatedSystems = [ "aarch64-linux" ];
+    binfmt.emulatedSystems = ["aarch64-linux"];
 
     loader = {
       systemd-boot = {
