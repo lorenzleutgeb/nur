@@ -4,8 +4,8 @@
   ...
 }: {
   imports = [
-    ../../fonts.nix
     ../../mixin/dns.nix
+    ../../mixin/fonts.nix
     ../../mixin/kmscon.nix
     ../../mixin/lorenz.nix
     ../../mixin/mkcert
@@ -73,7 +73,7 @@
       inherit matchConfig;
       linkConfig.WakeOnLan = "magic";
     };
-    networks."" = {
+    networks.${device} = {
       inherit matchConfig;
       networkConfig = {
         DHCP = "ipv4";
