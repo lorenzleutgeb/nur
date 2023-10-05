@@ -60,6 +60,7 @@
 
   outputs = inputs @ {
     self,
+    hardware,
     hm,
     mailserver,
     nil,
@@ -149,6 +150,9 @@
 
       host = name: preconfig:
         lib.nixosSystem {
+          specialArgs = {
+            inherit hardware;
+          };
           modules =
             modules.input
             ++ [
@@ -193,7 +197,7 @@
         };
 
       packages."aarch64-linux".pi-sd = (host "pi" ({modulesPath, ...}: {
-        imports = [ ./os/host/pi "${modulesPath}/installer/sd-card/sd-image-raspberrypi.nix" ];
+        imports = [ ./os/host/pi "${modulesPath}/installer/sd-card/sd-image-aarch64.nix" ];
       })).config.system.build.sdImage;
 
       nixosModules = importDirToAttrs ./os/module;
