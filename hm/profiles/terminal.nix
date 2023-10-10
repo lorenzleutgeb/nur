@@ -55,6 +55,7 @@ with builtins; {
     jq
     #kbfs
     miller
+    moreutils
     mosh
     mtr
     ngrok
