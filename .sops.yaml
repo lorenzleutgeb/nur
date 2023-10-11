@@ -2,24 +2,31 @@ seys:
   - &lorenz     age1c0g6s6daxy79dlm9uqczwlkh0hvjpghw5h8zzljc3vs275rvvqus30hv9l
   - &wsl        age16yswachju798a8tr53ezsdrxfam3dstgag2g3mtv0jk7hfv6r9dqvekh2h
   - &0mqr       age1k6udupm4ylkg3qgl096wytjj8m879r7qp02suhmsu27wdledr92se9kwqp
+  - &nc         age1e2pkyr4q4vs9uxzrvmkpp7jpdm36j3k89fzhfk25kascd3fgtu9q5gkq64
 creation_rules:
-  - path_regex: os/host/0mqr[^/]+/sops/[^/]+\.(yaml|json|bin)$
+  - path_regex: os/host/0mqr[^/]+/sops/[^/]+\.(bin|json|yaml)$
     key_groups:
     - age:
       - *lorenz
       - *0mqr
-  - path_regex: os/host/wsl/sops/[^/]+\.yaml$
+  - path_regex: os/host/wsl/sops/[^/]+\.(bin|json|yaml)$
     key_groups:
     - age:
       - *lorenz
       - *wsl
-  - path_regex: os/mixin/mkcert/sops/[^/]+\.yaml$
+  - path_regex: os/host/nc/sops/[^/]+\.(bin|json|yaml)$
+    key_groups:
+    - age:
+      - *lorenz
+      - *nc
+  - path_regex: os/mixin/mkcert/sops/[^/]+\.(bin|json|yaml)$
     key_groups:
     - age:
       - *lorenz
       - *0mqr
       - *wsl
-  - path_regex: hm/profiles/sops/[^/]+\.yaml$
+      - *nc
+  - path_regex: hm/profiles/sops/[^/]+\.(bin|json|yaml)$
     key_groups:
     - age:
       - *lorenz

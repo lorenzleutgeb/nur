@@ -21,4 +21,9 @@
     ./profiles/spass.nix
     ./profiles/summer-of-nix.nix
   ];
+
+  "nc" = [
+    ./profiles/common.nix
+    ./profiles/terminal.nix
+  ];
 }

@@ -9,7 +9,7 @@
   nixpkgs.config.allowUnfree = true;
 
   nix = {
-    package = lib.mkDefault pkgs.nixVersions.nix_2_16;
+    package = lib.mkDefault pkgs.nixVersions.nix_2_17;
     settings = {
       auto-optimise-store = true;
       substituters = ["https://lean4.cachix.org/" "https://mob.cachix.org/"];
