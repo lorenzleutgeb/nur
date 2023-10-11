@@ -135,7 +135,7 @@ in {
     };
 
     nginx = {
-      enable = true;
+      enable = false;
       virtualHosts = {
         "${domain}" = {
           serverAliases = [
@@ -187,6 +187,7 @@ in {
 
   security = {
     sudo.wheelNeedsPassword = false;
+    /*
     acme = {
       acceptTerms = true;
       defaults = {
@@ -212,6 +213,7 @@ in {
         };
       };
     };
+    */
   };
 
   programs.zsh.enable = true;
