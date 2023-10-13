@@ -8,7 +8,6 @@ with builtins; let
   domain = "leutgeb.xyz";
   alternateDomain = "falsum.org";
   subdomain = name: name + "." + domain;
-  dnsProvider = "cloudflare";
 in {
   imports = [
     #./jitsi.nix
@@ -176,7 +175,7 @@ in {
     users = {
       lorenz.hashedPassword = "$6$rJZSLnQH1hInB93$lfi4c2zxQbSJV7H9T9lrjOj6WIDhSEqP5FyjMinEE44j81E1l57hF6Epyxb02EbcWqDT9eYbyo4dBTAwewBgQ/";
 
-      #nginx.extraGroups = ["acme"];
+      caddy.extraGroups = ["acme"];
     };
   };
 
@@ -187,33 +186,26 @@ in {
 
   security = {
     sudo.wheelNeedsPassword = false;
-    /*
     acme = {
       acceptTerms = true;
       defaults = {
         email = "lorenz.leutgeb@gmail.com";
+        # TODO: Use SOPS.
+        credentialsFile = "/home/lorenz/cloudflare";
+        dnsProvider = "cloudflare";
       };
       certs = let
-        # TODO: Use SOPS.
-        credentialsFile = "/home/lorenz/.config/lego/cloudflare";
       in {
-        "${domain}" = {
-          inherit dnsProvider credentialsFile;
-        };
+        "${domain}" = {};
         "${domain}-wildcard" = {
-          inherit dnsProvider credentialsFile;
           domain = subdomain "*";
         };
-        "${alternateDomain}" = {
-          inherit dnsProvider credentialsFile;
-        };
+        "${alternateDomain}" = {};
         "${alternateDomain}-wildcard" = {
-          inherit dnsProvider credentialsFile;
           domain = "*.${alternateDomain}";
         };
       };
     };
-    */
   };
 
   programs.zsh.enable = true;
