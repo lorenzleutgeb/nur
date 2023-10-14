@@ -72,7 +72,7 @@ with builtins; {
     skypeforlinux
     sshfs-fuse
     # talon-bin # Custom package
-    teams
+    # teams # insecure
     teamviewer
     transmission-gtk
     universal-ctags
