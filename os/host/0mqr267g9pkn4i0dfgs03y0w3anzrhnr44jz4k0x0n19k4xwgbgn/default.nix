@@ -4,8 +4,10 @@
   ...
 }: {
   imports = [
+    ../../mixin/caddy
     ../../mixin/dns.nix
     ../../mixin/fonts.nix
+    ../../mixin/harmonia.nix
     ../../mixin/kmscon.nix
     ../../mixin/lorenz.nix
     ../../mixin/mkcert
@@ -170,7 +172,6 @@
     kubo.enable = false;
     pcscd.enable = true;
     printing.enable = true;
-    tailscale.enable = true;
 
     pipewire = {
       enable = true;

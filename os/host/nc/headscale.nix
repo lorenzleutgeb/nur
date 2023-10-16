@@ -1,12 +1,9 @@
 {
   config,
-  lib,
   pkgs,
   ...
 }: let
-  apex = "leutgeb.xyz";
-  sub = x: "${x}.${apex}";
-  domain = sub "headscale";
+  domain = "hs.leutgeb.xyz";
 in {
   environment.systemPackages = [config.services.headscale.package];
 
@@ -30,11 +27,6 @@ in {
           }
         );
         server_url = "https://${domain}";
-        dns_config = {
-          base_domain = sub "hs";
-          nameservers = ["https://dns.nextdns.io/9bd4a2"];
-          magic_dns = true;
-        };
         logtail.enabled = false;
         ip_prefixes = [
           "100.96.0.0/12"

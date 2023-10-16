@@ -22,7 +22,7 @@
     ExecStartPre = lib.mkForce [
       ''${config.services.caddy.package}/bin/caddy validate --config ${config.services.caddy.configFile} ${lib.optionalString (config.services.caddy.adapter != null) "--adapter ${config.services.caddy.adapter}"}''
 
-      ((pkgs.writeShellApplication rec {
+      ((pkgs.writeShellApplication {
           name = "caddy-secrets";
           text = "echo \"CLOUDFLARE_API_TOKEN=\\\"$(<\"$CREDENTIALS_DIRECTORY/CLOUDFLARE_API_TOKEN\")\\\"\" > \"$RUNTIME_DIRECTORY/secrets.env\"";
         })

@@ -1,4 +1,8 @@
-{config, ...}: let
+{
+  config,
+  lib,
+  ...
+}: let
   port = "5000";
 in {
   services.harmonia = {
@@ -6,7 +10,7 @@ in {
     settings.bind = "[::]:${port}";
   };
 
-  nix.settings.allowed-users = ["harmonia"];
+  nix.settings.allowed-users = [config.systemd.services.harmonia.serviceConfig.User];
 
   networking.firewall.allowedTCPPorts = [443];
 
@@ -14,11 +18,15 @@ in {
 
   services.caddy = {
     enable = true;
-    virtualHosts."0mqr.fluffy-ordinal.ts.net:443" = {
+    virtualHosts."${lib.tailscale.local}:443" = {
       listenAddresses = ["[::]"];
       extraConfig = ''
         handle_path /cache/* {
           reverse_proxy :${port}
+        }
+        tls {
+          dns cloudflare {env.CLOUDFLARE_API_TOKEN}
+          resolvers 1.1.1.1
         }
         encode zstd
       '';

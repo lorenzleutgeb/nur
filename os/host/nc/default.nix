@@ -11,16 +11,16 @@ with builtins; let
 in {
   imports = [
     #./jitsi.nix
-    ../../mixin/lorenz.nix
+    ../../mixin/caddy
     ../../mixin/dns.nix
     ../../mixin/kmscon.nix
+    ../../mixin/lorenz.nix
     ../../mixin/nix.nix
     ../../mixin/progressive.nix
-    ../../mixin/ssh.nix
-    ../../mixin/sops.nix
     ../../mixin/remote-build.nix
+    ../../mixin/sops.nix
+    ../../mixin/ssh.nix
     ../../mixin/tailscale.nix
-    ./caddy.nix
     ./headscale.nix
   ];
 
