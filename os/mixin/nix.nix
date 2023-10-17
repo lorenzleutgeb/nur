@@ -8,8 +8,11 @@
 
   nixpkgs.config.allowUnfree = true;
 
+  environment.etc."nix/inputs/nixpkgs".source = pkgs.path;
+
   nix = {
     package = lib.mkDefault pkgs.nixVersions.nix_2_17;
+    nixPath = ["nixpkgs=/etc/nix/inputs/nixpkgs"];
     settings = {
       auto-optimise-store = true;
       substituters = ["https://lean4.cachix.org/" "https://mob.cachix.org/"];
