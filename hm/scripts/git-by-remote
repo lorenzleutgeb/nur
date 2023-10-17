@@ -1,0 +1,91 @@
+#! /usr/bin/env bash
+
+set -euo pipefail
+
+WORK_DIR=$(readlink -f "$(mktemp -d git-by-remote.XXX)")
+echo "INFO: Creating symbolic links in '$WORK_DIR'."
+
+while read REPO
+do
+	if ! git -C "$REPO" rev-parse --show-toplevel 2> /dev/null > /dev/null
+	then
+		echo "SKIP: '$REPO' is not a repository (\`git rev-parse --show-toplevel\` failed)."
+		continue
+	fi
+
+	if [ "$(git -C "$REPO" rev-parse --git-common-dir)" != "$(git -C "$REPO" rev-parse --git-dir)" ]
+	then
+		# This repo is a workdir, we assume that
+		# we'll find the main repo anyway.
+		echo "SKIP: '$REPO' is a workdir (\`git rev-parse --git-common-dir\` ≠ \`git rev-parse --git-dir\`)."
+		continue
+	fi
+
+	for REMOTE in $(git -C "$REPO" remote)
+	do
+		ORIG=$(git -C "$REPO" remote get-url "$REMOTE")
+
+		if [[ -e "$ORIG" ]] || [[ -e "$REPO/$ORIG" ]]
+		then
+			echo "SKIP: Remote '$REMOTE' in repo '$REPO' is local and exists."
+			continue
+		fi
+
+		# Normalize URL.
+		URL=${ORIG}
+		# Remove protocol. bash can't match words?!
+		URL=$(echo "$URL" | sed 's/[a-z]\+:\/\///')
+		# Remove common extension.
+		URL=${URL%".git"}
+		# Remove common username.
+		URL=${URL#"git@"}
+		# Remove escaped whitespace.
+		URL=${URL/\\ / }
+
+		# Sanitize to get a file name.
+		# In some Git URLs, hostname and path are separated
+		# by ':' (and not by '/'). These cases are not handled
+		# optimally, because ':' will be substituted by '_',
+		# merging hostname and the first component of the path
+		# together. This is just a visual flaw and does not
+		# affect correctness.
+		URL=${URL//[^a-zA-Z^0-9\.\/\-~]/_}
+		URL=${URL//\/\///}
+
+		# For debugging.
+		#echo "DEBUG: $URL <- $ORIG"
+
+		REPO=$(git -C "$REPO" rev-parse --show-toplevel)
+		REPOSUM=$(echo "$REPO" | xxhsum | cut -f1 -d' ')
+		URLSUM=$(echo "$URL" | xxhsum | cut -f1 -d' ')
+
+		if [[ ! -h "$WORK_DIR/tree/$URL/$REPOSUM" ]]
+		then
+			mkdir -p "$WORK_DIR/tree/$URL"
+			ln -s "$REPO" "$WORK_DIR/tree/$URL/$REPOSUM"
+		fi
+
+		if [[ ! -h "$WORK_DIR/index/$URLSUM" ]]
+		then
+			mkdir -p "$WORK_DIR/index"
+			ln -s "$WORK_DIR/tree/$URL" "$WORK_DIR/index/$URLSUM"
+		fi
+	done
+done
+
+REMOTE_COUNTER=0
+for REMOTE in "$WORK_DIR/index"/*
+do
+	if [[ $(ls -U -- "$REMOTE" | wc -l) -gt 1 ]]
+	then
+		REMOTE_COUNTER=$((REMOTE_COUNTER + 1))
+		printf '%3d  %s\n' "$REMOTE_COUNTER" "$(realpath --relative-to "$WORK_DIR/tree" "$REMOTE")"
+
+		REPO_COUNTER=0
+		for REPO in "$REMOTE"/*
+		do
+			REPO_COUNTER=$((REPO_COUNTER + 1))
+			printf '  %2d %s\n' "$REPO_COUNTER" "$(realpath "$REPO")"
+		done
+	fi
+done
