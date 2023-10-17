@@ -148,10 +148,16 @@
         }
         else {};
 
-      host = name: preconfig:
-        lib.nixosSystem {
+      host = name: preconfig: let
+        result = lib.nixosSystem {
           specialArgs = {
             inherit hardware;
+            lib =
+              lib
+              // (import ./os/lib {
+                inherit lib;
+                inherit (result) config;
+              });
           };
           modules =
             modules.input
@@ -177,6 +183,8 @@
             ]
             ++ modules.self;
         };
+      in
+        result;
     in rec {
       overlays = {default = final: prev: importPackages prev;} // importDirToAttrs ./overlay;
 
@@ -196,9 +204,14 @@
           wsl = nixosConfigurations.wsl.config.system.build.tarball;
         };
 
-      packages."aarch64-linux".pi-sd = (host "pi" ({modulesPath, ...}: {
-        imports = [ ./os/host/pi "${modulesPath}/installer/sd-card/sd-image-aarch64.nix" ];
-      })).config.system.build.sdImage;
+      packages."aarch64-linux".pi-sd =
+        (host "pi" ({modulesPath, ...}: {
+          imports = [./os/host/pi "${modulesPath}/installer/sd-card/sd-image-aarch64.nix"];
+        }))
+        .config
+        .system
+        .build
+        .sdImage;
 
       nixosModules = importDirToAttrs ./os/module;
 
