@@ -8,7 +8,7 @@
 in {
   programs.ssh.knownHosts =
     builtins.mapAttrs (n: v: {
-      extraHostNames = [v.ip (lib.tailscale.host n)];
+      extraHostNames = [v.ip];
       publicKeyFile = v.pub;
     })
     hosts;

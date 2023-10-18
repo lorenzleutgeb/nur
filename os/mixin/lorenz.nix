@@ -17,6 +17,4 @@
     uid = 1000;
     shell = pkgs.zsh;
   };
-
-  services.tailscale.namespace = "lorenz";
 }

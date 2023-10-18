@@ -28,6 +28,7 @@ in {
       useRoutingFeatures = "both";
       permitCertUid = config.services.caddy.user;
       baseDomain = "hs.leutgeb.xyz";
+      namespace = "lorenz";
     };
 
     networking.firewall = {
@@ -53,5 +54,12 @@ in {
         server=${tailscaleDns}@${config.services.tailscale.interfaceName}
       '';
     };
+
+    programs.ssh.knownHosts = lib.pipe ["0mqr"] [
+      lib.tailscale.host
+      (name: {
+        extraHostNames = [name];
+      })
+    ];
   };
 }

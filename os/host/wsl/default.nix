@@ -80,7 +80,7 @@ in {
 
   nixpkgs.hostPlatform = "x86_64-linux";
 
-  nix.settings.substituters = ["https://0mqr.fluffy-ordinal.ts.net/cache/?trusted=true"];
+  #nix.settings.substituters = ["https://0mqr.fluffy-ordinal.ts.net/cache/?trusted=true"];
 
   networking = {
     firewall.enable = false;
