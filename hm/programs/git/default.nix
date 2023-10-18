@@ -4,6 +4,7 @@
   ...
 }: let
   sub = section: subsection: ''${section} "${subsection}"'';
+  gitalias = import ./gitalias.nix;
 in {
   home.packages = with pkgs;
   with gitAndTools; [
@@ -31,29 +32,20 @@ in {
     ignores = [".dir-locals.el" ".direnv/" ".envrc" ".mob" ".env"];
 
     aliases = {
-      a = "add";
-      ap = "add --patch";
+      inherit (gitalias) a ap b c ca cane co cob cp cpc d ds m;
+
+      can = gitalias.cane;
+
       alias = "! git config --get-regexp ^alias\\. | sed -e s/^alias\\.// -e s/\\ /\\ =\\ /";
-      b = "branch";
       bl = ''
         git for-each-ref --format="%(align:24,left)%(committername)%(end) %(committerdate:format:%F) %(objectname:short) %(refname:lstrip=3)" --sort=committerdate --sort=committername refs/remotes/origin'';
-      c = "commit";
-      ca = "commit --amend";
-      can = "commit --amend --no-edit";
       cd = "! cd $(git rev-parse --show-toplevel)";
       cn = "commit --no-verify";
-      cp = "cherry-pick";
-      cpc = "cherry-pick --continue";
-      co = "checkout";
-      cob = "checkout -b";
       coc = ''! f(){ git checkout "$1" && git clean -xfd; }; f'';
-      d = "diff";
-      ds = "diff --staged";
       i = "!gi() { curl -L -s https://www.gitignore.io/api/$@ ;}; gi";
       il = ''! git config --local core.excludesfile "$HOME/gitignore"'';
       ll = "log --graph --decorate --show-signature --date=iso8601-strict --use-mailmap --abbrev-commit";
       l = "log --graph --pretty=format:'%Cred%h%Creset%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)%an%Creset' --abbrev-commit --date=relative";
-      m = "merge";
       mff = "merge --ff-only";
       mm = "! git branch -m master main && git fetch origin && git branch -u origin/main main && git remote set-head origin -a";
       month = "! git log --no-merges --since='last month' --author=$USER --reverse --pretty=format:'%cd %s %d' --date=short";
