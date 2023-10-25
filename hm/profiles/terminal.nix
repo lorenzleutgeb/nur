@@ -41,7 +41,7 @@ with builtins; {
     dnsutils
     docker-compose
     entr
-    exa
+    eza
     fatrace
     fd
     ffmpeg

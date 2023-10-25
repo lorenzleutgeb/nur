@@ -55,7 +55,6 @@ with builtins; {
     entr
     envsubst
     evince
-    exa
     exiftool
     exercism
     fd
