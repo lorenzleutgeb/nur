@@ -4,6 +4,7 @@
   ...
 }: {
   imports = [
+    ../../mixin/benchexec.nix
     ../../mixin/caddy
     ../../mixin/dns.nix
     ../../mixin/fonts.nix
