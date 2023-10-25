@@ -90,7 +90,7 @@ with builtins; {
     yubikey-personalization-gui
     yq
     zoom-us
-    zotero
+    #zotero
 
     m17n_db
     m17n_lib
