@@ -55,11 +55,13 @@ in {
       '';
     };
 
+    /*
     programs.ssh.knownHosts = lib.pipe ["0mqr"] [
       lib.tailscale.host
       (name: {
         extraHostNames = [name];
       })
     ];
+    */
   };
 }

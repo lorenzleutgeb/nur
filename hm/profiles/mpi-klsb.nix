@@ -34,7 +34,7 @@ in {
 
       ".ssh/known_hosts_mpi-klsb".source = builtins.fetchurl {
         url = "https://ca.mpi-klsb.mpg.de/ssh_known_hosts";
-        sha256 = "sha256:0fi5k53rg215zz3zf9dkjribwmpzhbfgspm3ypailcxyr98hqvsf";
+        sha256 = "sha256:1wcivrfwwmxcfgswicaypxi9j9cwc0pf3hihq559dq49ixizz7g0";
       };
     };
     packages = with pkgs; [subversion];
