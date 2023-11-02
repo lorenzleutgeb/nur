@@ -1,13 +1,7 @@
 {pkgs, ...}: {
   programs.bat = {
     enable = true;
-    config = {
-      #theme = "tomorrow-night-bright";
-      pager = "less -FR";
-    };
-    #themes = {
-    #  tomorrow-night-bright = builtins.readFile ./tomorrow-night-bright.tmTheme;
-    #};
+    config.pager = "less -FR";
   };
 
   home.sessionVariables.BAT_STYLE = "numbers,changes";

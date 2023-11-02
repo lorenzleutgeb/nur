@@ -4,5 +4,7 @@
   ...
 }: {
   home.packages = with pkgs; [libvirt virt-manager];
-  xdg.configFile."libvirt/libvirt.conf".source = ./libvirt.conf;
+  xdg.configFile."libvirt/libvirt.conf".text = ''
+    uri_default = "qemu:///system"
+  '';
 }

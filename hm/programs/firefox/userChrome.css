@@ -6,23 +6,23 @@
 
 /* to hide the native tabs */
 #TabsToolbar {
-    visibility: collapse;
+	visibility: collapse;
 }
 
 /* to hide the sidebar header */
 #sidebar-header {
-    visibility: collapse;
+	visibility: collapse;
 }
 
 #back-button, #forward-button {
-    visibility: collapse !important;
+	visibility: collapse !important;
 }
 
 .sidebar-placesTree treechildren::-moz-tree-separator { 
-    border: 5px solid red !important;
+	border: 5px solid red !important;
 }
 
 #sidebar-splitter {
-    border: none;
-    visibility: collapse;
+	border: none;
+	visibility: collapse;
 }
