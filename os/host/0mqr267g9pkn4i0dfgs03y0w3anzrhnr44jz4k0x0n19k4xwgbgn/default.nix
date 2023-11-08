@@ -259,7 +259,11 @@
       enable = true;
       enableOnBoot = false;
     };
-    virtualbox.host.enable = false;
+    virtualbox.host = {
+      enable = true;
+      enableExtensionPack = true;
+      enableWebService = true;
+    };
     libvirtd = {
       enable = true;
       qemu.package = pkgs.qemu_kvm;
