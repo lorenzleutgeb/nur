@@ -24,9 +24,9 @@ function machine-hash {
 nixos-rebuild switch --flake .#$(machine-hash)
 ```
 
-# Setup Notes
+## Setup Notes
 
-## WSL
+### WSL
 
 Use `wsl --import` to create the distro, then start it with `wsl --distribution`.
 
@@ -68,7 +68,7 @@ sudo chown $UID:$GID /run/user/$UID
 sudo mount -t tmpfs -o size=4G,uid=$UID,gid=$GID /run/user/$UID
 ```
 
-## Bluetooth
+### Bluetooth
 
 See [NixOS Wiki][wiki-bt]. Gist is:
 
@@ -82,14 +82,14 @@ pair $ADDR
 connect $ADDR
 ```
 
-### Known Devices
+#### Known Devices
 
 | Address             | Description |
 |---------------------|-------------|
 | `78:2B:64:CC:E4:40` | Headset     |
 | `CE:B5:52:D6:EA:8C` | Trackball   |
 
-## SSD Partitioning
+### SSD Partitioning
 
 `fdisk -c -u /dev/x`
 
@@ -97,3 +97,11 @@ https://www.thomas-krenn.com/de/wiki/Partition_Alignment
 
 [man-machine-id]: https://man7.org/linux/man-pages/man5/machine-id.5.html
 [wiki-bt]: https://nixos.wiki/wiki/Bluetooth
+
+## Edge Router
+
+<https://www.ui.com/download/software/erlite3>
+
+### Tailscale
+
+<https://github.com/jamesog/tailscale-edgeos>
