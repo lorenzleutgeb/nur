@@ -149,11 +149,13 @@
 
   services = {
     accounts-daemon.enable = true;
+    /*
     beesd.filesystems."root" = {
       spec = "/";
       hashTableSizeMB = 2048;
       extraOptions = ["--thread-count" "4"];
     };
+    */
     blueman.enable = false;
     cron.enable = true;
     flatpak.enable = true;
