@@ -2,7 +2,7 @@
   fonts = {
     # If adding a font here does not work, try running
     # fc-cache -f -v
-    fonts = with pkgs; [
+    packages = with pkgs; [
       dejavu_fonts
       fira-code
       fira-code-symbols

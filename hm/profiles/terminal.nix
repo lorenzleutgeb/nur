@@ -41,7 +41,7 @@ with builtins; {
     dnsutils
     docker-compose
     entr
-    exa
+    eza
     fatrace
     fd
     ffmpeg
@@ -76,8 +76,6 @@ with builtins; {
     poppler_utils
     psmisc
     pv
-    #python38Full
-    #python38Packages.pyacoustid
     pwgen
     rclone
     rmapi

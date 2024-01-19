@@ -30,7 +30,7 @@ with builtins; {
     ../services/keybase.nix
   ];
 
-  home.packages = with pkgs; [
+  home.packages = with pkgs; let pythonPackages = python311Packages; in [
     alacritty
     #android-studio
     aspell
@@ -55,7 +55,6 @@ with builtins; {
     entr
     envsubst
     evince
-    exa
     exiftool
     exercism
     fd
@@ -109,13 +108,13 @@ with builtins; {
     pinta
     poppler_utils
     pwgen
-    python38Full
-    python38Packages.beautifulsoup4
-    python38Packages.mwclient
-    python38Packages.pip
-    python38Packages.setuptools
-    python38Packages.requests
-    python38Packages.yamllint
+    pythonPackages.python
+    pythonPackages.beautifulsoup4
+    pythonPackages.mwclient
+    pythonPackages.pip
+    pythonPackages.setuptools
+    pythonPackages.requests
+    pythonPackages.yamllint
     ranger
     shellcheck
     shfmt

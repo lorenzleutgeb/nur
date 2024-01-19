@@ -184,10 +184,6 @@
       pulse.enable = true;
     };
 
-    sourcehut = {
-      services = ["man" "meta" "git" "builds" "hub" "todo" "lists"];
-    };
-
     udev = {
       packages = [pkgs.yubikey-personalization];
       extraRules = ''
@@ -262,7 +258,7 @@
       enableOnBoot = false;
     };
     virtualbox.host = {
-      enable = true;
+      enable = false;
       enableExtensionPack = true;
       enableWebService = true;
     };

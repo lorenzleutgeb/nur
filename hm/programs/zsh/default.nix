@@ -12,9 +12,9 @@ with builtins; {
 
     shellAliases = {
       cat = assert elem pkgs.bat config.home.packages; "bat";
-      ls = assert elem pkgs.exa config.home.packages; "exa --time-style=long-iso --git";
+      ls = assert elem pkgs.eza config.home.packages; "eza --time-style=long-iso --git";
       tungz = "tar xvzf";
-      #lst = assert elem pkgs.exa config.home.packages; "exa --git --tree --long --time-s
+      #lst = assert elem pkgs.eza config.home.packages; "eza --git --tree --long --time-s
       ducks = "du -cks * | sort -rn | head";
 
       g = "git";
@@ -29,7 +29,7 @@ with builtins; {
       sshfp = "ssh-keygen -r $(hostname) > sshfp.txt";
 
       # Flash new firmware to an ErgoDox EZ keyboard.
-      ez-flash = "wally-cli $(exa --online --sort=oldest ~/Downloads/ergodox*.hex | head -1)";
+      ez-flash = "wally-cli $(eza --online --sort=oldest ~/Downloads/ergodox*.hex | head -1)";
 
       fix-interpreter = "patchelf --set-interpreter \"$(cat $NIX_CC/nix-support/dynamic-linker)\"";
 
