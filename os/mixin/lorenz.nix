@@ -15,6 +15,6 @@
       "msr" # https://man7.org/linux/man-pages/man4/msr.4.html
     ];
     uid = 1000;
-    shell = pkgs.zsh;
+    shell = pkgs.dash;
   };
 }

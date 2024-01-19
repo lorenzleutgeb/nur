@@ -78,4 +78,14 @@ with builtins; {
     packages = [pkgs.sqlite];
     sessionPath = ["$HOME/.nix-profile/bin" "/run/current-system/sw/bin"];
   };
+
+  home.file.".profile".text = ''
+    # https://tratt.net/laurie/blog/2024/faster_shell_startup_with_shell_switching.html
+    case $- in
+    *i* )
+       ${config.programs.zsh.package}/bin/zsh --version > /dev/null && exec ${config.programs.zsh.package}/bin/zsh
+       echo "Couldn't run 'zsh'" > /dev/stderr
+    ;;
+    esac
+  '';
 }
