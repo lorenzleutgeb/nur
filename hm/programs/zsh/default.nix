@@ -1,6 +1,7 @@
 {
   pkgs,
   config,
+  osConfig,
   ...
 }:
 with builtins; {
@@ -79,13 +80,16 @@ with builtins; {
     sessionPath = ["$HOME/.nix-profile/bin" "/run/current-system/sw/bin"];
   };
 
-  home.file.".profile".text = ''
-    # https://tratt.net/laurie/blog/2024/faster_shell_startup_with_shell_switching.html
-    case $- in
-    *i* )
-       ${config.programs.zsh.package}/bin/zsh --version > /dev/null && exec ${config.programs.zsh.package}/bin/zsh
-       echo "Couldn't run 'zsh'" > /dev/stderr
-    ;;
-    esac
-  '';
+  home.file.".profile".text =
+    if osConfig.users.users."${config.home.username}".shell != pkgs.dash + "x"
+    then throw "`users.users.\"${config.home.username}\".shell` must be set to `pkgs.dash` (`${pkgs.dash}`) for Laurie's tricks to work."
+    else ''
+      # https://tratt.net/laurie/blog/2024/faster_shell_startup_with_shell_switching.html
+      case $- in
+      *i* )
+         ${config.programs.zsh.package}/bin/zsh --version > /dev/null && exec ${config.programs.zsh.package}/bin/zsh
+         echo "Couldn't run 'zsh'" > /dev/stderr
+      ;;
+      esac
+    '';
 }
