@@ -81,7 +81,7 @@ with builtins; {
   };
 
   home.file.".profile".text =
-    if osConfig.users.users."${config.home.username}".shell != pkgs.dash + "x"
+    if osConfig.users.users."${config.home.username}".shell != pkgs.dash
     then throw "`users.users.\"${config.home.username}\".shell` must be set to `pkgs.dash` (`${pkgs.dash}`) for Laurie's tricks to work."
     else ''
       # https://tratt.net/laurie/blog/2024/faster_shell_startup_with_shell_switching.html
