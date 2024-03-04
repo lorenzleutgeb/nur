@@ -27,7 +27,6 @@ with builtins; {
     ../services/flameshot.nix
     ../services/mpris-proxy.nix
     ../services/syncthing.nix
-    ../services/keybase.nix
   ];
 
   home.packages = with pkgs; let pythonPackages = python311Packages; in [

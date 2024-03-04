@@ -26,7 +26,6 @@ with builtins; {
     ../programs/zsh
     ../services/gpg-agent.nix
     #../services/syncthing.nix
-    #../services/keybase.nix
   ];
 
   home.packages = with pkgs; [
