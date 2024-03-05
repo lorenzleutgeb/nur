@@ -33,10 +33,16 @@
       };
     };
 
-  # See https://wiki.archlinux.org/index.php/Suspend_and_hibernate#Hibernation
-  # Docs ask to also set `resume_offset` via `boot.kernelParams` but I believe
-  # this is only required for swap files.
-  # boot.resumeDevice = "/dev/mapper/swap";
+  swapDevices = [
+    {
+      label = "swap";
+      encrypted = {
+        enable = true;
+        blkDev = "/dev/nvme0n1p2";
+        label = "swap";
+      };
+    }
+  ];
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "performance";
 
