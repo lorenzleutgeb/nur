@@ -3,7 +3,9 @@
   lib,
   pkgs,
   ...
-}: {
+}: let
+  disk = uuid: "/dev/disk/by-uuid/" + uuid;
+in {
   imports = [../../mixin/intel-graphics.nix];
 
   fileSystems =
@@ -14,7 +16,7 @@
       }: {
         name = mountpoint;
         value = {
-          device = "/dev/disk/by-uuid/af3f86f8-5ca5-404e-800f-cbb4e72b953b";
+          device = disk "af3f86f8-5ca5-404e-800f-cbb4e72b953b";
           fsType = "btrfs";
           options = ["compress=zstd" "discard=async" "noatime" "subvol=${subvol}"];
         };
@@ -28,7 +30,7 @@
       ]))
     // {
       "/boot" = {
-        device = "/dev/disk/by-uuid/BC6E-4BA0";
+        device = disk "BC6E-4BA0";
         fsType = "vfat";
       };
     };
@@ -38,11 +40,37 @@
       label = "swap";
       encrypted = {
         enable = true;
-        blkDev = "/dev/nvme0n1p2";
+        blkDev = disk "c31b8709-e052-4688-9fea-056be16f857f";
         label = "swap";
+        #keyFile = "/dev/sda2";
       };
     }
   ];
+
+  # TODO
+  #boot.resumeDevice = "/dev/mapper/swap";
+
+  boot.initrd = {
+    systemd = {
+      enable = true;
+      emergencyAccess = true;
+      network = config.systemd.network;
+    };
+    luks.devices = {
+      "root" = {
+        device = disk "75533fca-c17b-4b54-b67d-e24053b1dbe2";
+        #keyFile = "/dev/sda2";
+        #keyFileSize = 4096;
+        #keyFileTimeout = 5;
+      };
+      #"swap" = {
+      #device = disk "c31b8709-e052-4688-9fea-056be16f857f";
+      #keyFile = "/dev/sda2";
+      #keyFileSize = 4096;
+      #keyFileTimeout = 5;
+      #};
+    };
+  };
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "performance";
 

@@ -1,4 +1,4 @@
-{username ? "lorenz"}: {pkgs, ...}: {
+{username ? "lorenz"}: {config, pkgs, ...}: {
   users.users.${username} = {
     isNormalUser = true;
     description = "Lorenz Leutgeb";
@@ -10,7 +10,9 @@
 
       "plugdev" # udev
       "wheel" # pam_wheel
-      "msr" # https://man7.org/linux/man-pages/man4/msr.4.html
+
+      config.hardware.cpu.x86.msr.group # https://man7.org/linux/man-pages/man4/msr.4.html
+      config.security.tpm2.tssGroup
     ];
     uid = 1000;
     shell = pkgs.dash;

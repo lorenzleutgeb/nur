@@ -45,7 +45,6 @@
         "sd_mod"
         "sr_mod"
       ];
-      luks.devices."root".device = "/dev/disk/by-uuid/75533fca-c17b-4b54-b67d-e24053b1dbe2";
     };
 
     kernel.sysctl = {
@@ -142,6 +141,7 @@
       utillinux
       which
       tpm2-tools
+      tpm2-pkcs11
       config.boot.kernelPackages.perf
     ];
     sessionVariables.LIBVA_DRIVER_NAME = "iHD";

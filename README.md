@@ -105,3 +105,18 @@ https://www.thomas-krenn.com/de/wiki/Partition_Alignment
 ### Tailscale
 
 <https://github.com/jamesog/tailscale-edgeos>
+
+## FDE
+
+```
+# For secure boot:
+sudo systemd-cryptenroll /dev/$DISK --tpm2-device=auto --tpm2-pcrs=0+2+7
+# Without secure boot:
+sudo systemd-cryptenroll /dev/$DISK --tpm2-device=auto --tpm2-pcrs=0
+# Removing key:
+systemd-cryptenroll /dev/... --wipe-slot=tpm2
+# Info
+sudo cryptsetup luksDump /dev/...
+# Check TPM
+tpm2_getcap -l
+```
