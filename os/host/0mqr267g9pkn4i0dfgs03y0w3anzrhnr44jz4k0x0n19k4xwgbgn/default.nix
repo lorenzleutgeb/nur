@@ -64,28 +64,59 @@
   };
 
   systemd.network = let
-    intel = "enp110s0";
-    #broadcom = "enp111s0f1";
-    device = intel;
-    matchConfig.Name = device;
+    nics = [
+      {
+        order = "40";
+        name = "broadcom";
+        matchConfig.PermanentMACAddress = "24:4b:fe:45:16:4d";
+        linkConfig.WakeOnLan = "magic";
+        wait = true;
+      }
+      {
+        order = "60";
+        name = "intel";
+        matchConfig.PermanentMACAddress = "24:4b:fe:45:16:4c";
+      }
+      {
+        order = "80";
+        name = "uni";
+        matchConfig.PermanentMACAddress = "00:e0:4c:68:03:39";
+      }
+    ];
   in {
     enable = true;
-    links.${device} = {
-      inherit matchConfig;
-      linkConfig.WakeOnLan = "magic";
+    wait-online = {
+      ignoredInterfaces = map (x: x.name) (builtins.filter (x: !(x.wait or false)) nics);
+      timeout = 5;
     };
-    networks.${device} = {
-      inherit matchConfig;
-      networkConfig = {
-        DHCP = "ipv4";
-        IPv6AcceptRA = true;
-      };
-      dns = config.services.resolved.fallbackDns;
-      dhcpV4Config = {
-        UseDNS = false;
-        UseRoutes = true;
-      };
-    };
+    links = builtins.listToAttrs (map (nic: {
+        name = "${nic.order}-${nic.name}";
+        value = {
+          inherit (nic) matchConfig;
+          linkConfig =
+            {
+              Name = nic.name;
+            }
+            // (nic.linkConfig or {});
+        };
+      })
+      nics);
+    networks = builtins.listToAttrs (map (nic: {
+        inherit (nic) name;
+        value = {
+          inherit (nic) matchConfig;
+          networkConfig = {
+            DHCP = "ipv4";
+            IPv6AcceptRA = true;
+          };
+          dns = config.services.resolved.fallbackDns;
+          dhcpV4Config = {
+            UseDNS = false;
+            UseRoutes = true;
+          };
+        };
+      })
+      nics);
   };
 
   # The global useDHCP flag is deprecated, therefore explicitly set to false here.

@@ -58,6 +58,7 @@ with builtins; {
     moreutils
     mosh
     mtr
+    ngrep
     ngrok
     neovim-remote
     niv

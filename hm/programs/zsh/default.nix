@@ -35,6 +35,8 @@ with builtins; {
       fix-interpreter = "patchelf --set-interpreter \"$(cat $NIX_CC/nix-support/dynamic-linker)\"";
 
       poison = ". <(nix print-dev-env)";
+
+      wolgrep = "ngrep -t -W single '\\xff{6}(.{6})\\1{15}' 'port 9'";
     };
 
     zplug = {
