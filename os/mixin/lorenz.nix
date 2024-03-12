@@ -1,8 +1,6 @@
-{pkgs, ...}: {
-  users.users.lorenz = {
+{username ? "lorenz"}: {pkgs, ...}: {
+  users.users.${username} = {
     isNormalUser = true;
-    createHome = true;
-    home = "/home/lorenz";
     description = "Lorenz Leutgeb";
     extraGroups = [
       "audio" # /dev/audio /dev/snd*

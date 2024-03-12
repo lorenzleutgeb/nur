@@ -5,13 +5,12 @@
   ...
 }:
 with builtins; let
-  name = "Lorenz Leutgeb";
   username = "lorenz";
 in {
   imports = [
     ../../mixin/dns.nix
     ../../mixin/fonts.nix
-    ../../mixin/lorenz.nix
+    (import ../../mixin/lorenz.nix {inherit username;})
     ../../mixin/mkcert
     ../../mixin/mpi-klsb.nix
     ../../mixin/nix.nix

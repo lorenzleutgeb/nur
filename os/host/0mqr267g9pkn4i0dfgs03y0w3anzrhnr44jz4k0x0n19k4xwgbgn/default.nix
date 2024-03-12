@@ -9,7 +9,7 @@
     ../../mixin/fonts.nix
     ../../mixin/harmonia.nix
     ../../mixin/kmscon.nix
-    ../../mixin/lorenz.nix
+    (import ../../mixin/lorenz.nix {})
     ../../mixin/mkcert
     ../../mixin/nix.nix
     ../../mixin/progressive.nix
