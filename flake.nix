@@ -89,7 +89,7 @@
         input = [
           nixpkgs.nixosModules.notDetected
           hm.nixosModules.home-manager
-          mailserver.nixosModules.default
+          #mailserver.nixosModules.default
           sops.nixosModules.sops
           wsl.nixosModules.wsl
         ];
