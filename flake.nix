@@ -55,6 +55,13 @@
         nixpkgs.follows = "nixpkgs";
       };
     };
+    radicle = {
+      url = "github:radicle-dev/heartwood/";
+      inputs = {
+        flake-utils.follows = "utils";
+        nixpkgs.follows = "nixpkgs";
+      };
+    };
   };
 
   outputs = inputs @ {
@@ -80,6 +87,7 @@
         input = [
           sbt.overlays.default
           (_: _: {inherit (nil.packages.${system}) nil;})
+          (_: _: inputs.radicle.packages.${system})
         ];
         # Overlays that are outputs of self;
         self = attrValues self.overlays;

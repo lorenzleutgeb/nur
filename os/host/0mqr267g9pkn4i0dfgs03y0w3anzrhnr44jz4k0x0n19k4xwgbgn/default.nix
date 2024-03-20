@@ -20,6 +20,8 @@
     ./bluetooth.nix
   ];
 
+  services.radicle.enable = true;
+
   # Use the systemd-boot EFI boot loader.
   boot = {
     binfmt.emulatedSystems = ["aarch64-linux"];
