@@ -148,13 +148,23 @@
 
   # Set your time zone.
   time.timeZone = "Europe/Vienna";
-  i18n.defaultLocale = "en_US.UTF-8";
+  i18n.extraLocaleSettings = {
+    LC_TIME = "en_DK.UTF-8";
+    LC_PAPER = "de_AT.UTF-8";
+    LC_MONETARY = "de_AT.UTF-8";
+    LC_MEASUREMENT = "de_AT.UTF-8";
+    LC_MESSAGES = "en_US.UTF-8";
+    LC_NAME = "de_AT.UTF-8";
+    LC_ADDRESS = "de_DE.UTF-8";
+    LC_NUMERIC = "fr_FR.UTF-8";
+    LC_TELEPHONE = "de_DE.UTF-8";
+  };
 
   programs = {
     adb.enable = true;
     dconf.enable = true;
     java = {
-      enable = true;
+      enable = false;
       binfmt = true;
     };
     mosh.enable = true;
