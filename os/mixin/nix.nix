@@ -1,18 +1,17 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}: {
+{ config, pkgs, ... }: {
   programs.nix-ld.enable = true;
 
   nixpkgs.config.allowUnfree = true;
 
-  environment.etc."nix/inputs/nixpkgs".source = pkgs.path;
+  environment = {
+    etc."nix/inputs/nixpkgs".source = pkgs.path;
+    systemPackages = [
+      pkgs.nil
+    ];
+  };
 
   nix = {
-    package = lib.mkDefault pkgs.nixVersions.nix_2_17;
-    nixPath = ["nixpkgs=/etc/nix/inputs/nixpkgs"];
+    nixPath = ["nixpkgs=/etc/${config.environment.etc."nix/inputs/nixpkgs".target}"];
     settings = {
       auto-optimise-store = true;
       substituters = ["https://lean4.cachix.org/" "https://mob.cachix.org/"];
@@ -40,8 +39,4 @@
     '';
     gc.automatic = true;
   };
-
-  environment.systemPackages = [
-    pkgs.nil
-  ];
 }
