@@ -25,10 +25,13 @@ with builtins; {
     ../programs/jetbrains.nix
     ../services/flameshot.nix
     ../services/mpris-proxy.nix
+    ../services/radicle.nix
     ../services/syncthing.nix
   ];
 
-  home.packages = with pkgs; let pythonPackages = python311Packages; in [
+  home.packages = with pkgs; let
+    pythonPackages = python311Packages;
+  in [
     alacritty
     #android-studio
     aspell

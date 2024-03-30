@@ -13,14 +13,13 @@
     ../../mixin/mkcert
     ../../mixin/nix.nix
     ../../mixin/progressive.nix
+    ../../mixin/radicle.nix
     ../../mixin/sops.nix
     ../../mixin/ssh.nix
     ../../mixin/tailscale.nix
     ./hardware-configuration.nix
     ./bluetooth.nix
   ];
-
-  services.radicle.enable = true;
 
   # Use the systemd-boot EFI boot loader.
   boot = {
