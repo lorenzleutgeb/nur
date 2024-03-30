@@ -135,6 +135,16 @@ in {
       ];
       */
     };
+
+    caddy.virtualHosts = {
+      "falsum.org" = {
+        serverAliases = ["www.falsum.org"];
+        extraConfig = ''
+          root * /var/www/falsum.org
+          file_server
+        '';
+      };
+    };
   };
 
   users = {
