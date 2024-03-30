@@ -111,8 +111,8 @@ in {
   networking.firewall.allowedTCPPorts = [
     22 # sshd
     #25 # postfix (SMTP)
-    80 # nginx
-    443 # nginx
+    80
+    443
     #465 # dovecot/postfix ? (SMTP over TLS)
     #993 # dovecot (IMAP over TLS)
     8384 # syncthing HTTP
@@ -135,42 +135,6 @@ in {
       ];
       */
     };
-
-    nginx = {
-      enable = false;
-      virtualHosts = {
-        "${domain}" = {
-          serverAliases = [
-            (subdomain "www")
-            (subdomain "mta-sts")
-            (subdomain "autoconfig")
-          ];
-          onlySSL = true;
-          enableACME = false;
-          useACMEHost = "${domain}";
-          locations."/" = {root = "/var/www";};
-        };
-
-        "${alternateDomain}" = {
-          serverAliases = [
-            (subdomain "www")
-            #(subdomain "mta-sts")
-            #(subdomain "autoconfig")
-          ];
-          onlySSL = true;
-          enableACME = false;
-          useACMEHost = "${alternateDomain}";
-          locations."/" = {root = "/var/www/falsum.org";};
-        };
-
-        "${subdomain "lorenz"}" = {
-          onlySSL = true;
-          enableACME = false;
-          useACMEHost = "${domain}-wildcard";
-          locations."/" = {root = "/var/www/${subdomain "lorenz"}";};
-        };
-      };
-    };
   };
 
   users = {
@@ -187,29 +151,7 @@ in {
 
   programs.ssh.startAgent = true;
 
-  security = {
-    sudo.wheelNeedsPassword = false;
-    acme = {
-      acceptTerms = true;
-      defaults = {
-        email = "lorenz.leutgeb@gmail.com";
-        # TODO: Use SOPS.
-        credentialsFile = "/home/lorenz/cloudflare";
-        dnsProvider = "cloudflare";
-      };
-      certs = let
-      in {
-        "${domain}" = {};
-        "${domain}-wildcard" = {
-          domain = subdomain "*";
-        };
-        "${alternateDomain}" = {};
-        "${alternateDomain}-wildcard" = {
-          domain = "*.${alternateDomain}";
-        };
-      };
-    };
-  };
+  security.sudo.wheelNeedsPassword = false;
 
   programs.zsh.enable = true;
 }
