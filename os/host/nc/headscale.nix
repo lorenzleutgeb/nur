@@ -3,7 +3,10 @@
   pkgs,
   ...
 }: let
-  domain = "hs.leutgeb.xyz";
+  domain = {
+    internal = "hs.leutgeb.xyz";
+    external = "headscale.leutgeb.xyz";
+  };
 in {
   environment.systemPackages = [config.services.headscale.package];
 
@@ -26,7 +29,7 @@ in {
             ];
           }
         );
-        server_url = "https://${domain}";
+        server_url = "https://${domain.internal}";
         logtail.enabled = false;
         ip_prefixes = [
           "100.96.0.0/12"
@@ -35,8 +38,8 @@ in {
       };
     };
 
-    caddy.virtualHosts."${domain}:443" = {
-      listenAddresses = ["[::]"];
+    caddy.virtualHosts."${domain.external}" = {
+      serverAliases = [domain.internal];
       extraConfig = ''
         reverse_proxy :${builtins.toString config.services.headscale.port}
       '';
