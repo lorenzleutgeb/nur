@@ -192,6 +192,7 @@ in {
             Slice = "session.slice";
             RestartSec = "3";
             ExecStart = "${lib.getExe' cfg.node.package "radicle-node"} ${cfg.node.args}";
+            Environment = ["PATH=${lib.getBin config.programs.git.package}/bin"];
             KillMode = "process";
             Restart = "always";
           };
