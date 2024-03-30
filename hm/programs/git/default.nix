@@ -6,6 +6,8 @@
   sub = section: subsection: ''${section} "${subsection}"'';
   gitalias = import ./gitalias.nix;
 in {
+  imports = [./difftastic.nix];
+
   home.packages = with pkgs;
   with gitAndTools; [
     delta
@@ -62,6 +64,7 @@ in {
       rs = ''
         !grs() { git remote show ''${1:-origin} | grep -vE "\stracked$" ;}; grs'';
       s = "status --short --branch";
+      sh = "show --ext-diff";
       suffix = "!gsuffix() { mv -v \${GIT_PREFIX}\${1} \${GIT_PREFIX}\${1}-$(git describe --abbrev=\${2:-4} --always --dirty) ;}; gsuffix";
       tags = "tag -l";
       who = "!gwho() { git log --pretty=%an $@ | sort | uniq ;}; gwho";
@@ -94,7 +97,7 @@ in {
       };
       diff = {
         submodule = "log";
-        tool = "ediff";
+        #tool = "ediff";
       };
       difftool = {prompt = "false";};
       fetch = {
