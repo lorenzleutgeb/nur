@@ -1,0 +1,11 @@
+#! /usr/bin/env nix-shell
+#! nix-shell -i bash -p bash wget dateutils
+
+STAMP="$(dround $(dateadd now -16m) /-15m --format="%Y%m%d.%H.%M")"
+FILENAME="posttrade.${STAMP}.mund.csv"
+
+curl -vL \
+    "https://erdk.bayerische-boerse.de/?u=edd-MUNCD&p=public&path=/posttrade/${FILENAME}.gz" \
+    | gunzip \
+    | grep --fixed-strings --file="${HOME}/.config/gettex/isin" \
+    | cut -d',' -f1,4 | tr ',.' ';,'
