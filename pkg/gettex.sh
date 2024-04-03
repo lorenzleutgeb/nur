@@ -15,7 +15,6 @@ function log() {
 
 # Get current offset from UTC (varies between CET and CEST).
 OFFSET="$(date +%:::z)"
-log "Using offset $OFFSET"
 
 mkdir -pv {"${XDG_DATA_HOME}","${XDG_CONFIG_HOME}"}/"${ME}"
 
@@ -31,20 +30,22 @@ elif [ "$1" = "init" ]
 then
 # Initialize database.
 sqlite3 "${DB}" "\
-create table if not exists $ME (isin text, time text not null, currency text not null, price int not null); \
+create table if not exists $ME (isin text, time text not null, unit text not null, tick int not null); \
 create unique index if not exists idx on $ME (isin, time);"
 exit
 
 elif [ "$1" = "query" ]
 then
 # Query for specific isin.
-sqlite3 -json "${DB}" "select isin, max(time) as time, currency, price from $ME where isin = '$2' group by isin" | jq
+sqlite3 -json "${DB}" "select isin, max(time) as time, unit, tick from $ME where isin = '$2' group by isin" \
+	| jq "INDEX(.isin) | map_values(del(.isin))"
 exit
 
 elif [ "$1" = "query-all" ]
 then
 # Query for specific isin.
-sqlite3 -json "${DB}" "select isin, max(time) as time, currency, price from $ME group by isin" | jq
+sqlite3 -json "${DB}" "select isin, max(time) as time, unit, tick from $ME group by isin" \
+	| jq "INDEX(.isin) | map_values(del(.isin))"
 exit
 
 elif [ "$1" != "fetch" ]
@@ -52,6 +53,8 @@ then
 echo "Unknown subcommand '$1'."
 exit 1
 fi
+
+log "Using offset $OFFSET"
 
 BASE="$(date -d "${2:-now}" --iso-8601=seconds)"
 DAY="$(date -d "${BASE}" --iso-8601)"
@@ -75,6 +78,9 @@ STAMP="$(date --utc -d "${BASE}" +%Y%m%d.%H.%M)"
 FILENAME="posttrade.${STAMP}.mund"
 LOCAL="${XDG_DATA_HOME}/${ME}/${FILENAME}"
 BUFFER=$(mktemp "${ME}-XXX-${FILENAME}.csv")
+PREFIX="$(date --utc -d "${BASE}" --iso-8601)T"
+
+log "Prefix ${BASE}"
 
 if ! test -f "${LOCAL}"
 then
@@ -82,8 +88,10 @@ then
     "https://erdk.bayerische-boerse.de/?u=edd-MUNCD&p=public&path=/posttrade/${FILENAME}.csv.gz" \
     | gunzip \
     | grep --fixed-strings --file="${XDG_CONFIG_HOME}/${ME}/isin" \
-    | tr -d "." \
-    | sed "s#,#,$(date --utc -d "${BASE}" --iso-8601)T#" > "${BUFFER}"
+    | mlr --csv --implicit-csv-header --headerless-csv-output put \
+      "\$4 = round (\$4 * 1000); \$3 = \$3 . \"/1000\"; \$2 = \"$PREFIX\" . \$2 " \
+    | cut -d, -f -4 \
+    > "${BUFFER}"
   sqlite3 -csv "${DB}" ".import ${BUFFER} ${ME}"
   touch "${LOCAL}"
   rm "${BUFFER}"

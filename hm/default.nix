@@ -26,5 +26,14 @@
   "nc" = [
     ./profiles/common.nix
     ./profiles/terminal.nix
+    ./profiles/gettex.nix
+    ({
+      pkgs,
+      lib,
+      ...
+    }: {
+      # TODO: This is quite hacky, remove once leutgeb.xyz has moved to nc.
+      systemd.user.services."gettex".Service.ExecStop = "${lib.getExe pkgs.bash} -c 'gettex query-all | tee /var/www/falsum.org/gettex.json'";
+    })
   ];
 }

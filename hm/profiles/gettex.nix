@@ -11,10 +11,8 @@ in {
   systemd.user = {
     timers."gettex" = {
       Unit.Description = "gettex Timer";
-      Timer = {
-        OnCalendar = "Mon..Fri 09,11,13,15,17,19,21:45:00";
-        WantedBy = "timers.target";
-      };
+      Timer.OnCalendar = "Mon..Fri 09,11,13,15,17,19,21:45:00";
+      Install.WantedBy = ["timers.target"];
     };
     services."gettex" = {
       Unit.Description = "gettex Fetch";
@@ -22,6 +20,7 @@ in {
         Type = "oneshot";
         ExecStart = "${lib.getExe pkg} fetch";
       };
+      Install.WantedBy = ["default.target"];
     };
   };
 
