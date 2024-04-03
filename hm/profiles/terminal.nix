@@ -36,8 +36,10 @@ with builtins; {
     beets
     cachix
     chromaprint
+    csvkit
     curlFull
     dasel
+    dateutils
     dnsutils
     docker-compose
     entr
@@ -93,6 +95,7 @@ with builtins; {
     yubikey-personalization
     yq
     zip
+    zindex
     zola
   ];
 }

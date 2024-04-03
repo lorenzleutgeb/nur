@@ -1,11 +1,70 @@
+#! /usr/bin/env bash
+
 #! /usr/bin/env nix-shell
-#! nix-shell -i bash -p bash wget dateutils
+#! nix-shell -i bash -p bash curl dateutils 
 
-STAMP="$(dround $(dateadd now -16m) /-15m --format="%Y%m%d.%H.%M")"
-FILENAME="posttrade.${STAMP}.mund.csv"
+set -euo pipefail
 
-curl -vL \
-    "https://erdk.bayerische-boerse.de/?u=edd-MUNCD&p=public&path=/posttrade/${FILENAME}.gz" \
+# Summer Time 2
+# Winter Time 1
+OFFSET=2
+
+mkdir -pv {"${XDG_DATA_HOME}","${XDG_CONFIG_HOME}"}/gettex
+
+DB="$XDG_DATA_HOME/gettex/db"
+
+if [ "$1" = "import" ]
+then
+# Import pre-existing CSV file.
+sqlite3 -csv "${DB}" ".import $2 gettex"
+exit
+
+elif [ "$1" = "init" ]
+then
+# Initialize database.
+sqlite3 "${DB}" "\
+create table if not exists gettex (isin text, time text, currency text, price real); \
+create unique index if not exists idx on gettex (isin, time);"
+exit
+
+elif [ "$1" = "query" ]
+then
+# Query for specific isin.
+sqlite3 -json "${DB}" "select isin, max(time) as time, currency, price from gettex where isin = '$2' group by isin"
+exit
+
+elif [ "$1" != "fetch" ]
+then
+echo "Unknown subcommand '$1'."
+exit 1
+fi
+
+BASE="${2:-now}"
+
+if datetest "${BASE}" --lt "$(date --iso-8601)T08:15:00+0${OFFSET}:00"
+then
+  BASE="$(date -d yesterday --iso-8601)T22:00+${OFFSET}"
+elif datetest "${BASE}" --gt "$(date --iso-8601)T22:00:00+0${OFFSET}:00"
+then
+  BASE="$(date -d today --iso-8601)T22:00+${OFFSET}:00"
+else
+  BASE="$(dround "$(dateadd "${BASE}" -15m)" /-15m)"
+fi
+
+STAMP="$(date --utc -d "${BASE}" +%Y%m%d.%H.%M)"
+
+FILENAME="posttrade.${STAMP}.mund"
+LOCAL="${XDG_DATA_HOME}/gettex/${FILENAME}"
+BUFFER=$(mktemp "gettex-XXX-${FILENAME}.csv")
+
+if ! test -f "${LOCAL}"
+then
+  curl -vL \
+    "https://erdk.bayerische-boerse.de/?u=edd-MUNCD&p=public&path=/posttrade/${FILENAME}.csv.gz" \
     | gunzip \
-    | grep --fixed-strings --file="${HOME}/.config/gettex/isin" \
-    | cut -d',' -f1,4 | tr ',.' ';,'
+    | grep --fixed-strings --file="${XDG_CONFIG_HOME}/gettex/isin" \
+    | sed "s#,#,$(date --utc -d "${BASE}" --iso-8601)T#" > "${BUFFER}"
+  sqlite3 -csv "${DB}" ".import ${BUFFER} gettex"
+  touch "${LOCAL}"
+  rm "${BUFFER}"
+fi
