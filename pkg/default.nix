@@ -5,6 +5,7 @@
     apalache = callPackage ./apalache.nix {};
     tessla = callPackage ./tessla.nix {};
     zindex = callPackage ./zindex.nix {};
+    gettex = callPackage ./gettex.nix {};
 
     caddy = callPackage ./caddy.nix {
       externalPlugins = [

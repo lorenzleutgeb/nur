@@ -20,6 +20,7 @@
     #./services/v4lbridge.nix
     ./profiles/spass.nix
     ./profiles/summer-of-nix.nix
+    ./profiles/gettex.nix
   ];
 
   "nc" = [
