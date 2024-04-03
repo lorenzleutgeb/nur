@@ -1,0 +1,43 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 5cb5f4c..76bec5d 100755
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -96,22 +96,6 @@ set(SOURCE_FILES
+         src/Pipe.h
+         ext/sqlite/sqlite3.c)
+ 
+-set(TEST_FILES
+-        tests/catch.hpp
+-        tests/LineFinderTest.cpp
+-        tests/test_main.cpp
+-        tests/SqliteTest.cpp
+-        tests/RegExpTest.cpp
+-        tests/RegExpIndexerTest.cpp
+-        tests/TempDir.h
+-        tests/TempDir.cpp
+-        tests/PrettyBytesTest.cpp
+-        tests/IndexTest.cpp
+-        tests/RangeFetcherTest.cpp
+-        tests/FieldIndexerTest.cpp
+-        tests/ExternalIndexerTest.cpp
+-        tests/LogTest.cpp)
+-
+ add_library(libzindex ${SOURCE_FILES})
+ set_target_properties(libzindex PROPERTIES OUTPUT_NAME zindex)
+ 
+@@ -120,15 +104,7 @@ target_link_libraries(zindex libzindex ${ZLIB_LIBRARIES} ${COMMON_LIBS})
+ add_executable(zq src/zq.cpp)
+ target_link_libraries(zq libzindex ${ZLIB_LIBRARIES} ${COMMON_LIBS})
+ 
+-add_executable(unit-tests ${TEST_FILES})
+-target_link_libraries(unit-tests libzindex ${ZLIB_LIBRARIES} ${COMMON_LIBS})
+-
+ if (BuildSqlShell)
+     add_executable(sql-shell ext/sqlite/shell.c ext/sqlite/sqlite3.c)
+     target_link_libraries(sql-shell ${COMMON_LIBS})
+ endif (BuildSqlShell)
+-
+-find_program(MEMORYCHECK_COMMAND valgrind)
+-enable_testing()
+-add_test(NAME unit-tests
+-        COMMAND unit-tests)

@@ -4,6 +4,7 @@
     quint = callPackage ./quint.nix {};
     apalache = callPackage ./apalache.nix {};
     tessla = callPackage ./tessla.nix {};
+    zindex = callPackage ./zindex.nix {};
 
     caddy = callPackage ./caddy.nix {
       externalPlugins = [
