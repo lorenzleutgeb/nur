@@ -14,7 +14,7 @@ in {
     ../../mixin/caddy
     ../../mixin/dns.nix
     ../../mixin/kmscon.nix
-    ../../mixin/lorenz.nix
+    (import ../../mixin/lorenz.nix {})
     ../../mixin/nix.nix
     ../../mixin/progressive.nix
     ../../mixin/remote-build.nix
@@ -22,6 +22,7 @@ in {
     ../../mixin/ssh.nix
     ../../mixin/tailscale.nix
     ./headscale.nix
+    ./nfs.nix
   ];
 
   fileSystems =
