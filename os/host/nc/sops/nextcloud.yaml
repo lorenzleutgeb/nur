@@ -1,0 +1,31 @@
+nextcloud:
+    admin: ENC[AES256_GCM,data:jirhAPeKN/BYftskQzOdVg==,iv:zUA6BF9EMfeB5/Ftgpv6yUnPS+5HRIJHoM0w+jTlRDI=,tag:D3hiwl11xieW8TbAId6tRQ==,type:str]
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1c0g6s6daxy79dlm9uqczwlkh0hvjpghw5h8zzljc3vs275rvvqus30hv9l
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBNQWZqVHhaQnkvaUl4bGJY
+            UzhSdFFoaU95cXNyTFpscUoya0pFaUgwZlI4CjFadHNqSU5mSU4xV0syN1ZYa1kv
+            bjBTdE1ITm9Zbm8vQlVZY1dtWTYvSU0KLS0tIFBLS1BuT3lUZnl2MWRBd1M3WWd5
+            Smtmc1Z3QlZIallqR3NyQVZhazNxS2cKOCtpzR9P11w18FKBYpW73JPQNBCNPprg
+            eOWuSQL6PGByc1L+52qoleUq0MI3ZUAjQBrfOeraSsIUcXgQBzR74A==
+            -----END AGE ENCRYPTED FILE-----
+        - recipient: age1e2pkyr4q4vs9uxzrvmkpp7jpdm36j3k89fzhfk25kascd3fgtu9q5gkq64
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBHSFJ6NnBrZk1DZTgyRENU
+            VHFXbHVvN214TGt2ZGNpSGVaclBRbVVCVTNNCjR0R1B6QllHdEFjN0dsU2NtRFFj
+            cnlpb1BRbWlQclRRSThJaEZ6ODRBZzAKLS0tIGxLbDdMbDJzb1p4bzdheE5YeElO
+            V250dGNjRXFVUUV3RnF3RDdYTlpuYmsK97tv4IRw17EZk9fwA0IduPQJCtQdXwpQ
+            b5PMyMf/Jh7PA2LTIbMo7tkrp5xw09g43QDtBMGO3ULyFMZqte9KMg==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2024-04-04T12:40:14Z"
+    mac: ENC[AES256_GCM,data:BmmKyGjIYDL7nIjuDgnPwru1fzaXU/Q2uuiAbJern0RXBFUbCrfzHhy1P4BmVdqdkq5SBxOfOZcJGilxVIV6pX217CrPI2EU3S2eP2BjkGrET8dgxBoyfeuRVQBP/Xlp2/7QKn/B+4bS+nF+azmds5IET5kbUHpR8asJXr714Mc=,iv:ekk6G9uwkfHaRADBzpeKdqb9QMV1VUi2XVaPFq43/TY=,tag:z99hVNJY16S6Ns+Nq4behw==,type:str]
+    pgp: []
+    unencrypted_suffix: _unencrypted
+    version: 3.8.1

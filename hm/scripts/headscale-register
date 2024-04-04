@@ -1,0 +1,9 @@
+#! /usr/bin/env bash
+
+set -euo pipefail
+
+read -p "Enter node key (starts with 'nodekey:'): " key
+read -p "Enter associated user [lorenz]: " user
+
+set -x
+sudo -u headscale headscale nodes register --user $user --key $key

@@ -23,6 +23,7 @@ in {
     ../../mixin/tailscale.nix
     ./headscale.nix
     ./nfs.nix
+    ./nextcloud.nix
   ];
 
   fileSystems =
@@ -165,4 +166,7 @@ in {
   security.sudo.wheelNeedsPassword = false;
 
   programs.zsh.enable = true;
+
+
+  sops.age.sshKeyPaths = map (x: x.path) config.services.openssh.hostKeys;
 }
