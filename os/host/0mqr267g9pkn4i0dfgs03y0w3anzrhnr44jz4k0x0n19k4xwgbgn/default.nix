@@ -20,6 +20,7 @@
     ./hardware-configuration.nix
     ./bluetooth.nix
     ./nfs.nix
+    ./rsync.nix
   ];
 
   # Use the systemd-boot EFI boot loader.
