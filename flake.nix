@@ -21,6 +21,7 @@
       #inputs.nixpkgs.follows = "nixpkgs"; Stopped following nixpkgs since nil's Rust version is too far ahead.
     };
     nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nix-index-database = {
       url = "github:Mic92/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -80,6 +81,7 @@
     mailserver,
     nil,
     nixpkgs,
+    nixpkgs-unstable,
     nix-index-database,
     sbt,
     sops,
@@ -183,12 +185,21 @@
                 system.stateVersion = "20.03";
                 system.configurationRevision =
                   pkgs.lib.mkIf (self ? rev) self.rev;
-                nix.registry.nixpkgs = {
-                  from = {
-                    id = "nixpkgs";
-                    type = "indirect";
+                nix.registry = {
+                  nixpkgs = {
+                    from = {
+                      id = "nixpkgs";
+                      type = "indirect";
+                    };
+                    flake = nixpkgs;
                   };
-                  flake = nixpkgs;
+                  nixpkgs-unstable = {
+                    from = {
+                      id = "nixpkgs-unstable";
+                      type = "indirect";
+                    };
+                    flake = nixpkgs-unstable;
+                  };
                 };
                 nixpkgs = {
                   overlays = overlays.input ++ overlays.self;
