@@ -6,10 +6,9 @@
 }:
 with builtins; {
   home.packages = let
-    nix-nom = 
-      pkgs.writeShellApplication {
-        name = "nix-nom";
-        text = ''
+    nix-nom = pkgs.writeShellApplication {
+      name = "nix-nom";
+      text = ''
         set -euo pipefail
         if [ "$1" = "build" ] || [ "$1" = "shell" ] || [ "$1" = "develop" ]
         then
@@ -17,10 +16,12 @@ with builtins; {
         else
           ${osConfig.nix.package}/bin/nix "''${@:1}"
         fi
-      ''; };
-    in
+      '';
+    };
+  in
     (map (x: (pkgs.writeScriptBin x (readFile (./. + "/${x}"))))
-    (attrNames (readDir ./.))) ++ [
-    nix-nom
+      (attrNames (readDir ./.)))
+    ++ [
+      nix-nom
     ];
 }

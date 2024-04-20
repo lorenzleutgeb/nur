@@ -3,8 +3,7 @@
   pkgs,
   hardware,
   ...
-}:
-{
+}: {
   imports = [
     ../../mixin/kmscon.nix
     ../../mixin/nix.nix
@@ -17,7 +16,7 @@
   ];
 
   boot = {
-    initrd.availableKernelModules = [ "xhci_pci" "uas" ];
+    initrd.availableKernelModules = ["xhci_pci" "uas"];
   };
 
   hardware.raspberry-pi."4" = {
@@ -46,7 +45,7 @@
     "/" = {
       device = "/dev/disk/by-label/NIXOS_SD";
       fsType = "ext4";
-      options = [ "noatime" ];
+      options = ["noatime"];
     };
   };
 
@@ -88,7 +87,7 @@
     overlays = [
       # https://github.com/NixOS/nixpkgs/issues/126755#issuecomment-869149243
       (final: super: {
-        makeModulesClosure = x: super.makeModulesClosure (x // { allowMissing = true; });
+        makeModulesClosure = x: super.makeModulesClosure (x // {allowMissing = true;});
       })
     ];
   };

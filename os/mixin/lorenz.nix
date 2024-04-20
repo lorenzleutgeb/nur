@@ -1,4 +1,8 @@
-{username ? "lorenz"}: {config, pkgs, ...}: {
+{username ? "lorenz"}: {
+  config,
+  pkgs,
+  ...
+}: {
   users.users.${username} = {
     isNormalUser = true;
     description = "Lorenz Leutgeb";
