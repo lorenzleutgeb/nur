@@ -26,6 +26,8 @@ in {
     ./nextcloud.nix
   ];
 
+  services.nginx.enable = false;
+
   fileSystems =
     (builtins.listToAttrs (map
       ({
@@ -123,6 +125,10 @@ in {
   #extraVirtualAliases.${localMail "theres-und-lorenz"} = ["theressophie@gmail.com" "${me.email}"];
 
   services = {
+    hedgedoc = {
+      enable = true;
+      settings.domain = "pad.leutgeb.wien";
+    };
     qemuGuest.enable = true;
     openssh = {
       enable = true;
@@ -147,6 +153,21 @@ in {
         '';
       };
     };
+
+    caddy.virtualHosts = {
+      "lorenz.leutgeb.wien" = {
+        extraConfig = ''
+          root * /var/www/lorenz.leutgeb.wien
+          file_server
+        '';
+      };
+
+      "pad.leutgeb.wien" = {
+        extraConfig = ''
+          reverse_proxy 127.0.0.1:${builtins.toString config.services.hedgedoc.settings.port}
+        '';
+      };
+    };
   };
 
   users = {
@@ -166,7 +187,6 @@ in {
   security.sudo.wheelNeedsPassword = false;
 
   programs.zsh.enable = true;
-
 
   sops.age.sshKeyPaths = map (x: x.path) config.services.openssh.hostKeys;
 }
