@@ -1,5 +1,6 @@
 nextcloud:
     admin: ENC[AES256_GCM,data:jirhAPeKN/BYftskQzOdVg==,iv:zUA6BF9EMfeB5/Ftgpv6yUnPS+5HRIJHoM0w+jTlRDI=,tag:D3hiwl11xieW8TbAId6tRQ==,type:str]
+    mail: ENC[AES256_GCM,data:Kr7b1apUzL2PZzg46my4sg==,iv:hgZxmXJ8ckXJWQ8OOEi2UdmRcrCNXbtd0UBANJX56KQ=,tag:e5TsinYt3ZdvnWU/ewMKGw==,type:str]
 sops:
     kms: []
     gcp_kms: []
@@ -24,8 +25,8 @@ sops:
             V250dGNjRXFVUUV3RnF3RDdYTlpuYmsK97tv4IRw17EZk9fwA0IduPQJCtQdXwpQ
             b5PMyMf/Jh7PA2LTIbMo7tkrp5xw09g43QDtBMGO3ULyFMZqte9KMg==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2024-04-04T12:40:14Z"
-    mac: ENC[AES256_GCM,data:BmmKyGjIYDL7nIjuDgnPwru1fzaXU/Q2uuiAbJern0RXBFUbCrfzHhy1P4BmVdqdkq5SBxOfOZcJGilxVIV6pX217CrPI2EU3S2eP2BjkGrET8dgxBoyfeuRVQBP/Xlp2/7QKn/B+4bS+nF+azmds5IET5kbUHpR8asJXr714Mc=,iv:ekk6G9uwkfHaRADBzpeKdqb9QMV1VUi2XVaPFq43/TY=,tag:z99hVNJY16S6Ns+Nq4behw==,type:str]
+    lastmodified: "2024-04-04T13:59:48Z"
+    mac: ENC[AES256_GCM,data:3bQvlQROt4aAOxKbER8W4Hx+8NciQzqZIfvcHNZBNViwZgbMC57Idi/ywsWWYbY9TkAbaVKV5ODmd+x3TC45PpeCA3OrZn84ZgmpOrTdAk00jq7fkViiW1V9JBmpEYh0i8h6cDG7OXFpWlolLY9oYDIwf8Kd7Mb7hcpt+HeKJiA=,iv:RbSXPiQlAoGzsjMDIH2j9yhcSXVIrN2xU8eRxUBncsk=,tag:QLygeV7ICbj9HNFD6UGE2Q==,type:str]
     pgp: []
     unencrypted_suffix: _unencrypted
     version: 3.8.1
