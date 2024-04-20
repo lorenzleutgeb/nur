@@ -21,4 +21,5 @@
     uid = 1000;
     shell = pkgs.dash;
   };
+  services.openssh.settings.AllowUsers = [username];
 }

@@ -126,6 +126,7 @@ in {
   #extraVirtualAliases.${localMail "theres-und-lorenz"} = ["theressophie@gmail.com" "${me.email}"];
 
   services = {
+    fail2ban.enable = true;
     hedgedoc = {
       enable = true;
       settings.domain = "pad.leutgeb.wien";
@@ -133,6 +134,12 @@ in {
     qemuGuest.enable = true;
     openssh = {
       enable = true;
+      settings = {
+        PermitRootLogin = "no";
+        MaxAuthTries = 3;
+        LoginGraceTime = 20;
+        PermitEmptyPasswords = "no";
+      };
       # Only listen on Tailscale interface.
       # If Tailscale goes down, recover access via netcup vServer Control Panel.
       /*
