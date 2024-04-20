@@ -14,8 +14,15 @@ in {
 
   services.postgresql.package = pkgs.postgresql_15;
 
+  services.phpfpm.pools.nextcloud.settings = {
+    #owner = "nextcloud";
+    "listen.owner" = config.services.caddy.user;
+    "listen.group" = config.services.caddy.group;
+  };
+
   services.nextcloud = {
     enable = true;
+    https = true;
     package = pkgs.nextcloud28;
     hostName = "cloud.leutgeb.xyz";
 
@@ -33,7 +40,7 @@ in {
   };
 
   services.caddy = {
-    enable = mkDefault true;
+    enable = true;
     virtualHosts."${
       if cfg.https
       then "https"
