@@ -11,7 +11,7 @@ with builtins; let
 in {
   imports = [
     #./jitsi.nix
-    ../../mixin/caddy
+    ../../mixin/caddy.nix
     ../../mixin/dns.nix
     ../../mixin/kmscon.nix
     (import ../../mixin/lorenz.nix {})
@@ -21,6 +21,7 @@ in {
     ../../mixin/sops.nix
     ../../mixin/ssh.nix
     ../../mixin/tailscale.nix
+    ./caddy.nix
     ./headscale.nix
     ./nfs.nix
     ./nextcloud.nix
@@ -142,31 +143,6 @@ in {
         }
       ];
       */
-    };
-
-    caddy.virtualHosts = {
-      "falsum.org" = {
-        serverAliases = ["www.falsum.org"];
-        extraConfig = ''
-          root * /var/www/falsum.org
-          file_server
-        '';
-      };
-    };
-
-    caddy.virtualHosts = {
-      "lorenz.leutgeb.wien" = {
-        extraConfig = ''
-          root * /var/www/lorenz.leutgeb.wien
-          file_server
-        '';
-      };
-
-      "pad.leutgeb.wien" = {
-        extraConfig = ''
-          reverse_proxy 127.0.0.1:${builtins.toString config.services.hedgedoc.settings.port}
-        '';
-      };
     };
   };
 

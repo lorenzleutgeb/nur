@@ -9,11 +9,30 @@
   };
 
   services.caddy = {
-    enable = true;
     globalConfig = ''
-      email lorenz.leutgeb@gmail.com
       acme_dns cloudflare {env.CLOUDFLARE_API_TOKEN}
     '';
+
+    virtualHosts = {
+      "falsum.org" = {
+        serverAliases = ["www.falsum.org"];
+        extraConfig = ''
+          root * /var/www/falsum.org
+          file_server
+        '';
+      };
+      "lorenz.leutgeb.wien" = {
+        extraConfig = ''
+          root * /var/www/lorenz.leutgeb.wien
+          file_server
+        '';
+      };
+      "pad.leutgeb.wien" = {
+        extraConfig = ''
+          reverse_proxy 127.0.0.1:${builtins.toString config.services.hedgedoc.settings.port}
+        '';
+      };
+    };
   };
 
   systemd.services.caddy.serviceConfig = {

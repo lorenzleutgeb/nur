@@ -4,7 +4,7 @@
   ...
 }: {
   imports = [
-    ../../mixin/caddy
+    ../../mixin/caddy.nix
     ../../mixin/dns.nix
     ../../mixin/fonts.nix
     ../../mixin/harmonia.nix
