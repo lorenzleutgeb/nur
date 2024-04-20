@@ -65,7 +65,7 @@
       };
     };
     radicle = {
-      url = "github:radicle-dev/heartwood/081af03362b5bd3d637ee22011a4e5b51a1f1498";
+      url = "github:radicle-dev/heartwood/v1.0.0-rc.4";
       inputs = {
         flake-utils.follows = "utils";
         nixpkgs.follows = "nixpkgs";
@@ -161,7 +161,9 @@
             useGlobalPkgs = true;
             useUserPackages = false;
             backupFileExtension = "bak";
-            extraSpecialArgs.inputs = inputs;
+            extraSpecialArgs = {
+              inherit inputs self;
+            };
           };
         }
         else {};
@@ -169,7 +171,7 @@
       host = name: preconfig: let
         result = lib.nixosSystem {
           specialArgs = {
-            inherit hardware;
+            inherit hardware self;
             lib =
               lib
               // (import ./os/lib {
