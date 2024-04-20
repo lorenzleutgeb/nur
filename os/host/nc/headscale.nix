@@ -12,6 +12,13 @@ in {
 
   users.users.lorenz.extraGroups = [config.services.headscale.group];
 
+  systemd.services = {
+    "tailscaled" = {
+      wants = ["headscale.service"];
+      after = ["headscale.service"];
+    };
+  };
+
   services = {
     headscale = {
       enable = true;
