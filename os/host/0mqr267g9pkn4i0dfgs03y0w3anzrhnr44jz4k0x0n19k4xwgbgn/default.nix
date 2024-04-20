@@ -13,7 +13,6 @@
     ../../mixin/mkcert
     ../../mixin/nix.nix
     ../../mixin/progressive.nix
-    ../../mixin/radicle.nix
     ../../mixin/sops.nix
     ../../mixin/ssh.nix
     ../../mixin/tailscale.nix
