@@ -1,15 +1,17 @@
-{
-  pkgs,
-  ...
-}: pkgs.writeShellApplication {
-    name = "gettex";
+{pkgs, ...}:
+pkgs.writeShellApplication {
+  name = "gettex";
 
-    runtimeInputs = with pkgs; [
-      bash
-      curl
-      dateutils
-      sqlite
-    ];
+  runtimeInputs = with pkgs; [
+    coreutils
+    bash
+    gnugrep
+    curl
+    gzip
+    dateutils
+    sqlite
+    miller
+  ];
 
-    text = builtins.readFile ./gettex.sh;
-  }
+  text = builtins.readFile ./gettex.sh;
+}
