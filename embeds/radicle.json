@@ -1,1 +1,1 @@
-{"delegates":["did:key:z6MkhxScHcyD1kBpJkvBJd1id2cjqd7nQPfX5QbSuRmUaRQQ","did:key:z6MkkPvBfjP4bQmco5Dm7UGsX2ruDBieEHi8n9DVJWX5sTEz"],"payload":{"xyz.radicle.project":{"defaultBranch":"main","description":"Nix User Repository","name":"nur"}},"threshold":1}
+{"delegates":["did:key:z6MkkPvBfjP4bQmco5Dm7UGsX2ruDBieEHi8n9DVJWX5sTEz"],"payload":{"xyz.radicle.project":{"defaultBranch":"main","description":"Nix User Repository","name":"nur"}},"threshold":1}
