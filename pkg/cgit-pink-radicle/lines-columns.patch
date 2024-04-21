@@ -1,0 +1,33 @@
+diff --git a/ui-log.c b/ui-log.c
+index cfa9192..ef5bcd6 100644
+--- a/ui-log.c
++++ b/ui-log.c
+@@ -186,7 +186,7 @@ static void print_commit(struct commit *commit, struct rev_info *revs)
+ 	if (ctx.repo->enable_log_filecount)
+ 		columns++;
+ 	if (ctx.repo->enable_log_linecount)
+-		columns++;
++		columns += 2;
+ 
+ 	if (revs->graph) {
+ 		/* Advance graph until current commit */
+@@ -266,8 +266,8 @@ static void print_commit(struct commit *commit, struct rev_info *revs)
+ 	if (ctx.repo->enable_log_filecount)
+ 		htmlf("</td><td>%d", files);
+ 	if (ctx.repo->enable_log_linecount)
+-		htmlf("</td><td><span class='deletions'>-%d</span>/"
+-			"<span class='insertions'>+%d</span>", rem_lines, add_lines);
++		htmlf("</td><td class='insertions'>%d</td>/"
++			"<td class='deletions'>%d", add_lines, rem_lines);
+ 
+ 	html("</td></tr>\n");
+ 
+@@ -482,7 +482,7 @@ void cgit_print_log(const char *tip, int ofs, int cnt, char *grep, char *pattern
+ 		columns++;
+ 	}
+ 	if (ctx.repo->enable_log_linecount) {
+-		html("<th class='left'>Lines</th>");
++		html("<th class='left'>+</th><th class='left'>-</th>");
+ 		columns++;
+ 	}
+ 	html("</tr>\n");

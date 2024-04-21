@@ -1,0 +1,22 @@
+diff --git a/ui-shared.c b/ui-shared.c
+index 72a1505..69c0e8b 100644
+--- a/ui-shared.c
++++ b/ui-shared.c
+@@ -1104,7 +1104,7 @@ void cgit_print_pageheader(void)
+ 		html_option("committer", "committer", ctx.qry.grep);
+ 		html_option("range", "range", ctx.qry.grep);
+ 		html("</select>\n");
+-		html("<input class='txt' type='search' size='10' name='q' value='");
++		html("<input class='txt' type='search' size='10' name='q' placeholder='query' value='");
+ 		html_attr(ctx.qry.search);
+ 		html("'/>\n");
+ 		html("<input type='submit' value='search'/>\n");
+@@ -1119,7 +1119,7 @@ void cgit_print_pageheader(void)
+ 		html("<form method='get' action='");
+ 		html_attr(currenturl);
+ 		html("'>\n");
+-		html("<input type='search' name='q' size='10' value='");
++		html("<input type='search' name='q' size='10' placeholder='query' value='");
+ 		html_attr(ctx.qry.search);
+ 		html("'/>\n");
+ 		html("<input type='submit' value='search'/>\n");

@@ -1,0 +1,13 @@
+diff --git a/ui-log.c b/ui-log.c
+index cfa9192..833b4b5 100644
+--- a/ui-log.c
++++ b/ui-log.c
+@@ -264,7 +264,7 @@ static void print_commit(struct commit *commit, struct rev_info *revs)
+ 	}
+ 
+ 	if (ctx.repo->enable_log_filecount)
+-		htmlf("</td><td>%d", files);
++		htmlf("</td><td class='files'>%d", files);
+ 	if (ctx.repo->enable_log_linecount)
+ 		htmlf("</td><td><span class='deletions'>-%d</span>/"
+ 			"<span class='insertions'>+%d</span>", rem_lines, add_lines);

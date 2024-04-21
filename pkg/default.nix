@@ -6,6 +6,7 @@
     tessla = callPackage ./tessla.nix {};
     zindex = callPackage ./zindex.nix {};
     gettex = callPackage ./gettex.nix {};
+    cgit-pink-radicle = callPackage ./cgit-pink-radicle/default.nix {};
 
     caddy = callPackage ./caddy.nix {
       externalPlugins = [

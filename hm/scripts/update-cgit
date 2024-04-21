@@ -17,11 +17,14 @@ function config {
 
 sudo --preserve-env=RAD_HOME --user radicle rad inspect --identity "$RID" > "$ID"
 
+NAME="$(jq -r '.payload."xyz.radicle.project".name' "$ID")"
+
 config cgit.clone-url "rid:${RID}"
 config cgit.desc "$(jq -r '.payload."xyz.radicle.project".description' "$ID")"
-config cgit.name "$(jq -r '.payload."xyz.radicle.project".name' "$ID")"
+config cgit.name "$NAME"
 config cgit.defbranch "$(jq -r '.payload."xyz.radicle.project".defaultBranch' "$ID")"
-config cgit.homepage "https://app.radicle.xyz/nodes/seed.radicle.at/rad:$RID"
-config cgit.owner "$(jq -r '(if .threshold > 1 then "\(.threshold) of " else "" end) + (.delegates | sort | map(.[8:(8+6)] + "…" + .[(8+48-6):]) | join(", "))' "$ID")"
+config cgit.homepage "https://app.radicle.at/nodes/seed.radicle.at/rad:$RID"
+config cgit.owner "$(jq -r '(if .threshold > 1 then "\(.threshold) of " else "" end) + (.delegates | sort | map(.[8:] | .[0:6] + "…" + .[-6:]) | join(", "))' "$ID")"
+config cgit.snapshot-prefix "$NAME-$(jq -r --arg rid "$RID" '$rid | .[0:6] + "_" + .[-6:]' "$ID")"
 
 done

@@ -1,0 +1,51 @@
+diff --git a/ui-shared.c b/ui-shared.c
+index 72a1505..3c9f022 100644
+--- a/ui-shared.c
++++ b/ui-shared.c
+@@ -671,11 +671,11 @@ const struct date_mode *cgit_date_mode(enum date_mode_type type)
+ }
+ 
+ static void print_rel_date(time_t t, int tz, double value,
+-	const char *class, const char *suffix)
++	const char *class, const char* prefix, const char *suffix)
+ {
+ 	htmlf("<span class='%s' title='", class);
+ 	html_attr(show_date(t, tz, cgit_date_mode(DATE_ISO8601)));
+-	htmlf("'>%.0f %s</span>", value, suffix);
++	htmlf("'>&#8776; %s%.2f%s</span>", value, prefix, suffix);
+ }
+ 
+ void cgit_print_age(time_t t, int tz, time_t max_relative)
+@@ -699,26 +699,26 @@ void cgit_print_age(time_t t, int tz, time_t max_relative)
+ 	}
+ 
+ 	if (secs < TM_HOUR * 2) {
+-		print_rel_date(t, tz, secs * 1.0 / TM_MIN, "age-mins", "min.");
++		print_rel_date(t, tz, secs * 1.0 / TM_MIN, "age-mins", "PT", "M");
+ 		return;
+ 	}
+ 	if (secs < TM_DAY * 2) {
+-		print_rel_date(t, tz, secs * 1.0 / TM_HOUR, "age-hours", "hours");
++		print_rel_date(t, tz, secs * 1.0 / TM_HOUR, "age-hours", "PT", "H");
+ 		return;
+ 	}
+ 	if (secs < TM_WEEK * 2) {
+-		print_rel_date(t, tz, secs * 1.0 / TM_DAY, "age-days", "days");
++		print_rel_date(t, tz, secs * 1.0 / TM_DAY, "age-days", "P", "D");
+ 		return;
+ 	}
+ 	if (secs < TM_MONTH * 2) {
+-		print_rel_date(t, tz, secs * 1.0 / TM_WEEK, "age-weeks", "weeks");
++		print_rel_date(t, tz, secs * 1.0 / TM_WEEK, "age-weeks", "P", "W");
+ 		return;
+ 	}
+ 	if (secs < TM_YEAR * 2) {
+-		print_rel_date(t, tz, secs * 1.0 / TM_MONTH, "age-months", "months");
++		print_rel_date(t, tz, secs * 1.0 / TM_MONTH, "age-months", "P", "M");
+ 		return;
+ 	}
+-	print_rel_date(t, tz, secs * 1.0 / TM_YEAR, "age-years", "years");
++	print_rel_date(t, tz, secs * 1.0 / TM_YEAR, "age-years", "P", "Y");
+ }
+ 
+ void cgit_print_http_headers(void)
