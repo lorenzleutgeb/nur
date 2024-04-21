@@ -17,4 +17,4 @@ If you're interested in running cgit on your own node, check
 
  * [`/z3WFXKNQgDcHHATJx1PxL1XhDot9u/tree/pkg/cgit-pink-radicle`](/z3WFXKNQgDcHHATJx1PxL1XhDot9u/tree/pkg/cgit-pink-radicle)
  * [`/z3WFXKNQgDcHHATJx1PxL1XhDot9u/tree/os/host/nc/git.nix`](/z3WFXKNQgDcHHATJx1PxL1XhDot9u/tree/os/host/nc/git.nix)
- * [`/z3WFXKNQgDcHHATJx1PxL1XhDot9u/tree/hm/script/update-cgit`](/z3WFXKNQgDcHHATJx1PxL1XhDot9u/tree/hm/script/update-cgit)
+ * [`/z3WFXKNQgDcHHATJx1PxL1XhDot9u/tree/hm/scripts/update-cgit`](/z3WFXKNQgDcHHATJx1PxL1XhDot9u/tree/hm/scripts/update-cgit)
