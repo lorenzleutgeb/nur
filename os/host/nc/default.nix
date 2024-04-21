@@ -122,6 +122,7 @@ in {
     #465 # dovecot/postfix ? (SMTP over TLS)
     #993 # dovecot (IMAP over TLS)
     8384 # syncthing HTTP
+    8776 # radicle node
   ];
 
   #extraVirtualAliases.${localMail "theres-und-lorenz"} = ["theressophie@gmail.com" "${me.email}"];

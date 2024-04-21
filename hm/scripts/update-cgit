@@ -22,6 +22,6 @@ config cgit.desc "$(jq -r '.payload."xyz.radicle.project".description' "$ID")"
 config cgit.name "$(jq -r '.payload."xyz.radicle.project".name' "$ID")"
 config cgit.defbranch "$(jq -r '.payload."xyz.radicle.project".defaultBranch' "$ID")"
 config cgit.homepage "https://app.radicle.xyz/nodes/seed.radicle.at/rad:$RID"
-config cgit.owner "$(jq -r '(if .theshold > 1 then "\(.threshold) of " else "" end) + (.delegates | map(.[8:(8+6)] + "…" + .[(8+48-6):]) | join(", "))' "$ID")"
+config cgit.owner "$(jq -r '(if .theshold > 1 then "\(.threshold) of " else "" end) + (.delegates | sort | map(.[8:(8+6)] + "…" + .[(8+48-6):]) | join(", "))' "$ID")"
 
 done

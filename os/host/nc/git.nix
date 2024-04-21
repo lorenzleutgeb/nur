@@ -58,7 +58,15 @@ in {
     cgit.radicle = {
       enable = true;
       scanPath = "/var/lib/radicle/storage";
-      package = pkgs.cgit-pink;
+      package = pkgs.cgit-pink.overrideDerivation (old: {
+        postPatch =
+          old.postPatch
+          + ''
+                 substituteInPlace ui-repolist.c --replace \
+            'Owner' \
+            'Delegate(s) and Threshold (if unequal 1)'
+          '';
+      });
       settings = {
         enable-git-config = true;
         enable-blame = true;
@@ -68,7 +76,7 @@ in {
         enable-log-linecount = true;
         enable-remote-branches = true;
         enable-tree-linenumbers = true;
-        css = "/assets/cgit.css";
+        css = "/x/cgit.css";
         favicon = "/assets/favicon.ico";
         robots = "noindex, nofollow";
         about-filter = builtins.toString (pkgs.writeShellScript "about-filter.sh" ''
