@@ -71,6 +71,7 @@ in {
         css = "/x/cgit.css";
         favicon = "/assets/favicon.ico";
         robots = "noindex, nofollow";
+        clone-prefix = "rad: https://git.leutgeb.xyz/";
         source-filter = "${config.services.cgit.radicle.package}/lib/cgit/filters/syntax-highlighting.py";
         about-filter = builtins.toString (pkgs.writeShellScript "about-filter.sh" ''
           case "$(printf '%s' "$1" | tr '[:upper:]' '[:lower:]')" in

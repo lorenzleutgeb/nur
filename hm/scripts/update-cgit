@@ -19,7 +19,7 @@ sudo --preserve-env=RAD_HOME --user radicle rad inspect --identity "$RID" > "$ID
 
 NAME="$(jq -r '.payload."xyz.radicle.project".name' "$ID")"
 
-config cgit.clone-url "rid:${RID}"
+config cgit.url "${RID}"
 config cgit.desc "$(jq -r '.payload."xyz.radicle.project".description' "$ID")"
 config cgit.name "$NAME"
 config cgit.defbranch "$(jq -r '.payload."xyz.radicle.project".defaultBranch' "$ID")"
