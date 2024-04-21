@@ -171,7 +171,7 @@
       host = name: preconfig: let
         result = lib.nixosSystem {
           specialArgs = {
-            inherit hardware self;
+            inherit hardware self inputs;
             lib =
               lib
               // (import ./os/lib {

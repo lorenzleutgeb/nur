@@ -45,56 +45,50 @@ in {
         type = lib.types.submodule {
           # Declare that the settings option supports arbitrary format values, json here
           freeformType = settings.format.type;
-        };
-        default = {
-          publicExplorer = "https://app.radicle.xyz/nodes/$host/$rid$path";
-          preferredSeeds = [
-            "z6MkrLMMsiPWUcNPHcRajuMi9mDfYckSoJyPwwnknocNYPm7@seed.radicle.garden:8776"
-          ];
-          web = {
-            pinned = {
-              repositories = [];
+          options = {
+            publicExplorer = lib.mkOption {
+              type = lib.types.str;
+              default = "https://app.radicle.xyz/nodes/$host/$rid$path";
             };
-          };
-          cli = {
-            hints = true;
-          };
-          node = {
-            #alias = config.networking.hostName;
-            alias = "leutgeb.xyz";
-            listen = [];
-            peers = {
-              type = "dynamic";
-              target = 8;
+            preferredSeeds = lib.mkOption {
+              type = lib.types.listOf lib.types.str;
+              default = [
+                "z6MkrLMMsiPWUcNPHcRajuMi9mDfYckSoJyPwwnknocNYPm7@seed.radicle.garden:8776"
+              ];
             };
-            connect = [];
-            externalAddresses = [];
-            network = "main";
-            relay = true;
-            limits = {
-              routingMaxSize = 1000;
-              routingMaxAge = 604800;
-              gossipMaxAge = 1209600;
-              fetchConcurrency = 1;
-              maxOpenFiles = 4096;
-              rate = {
-                inbound = {
-                  fillRate = 0.2;
-                  capacity = 32;
-                };
-                outbound = {
-                  fillRate = 1.0;
-                  capacity = 64;
+
+            node = mkOption {
+              type = types.submodule {
+                options = {
+                  alias = mkOption {
+                    type = lib.types.str;
+                    default = config.networking.hostName;
+                  };
+                  network = mkOption {
+                    type = lib.types.str;
+                    default = "main";
+                  };
+                  relay = mkOption {
+                    type = lib.types.bool;
+                    default = true;
+                  };
+                  workers = mkOption {
+                    type = lib.types.int;
+                    default = 8;
+                  };
+
+                  policy = mkOption {
+                    type = lib.types.str;
+                    default = "block";
+                  };
+
+                  scope = mkOption {
+                    type = lib.types.str;
+                    default = "all";
+                  };
                 };
               };
-              connection = {
-                inbound = 128;
-                outbound = 16;
-              };
             };
-            workers = 8;
-            policy = "block";
-            scope = "all";
           };
         };
       };
@@ -102,6 +96,12 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
+    users.users.radicle = {
+      isSystemUser = true;
+      group = "radicle";
+    };
+    users.groups.radicle = {};
+
     environment.systemPackages = [pkgs.radicle-cli pkgs.radicle-remote-helper pkgs.radicle-full];
 
     environment.etc.${settings.name}.source = settings.format.generate settings.name cfg.settings;
@@ -116,7 +116,6 @@ in {
         after = ["network.target" "network-online.target"];
         requires = ["network-online.target"];
         serviceConfig = {
-          DynamicUser = "yes";
           User = "radicle";
           KillMode = "process";
           Restart = "always";
@@ -141,11 +140,10 @@ in {
         ];
         serviceConfig = {
           RestartSec = "3";
-          ExecStartPre = "${lib.getExe' pkgs.coreutils "ln"} --symbolic --force \${CREDENTIALS_DIRECTORY}/radicle \${STATE_DIRECTORY}/keys/radicle";
+          # TODO: Credentials.
+          #ExecStartPre = "${lib.getExe' pkgs.coreutils "ln"} --symbolic --force \${CREDENTIALS_DIRECTORY}/radicle \${STATE_DIRECTORY}/keys/radicle";
           ExecStart = "${getExe "radicle-node"} --config /etc/${config.environment.etc.${settings.name}.target} ${cfg.node.args}";
-          LoadCredential = [
-            "radicle:${cfg.keyFile}"
-          ];
+          #LoadCredential = [ "radicle:${cfg.keyFile}" ];
         };
       };
     };

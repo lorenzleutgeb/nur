@@ -22,6 +22,7 @@ in {
     ../../mixin/ssh.nix
     ../../mixin/tailscale.nix
     ./caddy.nix
+    ./git.nix
     ./headscale.nix
     ./nfs.nix
     ./nextcloud.nix

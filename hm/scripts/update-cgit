@@ -1,0 +1,27 @@
+#! /usr/bin/env bash
+
+set -xeuo pipefail
+
+export RAD_HOME="/var/lib/radicle"
+
+for GIT_DIR in "$RAD_HOME/storage"/*
+do
+
+export GIT_DIR
+RID="$(basename $GIT_DIR)"
+ID="$(mktemp -t "rad-id-$RID-XXXX.json")"
+
+function config {
+	sudo --preserve-env=GIT_DIR git config "$1" "${@:2}"
+}
+
+sudo --preserve-env=RAD_HOME --user radicle rad inspect --identity "$RID" > "$ID"
+
+config cgit.clone-url "rid:${RID}"
+config cgit.desc "$(jq -r '.payload."xyz.radicle.project".description' "$ID")"
+config cgit.name "$(jq -r '.payload."xyz.radicle.project".name' "$ID")"
+config cgit.defbranch "$(jq -r '.payload."xyz.radicle.project".defaultBranch' "$ID")"
+config cgit.homepage "https://app.radicle.xyz/nodes/seed.radicle.at/rad:$RID"
+config cgit.owner "$(jq -r '(if .theshold > 1 then "\(.threshold) of " else "" end) + (.delegates | map(.[8:(8+6)] + "…" + .[(8+48-6):]) | join(", "))' "$ID")"
+
+done
