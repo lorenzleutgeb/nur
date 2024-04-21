@@ -79,8 +79,18 @@ in {
         css = "/x/cgit.css";
         favicon = "/assets/favicon.ico";
         robots = "noindex, nofollow";
+        source-filter = "${config.services.cgit.radicle.package}/lib/cgit/filters/syntax-highlighting.py";
         about-filter = builtins.toString (pkgs.writeShellScript "about-filter.sh" ''
-          ${lib.getExe pkgs.pandoc} -
+          case "$(printf '%s' "$1" | tr '[:upper:]' '[:lower:]')" in
+              *.markdown|*.mdown|*.md|*.mkd) FROM='markdown'; ;;
+              *.rst) FROM='rst'; ;;
+              *.[1-9]) FROM='man'; ;;
+              *.htm|*.html) exec cat; ;;
+              *.dj) FROM='djot'; ;;
+              *.txt|*) FROM='plain'; ;;
+          esac
+
+          ${lib.getExe pkgs.pandoc} --from=$FROM --to=html -
         '');
         logo = "/x/radicle.svg";
         #header = builtins.toString (pkgs.writeText "header" "Hey!");
