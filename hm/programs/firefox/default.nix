@@ -63,6 +63,8 @@ with builtins; {
         # CSS
         # Note that backdrop-filter also requires gfx.webrender.all (above).
         "layout.css.backdrop-filter.enabled" = true;
+
+	"browser.chrome.guess_favicon" = false;
       };
 
       userChrome = readFile ./userChrome.css;
