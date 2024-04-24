@@ -1,5 +1,21 @@
+diff --git a/cmd.c b/cmd.c
+index 0eb75b1..47aae7d 100644
+--- a/cmd.c
++++ b/cmd.c
+@@ -133,9 +133,9 @@ static void plain_fn(void)
+ 	cgit_print_plain();
+ }
+ 
+-static void refs_fn(void)
++static void refs_fn(int colcount)
+ {
+-	cgit_print_refs();
++	cgit_print_refs(colcount);
+ }
+ 
+ static void snapshot_fn(void)
 diff --git a/ui-log.c b/ui-log.c
-index cfa9192..ef5bcd6 100644
+index cfa9192..701bce1 100644
 --- a/ui-log.c
 +++ b/ui-log.c
 @@ -186,7 +186,7 @@ static void print_commit(struct commit *commit, struct rev_info *revs)
@@ -22,12 +38,207 @@ index cfa9192..ef5bcd6 100644
  
  	html("</td></tr>\n");
  
-@@ -482,7 +482,7 @@ void cgit_print_log(const char *tip, int ofs, int cnt, char *grep, char *pattern
+@@ -478,12 +478,12 @@ void cgit_print_log(const char *tip, int ofs, int cnt, char *grep, char *pattern
+ 	if (rev.graph)
+ 		html("<th class='left'>Age</th>");
+ 	if (ctx.repo->enable_log_filecount) {
+-		html("<th class='left'>Files</th>");
++		html("<th class='right'>Files</th>");
  		columns++;
  	}
  	if (ctx.repo->enable_log_linecount) {
 -		html("<th class='left'>Lines</th>");
-+		html("<th class='left'>+</th><th class='left'>-</th>");
- 		columns++;
+-		columns++;
++		html("<th class='right'>+</th><th class='right'>-</th>");
++		columns += 2;
  	}
  	html("</tr>\n");
+ 
+diff --git a/ui-refs.c b/ui-refs.c
+index 456f610..59937e8 100644
+--- a/ui-refs.c
++++ b/ui-refs.c
+@@ -54,7 +54,7 @@ static int cmp_tag_age(const void *a, const void *b)
+ 	return cmp_age(get_ref_age(r1), get_ref_age(r2));
+ }
+ 
+-static int print_branch(struct refinfo *ref)
++static int print_branch(struct refinfo *ref, int colcount)
+ {
+ 	struct commitinfo *info = ref->commit;
+ 	char *name = (char *)ref->refname;
+@@ -72,7 +72,7 @@ static int print_branch(struct refinfo *ref)
+ 		cgit_open_filter(ctx.repo->email_filter, info->author_email, "refs");
+ 		html_txt(info->author);
+ 		cgit_close_filter(ctx.repo->email_filter);
+-		html("</td><td colspan='2'>");
++		htmlf("</td><td colspan='%d'>", colcount - 4 + 1);
+ 		cgit_print_age(info->committer_date, info->committer_tz, -1);
+ 	} else {
+ 		html("</td><td></td><td>");
+@@ -82,15 +82,15 @@ static int print_branch(struct refinfo *ref)
+ 	return 0;
+ }
+ 
+-static void print_tag_header(void)
++static void print_tag_header(int colcount)
+ {
+-	html("<tr class='nohover'><th class='left'>Tag</th>"
++	htmlf("<tr class='nohover'><th class='left'>Tag</th>"
+ 	     "<th class='left'>Download</th>"
+ 	     "<th class='left'>Author</th>"
+-	     "<th class='left' colspan='2'>Age</th></tr>\n");
++	     "<th class='left' colspan='%d'>Age</th></tr>\n", colcount - 4 + 1);
+ }
+ 
+-static int print_tag(struct refinfo *ref)
++static int print_tag(struct refinfo *ref, int colcount)
+ {
+ 	struct tag *tag = NULL;
+ 	struct taginfo *info = NULL;
+@@ -124,34 +124,34 @@ static int print_tag(struct refinfo *ref)
+ 		html_txt(ref->commit->author);
+ 		cgit_close_filter(ctx.repo->email_filter);
+ 	}
+-	html("</td><td colspan='2'>");
++	htmlf("</td><td colspan='%d'>", colcount - 4 + 1);
+ 	if (info) {
+ 		if (info->tagger_date > 0)
+ 			cgit_print_age(info->tagger_date, info->tagger_tz, -1);
+ 	} else if (ref->object->type == OBJ_COMMIT) {
+ 		cgit_print_age(ref->commit->commit->date, 0, -1);
+ 	}
+-	html("</td></tr>\n");
++	htmlf("</td></tr>\n");
+ 
+ 	return 0;
+ }
+ 
+-static void print_refs_link(const char *path)
++static void print_refs_link(const char *path, int colcount)
+ {
+-	html("<tr class='nohover'><td colspan='5'>");
++	htmlf("<tr class='nohover'><td colspan='%d'>", colcount);
+ 	cgit_refs_link("[...]", NULL, NULL, ctx.qry.head, NULL, path);
+ 	html("</td></tr>");
+ }
+ 
+-void cgit_print_branches(int maxcount)
++void cgit_print_branches(int maxcount, int colcount)
+ {
+ 	struct reflist list;
+ 	int i;
+ 
+-	html("<tr class='nohover'><th class='left'>Branch</th>"
++	htmlf("<tr class='nohover'><th class='left'>Branch</th>"
+ 	     "<th class='left'>Commit message</th>"
+ 	     "<th class='left'>Author</th>"
+-	     "<th class='left' colspan='2'>Age</th></tr>\n");
++	     "<th class='left' colspan='%d'>Age</th></tr>\n", colcount - 4 + 1);
+ 
+ 	list.refs = NULL;
+ 	list.alloc = list.count = 0;
+@@ -167,15 +167,15 @@ void cgit_print_branches(int maxcount)
+ 		qsort(list.refs, maxcount, sizeof(*list.refs), cmp_ref_name);
+ 
+ 	for (i = 0; i < maxcount; i++)
+-		print_branch(list.refs[i]);
++		print_branch(list.refs[i], colcount);
+ 
+ 	if (maxcount < list.count)
+-		print_refs_link("heads");
++		print_refs_link("heads", colcount);
+ 
+ 	cgit_free_reflist_inner(&list);
+ }
+ 
+-void cgit_print_tags(int maxcount)
++void cgit_print_tags(int maxcount, int colcount)
+ {
+ 	struct reflist list;
+ 	int i;
+@@ -190,29 +190,29 @@ void cgit_print_tags(int maxcount)
+ 		maxcount = list.count;
+ 	else if (maxcount > list.count)
+ 		maxcount = list.count;
+-	print_tag_header();
++	print_tag_header(colcount);
+ 	for (i = 0; i < maxcount; i++)
+-		print_tag(list.refs[i]);
++		print_tag(list.refs[i], colcount);
+ 
+ 	if (maxcount < list.count)
+-		print_refs_link("tags");
++		print_refs_link("tags", colcount);
+ 
+ 	cgit_free_reflist_inner(&list);
+ }
+ 
+-void cgit_print_refs(void)
++void cgit_print_refs(int colcount)
+ {
+ 	cgit_print_layout_start();
+ 	html("<table class='list nowrap'>");
+ 
+ 	if (ctx.qry.path && starts_with(ctx.qry.path, "heads"))
+-		cgit_print_branches(0);
++		cgit_print_branches(0, colcount);
+ 	else if (ctx.qry.path && starts_with(ctx.qry.path, "tags"))
+-		cgit_print_tags(0);
++		cgit_print_tags(0, colcount);
+ 	else {
+-		cgit_print_branches(0);
+-		html("<tr class='nohover'><td colspan='5'>&nbsp;</td></tr>");
+-		cgit_print_tags(0);
++		cgit_print_branches(0, colcount);
++		htmlf("<tr class='nohover'><td colspan='%d'>&nbsp;</td></tr>", colcount);
++		cgit_print_tags(0, colcount);
+ 	}
+ 	html("</table>");
+ 	cgit_print_layout_end();
+diff --git a/ui-refs.h b/ui-refs.h
+index 1d4a54a..9a0feb0 100644
+--- a/ui-refs.h
++++ b/ui-refs.h
+@@ -1,8 +1,8 @@
+ #ifndef UI_REFS_H
+ #define UI_REFS_H
+ 
+-extern void cgit_print_branches(int maxcount);
+-extern void cgit_print_tags(int maxcount);
+-extern void cgit_print_refs(void);
++extern void cgit_print_branches(int maxcount, int colcount);
++extern void cgit_print_tags(int maxcount, int colcount);
++extern void cgit_print_refs(int colcount);
+ 
+ #endif /* UI_REFS_H */
+diff --git a/ui-summary.c b/ui-summary.c
+index df7f739..ed13a73 100644
+--- a/ui-summary.c
++++ b/ui-summary.c
+@@ -24,7 +24,7 @@ static void print_url(const char *url)
+ 	if (ctx.repo->enable_log_filecount)
+ 		columns++;
+ 	if (ctx.repo->enable_log_linecount)
+-		columns++;
++		columns += 2;
+ 
+ 	if (urls++ == 0) {
+ 		htmlf("<tr class='nohover'><td colspan='%d'>&nbsp;</td></tr>", columns);
+@@ -47,13 +47,13 @@ void cgit_print_summary(void)
+ 	if (ctx.repo->enable_log_filecount)
+ 		columns++;
+ 	if (ctx.repo->enable_log_linecount)
+-		columns++;
++		columns += 2;
+ 
+ 	cgit_print_layout_start();
+ 	html("<table summary='repository info' class='list nowrap'>");
+-	cgit_print_branches(ctx.cfg.summary_branches);
++	cgit_print_branches(ctx.cfg.summary_branches, columns);
+ 	htmlf("<tr class='nohover'><td colspan='%d'>&nbsp;</td></tr>", columns);
+-	cgit_print_tags(ctx.cfg.summary_tags);
++	cgit_print_tags(ctx.cfg.summary_tags, columns);
+ 	if (ctx.cfg.summary_log > 0) {
+ 		htmlf("<tr class='nohover'><td colspan='%d'>&nbsp;</td></tr>", columns);
+ 		cgit_print_log(ctx.qry.head, 0, ctx.cfg.summary_log, NULL,
