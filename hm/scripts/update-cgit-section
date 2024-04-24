@@ -1,0 +1,16 @@
+#! /usr/bin/env bash
+
+set -xeuo pipefail
+
+
+RID="$1"
+SECTION="$2"
+
+export RAD_HOME="/var/lib/radicle"
+export GIT_DIR="${RAD_HOME}/storage/${RID}"
+
+function config {
+	sudo --preserve-env=GIT_DIR git config "$1" "${@:2}"
+}
+
+config cgit.section "${SECTION}"
