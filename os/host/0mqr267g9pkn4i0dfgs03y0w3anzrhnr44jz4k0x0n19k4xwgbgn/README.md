@@ -6,7 +6,8 @@ https://linux-hardware.org/?probe=3825190816
 
 PCIe 3 Lanes: 16
 
-https://ark.intel.com/content/www/us/en/ark/products/199336/intel-xeon-w-1290p-processor-20m-cache-3-70-ghz.html
+[Intel Xeon W-1290P](https://ark.intel.com/content/www/us/en/ark/products/199336/intel-xeon-w-1290p-processor-20m-cache-3-70-ghz.html),
+similar to [Intel Core i9-10900K](https://ark.intel.com/content/www/us/en/ark/products/199332/intel-core-i9-10900k-processor-20m-cache-up-to-5-30-ghz.html)
 
 Bought on 2021-01-18 for 576.9 EUR.
 
