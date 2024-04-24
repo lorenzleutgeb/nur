@@ -5,14 +5,14 @@
 }: {
   programs.nix-ld.enable = true;
 
-  nixpkgs.config.allowUnfree = true;
-
   environment = {
     etc."nix/inputs/nixpkgs".source = pkgs.path;
     systemPackages = [
       pkgs.nil
     ];
   };
+
+  nixpkgs.config.allowUnfree = true;
 
   nix = {
     nixPath = ["nixpkgs=/etc/${config.environment.etc."nix/inputs/nixpkgs".target}"];
