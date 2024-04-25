@@ -26,6 +26,7 @@ in {
     ./headscale.nix
     ./nfs.nix
     ./nextcloud.nix
+    ./tor.nix
   ];
 
   services.nginx.enable = false;
