@@ -49,6 +49,24 @@
       # extra config
       ${cfg.extraConfig}
     '';
+
+  onion = "q37hn7rhcbqiirapcx5bkgxzue5oqijdmjv55anfht2ne5hxxjxyhhyd.onion";
+
+  cgitReverseProxy = ''
+    handle_path /assets/* {
+      root * ${config.services.cgit.radicle.package}/cgit
+      file_server
+    }
+    handle_path /x/* {
+      root * /var/www/git.leutgeb.xyz
+      file_server
+    }
+    reverse_proxy unix/${config.services.fcgiwrap.socketAddress} {
+      transport fastcgi {
+        env SCRIPT_FILENAME ${config.services.cgit.radicle.package}/cgit/cgit.cgi
+      }
+    }
+  '';
 in {
   environment.etc."cgitrc".source = mkCgitrc;
   services = {
@@ -71,7 +89,7 @@ in {
         css = "/x/cgit.css";
         favicon = "/assets/favicon.ico";
         robots = "noindex, nofollow";
-	clone-url = "rad:$CGIT_REPO_URL https://git.leutgeb.xyz/$CGIT_REPO_URL";
+        clone-url = "rad:$CGIT_REPO_URL https://git.leutgeb.xyz/$CGIT_REPO_URL http://${onion}/$CGIT_REPO_URL";
         source-filter = "${config.services.cgit.radicle.package}/lib/cgit/filters/syntax-highlighting.py";
         about-filter = builtins.toString (pkgs.writeShellScript "about-filter.sh" ''
           case "$(printf '%s' "$1" | tr '[:upper:]' '[:lower:]')" in
@@ -118,23 +136,8 @@ in {
           encode zstd
         '';
       };
-      virtualHosts."git.leutgeb.xyz" = {
-        extraConfig = ''
-          handle_path /assets/* {
-            root * ${config.services.cgit.radicle.package}/cgit
-            file_server
-          }
-          handle_path /x/* {
-            root * /var/www/git.leutgeb.xyz
-            file_server
-          }
-          reverse_proxy unix/${config.services.fcgiwrap.socketAddress} {
-            transport fastcgi {
-              env SCRIPT_FILENAME ${config.services.cgit.radicle.package}/cgit/cgit.cgi
-            }
-          }
-        '';
-      };
+      virtualHosts."git.leutgeb.xyz".extraConfig = cgitReverseProxy;
+      virtualHosts."http://${onion}".extraConfig = cgitReverseProxy;
     };
   };
 }
