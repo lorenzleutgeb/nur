@@ -15,7 +15,7 @@ index 0eb75b1..47aae7d 100644
  
  static void snapshot_fn(void)
 diff --git a/ui-log.c b/ui-log.c
-index cfa9192..701bce1 100644
+index cfa9192..f8b6a29 100644
 --- a/ui-log.c
 +++ b/ui-log.c
 @@ -186,7 +186,7 @@ static void print_commit(struct commit *commit, struct rev_info *revs)
@@ -33,7 +33,7 @@ index cfa9192..701bce1 100644
  	if (ctx.repo->enable_log_linecount)
 -		htmlf("</td><td><span class='deletions'>-%d</span>/"
 -			"<span class='insertions'>+%d</span>", rem_lines, add_lines);
-+		htmlf("</td><td class='insertions'>%d</td>/"
++		htmlf("</td><td class='insertions'>%d</td>"
 +			"<td class='deletions'>%d", add_lines, rem_lines);
  
  	html("</td></tr>\n");
