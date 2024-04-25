@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  self,
   ...
 }: {
   sops.secrets = {
@@ -14,6 +15,7 @@
     '';
 
     virtualHosts = {
+      "http://".extraConfig = "respond \"Servus! ${self.rev or self.dirtyRev} ${self.lastModifiedDate}\"";
       "falsum.org" = {
         serverAliases = ["www.falsum.org"];
         extraConfig = ''
