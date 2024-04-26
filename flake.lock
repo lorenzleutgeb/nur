@@ -284,16 +284,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1712671784,
-        "narHash": "sha256-MDUwt2doFocDMqVBAPrtjf47uWaSL67XGkQg6mDGWsE=",
+        "lastModified": 1713957958,
+        "narHash": "sha256-cqR6xVAYghtdWZE6JkqDQf/4hQ7GSnOK67Gj8pyYO8E=",
         "owner": "radicle-dev",
         "repo": "heartwood",
-        "rev": "35567583869c2c24a2e040a0f1e755d4e3d17880",
+        "rev": "c607619683e859fd715a23377c03fb08dc8090f4",
         "type": "github"
       },
       "original": {
         "owner": "radicle-dev",
-        "ref": "v1.0.0-rc.4",
+        "ref": "v1.0.0-rc.5",
         "repo": "heartwood",
         "type": "github"
       }

@@ -65,7 +65,7 @@
       };
     };
     radicle = {
-      url = "github:radicle-dev/heartwood/v1.0.0-rc.4";
+      url = "github:radicle-dev/heartwood/v1.0.0-rc.5";
       inputs = {
         flake-utils.follows = "utils";
         nixpkgs.follows = "nixpkgs";
