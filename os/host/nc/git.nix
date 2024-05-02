@@ -125,6 +125,8 @@ in {
     };
     caddy = {
       virtualHosts."seed.leutgeb.xyz" = {
+        # For Caddy ≥ 2.8 use `file.*` replacements, see
+        # <https://github.com/caddyserver/caddy/pull/5463>
         extraConfig = ''
           handle_path /* {
             reverse_proxy :${port}

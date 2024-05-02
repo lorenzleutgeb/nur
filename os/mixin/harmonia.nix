@@ -16,6 +16,8 @@ in {
 
   services.tailscale.permitCertUid = config.services.caddy.user;
 
+  # For Caddy ≥ 2.8 use `file.*` replacements, see
+  # <https://github.com/caddyserver/caddy/pull/5463>
   services.caddy = {
     enable = true;
     virtualHosts."${lib.tailscale.local}:443" = {
