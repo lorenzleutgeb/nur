@@ -8,11 +8,11 @@
       role = "private-bridge";
       onionServices = {
         "radicle".map = [
-          { port = 8776; }
-          { port = 80; }
+          {port = 8776;}
+          {port = 80;}
         ];
         "http".map = [
-          { port = 80; }
+          {port = 80;}
         ];
       };
     };
