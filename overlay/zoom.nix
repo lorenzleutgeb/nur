@@ -1,7 +1,7 @@
 # https://github.com/sebastiant/dotfiles/blob/367668f28ca6770493c78f4306338dcfbddbccff/programs/wayland-overlay.nix
 # ~/config/zoomus.conf: enableWaylandShare=true
-final: prev: {
-  zoom-us = prev.zoom-us.overrideAttrs (oldAttrs: rec {
+_: final: prev: {
+  zoom-us = prev.zoom-us.overrideAttrs (oldAttrs: {
     postFixup =
       oldAttrs.postFixup
       + ''

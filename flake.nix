@@ -1,6 +1,12 @@
 {
   description = "Lorenz Leutgeb's Flake";
   inputs = {
+    # This looks redundant, but actually is nice.
+    # Allows to model "stable" vs. "unstable" vs. "don't care".
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-stable.follows = "nixpkgs";
+
     hardware = {
       url = "github:NixOS/nixos-hardware";
       flake = false;
@@ -18,10 +24,8 @@
     };
     nil = {
       url = "github:oxalica/nil";
-      #inputs.nixpkgs.follows = "nixpkgs"; Stopped following nixpkgs since nil's Rust version is too far ahead.
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nix-index-database = {
       url = "github:Mic92/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -37,14 +41,9 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    treefmt-nix = {
-      url = "github:numtide/treefmt-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     utils.url = "github:numtide/flake-utils";
     vscode-server = {
-      # See https://github.com/nix-community/nixos-vscode-server/pull/78
-      url = "github:Ten0/nixos-vscode-server/support_new_vscode_versions";
+      url = "github:Ten0/nixos-vscode-server";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         flake-utils.follows = "utils";
@@ -65,11 +64,20 @@
       };
     };
     radicle = {
-      url = "github:radicle-dev/heartwood/v1.0.0-rc.5";
+      url = "git+https://seed.radicle.xyz/z3gqcJUoA1n9HaHKufZs5FCSGazv5.git?tag=v1.0.0-rc.6";
       inputs = {
         flake-utils.follows = "utils";
         nixpkgs.follows = "nixpkgs";
         rust-overlay.follows = "rust-overlay";
+      };
+    };
+
+    pre-commit-hooks = {
+      url = "github:cachix/pre-commit-hooks.nix";
+      inputs = {
+        flake-utils.follows = "utils";
+        nixpkgs.follows = "nixpkgs";
+        nixpkgs-stable.follows = "nixpkgs-stable";
       };
     };
   };
@@ -79,150 +87,142 @@
     hardware,
     hm,
     mailserver,
-    nil,
     nixpkgs,
     nixpkgs-unstable,
     nix-index-database,
-    sbt,
+    pre-commit-hooks,
     sops,
-    treefmt-nix,
     vscode-server,
     wsl,
     ...
-  }:
-    with builtins;
-    with nixpkgs; let
-      system = "x86_64-linux";
-      overlays = {
-        # Overlays defined in flake inputs.
-        input = [
-          sbt.overlays.default
-          (_: _: {inherit (nil.packages.${system}) nil;})
-          (_: _: inputs.radicle.packages.${system})
-        ];
-        # Overlays that are outputs of self;
-        self = attrValues self.overlays;
+  }: let
+    lib = nixpkgs.lib.recursiveUpdate nixpkgs.lib (import ./lib.nix {inherit (nixpkgs) lib;});
+
+    inherit
+      (lib)
+      attrValues
+      dirToAttrs
+      nameValuePair
+      mapAttrs
+      mapAttrs'
+      ;
+
+    inherit
+      (builtins)
+      readDir
+      ;
+
+    system = "x86_64-linux";
+
+    modules = {
+      input = [
+        nixpkgs.nixosModules.notDetected
+        hm.nixosModules.home-manager
+        #mailserver.nixosModules.default
+        sops.nixosModules.sops
+        wsl.nixosModules.wsl
+      ];
+      self = attrValues self.nixosModules;
+    };
+
+    homeModules = {
+      input = [
+        vscode-server.homeModules.default
+        nix-index-database.hmModules.nix-index
+        sops.homeManagerModule
+      ];
+      self = {
+        "programs.radicle" = ./hm/module/programs/radicle.nix;
+        "services.radicle" = ./hm/module/services/radicle.nix;
+        "services.ulauncher" = ./hm/module/services/ulauncher.nix;
+      };
+    };
+
+    pkgs = import nixpkgs {
+      inherit system;
+      overlays = attrValues self.overlays;
+    };
+
+    importPackages = pkgs:
+      import ./pkg {
+        inherit (pkgs) newScope;
       };
 
-      modules = {
-        input = [
-          nixpkgs.nixosModules.notDetected
-          hm.nixosModules.home-manager
-          #mailserver.nixosModules.default
-          sops.nixosModules.sops
-          wsl.nixosModules.wsl
-        ];
-        self = attrValues self.nixosModules;
-      };
+    hmConfig = path: user: host: let
+      hm = import path;
+    in
+      if hm ? ${host}
+      then {
+        home-manager = {
+          users.${user}.imports =
+            hm.${host}
+            ++ homeModules.input
+            ++ (attrValues homeModules.self);
 
-      homeModules = {
-        input = [
-          vscode-server.homeModules.default
-          nix-index-database.hmModules.nix-index
-          sops.homeManagerModule
-        ];
-        self = attrValues (importDirToAttrs ./hm/module);
-      };
-
-      pkgs = import nixpkgs {
-        inherit system;
-        overlays = overlays.input ++ overlays.self;
-      };
-
-      importPackages = pkgs:
-        import ./pkg {
-          inherit (pkgs) newScope;
+          useGlobalPkgs = true;
+          useUserPackages = false;
+          backupFileExtension = "bak";
+          extraSpecialArgs = {
+            inherit inputs self;
+          };
         };
+      }
+      else {};
 
-      makeDiskImage = import "${nixpkgs}/nixos/lib/make-disk-image.nix";
-
-      kebabCaseToCamelCase =
-        replaceStrings (map (s: "-${s}") lib.lowerChars) lib.upperChars;
-
-      importDirToAttrs = dir:
-        listToAttrs (map (name: {
-          name = kebabCaseToCamelCase (lib.removeSuffix ".nix" name);
-          value = import (dir + "/${name}");
-        }) (attrNames (readDir dir)));
-
-      treefmt = treefmt-nix.lib.evalModule pkgs ./treefmt.nix;
-
-      hmConfig = path: user: host: let
-        hm = import path;
-      in
-        if hm ? ${host}
-        then {
-          home-manager = {
-            users.${user}.imports =
-              hm.${host}
-              ++ homeModules.input
-              ++ homeModules.self;
-
-            useGlobalPkgs = true;
-            useUserPackages = false;
-            backupFileExtension = "bak";
-            extraSpecialArgs = {
-              inherit inputs self;
-            };
-          };
-        }
-        else {};
-
-      host = name: preconfig: let
-        result = lib.nixosSystem {
-          specialArgs = {
-            inherit hardware self inputs;
-            lib =
-              lib
-              // (import ./os/lib {
-                inherit lib;
-                inherit (result) config;
-              });
-          };
-          modules =
-            modules.input
-            ++ [
-              (hmConfig ./hm "lorenz" name)
-              {
-                system.stateVersion = "20.03";
-                system.configurationRevision =
-                  pkgs.lib.mkIf (self ? rev) self.rev;
-                nix.registry = {
-                  nixpkgs = {
-                    from = {
-                      id = "nixpkgs";
-                      type = "indirect";
-                    };
-                    flake = nixpkgs;
-                  };
-                  nixpkgs-unstable = {
-                    from = {
-                      id = "nixpkgs-unstable";
-                      type = "indirect";
-                    };
-                    flake = nixpkgs-unstable;
-                  };
-                };
+    host = name: preconfig: let
+      result = lib.nixosSystem {
+        specialArgs = {
+          inherit hardware self inputs;
+          lib =
+            lib
+            // (import ./os/lib {
+              inherit lib;
+              inherit (result) config;
+            });
+        };
+        modules =
+          modules.input
+          ++ [
+            (hmConfig ./hm "lorenz" name)
+            {
+              system.stateVersion = "20.03";
+              system.configurationRevision =
+                pkgs.lib.mkIf (self ? rev) self.rev;
+              nix.registry = {
                 nixpkgs = {
-                  overlays = overlays.input ++ overlays.self;
-                  config.allowUnfree = true;
+                  from = {
+                    id = "nixpkgs";
+                    type = "indirect";
+                  };
+                  flake = nixpkgs;
                 };
-              }
-              preconfig
-            ]
-            ++ modules.self;
-        };
-      in
-        result;
-    in rec {
-      overlays = {default = final: prev: importPackages prev;} // importDirToAttrs ./overlay;
-
-      formatter.${system} = treefmt.config.build.wrapper;
+                nixpkgs-unstable = {
+                  from = {
+                    id = "nixpkgs-unstable";
+                    type = "indirect";
+                  };
+                  flake = nixpkgs-unstable;
+                };
+              };
+              nixpkgs = {
+                overlays = attrValues self.overlays;
+                config.allowUnfree = true;
+              };
+            }
+            preconfig
+          ]
+          ++ modules.self;
+      };
+    in
+      result;
+  in
+    rec {
+      overlays = {default = final: prev: importPackages prev;} // (mapAttrs (_: v: import v inputs) (dirToAttrs ./overlay));
 
       packages.${system} =
         importPackages pkgs
         // {
-          nc = makeDiskImage {
+          nc = import "${nixpkgs}/nixos/lib/make-disk-image.nix" {
             inherit pkgs;
             inherit (pkgs) lib;
             diskSize = "auto"; # 240 * 1000 * 1000 * 1000; # 240GB
@@ -230,7 +230,7 @@
             config = nixosConfigurations.nc.config;
           };
           live = nixosConfigurations.live.config.system.build.isoImage;
-          wsl = nixosConfigurations.wsl.config.system.build.tarball;
+          #wsl = nixosConfigurations.wsl.config.system.build.tarball;
         };
 
       packages."aarch64-linux".pi-sd =
@@ -242,15 +242,39 @@
         .build
         .sdImage;
 
-      nixosModules = importDirToAttrs ./os/module;
+      nixosModules = mapAttrs (_: import) (dirToAttrs ./os/module);
 
       nixosConfigurations = let dir = ./os/host; in mapAttrs (id: _: host id (import (dir + "/${id}"))) (readDir dir);
 
+      devShell.${system} = pkgs.mkShell {
+        inherit (self.checks.${system}.pre-commit) shellHook;
+        buildInputs = self.checks.${system}.pre-commit.enabledPackages;
+      };
+
+      formatter.${system} = pkgs.writeShellApplication {
+        name = "formatter";
+        text = ''
+          # shellcheck disable=all
+          shell-hook () {
+            ${self.checks.${system}.pre-commit.shellHook}
+          }
+
+          shell-hook
+          pre-commit run --all-files
+        '';
+      };
+
       checks.${system} =
-        self.packages.${system}
-        // {
-          formatting = treefmt.config.build.check self;
-        };
+        {
+          pre-commit = pre-commit-hooks.lib.${system}.run {
+            src = ./.;
+            hooks = {
+              alejandra.enable = true;
+            };
+          };
+        }
+        // (mapAttrs' (name: value: nameValuePair "packages/${name}" value) self.packages.${system})
+        // (mapAttrs' (name: value: nameValuePair "nixosConfigurations/${name}" value.config.system.build.toplevel) self.nixosConfigurations);
 
       /*
       homeConfigurations = mapAttrs (_: config:
@@ -266,5 +290,8 @@
             ++ (attrValues (importDirToAttrs ./hm/module));
         }) (import ./hm);
       */
+    }
+    // {
+      homeModules = homeModules.self;
     };
 }
