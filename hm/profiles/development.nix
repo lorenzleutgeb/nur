@@ -82,7 +82,6 @@ with builtins; {
     htop
     insomnia
     iperf
-    jdk17
     jq
     kbfs
     kdiff3
@@ -99,6 +98,8 @@ with builtins; {
     neovim-remote
     niv
     nvme-cli
+    nodejs
+    nodePackages.pnpm
     noto-fonts
     pandoc
     pantheon.elementary-files
@@ -154,5 +155,6 @@ with builtins; {
     yubikey-personalization
     yq
     zoom-us
+    rustup
   ];
 }
