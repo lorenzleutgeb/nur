@@ -15,6 +15,7 @@
     ../../mixin/progressive.nix
     ../../mixin/sops.nix
     ../../mixin/ssh.nix
+    ../../mixin/ngi.nix
     ../../mixin/tailscale.nix
     ./hardware-configuration.nix
     ./bluetooth.nix
