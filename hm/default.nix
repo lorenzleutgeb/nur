@@ -8,7 +8,6 @@
     ./profiles/summer-of-nix.nix
     ./programs/vscode.nix
     ./profiles/wsl.nix
-    #./profiles/vtsa.nix
   ];
 
   "0mqr267g9pkn4i0dfgs03y0w3anzrhnr44jz4k0x0n19k4xwgbgn" = [
