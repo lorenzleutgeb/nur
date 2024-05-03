@@ -28,9 +28,9 @@ in {
 
       package = mkOption {
         type = types.package;
-        default = pkgs.kmonad-bin;
-        defaultText = "pkgs.kmonad-bin";
-        example = literalExample "pkgs.kmonad";
+        default = pkgs.haskellPackages.kmonad;
+        defaultText = "pkgs.haskellPackages.kmonad";
+        example = literalExample "pkgs.haskellPackages.kmonad";
         description = ''
           The KMonad derivation to use.
         '';
