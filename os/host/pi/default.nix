@@ -11,7 +11,7 @@
     ../../mixin/ssh.nix
     ../../mixin/tailscale.nix
     ../../mixin/dns.nix
-    ../../mixin/lorenz.nix
+    (import ../../mixin/lorenz.nix {})
     "${hardware}/raspberry-pi/4"
   ];
 
