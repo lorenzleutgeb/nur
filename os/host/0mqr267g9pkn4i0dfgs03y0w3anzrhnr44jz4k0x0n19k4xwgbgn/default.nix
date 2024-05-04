@@ -280,11 +280,6 @@
 
   nixpkgs.hostPlatform = "x86_64-linux";
 
-  nix.settings = {
-    cores = 4;
-    max-jobs = 5;
-  };
-
   security = {
     sudo.wheelNeedsPassword = false;
     pam = {
