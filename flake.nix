@@ -52,13 +52,6 @@
         flake-utils.follows = "utils";
       };
     };
-    mailserver = {
-      url = "git+https://gitlab.com/simple-nixos-mailserver/nixos-mailserver/";
-      inputs = {
-        utils.follows = "utils";
-        nixpkgs.follows = "nixpkgs";
-      };
-    };
     radicle = {
       url = "git+https://seed.radicle.xyz/z3gqcJUoA1n9HaHKufZs5FCSGazv5.git?tag=v1.0.0-rc.8";
       #url = "path:/home/lorenz/src/rad/heartwood";
@@ -83,7 +76,6 @@
     self,
     hardware,
     hm,
-    mailserver,
     nixpkgs,
     nixpkgs-unstable,
     nix-index-database,
@@ -115,7 +107,6 @@
       input = [
         nixpkgs.nixosModules.notDetected
         hm.nixosModules.home-manager
-        #mailserver.nixosModules.default
         sops.nixosModules.sops
         wsl.nixosModules.wsl
       ];
