@@ -7,6 +7,7 @@
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-stable.follows = "nixpkgs";
 
+    compat.url = "github:edolstra/flake-compat";
     hardware = {
       url = "github:NixOS/nixos-hardware";
       flake = false;
@@ -48,8 +49,9 @@
     wsl = {
       url = "github:nix-community/nixos-wsl";
       inputs = {
-        nixpkgs.follows = "nixpkgs";
+        flake-compat.follows = "compat";
         flake-utils.follows = "utils";
+        nixpkgs.follows = "nixpkgs";
       };
     };
     radicle = {
@@ -65,6 +67,7 @@
     pre-commit-hooks = {
       url = "github:cachix/pre-commit-hooks.nix";
       inputs = {
+        flake-compat.follows = "compat";
         flake-utils.follows = "utils";
         nixpkgs.follows = "nixpkgs";
         nixpkgs-stable.follows = "nixpkgs-stable";
