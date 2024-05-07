@@ -1,11 +1,8 @@
 #! /usr/bin/env bash
 set -euo pipefail
 
-# Read the default remote from config, defaulting to "origin".
-DEFAULT_REMOTE=$(git config --default origin --get clone.defaultRemoteName)
-
-# Use first argument as remote name, fallback to default.
-REMOTE=${1:-$DEFAULT_REMOTE}
+# Use first argument as remote name, fallback to "all".
+REMOTE=${1:-"--all"}
 
 # Resolve the rev that HEAD points at, so that we can give it
 # a special treatement.
@@ -34,7 +31,7 @@ do
 		set -e
 	elif grep -q "$BRANCH_REV" <<< "$WORKTREE_REVS"
 	then
-		# This branch is currently checked out by another. Leave it alone.
+		# This branch is currently checked out in another worktree. Leave it alone.
 		echo "$BRANCH skipped, because it is checked out in another worktree. Use 'git worktree list' to diagnose."
 	else
 		# This branch is not checked out. Just update it!
