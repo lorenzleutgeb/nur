@@ -1,0 +1,20 @@
+#! /usr/bin/env bash
+# Quick Diff. Reads from standard input, opens editor, and diffs.
+
+NAME="${1:-tmp}"
+UNIFIED="${2:-2}"
+
+DIR="$(mktemp --tmpdir --directory XXX)"
+A="$DIR/a"
+B="$DIR/b"
+
+cat /dev/stdin | tee "$A" > "$B"
+
+"$EDITOR" "$B"
+
+printf '\x1b[30;45m'
+printf '  %-30s\n' "$DIR"
+printf '\x1b[0m'
+printf '────────────────────────────────\n\n```diff\n'
+diff --color=always --unified="$UNIFIED" "$A" "$B" | sed "s#$DIR/\\(a\\|b\\)#\\1/$NAME#"
+printf '```\n\n────────────────────────────────\n'
