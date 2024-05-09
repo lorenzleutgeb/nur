@@ -45,7 +45,8 @@ in {
       node = {
         args = mkOption {
           type = str;
-          default = "--listen 0.0.0.0:8776";
+          default = "";
+          example = "--listen 0.0.0.0:8776";
         };
         package = mkPackageOption pkgs "radicle-node" {};
       };
