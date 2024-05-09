@@ -142,6 +142,7 @@ with builtins; {
     roboto-mono
     roboto-slab
     skopeo
+    socat
     #swiPrologWithGui # 2023-06-06: Depends on insecure OpenSSL
     tio
     tmux
