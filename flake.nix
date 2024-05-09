@@ -3,9 +3,9 @@
   inputs = {
     # This looks redundant, but actually is nice.
     # Allows to model "stable" vs. "unstable" vs. "don't care".
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-stable.follows = "nixpkgs";
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-23.11";
+    nixpkgs.follows = "nixpkgs-stable";
 
     compat.url = "github:edolstra/flake-compat";
     hardware = {
@@ -37,6 +37,7 @@
     sops = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs-stable.follows = "nixpkgs-stable";
     };
     utils.url = "github:numtide/flake-utils";
     vscode-server = {
