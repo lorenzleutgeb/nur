@@ -21,6 +21,7 @@
     ./bluetooth.nix
     ./nfs.nix
     ./rsync.nix
+    ./tor.nix
   ];
 
   # Use the systemd-boot EFI boot loader.
