@@ -50,7 +50,7 @@
         nativeBuildInputs = [cfg.cli.package];
       } ''
         mkdir keys
-        echo "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDCLaw/LP2QyqhljkjIuJ6TWICR6XP2Wj4h3oxBO0076 radicle" \
+        echo "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID/this/is/not/a/real/key/only/a/placeholder" \
           > keys/radicle.pub
         cp ${format.generate name cfg.settings} ${name}
         RAD_HOME=$PWD rad config

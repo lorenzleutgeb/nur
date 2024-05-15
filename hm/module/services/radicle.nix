@@ -2,10 +2,12 @@
   config,
   lib,
   pkgs,
+  options,
   ...
 }: let
   inherit
     (lib)
+    generators
     getBin
     getExe
     getExe'
@@ -13,7 +15,6 @@
     mkDefault
     mkEnableOption
     mkIf
-    mkMerge
     mkOption
     mkPackageOption
     ;
@@ -29,62 +30,60 @@
     ;
 
   cfg = config.services.radicle;
+  opt = options.services.radicle;
 
   radicleHome = config.home.homeDirectory + "/.radicle";
+
+  env = mapAttrsToList (generators.mkKeyValueDefault {} "=");
 in {
   options = {
     services.radicle = {
-      enable = mkEnableOption "Radicle Services (Node and HTTP Daemon)";
-      environment = mkOption {
-        type = attrsOf (nullOr (oneOf [str path package]));
-        default = {
-          RUST_LOG = "info";
-          RUST_BACKTRACE = "1";
-        };
-      };
       node = {
+        enable = mkEnableOption "Radicle Node";
+        package = mkPackageOption pkgs "radicle-node" {};
         args = mkOption {
           type = str;
           default = "";
           example = "--listen 0.0.0.0:8776";
         };
-        package = mkPackageOption pkgs "radicle-node" {};
+        environment = mkOption {
+          type = attrsOf (nullOr (oneOf [str path package]));
+          default = {};
+        };
       };
       httpd = {
+        enable = mkEnableOption "Radicle HTTP Daemon";
+        package = mkPackageOption pkgs "radicle-httpd" {};
         args = mkOption {
           type = str;
           default = "--listen 127.0.0.1:8080";
         };
-        package = mkPackageOption pkgs "radicle-httpd" {};
+        environment = mkOption {
+          type = attrsOf (nullOr (oneOf [str path package]));
+          default = cfg.node.enable;
+        };
       };
     };
   };
 
-  config = mkIf cfg.enable {
+  config = mkIf (cfg.node.enable || cfg.httpd.enable) {
+    assertions = [
+      {
+        assertion = cfg.httpd.enable -> cfg.node.enable;
+        message = "`${opt.httpd.enable}` requires `${opt.node.enable}`, since `radicle-httpd` depends on `radicle-node`";
+      }
+    ];
     systemd.user = {
-      services = let
-        common = x:
-          mkMerge [
-            x
-            {
-              Unit = {
-                Documentation = ["https://radicle.xyz/guides"];
-                After = ["default.target"];
-                Requires = ["default.target"];
-              };
-              Service = {
-                Environment = mapAttrsToList (name: value: "${name}=${value}") cfg.environment;
-              };
-            }
-          ];
-      in {
-        "radicle-keys" = common {
+      services = {
+        "radicle-keys" = {
           Unit = {
             Description = "Radicle Keys";
             Documentation = [
               "man:rad(1)"
               "https://radicle.xyz/guides/user#come-into-being-from-the-elliptic-aether"
             ];
+            After = ["default.target"];
+            Requires = ["default.target"];
           };
           Service = {
             Type = "oneshot";
@@ -124,40 +123,44 @@ in {
             });
           };
         };
-        "radicle-httpd" = common {
-          Unit = {
-            Description = "Radicle HTTP Daemon";
-            Documentation = ["man:radicle-httpd(1)"];
-            After = ["radicle-node.service"];
-            Requires = ["radicle-node.service"];
-          };
-          Service = {
-            Slice = "session.slice";
-            RestartSec = "1";
-            ExecStart = "${getExe' cfg.httpd.package "radicle-httpd"} ${cfg.httpd.args}";
-            Environment = ["PATH=${getBin config.programs.git.package}/bin"];
-            KillMode = "process";
-            Restart = "always";
-          };
-        };
-        "radicle-node" = common {
+        "radicle-node" = mkIf cfg.node.enable {
           Unit = {
             Description = "Radicle Node";
-            Documentation = ["man:radicle-node(1)"];
             After = ["radicle-keys.service"];
             Requires = ["radicle-keys.service"];
+            Documentation = ["https://radicle.xyz/guides" "man:radicle-node(1)"];
           };
           Service = {
             Slice = "session.slice";
-            RestartSec = "3";
             ExecStart = "${getExe' cfg.node.package "radicle-node"} ${cfg.node.args}";
-            Environment = ["PATH=${getBin config.programs.git.package}/bin"];
+            Environment = (env cfg.node.environment) ++ ["PATH=${getBin config.programs.git.package}/bin"];
             KillMode = "process";
             Restart = "always";
+            RestartSec = "2";
+            RestartSteps = "100";
+            RestartDelayMaxSec = "1min";
+          };
+        };
+        "radicle-httpd" = mkIf cfg.httpd.enable {
+          Unit = {
+            Description = "Radicle HTTP Daemon";
+            After = ["radicle-node.service"];
+            Requires = ["radicle-node.service"];
+            Documentation = ["https://radicle.xyz/guides" "man:radicle-httpd(1)"];
+          };
+          Service = {
+            Slice = "session.slice";
+            ExecStart = "${getExe' cfg.httpd.package "radicle-httpd"} ${cfg.httpd.args}";
+            Environment = (env cfg.httpd.environment) ++ ["PATH=${getBin config.programs.git.package}/bin"];
+            KillMode = "process";
+            Restart = "always";
+            RestartSec = "4";
+            RestartSteps = "100";
+            RestartDelayMaxSec = "2min";
           };
         };
       };
-      sockets."radicle-node" = {
+      sockets."radicle-node" = mkIf cfg.node.enable {
         Unit = {
           Description = "Radicle Node Control Socket";
           Documentation = ["man:radicle-node(1)"];
