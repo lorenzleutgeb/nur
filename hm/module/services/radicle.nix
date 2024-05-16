@@ -34,8 +34,12 @@
 
   radicleHome = config.home.homeDirectory + "/.radicle";
 
-  env = mapAttrsToList (generators.mkKeyValueDefault {} "=");
+  gitPath = ["PATH=${getBin config.programs.git.package}/bin"];
+  env = attrs: (mapAttrsToList (generators.mkKeyValueDefault {} "=") attrs)
+    ++ gitPath;
 in {
+  meta.maintainers = with lib.maintainers; [ lorenzleutgeb ];
+
   options = {
     services.radicle = {
       node = {
@@ -133,7 +137,7 @@ in {
           Service = {
             Slice = "session.slice";
             ExecStart = "${getExe' cfg.node.package "radicle-node"} ${cfg.node.args}";
-            Environment = (env cfg.node.environment) ++ ["PATH=${getBin config.programs.git.package}/bin"];
+            Environment = env cfg.node.environment;
             KillMode = "process";
             Restart = "always";
             RestartSec = "2";
@@ -151,7 +155,7 @@ in {
           Service = {
             Slice = "session.slice";
             ExecStart = "${getExe' cfg.httpd.package "radicle-httpd"} ${cfg.httpd.args}";
-            Environment = (env cfg.httpd.environment) ++ ["PATH=${getBin config.programs.git.package}/bin"];
+            Environment = env cfg.httpd.environment;
             KillMode = "process";
             Restart = "always";
             RestartSec = "4";
