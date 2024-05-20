@@ -176,7 +176,7 @@
           ++ [
             (hmConfig ./hm "lorenz" name)
             {
-              system.stateVersion = "20.03";
+              system.stateVersion = "23.11";
               system.configurationRevision =
                 pkgs.lib.mkIf (self ? rev) self.rev;
               nix.registry = {

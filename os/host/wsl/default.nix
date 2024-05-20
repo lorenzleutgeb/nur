@@ -75,8 +75,6 @@ in {
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.lorenz.extraGroups = ["docker" "networkmanager"];
 
-  system.stateVersion = "20.03";
-
   nixpkgs.hostPlatform = "x86_64-linux";
 
   #nix.settings.substituters = ["https://0mqr.fluffy-ordinal.ts.net/cache/?trusted=true"];

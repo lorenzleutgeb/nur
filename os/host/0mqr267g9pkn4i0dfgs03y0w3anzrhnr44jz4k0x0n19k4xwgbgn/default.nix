@@ -22,6 +22,8 @@
     ./nfs.nix
     ./rsync.nix
     ./tor.nix
+    ./concourse.nix
+    ./caddy.nix
   ];
 
   # Use the systemd-boot EFI boot loader.
@@ -277,8 +279,6 @@
     "vboxusers"
   ];
 
-  system.stateVersion = "20.03";
-
   nixpkgs.hostPlatform = "x86_64-linux";
 
   security = {
@@ -328,5 +328,11 @@
     secrets = {
       "ssh/key".sopsFile = ./sops/ssh.yaml;
     };
+  };
+
+  systemd.services.nix-daemon.serviceConfig = {
+    MemoryHigh = "48G";
+    MemoryMax = "52G";
+    MemorySwapMax = "28G";
   };
 }

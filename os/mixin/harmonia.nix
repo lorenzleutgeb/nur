@@ -1,37 +1,19 @@
-{
-  config,
-  lib,
-  ...
-}: let
+{config, ...}: let
   port = "5000";
 in {
-  services.harmonia = {
-    enable = true;
-    settings.bind = "[::]:${port}";
+  services = {
+    harmonia = {
+      enable = true;
+      settings.bind = "[::]:${port}";
+    };
+    caddy = {
+      virtualHosts."cache.${config.services.tailscale.baseDomain}" = {
+        extraConfig = ''
+          reverse_proxy :${port}
+        '';
+      };
+    };
   };
 
   nix.settings.allowed-users = [config.systemd.services.harmonia.serviceConfig.User];
-
-  networking.firewall.allowedTCPPorts = [443];
-
-  services.tailscale.permitCertUid = config.services.caddy.user;
-
-  # For Caddy ≥ 2.8 use `file.*` replacements, see
-  # <https://github.com/caddyserver/caddy/pull/5463>
-  services.caddy = {
-    enable = true;
-    virtualHosts."${lib.tailscale.local}:443" = {
-      listenAddresses = ["[::]"];
-      extraConfig = ''
-        handle_path /cache/* {
-          reverse_proxy :${port}
-        }
-        tls {
-          dns cloudflare {env.CLOUDFLARE_API_TOKEN}
-          resolvers 1.1.1.1
-        }
-        encode zstd
-      '';
-    };
-  };
 }

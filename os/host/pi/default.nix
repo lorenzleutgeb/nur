@@ -80,8 +80,6 @@
     resolved.enable = true;
   };
 
-  system.stateVersion = "20.03";
-
   nixpkgs = {
     hostPlatform = "aarch64-linux";
     overlays = [

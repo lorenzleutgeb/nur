@@ -165,7 +165,6 @@ in {
     };
   };
 
-  system.stateVersion = "20.03";
   nixpkgs.hostPlatform = "x86_64-linux";
 
   programs.ssh.startAgent = true;
