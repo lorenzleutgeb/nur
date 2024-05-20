@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  config,
+  ...
+}: {
   imports = [./yubikey.nix ../scripts];
 
   # Let Home Manager install and manage itself.
@@ -28,5 +32,9 @@
 
     sessionPath = ["$HOME/bin"];
     packages = [pkgs.xdg-utils];
+
+    sessionVariables = {
+      XDG_RUNTIME_DIR = "/var/run/user/$UID";
+    };
   };
 }

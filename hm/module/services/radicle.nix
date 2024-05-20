@@ -22,6 +22,7 @@
   inherit
     (lib.types)
     attrsOf
+    bool
     nullOr
     oneOf
     package
@@ -35,10 +36,11 @@
   radicleHome = config.home.homeDirectory + "/.radicle";
 
   gitPath = ["PATH=${getBin config.programs.git.package}/bin"];
-  env = attrs: (mapAttrsToList (generators.mkKeyValueDefault {} "=") attrs)
+  env = attrs:
+    (mapAttrsToList (generators.mkKeyValueDefault {} "=") attrs)
     ++ gitPath;
 in {
-  meta.maintainers = with lib.maintainers; [ lorenzleutgeb ];
+  meta.maintainers = with lib.maintainers; [lorenzleutgeb];
 
   options = {
     services.radicle = {
@@ -54,6 +56,10 @@ in {
           type = attrsOf (nullOr (oneOf [str path package]));
           default = {};
         };
+        lazy = mkOption {
+          type = bool;
+          default = false;
+        };
       };
       httpd = {
         enable = mkEnableOption "Radicle HTTP Daemon";
@@ -64,7 +70,7 @@ in {
         };
         environment = mkOption {
           type = attrsOf (nullOr (oneOf [str path package]));
-          default = cfg.node.enable;
+          default = {};
         };
       };
     };
@@ -79,70 +85,44 @@ in {
     ];
     systemd.user = {
       services = {
-        "radicle-keys" = {
+        "radicle-node" =
+          mkIf cfg.node.enable
+          (let
+            keyFile = name: "${radicleHome}/keys/${name}";
+            keyPair = name: [(keyFile name) (keyFile (name + ".pub"))];
+            radicleKeyPair = keyPair "radicle";
+          in {
+            Unit = {
+              Description = "Radicle Node";
+              Documentation = ["https://radicle.xyz/guides" "man:radicle-node(1)"];
+              StopWhenUnneeded = cfg.node.lazy;
+              ConditionPathExists = radicleKeyPair;
+            };
+            Service = {
+              Slice = "session.slice";
+              ExecStart = "${getExe' cfg.node.package "radicle-node"} ${cfg.node.args}";
+              Environment = env cfg.node.environment;
+              KillMode = "process";
+              Restart = "no";
+              RestartSec = "2";
+              RestartSteps = "100";
+              RestartMaxDelaySec = "1min";
+            };
+          });
+        "radicle-node-proxy" = mkIf (cfg.node.enable && cfg.node.lazy) {
           Unit = {
-            Description = "Radicle Keys";
-            Documentation = [
-              "man:rad(1)"
-              "https://radicle.xyz/guides/user#come-into-being-from-the-elliptic-aether"
-            ];
-            After = ["default.target"];
-            Requires = ["default.target"];
+            Description = "Radicle Node Proxy";
+            BindsTo = ["radicle-node-proxy.socket" "radicle-node.service"];
+            After = ["radicle-node-proxy.socket" "radicle-node.service"];
           };
           Service = {
-            Type = "oneshot";
-            Slice = "background.slice";
-            ExecStart = getExe (pkgs.writeShellApplication {
-              name = "radicle-keys.sh";
-              runtimeInputs = [pkgs.coreutils];
-              text = let
-                keyFile = name: "${radicleHome}/keys/${name}";
-                keyPair = name: [(keyFile name) (keyFile (name + ".pub"))];
-                radicleKeyPair = keyPair "radicle";
-              in ''
-                echo testing
-                FILES=(${builtins.concatStringsSep " " radicleKeyPair})
-                if stat --terse "''${FILES[@]}"
-                then
-                  # Happy path, we're done!
-                  exit 0
-                fi
-
-                cat <<EOM
-                At least one of the following files does not exist, but they all should!
-
-                $(printf '  %s\n' "''${FILES[@]}")
-
-                In order for Radicle to work, please initialize by executing
-
-                  rad auth
-
-                or provisioning pre-existing keys manually, e.g.
-
-                  ln -s ~/.ssh/id_ed25519     ${keyFile "radicle"}
-                  ln -s ~/.ssh/id_ed25519.pub ${keyFile "radicle.pub"}
-                EOM
-                exit 1
-              '';
-            });
-          };
-        };
-        "radicle-node" = mkIf cfg.node.enable {
-          Unit = {
-            Description = "Radicle Node";
-            After = ["radicle-keys.service"];
-            Requires = ["radicle-keys.service"];
-            Documentation = ["https://radicle.xyz/guides" "man:radicle-node(1)"];
-          };
-          Service = {
-            Slice = "session.slice";
-            ExecStart = "${getExe' cfg.node.package "radicle-node"} ${cfg.node.args}";
-            Environment = env cfg.node.environment;
-            KillMode = "process";
-            Restart = "always";
-            RestartSec = "2";
-            RestartSteps = "100";
-            RestartDelayMaxSec = "1min";
+            Environment = ["SYSTEMD_LOG_LEVEL=debug"];
+            ExecSearchPath = "${pkgs.systemd}/lib/systemd";
+            ExecStart = "systemd-socket-proxyd --exit-idle-time=30m %t/radicle/proxy.sock";
+            PrivateTmp = "yes";
+            PrivateNetwork = "yes";
+            RuntimeDirectory = "radicle";
+            RuntimeDirectoryPreserve = "yes";
           };
         };
         "radicle-httpd" = mkIf cfg.httpd.enable {
@@ -160,19 +140,43 @@ in {
             Restart = "always";
             RestartSec = "4";
             RestartSteps = "100";
-            RestartDelayMaxSec = "2min";
+            RestartMaxDelaySec = "2min";
           };
         };
       };
-      sockets."radicle-node" = mkIf cfg.node.enable {
-        Unit = {
-          Description = "Radicle Node Control Socket";
-          Documentation = ["man:radicle-node(1)"];
+      sockets = mkIf (cfg.node.enable && cfg.node.lazy) {
+        "radicle-node-control" = {
+          Unit = {
+            Description = "Radicle Node Control Socket";
+            Documentation = ["man:radicle-node(1)"];
+          };
+          Socket = {
+            Service = "radicle-node-proxy.service";
+            ListenStream = "%t/radicle/control.sock";
+            RuntimeDirectory = "radicle";
+            RuntimeDirectoryPreserve = "yes";
+          };
+          Install.WantedBy = ["sockets.target"];
         };
-        Socket.ListenStream = "${radicleHome}/node/control.sock";
-        Install.WantedBy = ["sockets.target"];
+        "radicle-node-proxy" = {
+          Unit = {
+            Description = "Radicle Node Proxy Socket";
+            Documentation = ["man:systemd-socket-proxyd(8)"];
+          };
+          Socket = {
+            Service = "radicle-node.service";
+            FileDescriptorName = "control";
+            ListenStream = "%t/radicle/proxy.sock";
+            RuntimeDirectory = "radicle";
+            RuntimeDirectoryPreserve = "yes";
+          };
+          Install.WantedBy = ["sockets.target"];
+        };
       };
     };
     programs.radicle.enable = mkDefault true;
+    home.sessionVariables = mkIf (cfg.node.enable && cfg.node.lazy) {
+      RAD_SOCKET = (config.sessionVariables.XDG_RUNTIME_DIR or "/run/user/$UID") + "/radicle/control.sock";
+    };
   };
 }

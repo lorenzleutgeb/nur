@@ -26,11 +26,17 @@ in {
             else "seed.leutgeb.xyz"
           }:8776"
         ];
-      node.tor = lib.mkIf tor.enable {
+      node.onion = lib.mkIf tor.enable {
         mode = "proxy";
         address = with tor.socksListenAddress; "${addr}:${builtins.toString port}";
       };
     };
   };
-  services.radicle.enable = true;
+  services.radicle = {
+    node = {
+      enable = true;
+      lazy = true;
+    };
+    httpd.enable = true;
+  };
 }
