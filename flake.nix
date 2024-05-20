@@ -68,7 +68,6 @@
       url = "github:cachix/pre-commit-hooks.nix";
       inputs = {
         flake-compat.follows = "compat";
-        flake-utils.follows = "utils";
         nixpkgs.follows = "nixpkgs";
         nixpkgs-stable.follows = "nixpkgs-stable";
       };
