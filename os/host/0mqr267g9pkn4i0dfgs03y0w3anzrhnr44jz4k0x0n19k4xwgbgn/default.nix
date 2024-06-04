@@ -10,7 +10,6 @@
     ../../mixin/harmonia.nix
     ../../mixin/kmscon.nix
     (import ../../mixin/lorenz.nix {})
-    ../../mixin/mkcert
     ../../mixin/nix.nix
     ../../mixin/progressive.nix
     ../../mixin/sops.nix

@@ -4,7 +4,7 @@
     # This looks redundant, but actually is nice.
     # Allows to model "stable" vs. "unstable" vs. "don't care".
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-23.11";
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.05";
     nixpkgs.follows = "nixpkgs-stable";
 
     compat.url = "github:edolstra/flake-compat";
@@ -179,13 +179,6 @@
               system.configurationRevision =
                 pkgs.lib.mkIf (self ? rev) self.rev;
               nix.registry = {
-                nixpkgs = {
-                  from = {
-                    id = "nixpkgs";
-                    type = "indirect";
-                  };
-                  flake = nixpkgs;
-                };
                 nixpkgs-unstable = {
                   from = {
                     id = "nixpkgs-unstable";
