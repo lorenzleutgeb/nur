@@ -95,7 +95,6 @@ with builtins; {
     yubikey-personalization
     yq
     zip
-    zindex
     zola
   ];
 }

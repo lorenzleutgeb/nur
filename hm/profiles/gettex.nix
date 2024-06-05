@@ -6,7 +6,7 @@
 }: let
   pkg = pkgs.gettex;
 in {
-  home.packages = [pkg];
+  home.packages = [pkg pkgs.zindex];
 
   systemd.user = {
     timers."gettex" = {
