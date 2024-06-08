@@ -131,14 +131,14 @@ in {
           handle_path /* {
             reverse_proxy :${port}
           }
-          tls {
-            dns cloudflare {env.CLOUDFLARE_API_TOKEN}
-            resolvers 1.1.1.1
-          }
           encode zstd
         '';
       };
-      virtualHosts."git.leutgeb.xyz".extraConfig = cgitReverseProxy;
+      virtualHosts."git.leutgeb.xyz".extraConfig =
+        cgitReverseProxy
+        + ''
+          header Onion-Location http://${onion}{path}
+        '';
       virtualHosts."http://${onion}".extraConfig = cgitReverseProxy;
     };
   };

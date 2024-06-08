@@ -1,0 +1,64 @@
+$TTL 3600
+
+@	IN	SOA	ns1 lorenz 2024060809 14400 3600 1209600 3600
+
+	IN	NS	ns1
+
+	IN	NS	ns1.he.net.
+	IN	NS	ns2.he.net.
+	IN	NS	ns3.he.net.
+	IN	NS	ns4.he.net.
+	IN	NS	ns5.he.net.
+
+	IN	NS	ns1.afraid.org.
+	IN	NS	ns2.afraid.org.
+
+	IN	NS	puck.nether.net.
+
+	IN	NS	ns0.1984.is
+	IN	NS	ns1.1984.is
+	IN	NS	ns2.1984.is
+
+	IN	CAA	0 issue "letsencrypt.org"
+
+	IN	A	5.45.105.177
+	IN	AAAA	2a03:4000:6:10ea:54b5:3dff:fe79:b5b9
+
+$TTL 600
+
+;; Nameservers
+ns1			IN	A	5.45.105.177
+			IN	AAAA	2a03:4000:6:10ea:54b5:3dff:fe79:b5b9
+
+;; A Records
+nc			IN	A	5.45.105.177
+			IN	AAAA	2a03:4000:6:10ea:54b5:3dff:fe79:b5b9
+
+lorenz			IN	CNAME	nc
+pad			IN	CNAME	nc
+www			IN	CNAME	nc
+
+pretix			IN	CNAME	leutgeb.cname.pretix.eu.
+
+;; BEGIN Migadu
+$TTL 3000
+
+@			IN	MX	10 aspmx1.migadu.com.
+@			IN	MX	20 aspmx2.migadu.com.
+
+@			IN	TXT	"hosted-email-verify=kyya0bkg"
+@			IN	TXT	"v=spf1 include:spf.migadu.com -all"
+_dmarc			IN	TXT	"v=DMARC1; p=quarantine;"
+_smtp._tls		IN	TXT	"v=TLSRPTv1; rua=mailto:tls-reports@leutgeb.wien"
+
+_autodiscover._tcp	IN	SRV	0 1 443 autodiscover.migadu.com.
+_imaps._tcp		IN	SRV	0 1 993 imap.migadu.com.
+_pop3s._tcp		IN	SRV	0 1 995 pop.migadu.com.
+_submissions._tcp	IN	SRV	0 1 465 smtp.migadu.com.
+
+key1._domainkey		IN	CNAME	key1.leutgeb.wien._domainkey.migadu.com.
+key2._domainkey		IN	CNAME	key2.leutgeb.wien._domainkey.migadu.com.
+key3._domainkey		IN	CNAME	key3.leutgeb.wien._domainkey.migadu.com.
+
+autoconfig		IN	CNAME	autoconfig.migadu.com.
+;; END Migadu

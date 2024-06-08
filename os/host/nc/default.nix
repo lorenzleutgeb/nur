@@ -24,6 +24,7 @@ in {
     ./caddy.nix
     ./git.nix
     ./headscale.nix
+    ./knot.nix
     ./nfs.nix
     ./nextcloud.nix
     ./tor.nix
