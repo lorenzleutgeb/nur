@@ -28,6 +28,7 @@ in {
     ./nfs.nix
     ./nextcloud.nix
     ./tor.nix
+    ./unifi.nix
   ];
 
   services.nginx.enable = false;
