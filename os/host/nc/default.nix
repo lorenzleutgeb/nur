@@ -25,6 +25,7 @@ in {
     ./git.nix
     ./headscale.nix
     ./knot.nix
+    ./mta-sts.nix
     ./nfs.nix
     ./nextcloud.nix
     ./tor.nix

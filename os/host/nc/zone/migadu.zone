@@ -13,3 +13,5 @@ _pop3s._tcp		SRV	0 1 995 pop.migadu.com.
 _submissions._tcp	SRV	0 1 465 smtp.migadu.com.
 
 autoconfig		CNAME	autoconfig.migadu.com.
+
+mta-sts			CNAME	nc.leutgeb.xyz
