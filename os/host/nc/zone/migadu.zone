@@ -1,0 +1,15 @@
+@			MX	10 aspmx1.migadu.com.
+			MX	20 aspmx2.migadu.com.
+
+			TXT	"v=spf1 include:spf.migadu.com -all"
+
+_smtp._tls		TXT	"v=TLSRPTv1; rua=mailto:tls-reports@leutgeb.xyz"
+
+_dmarc			TXT	"v=DMARC1; p=quarantine;"
+
+_autodiscover._tcp	SRV	0 1 443 autodiscover.migadu.com.
+_imaps._tcp		SRV	0 1 993 imap.migadu.com.
+_pop3s._tcp		SRV	0 1 995 pop.migadu.com.
+_submissions._tcp	SRV	0 1 465 smtp.migadu.com.
+
+autoconfig		CNAME	autoconfig.migadu.com.

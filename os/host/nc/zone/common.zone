@@ -1,0 +1,18 @@
+$TTL 3600
+
+$INCLUDE secondaries.zone
+
+$INCLUDE migadu.zone
+
+@	CAA	0 issue "letsencrypt.org"
+
+	NS	ns1
+
+	A	5.45.105.177
+	AAAA	2a03:4000:6:10ea:54b5:3dff:fe79:b5b9
+
+ns1	A	5.45.105.177
+	AAAA	2a03:4000:6:10ea:54b5:3dff:fe79:b5b9
+
+nc	A	5.45.105.177
+	AAAA	2a03:4000:6:10ea:54b5:3dff:fe79:b5b9
