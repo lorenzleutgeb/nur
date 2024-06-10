@@ -8,10 +8,7 @@
     nixpkgs.follows = "nixpkgs-stable";
 
     compat.url = "github:edolstra/flake-compat";
-    hardware = {
-      url = "github:NixOS/nixos-hardware";
-      flake = false;
-    };
+    hardware.url = "github:NixOS/nixos-hardware";
     hm = {
       url = "github:nix-community/home-manager/release-24.05";
       inputs.nixpkgs.follows = "nixpkgs";
