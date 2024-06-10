@@ -18,7 +18,7 @@ setopt HIST_SAVE_NO_DUPS         # Do not write duplicate entries in the history
 setopt HIST_REDUCE_BLANKS        # Remove superfluous blanks before recording entry.
 setopt HIST_VERIFY               # Do not execute immediately upon history expansion.
 
-PROMPT="%# "
+PROMPT="$ "
 
 #autoload -Uz add-zsh-hook
 #add-zsh-hook precmd histdb-update-outcome
