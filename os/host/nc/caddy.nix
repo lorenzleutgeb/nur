@@ -21,6 +21,13 @@
           file_server
         '';
       };
+      "lorenz.leutgeb.xyz" = {
+        serverAliases = ["http://lorenz.leutgeb.xyz"]; # For testing.
+        extraConfig = ''
+          root * /var/www/lorenz.leutgeb.xyz
+          file_server
+        '';
+      };
       "pad.leutgeb.wien" = {
         extraConfig = ''
           reverse_proxy 127.0.0.1:${builtins.toString config.services.hedgedoc.settings.port}
