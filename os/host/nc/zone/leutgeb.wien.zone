@@ -1,6 +1,6 @@
 $TTL 3600
 
-@ IN			SOA	ns1 lorenz 2024061101 14400 3600 1209600 3600
+@ IN			SOA	ns1 lorenz 2024061104 14400 3600 1209600 3600
 
 $INCLUDE common.zone
 
@@ -9,10 +9,6 @@ $INCLUDE common.zone
 key1._domainkey		CNAME	key1.leutgeb.wien._domainkey.migadu.com.
 key2._domainkey		CNAME	key2.leutgeb.wien._domainkey.migadu.com.
 key3._domainkey		CNAME	key3.leutgeb.wien._domainkey.migadu.com.
-
-lorenz			CNAME	nc
-pad			CNAME	nc
-www			CNAME	nc
 
 pretix			CNAME	leutgeb.cname.pretix.eu.
 
