@@ -253,6 +253,13 @@
             src = ./.;
             hooks = {
               alejandra.enable = true;
+              zonecheck = {
+                enable = true;
+                name = "zonecheck";
+                description = "Check DNS zones";
+                files = "\\.zone$";
+                entry = "${lib.getExe' pkgs.knot-dns "kzonecheck"} --verbose";
+              };
             };
           };
         }
