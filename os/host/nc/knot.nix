@@ -60,7 +60,11 @@ in {
         {
           id = "slave.dns.he.net";
           address = ["2001:470:600::2" "216.218.133.2"];
-          key = "1FCTMVl4ITuOsxyYmWFymxz8VhXMzzZM";
+
+          # NOTE: Sadly does not work.
+          # ACL, allowed, action query, remote …, key 1fc…zzm.
+          # TSIG, key '1fc…zzm.', verification failed 'BADSIG'
+          #key = "1FCTMVl4ITuOsxyYmWFymxz8VhXMzzZM";
         }
         {
           id = "ns1.he.net";
@@ -68,11 +72,21 @@ in {
         }
         {
           id = "ns2.afraid.org";
-          address = ["2001:1850:1:5:800::6b" "69.65.50.192"];
+          address = [
+            "69.65.50.192"
+
+            # NOTE: afraid.org seems to only pull and allow our A, but not AAAA records.
+            #"2001:1850:1:5:800::6b"
+          ];
         }
         {
           id = "puck.nether.net";
-          address = ["2602:fe55:5::5" "204.42.254.5"];
+          address = [
+            "2602:fe55:5::5"
+
+            # NOTE: Only our IPv6 is allowlisted on their end.
+            #"204.42.254.5"
+          ];
         }
         {
           id = "1984.is";
@@ -156,7 +170,10 @@ in {
         {
           id = "default";
           semantic-checks = "on";
-          global-module = ["mod-rrl/default" "mod-dnsproxy/default"];
+          global-module = [
+            "mod-rrl/default"
+            #"mod-dnsproxy/default"
+          ];
           zonefile-load = "difference-no-serial";
           zonefile-sync = "-1";
           journal-content = "all";
@@ -170,12 +187,14 @@ in {
       ];
 
       zone = let
+        path = ./. + "/zone";
         primary = domain: {
           inherit domain;
-          file = ./. + "/zone/${domain}.zone";
+          file = "${path}/${domain}.zone";
           template = "primary";
         };
       in [
+        (primary "falsum.org")
         (primary "leutgeb.xyz")
         (primary "leutgeb.wien")
       ];

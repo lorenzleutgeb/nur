@@ -1,17 +1,28 @@
 @			MX	10 aspmx1.migadu.com.
 			MX	20 aspmx2.migadu.com.
 
-			TXT	"v=spf1 include:spf.migadu.com -all"
+; https://datatracker.ietf.org/doc/rfc7208/
+@			TXT	"v=spf1 include:spf.migadu.com -all"
 
+; https://datatracker.ietf.org/doc/rfc7489/
+_dmarc			TXT	"v=DMARC1; p=quarantine; rua=mailto:dmarc-reports@leutgeb.xyz"
+
+; https://datatracker.ietf.org/doc/rfc8461/
+mta-sts			CNAME	www
+_mta-sts		TXT	"v=STSv1; id=2024060913"
+
+; https://datatracker.ietf.org/doc/rfc8460/
 _smtp._tls		TXT	"v=TLSRPTv1; rua=mailto:tls-reports@leutgeb.xyz"
 
-_dmarc			TXT	"v=DMARC1; p=quarantine;"
-
-_autodiscover._tcp	SRV	0 1 443 autodiscover.migadu.com.
+; https://datatracker.ietf.org/doc/rfc6186/
+; https://datatracker.ietf.org/doc/rfc8314/
+_submissions._tcp	SRV	0 1 465 smtp.migadu.com.
 _imaps._tcp		SRV	0 1 993 imap.migadu.com.
 _pop3s._tcp		SRV	0 1 995 pop.migadu.com.
-_submissions._tcp	SRV	0 1 465 smtp.migadu.com.
+
+_smtp._tcp		SRV	0 1 25 aspmx1.migadu.com.
+_smtp._tcp		SRV	0 1 25 aspmx2.migadu.com.
+
+_autodiscover._tcp	SRV	0 1 443 autodiscover.migadu.com.
 
 autoconfig		CNAME	autoconfig.migadu.com.
-
-mta-sts			CNAME	nc.leutgeb.xyz

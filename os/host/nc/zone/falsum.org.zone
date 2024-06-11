@@ -1,0 +1,13 @@
+$TTL 3600
+
+@ IN			SOA	ns1 lorenz\.leutgeb 2024061101 14400 3600 1209600 3600
+
+$INCLUDE common.zone
+
+@			TXT	"hosted-email-verify=xqslfexe"
+
+key1._domainkey		CNAME	key1.falsum.org._domainkey.migadu.com.
+key2._domainkey		CNAME	key2.falsum.org._domainkey.migadu.com.
+key3._domainkey		CNAME	key3.falsum.org._domainkey.migadu.com.
+
+_keybase		TXT	"keybase-site-verification=u-3Yei2E3-ELYHtxX6MB-I8oh4OhnmljR0mOsf1w5OA"

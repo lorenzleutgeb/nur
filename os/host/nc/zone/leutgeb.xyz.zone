@@ -1,6 +1,6 @@
 $TTL 3600
 
-@ IN			SOA	ns1 lorenz 2024060809 14400 3600 1209600 3600
+@ IN			SOA	ns1 lorenz 2024061101 14400 3600 1209600 3600
 
 $INCLUDE common.zone
 
@@ -18,7 +18,7 @@ cloud			CNAME	nc
 git			CNAME	nc
 
 ; Lorenz
-lorenz			CNAME	c.storage.googleapis.com.
+lorenz			CNAME	nc
 
 ; Unifi
 portal			CNAME	nc
@@ -30,8 +30,5 @@ radicle			CNAME	nc
 radicle-nix		CNAME	nc
 sourcegraph		CNAME	nc
 
-; TXT Records (mostly verification)
-; _discord.lorenz	TXT	"dh=dbfb5e1781f4d8aa121ce1c805e85d978b294e5b"
-; _keybase		TXT	"keybase-site-verification=u-3Yei2E3-ELYHtxX6MB-I8oh4OhnmljR0mOsf1w5OA"
-; lorenz		TXT	"dnslink=/ipfs/QmQnVp1YpygyiXN4gdrxo3ZtYL6BXDeUWHQB7uSPSbFVJy"
-; lorenz		TXT	"google-site-verification=i_kq9GWZu-6XJft2DqcHFp8_jhLj1PJ0vqMsldanxYA"
+_discord.lorenz		TXT	"dh=dbfb5e1781f4d8aa121ce1c805e85d978b294e5b"
+_keybase		TXT	"keybase-site-verification=u-3Yei2E3-ELYHtxX6MB-I8oh4OhnmljR0mOsf1w5OA"
