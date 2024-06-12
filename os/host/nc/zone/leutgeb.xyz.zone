@@ -1,14 +1,16 @@
 $TTL 3600
 
-@ IN			SOA	ns1 lorenz 2024061104 14400 3600 1209600 3600
+@ IN			SOA	ns1 lorenz 2024061301 14400 3600 1209600 3600
 
 $INCLUDE common.zone
 
 @			TXT	"hosted-email-verify=3g350uwg"
+
+lorenz			CNAME	nc
 
 key1._domainkey		CNAME	key1.leutgeb.xyz._domainkey.migadu.com.
 key2._domainkey		CNAME	key2.leutgeb.xyz._domainkey.migadu.com.
 key3._domainkey		CNAME	key3.leutgeb.xyz._domainkey.migadu.com.
 
 _discord.lorenz		TXT	"dh=dbfb5e1781f4d8aa121ce1c805e85d978b294e5b"
-_keybase		TXT	"keybase-site-verification=u-3Yei2E3-ELYHtxX6MB-I8oh4OhnmljR0mOsf1w5OA"
+_keybase.lorenz		TXT	"keybase-site-verification=u-3Yei2E3-ELYHtxX6MB-I8oh4OhnmljR0mOsf1w5OA"
