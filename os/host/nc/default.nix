@@ -123,8 +123,6 @@ in {
   networking.firewall.allowedTCPPorts = [
     22 # sshd
     #25 # postfix (SMTP)
-    80
-    443
     #465 # dovecot/postfix ? (SMTP over TLS)
     #993 # dovecot (IMAP over TLS)
     8384 # syncthing HTTP
@@ -135,10 +133,6 @@ in {
 
   services = {
     fail2ban.enable = true;
-    hedgedoc = {
-      enable = true;
-      settings.domain = "pad.leutgeb.wien";
-    };
     qemuGuest.enable = true;
     openssh = {
       enable = true;
@@ -165,8 +159,6 @@ in {
     mutableUsers = false;
     users = {
       lorenz.hashedPassword = "$6$rJZSLnQH1hInB93$lfi4c2zxQbSJV7H9T9lrjOj6WIDhSEqP5FyjMinEE44j81E1l57hF6Epyxb02EbcWqDT9eYbyo4dBTAwewBgQ/";
-
-      caddy.extraGroups = ["acme"];
     };
   };
 
