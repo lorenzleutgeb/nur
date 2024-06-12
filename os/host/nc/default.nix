@@ -31,6 +31,7 @@ in {
     ./nullmailer.nix
     ./tor.nix
     ./unifi.nix
+    ./vaultwarden.nix
   ];
 
   services.nginx.enable = false;
