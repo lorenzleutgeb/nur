@@ -28,6 +28,7 @@ in {
     ./mta-sts.nix
     ./nfs.nix
     ./nextcloud.nix
+    ./nullmailer.nix
     ./tor.nix
     ./unifi.nix
   ];

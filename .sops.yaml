@@ -14,7 +14,7 @@ creation_rules:
     - age:
       - *lorenz
       - *wsl
-  - path_regex: os/host/nc/sops/[^/]+\.(bin|json|yaml)$
+  - path_regex: os/host/nc/sops
     key_groups:
     - age:
       - *lorenz
