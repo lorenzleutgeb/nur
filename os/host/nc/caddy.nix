@@ -31,6 +31,7 @@ in {
       }
       // (static "lorenz.leutgeb.wien")
       // (static "lorenz.leutgeb.xyz")
-      // (static "falsum.org");
+      // (static "falsum.org")
+      // (static "xn--sfest-lqa6r.live");
   };
 }
