@@ -46,7 +46,8 @@ $TTL 3000
 @			IN	MX	10 aspmx1.migadu.com.
 @			IN	MX	20 aspmx2.migadu.com.
 
-@			IN	TXT	"hosted-email-verify=kyya0bkg"
+@			IN	TXT	"hosted-email-verify=ko4zocdh"
+
 @			IN	TXT	"v=spf1 include:spf.migadu.com -all"
 _dmarc			IN	TXT	"v=DMARC1; p=quarantine;"
 _smtp._tls		IN	TXT	"v=TLSRPTv1; rua=mailto:tls-reports@leutgeb.wien"
