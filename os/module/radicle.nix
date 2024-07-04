@@ -60,10 +60,6 @@ in {
     services.radicle = {
       enable = mkEnableOption "Radicle Seed Node";
       package = mkPackageOption pkgs "radicle-full" {};
-      keyFile = mkOption {
-        type = str;
-        default = "/run/secrets/ssh/key";
-      };
       environment = mkOption {
         type = attrsOf (nullOr (oneOf [str path package]));
         default = {
@@ -79,6 +75,10 @@ in {
         args = mkOption {
           type = str;
           default = "--listen 0.0.0.0:8776 --force";
+        };
+        keyFile = mkOption {
+          type = str;
+          default = "/run/secrets/ssh/key";
         };
         package = mkPackageOption pkgs "radicle-node" {};
       };
@@ -190,14 +190,27 @@ in {
         ];
         serviceConfig = {
           RestartSec = "3";
-          LoadCredential = ["radicle:${cfg.keyFile}"];
+          LoadCredential = ["radicle:${cfg.node.keyFile}"];
           ExecStartPre = "${getExe' pkgs.coreutils "ln"} --symbolic --force \${CREDENTIALS_DIRECTORY}/radicle \${STATE_DIRECTORY}/keys/radicle";
           ExecStart = "${getBin cfg.node.package}/bin/radicle-node --config /etc/${config.environment.etc."radicle/${configFile.name}".target} ${cfg.node.args}";
         };
       };
+      /*
+           "radicle-keys" = {
+             description = "Radicle Node Key Setup";
+      serviceConfig = {
+        Type = "oneshot";
+      };
+      script = ''
+      '';
+           };
+      */
     };
 
-    environment.etc."radicle/${configFile.name}".source = configFile.path;
+    environment = {
+      etc."radicle/${configFile.name}".source = configFile.path;
+      systemPackages = [cfg.cli.package];
+    };
 
     users.users.radicle = {
       isSystemUser = true;

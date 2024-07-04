@@ -119,9 +119,16 @@ in {
       };
     };
     radicle = {
-      enable = true;
+      enable = false;
+      node.keyFile = "/etc/ssh/ssh_host_ed25519_key";
       httpd.args = "--listen 127.0.0.1:${port}";
-      settings.node.alias = "leutgeb.xyz";
+      settings.node = {
+        alias = "leutgeb.xyz";
+        externalAddresses = [
+          "seed.leutgeb.xyz:8776"
+          "${onion}:8776"
+        ];
+      };
     };
     caddy = {
       virtualHosts."seed.leutgeb.xyz" = {

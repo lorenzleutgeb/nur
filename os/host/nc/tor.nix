@@ -11,9 +11,6 @@
           {port = 8776;}
           {port = 80;}
         ];
-        "http".map = [
-          {port = 80;}
-        ];
       };
     };
     settings = {
