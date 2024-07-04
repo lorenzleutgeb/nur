@@ -206,6 +206,7 @@ in {
           (primary "falsum.org")
           (primary "leutgeb.xyz")
           (primary "leutgeb.wien")
+          (primary "xn--sfest-lqa6r.live")
         ];
       };
     };
