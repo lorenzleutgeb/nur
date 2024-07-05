@@ -1,11 +1,11 @@
 $TTL 3600
 
-@ IN			SOA	ns1.leutgeb.xyz. lorenz 2024061301 14400 3600 1209600 3600
+@			SOA	ns1 lorenz 2024070501 14400 3600 1209600 3600
 
 $INCLUDE common.zone
 
-@			TXT	"hosted-email-verify=7y7xi0v9"
+@			TXT	"hosted-email-verify=a4goqbb1"
 
-key1._domainkey		CNAME	key1.xn--sfest-lqa6r.pii.at._domainkey.migadu.com.
-key2._domainkey		CNAME	key2.xn--sfest-lqa6r.pii.at._domainkey.migadu.com.
-key3._domainkey		CNAME	key3.xn--sfest-lqa6r.pii.at._domainkey.migadu.com.
+key1._domainkey		CNAME	key1.xn--sfest-lqa6r.live._domainkey.migadu.com.
+key2._domainkey		CNAME	key2.xn--sfest-lqa6r.live._domainkey.migadu.com.
+key3._domainkey		CNAME	key3.xn--sfest-lqa6r.live._domainkey.migadu.com.
