@@ -35,8 +35,8 @@ in {
   services.radicle = {
     node = {
       enable = true;
-      lazy = true;
+      #lazy = true;
     };
-    httpd.enable = true;
+    #httpd.enable = true;
   };
 }
