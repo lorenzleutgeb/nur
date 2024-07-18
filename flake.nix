@@ -53,7 +53,7 @@
       };
     };
     radicle = {
-      url = "github:lorenzleutgeb/heartwood/v1.0.0-rc.9";
+      url = "github:lorenzleutgeb/heartwood/v1.0.0-rc.13";
       inputs = {
         flake-utils.follows = "utils";
         nixpkgs.follows = "nixpkgs";

@@ -203,16 +203,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1715867234,
-        "narHash": "sha256-GFltwKc6madTJWPTeAeslmFffHtixR0Dxd+3hAnHvz0=",
+        "lastModified": 1721310438,
+        "narHash": "sha256-6bJcJfNIe9idgQ/P5kYMklp9gLwkO8aXm5gfWkafScM=",
         "owner": "lorenzleutgeb",
         "repo": "heartwood",
-        "rev": "d56d619f5601ba456c7bb517be96a1418743cf9e",
+        "rev": "1848c2b85d1bb9a12531b3f31a59e8b2958917a2",
         "type": "github"
       },
       "original": {
         "owner": "lorenzleutgeb",
-        "ref": "v1.0.0-rc.9",
+        "ref": "v1.0.0-rc.13",
         "repo": "heartwood",
         "type": "github"
       }
