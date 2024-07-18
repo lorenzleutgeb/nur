@@ -124,8 +124,6 @@ in {
         };
       };
 
-      output = {"*" = {"background" = "~/Pictures/nix-color.png fill";};};
-
       # Idea for workspaces:
       #   1 ?
       #   2 Messaging    Thunderbird, Skype, Signal, Zoom
