@@ -30,8 +30,10 @@ in {
     ./nextcloud.nix
     ./nullmailer.nix
     ./tor.nix
+    ./frigate.nix
     ./unifi.nix
     ./vaultwarden.nix
+    ./wireguard.nix
   ];
 
   services.nginx.enable = false;

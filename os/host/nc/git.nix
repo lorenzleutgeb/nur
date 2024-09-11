@@ -6,7 +6,7 @@
   ...
 }: let
   inherit (lib) concatStringsSep mapAttrsToList optionalString concatStrings;
-  port = "5001";
+  port = "5002";
 
   cgitrcLine = name: value: "${name}=${
     if value == true
