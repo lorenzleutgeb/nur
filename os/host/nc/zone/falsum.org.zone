@@ -1,6 +1,6 @@
 $TTL 3600
 
-@			SOA	ns1 lorenz\.leutgeb 2024070501 14400 3600 1209600 3600
+@			SOA	ns1 lorenz\.leutgeb 2024091001 14400 3600 1209600 3600
 
 $INCLUDE common.zone
 

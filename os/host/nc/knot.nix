@@ -78,7 +78,11 @@ in {
           }
           {
             id = "ns1.he.net";
-            address = ["2001:470:100::2" "216.218.130.2"];
+            address = [
+              # NOTE: Looks like ns1.he.net prefers to receive zone updates via IPv4?
+              # "2001:470:100::2"
+              "216.218.130.2"
+            ];
           }
           {
             id = "ns2.afraid.org";
@@ -197,16 +201,23 @@ in {
         ];
 
         zone = let
-          primary = domain: {
-            inherit domain;
-            file = "${path}/${domain}.zone";
-            template = "primary";
-          };
+          primary = {domain, ...} @ args:
+            {
+              file = "${path}/${domain}.zone";
+              template = "primary";
+            }
+            // args;
         in [
-          (primary "falsum.org")
-          (primary "leutgeb.xyz")
-          (primary "leutgeb.wien")
-          (primary "xn--sfest-lqa6r.live")
+          (primary {
+            domain = "falsum.org";
+            dnssec-signing = true;
+          })
+          (primary {
+            domain = "leutgeb.xyz";
+            dnssec-signing = true;
+          })
+          (primary {domain = "leutgeb.wien";})
+          (primary {domain = "xn--sfest-lqa6r.live";})
         ];
       };
     };

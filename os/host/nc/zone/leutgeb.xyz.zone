@@ -1,6 +1,6 @@
 $TTL 360
 
-@ IN			SOA	ns1 lorenz 2024070501 14400 3600 1209600 3600
+@ IN			SOA	ns1 lorenz 2024091001 14400 3600 1209600 3600
 
 $INCLUDE common.zone
 
@@ -11,6 +11,10 @@ e			CNAME	viuyg7910fd1t4dq.myfritz.net.
 key1._domainkey		CNAME	key1.leutgeb.xyz._domainkey.migadu.com.
 key2._domainkey		CNAME	key2.leutgeb.xyz._domainkey.migadu.com.
 key3._domainkey		CNAME	key3.leutgeb.xyz._domainkey.migadu.com.
+
+
+lorenz			A	5.45.105.177
+			AAAA	2a03:4000:6:10ea:54b5:3dff:fe79:b5b9
 
 _discord.lorenz		TXT	"dh=dbfb5e1781f4d8aa121ce1c805e85d978b294e5b"
 _keybase		TXT	"keybase-site-verification=u-3Yei2E3-ELYHtxX6MB-I8oh4OhnmljR0mOsf1w5OA"
