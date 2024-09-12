@@ -53,7 +53,7 @@
       };
     };
     radicle = {
-      url = "github:lorenzleutgeb/heartwood/v1.0.0-rc.13";
+      url = "github:lorenzleutgeb/heartwood/v1.0.0";
       inputs = {
         flake-utils.follows = "utils";
         nixpkgs.follows = "nixpkgs";
@@ -107,7 +107,6 @@
         nixpkgs.nixosModules.notDetected
         hm.nixosModules.home-manager
         sops.nixosModules.sops
-        wsl.nixosModules.wsl
       ];
       self = attrValues self.nixosModules;
     };
@@ -169,6 +168,7 @@
         };
         modules =
           modules.input
+          ++ (lib.optional (name == "wsl") wsl.nixosModules.wsl) # https://github.com/nix-community/NixOS-WSL/pull/503/commits/ffdae0d9a6bb43f859c36d90091a85022fbcb5ce#diff-b6fcf40cf4716be824c72dac70c148d5664b3414f76a7a4433ac5573543523beR2
           ++ [
             (hmConfig ./hm "lorenz" name)
             {
