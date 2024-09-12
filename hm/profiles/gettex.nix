@@ -15,10 +15,19 @@ in {
       Install.WantedBy = ["timers.target"];
     };
     services."gettex" = {
-      Unit.Description = "gettex Fetch";
+      Unit.Description = "gettex";
       Service = {
         Type = "oneshot";
-        ExecStart = "${lib.getExe pkg} fetch";
+        ExecStart = lib.getExe (pkgs.writeShellApplication rec {
+          name = "gettex-script";
+          meta.mainProgram = name;
+          runtimeInputs = with pkgs; [zindex gettex sqlite jq coreutils];
+          text = ''
+            gettex fetch
+            gettex query-all
+            cp -v "$XDG_DATA_HOME/gettex/all.json" "/var/www/lorenz.leutgeb.xyz/gettex.json"
+          '';
+        });
       };
       Install.WantedBy = ["default.target"];
     };
@@ -26,15 +35,15 @@ in {
 
   xdg.configFile = {
     "gettex/isin".text = builtins.concatStringsSep "\n" [
-      "IE00BGL86Z12"
-      "IE00BGDQ0T50"
-      "IE00BYYHSM20"
-      "IE00BDZZTM54"
-      "NL0015000N74"
-      "DE000GX5LS95"
-      "IE00BCRY6557"
-      "LU0335044896"
-      "CH1102728750"
+      "CH1102728750" # 21Shares       Cardano
+      "DE000GX5LS95" # Goldman Sachs  Fixed Income
+      "IE00B4L60045" # iShares        EUR Corporate Bond
+      "IE00BCRY6557" # iShares        Ultrashort Bond
+      "IE00BDZZTM54" # iShares        MSCI World SRI
+      "IE00BGDQ0T50" # iShares        EM SRI
+      "IE00BGL86Z12" # iShares        Electric Vehicles and Driving Technology
+      "IE00BYYHSM20" # iShares        MSCI Europe Quality Dividend
+      "LU0335044896" # Xtrackers      Overnight Rate Swap
     ];
     "gettex/zindex.json".text =
       builtins.toJSON

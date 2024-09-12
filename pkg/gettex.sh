@@ -5,7 +5,7 @@
 #     #! /usr/bin/env nix-shell
 #     #! nix-shell -i bash -p bash curl dateutils sqlite jq
 
-set -euo pipefail
+set -xeuo pipefail
 
 ME="gettex"
 
@@ -24,7 +24,7 @@ if [ "$1" = "import" ]
 then
 # Import pre-existing CSV file.
 sqlite3 -csv "${DB}" ".import $2 $ME"
-exit
+exit 0
 
 elif [ "$1" = "init" ]
 then
@@ -32,21 +32,21 @@ then
 sqlite3 "${DB}" "\
 create table if not exists $ME (isin text, time text not null, unit text not null, tick int not null); \
 create unique index if not exists idx on $ME (isin, time);"
-exit
+exit 0
 
 elif [ "$1" = "query" ]
 then
 # Query for specific isin.
 sqlite3 -json "${DB}" "select isin, max(time) as time, unit, tick from $ME where isin = '$2' group by isin" \
 	| jq "INDEX(.isin) | map_values(del(.isin))"
-exit
+exit 0
 
 elif [ "$1" = "query-all" ]
 then
-# Query for specific isin.
 sqlite3 -json "${DB}" "select isin, max(time) as time, unit, tick from $ME group by isin" \
-	| jq "INDEX(.isin) | map_values(del(.isin))"
-exit
+	| jq "INDEX(.isin) | map_values(del(.isin))" \
+	> "${XDG_DATA_HOME}/${ME}/all.json"
+exit 0
 
 elif [ "$1" != "fetch" ]
 then
@@ -84,7 +84,7 @@ log "Prefix ${BASE}"
 
 if ! test -f "${LOCAL}"
 then
-  curl -L \
+  curl --verbose --location \
     "https://erdk.bayerische-boerse.de/?u=edd-MUNCD&p=public&path=/posttrade/${FILENAME}.csv.gz" \
     | gunzip \
     | grep --fixed-strings --file="${XDG_CONFIG_HOME}/${ME}/isin" \
