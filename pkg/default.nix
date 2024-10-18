@@ -5,7 +5,6 @@
     #tessla = callPackage ./tessla.nix {}; # Broken as of 2023-05-03.
     concourse = callPackage ./concourse.nix {};
     zindex = callPackage ./zindex.nix {};
-    gettex = callPackage ./gettex.nix {};
     cgit-pink-radicle = callPackage ./cgit-pink-radicle/default.nix {};
 
     caddy = callPackage ./caddy.nix {
