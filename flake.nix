@@ -52,15 +52,6 @@
         nixpkgs.follows = "nixpkgs";
       };
     };
-    radicle = {
-      url = "github:lorenzleutgeb/heartwood/v1.0.0";
-      inputs = {
-        flake-utils.follows = "utils";
-        nixpkgs.follows = "nixpkgs";
-        rust-overlay.follows = "rust-overlay";
-      };
-    };
-
     pre-commit-hooks = {
       url = "github:cachix/pre-commit-hooks.nix";
       inputs = {
