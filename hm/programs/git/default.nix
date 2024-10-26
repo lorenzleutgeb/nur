@@ -12,6 +12,7 @@ in {
   with gitAndTools; [
     delta
     ghq
+    git-absorb
     git-crypt
     git-imerge
     tig
