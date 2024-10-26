@@ -18,6 +18,7 @@ with builtins; {
     ../programs/gh.nix
     ../programs/git
     ../programs/gpg.nix
+    ../programs/jj.nix
     ../programs/nix
     ../programs/nvim
     ../programs/password-store.nix
