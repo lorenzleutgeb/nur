@@ -54,6 +54,7 @@ in {
       month = "! git log --no-merges --since='last month' --author=$USER --reverse --pretty=format:'%cd %s %d' --date=short";
       mr = "! sh -c 'git fetch $1 merge-requests/$2/head:mr-$1-$2 && git checkout mr-$1-$2' -";
       p = "push";
+      pam = "!f() { branch=\"$(git rev-parse --abbrev-ref HEAD)\" ; git checkout --detach ; git commit $@ ; git push self HEAD:refs/patches ; git checkout \"$branch\" ; }; f";
       pf = "push --force-with-lease";
       pff = "push --force";
       pr = "!f() { remote=\${2:-origin} ; git fetch $remote refs/pull/$1/head:#$1 ; } ; f";
