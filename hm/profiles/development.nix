@@ -117,6 +117,7 @@ with builtins; {
     pythonPackages.setuptools
     pythonPackages.requests
     pythonPackages.yamllint
+    pythonPackages.zulip
     ranger
     shellcheck
     shfmt
