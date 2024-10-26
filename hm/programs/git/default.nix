@@ -127,6 +127,7 @@ in {
       pull.ff = "only";
       push = {default = "current";};
       rebase = {
+        updateRefs = true;
         # Support fixup and squash commits.
         autoSquash = true;
         # Stash dirty worktree before rebase.
