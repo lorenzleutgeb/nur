@@ -29,6 +29,7 @@ in {
     sessionVariables.BROWSER = explorer;
     packages = with pkgs; [
       desktop-file-utils
+      rustup
     ];
   };
 
