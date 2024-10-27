@@ -60,7 +60,7 @@
       root * /var/www/git.leutgeb.xyz
       file_server
     }
-    reverse_proxy unix/${config.services.fcgiwrap.instances.cgit.socket.address} {
+    reverse_proxy unix/${config.services.fcgiwrap.instances."cgit-radicle".socket.address} {
       transport fastcgi {
         env SCRIPT_FILENAME ${config.services.cgit.radicle.package}/cgit/cgit.cgi
       }
@@ -71,8 +71,11 @@ in {
   services = {
     nginx.enable = lib.mkForce false;
 
-    fcgiwrap.instances.cgit.socket = {
-      inherit (config.services.caddy) user group;
+    fcgiwrap.instances."cgit-radicle".socket = let
+      inherit (config.services) caddy;
+    in {
+      user = lib.mkForce caddy.user;
+      group = lib.mkForce caddy.group;
     };
     cgit.radicle = {
       enable = true;
