@@ -17,17 +17,17 @@ in {
     (import ../../mixin/lorenz.nix {})
     ../../mixin/nix.nix
     ../../mixin/progressive.nix
-    ../../mixin/remote-build.nix
+    #../../mixin/remote-build.nix
     ../../mixin/sops.nix
     ../../mixin/ssh.nix
     ../../mixin/tailscale.nix
     ./caddy.nix
     ./git.nix
-    ./headscale.nix
+    #./headscale.nix
     ./knot.nix
     ./mta-sts.nix
-    ./nfs.nix
-    ./nextcloud.nix
+    #./nfs.nix
+    #./nextcloud.nix
     ./nullmailer.nix
     ./tor.nix
     ./frigate.nix
