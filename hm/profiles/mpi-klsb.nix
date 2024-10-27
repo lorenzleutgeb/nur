@@ -22,19 +22,27 @@
 in {
   home = {
     file = {
-      ".ssh/config_mpi-klsb".text = ''
-        Match host *.mpi-inf.mpg.de,*.mpi-sws.org,*.mpi-klsb.mpg.de
-          # Do not blindly accept known hosts for any domain,
-          # but restrict to well-known domains.
-          UserKnownHostsFile ~/.ssh/known_hosts_mpi-klsb
+      ".ssh/config_mpi-klsb" = {
+        text = ''
+          Match host *.mpi-inf.mpg.de,*.mpi-sws.org,*.mpi-klsb.mpg.de
+            # Do not blindly accept known hosts for any domain,
+            # but restrict to well-known domains.
+            UserKnownHostsFile ~/.ssh/known_hosts_mpi-klsb
 
-        Match host *.mpi-inf.mpg.de,!contact.mpi-inf.mpg.de !exec "ip -4 -o a show up scope global | grep 139.19."
-          ProxyJump contact.mpi-inf.mpg.de
-      '';
+          Match host *.mpi-inf.mpg.de,!contact.mpi-inf.mpg.de !exec "ip -4 -o a show up scope global | grep 139.19."
+            ProxyJump contact.mpi-inf.mpg.de
+        '';
+        target = ".ssh/config_mpi-klsb.orig";
+        onChange = ''cat .ssh/config_mpi-klsb.orig > .ssh/config_mpi-klsb && chmod 400 .ssh/config_mpi-klsb'';
+      };
 
-      ".ssh/known_hosts_mpi-klsb".source = builtins.fetchurl {
-        url = "https://ca.mpi-klsb.mpg.de/ssh_known_hosts";
-        sha256 = "sha256:1bi27zlsxny6hzgfzxihs06d0na9zlxwgk88y9irm69cs4v8mzm2";
+      ".ssh/known_hosts_mpi-klsb" = {
+        source = builtins.fetchurl {
+          url = "https://ca.mpi-klsb.mpg.de/ssh_known_hosts";
+          sha256 = "sha256:1bi27zlsxny6hzgfzxihs06d0na9zlxwgk88y9irm69cs4v8mzm2";
+        };
+        target = ".ssh/known_hosts-mpi-klsb.orig";
+        onChange = ''cat .ssh/known_hosts_mpi-klsb.orig > .ssh/known_hosts_mpi-klsb && chmod 400 .ssh/known_hosts_mpi-klsb'';
       };
     };
     packages = with pkgs; [subversion];
