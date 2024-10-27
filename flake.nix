@@ -3,6 +3,8 @@
   inputs = {
     # This looks redundant, but actually is nice.
     # Allows to model "stable" vs. "unstable" vs. "don't care".
+    # Don't forget to also adjust the URL for home-manager below
+    # accordingly.
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.05";
     nixpkgs.follows = "nixpkgs-unstable";
@@ -10,7 +12,7 @@
     compat.url = "github:edolstra/flake-compat";
     hardware.url = "github:NixOS/nixos-hardware";
     hm = {
-      url = "github:nix-community/home-manager/release-24.05";
+      url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     rust-overlay = {
