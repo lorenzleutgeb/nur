@@ -45,7 +45,7 @@ in {
         "192.168.178.1"
       ];
       networkConfig = {
-        IPForward = "yes";
+        IPv4Forwarding = "yes";
       };
     };
   };
