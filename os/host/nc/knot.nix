@@ -59,8 +59,6 @@ in {
           listen = [
             "5.45.105.177" # netcup
             "2a03:4000:6:10ea:54b5:3dff:fe79:b5b9" # netcup
-            "100.96.0.2" # tailnet
-            "fd7a:115c:a1e0:e00::2" # tailnet
           ];
 
           automatic-acl = true;
@@ -154,14 +152,6 @@ in {
             action = "update";
             key = "acme";
           }
-          {
-            id = "tailnet";
-            action = [
-              "transfer"
-              "update"
-            ];
-            address = config.services.headscale.settings.ip_prefixes;
-          }
         ];
 
         mod-rrl = [
@@ -195,8 +185,9 @@ in {
           {
             id = "primary";
             notify = "notify";
-            acl = ["transfer" "tailnet"];
-            dnssec-signing = true;
+            acl = [
+              "transfer"
+            ];
           }
         ];
 
