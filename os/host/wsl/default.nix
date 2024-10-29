@@ -16,6 +16,7 @@ in {
     ../../mixin/nix.nix
     ../../mixin/sops.nix
     ../../mixin/ssh.nix
+    ./tor.nix
     #../../mixin/tailscale.nix
   ];
 

@@ -7,8 +7,8 @@
 in {
   programs.radicle = {
     uri = {
-      web-rad.enable = true;
-      rad.browser.enable = true;
+      web-rad.enable = false;
+      rad.browser.enable = false;
     };
     settings = {
       preferredSeeds = let
@@ -50,9 +50,16 @@ in {
             else "seed.leutgeb.xyz";
         })
       ];
-      node.onion = lib.mkIf tor.enable {
-        mode = "proxy";
-        address = with tor.socksListenAddress; "${addr}:${builtins.toString port}";
+      node = lib.mkIf tor.enable {
+        onion = {
+          mode = "proxy";
+          address = with tor.socksListenAddress; "${addr}:${builtins.toString port}";
+        };
+        externalAddresses = [
+          # TODO: Slight inconsistency here, depends on Tor running on the system.
+          # sudo -u tor cat /var/lib/tor/onion/radicle/hostname
+          "x3usylutxxwujquc4dut44krigmbmfxqgeyz2duoqkjiocvrmzwoxtad.onion:8776"
+        ];
       };
     };
   };

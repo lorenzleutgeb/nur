@@ -21,7 +21,6 @@ with builtins; {
     ../programs/cakeml.nix
     ../programs/zsh
     ../services/mpris-proxy.nix
-    ../services/radicle.nix
     ../services/syncthing.nix
   ];
 
