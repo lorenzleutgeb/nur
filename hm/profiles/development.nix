@@ -6,6 +6,7 @@
 with builtins; {
   imports = [
     ./graphical.nix
+    ./rust.nix
     ../programs/bat
     ../programs/browserpass.nix
     ../programs/firefox
@@ -157,6 +158,5 @@ with builtins; {
     yubikey-personalization
     yq
     zoom-us
-    rustup
   ];
 }

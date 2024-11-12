@@ -11,7 +11,6 @@
         "editor.guides.bracketPairs" = true;
         "lean4.input.languages" = "lean4";
         "remote.SSH.remotePlatform"."0mqr.lorenz.hs.leutgeb.xyz" = "linux";
-        "rust-analyzer.updates.askBeforeDownload" = false;
         "update.channel" = "none";
       };
       extensions = with pkgs.vscode-extensions; [
@@ -22,7 +21,6 @@
         haskell.haskell
         jnoortheen.nix-ide
         justusadam.language-haskell
-        matklad.rust-analyzer
         mkhl.direnv
         ms-python.python
         # See https://code.visualstudio.com/docs/cpp/config-linux
