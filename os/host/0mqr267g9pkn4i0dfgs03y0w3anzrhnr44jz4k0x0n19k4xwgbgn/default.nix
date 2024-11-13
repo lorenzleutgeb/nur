@@ -132,7 +132,6 @@
 
     firewall = {
       allowedTCPPorts = [
-        # 8443 # unifi
         5900 # wayvnc
         8384 # syncthing
       ];
@@ -254,12 +253,6 @@
         # BeagleBone Black gets /dev/ttybbb
         KERNEL=="ttyACM[0-9]*", SUBSYSTEM=="tty", ATTRS{idVendor}=="1d6b", ATTRS{idProduct}=="0104", SYMLINK="ttybbb"
       '';
-    };
-
-    unifi = {
-      enable = false;
-      unifiPackage = pkgs.unifi;
-      openFirewall = false;
     };
 
     logind.extraConfig = ''
