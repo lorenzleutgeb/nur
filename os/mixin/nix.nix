@@ -27,7 +27,7 @@
     };
     extraOptions = ''
       allow-import-from-derivation = true
-      experimental-features = nix-command flakes repl-flake
+      experimental-features = nix-command flakes
       builders-use-substitutes = true
       log-lines = 30
       max-silent-time = 600
