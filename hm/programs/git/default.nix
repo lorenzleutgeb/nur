@@ -32,7 +32,15 @@ in {
     userName = "Lorenz Leutgeb";
     userEmail = "lorenz@leutgeb.xyz";
 
-    ignores = [".dir-locals.el" ".direnv/" ".envrc" ".mob" ".env"];
+    ignores = [
+      "*.orig"
+      ".dir-locals.el"
+      ".mob"
+      "/.direnv/"
+      "/.env"
+      "/.envrc"
+      "/result/"
+    ];
 
     aliases = {
       inherit (gitalias) a ap b c ca cane co cob cp cpc d ds m;
@@ -46,7 +54,6 @@ in {
       cn = "commit --no-verify";
       coc = ''! f(){ git checkout "$1" && git clean -xfd; }; f'';
       i = "!gi() { curl -L -s https://www.gitignore.io/api/$@ ;}; gi";
-      il = ''! git config --local core.excludesfile "$HOME/gitignore"'';
       ll = "log --graph --decorate --show-signature --date=iso8601-strict --use-mailmap --abbrev-commit";
       l = "log --graph --pretty=format:'%Cred%h%Creset%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)%an%Creset' --abbrev-commit --date=relative";
       mff = "merge --ff-only";
