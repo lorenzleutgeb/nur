@@ -95,20 +95,20 @@
     pam = {
       u2f = {
         enable = true;
-        cue = true;
+        settings.cue = true;
       };
     };
     rtkit.enable = true;
   };
 
-  xdg = {
-    portal = {
-      enable = true;
-      extraPortals = with pkgs; [
-        xdg-desktop-portal-gtk
-        xdg-desktop-portal-wlr
-      ];
-    };
+
+  xdg.portal = {
+    enable = true;
+    config.common.default = "*";
+    extraPortals = with pkgs; [
+      xdg-desktop-portal-gtk
+      xdg-desktop-portal-wlr
+    ];
   };
 
   sops = {

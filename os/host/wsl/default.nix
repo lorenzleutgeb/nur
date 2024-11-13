@@ -94,7 +94,7 @@ in {
     pam = {
       u2f = {
         enable = false;
-        cue = true;
+        settings.cue = true;
       };
     };
     rtkit.enable = true;

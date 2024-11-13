@@ -75,7 +75,7 @@ in {
   powerManagement.cpuFreqGovernor = lib.mkDefault "performance";
 
   hardware = {
-    opengl.enable = true;
+    graphics.enable = true;
     bluetooth.enable = true;
   };
 
