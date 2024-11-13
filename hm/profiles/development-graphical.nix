@@ -5,19 +5,7 @@
 }:
 with builtins; {
   imports = [
-    ./input-method.nix
-    ./terminal.nix
-    ./sway
-    ../programs/alacritty
-    ../programs/browserpass.nix
-    ../programs/firefox
-    ../programs/password-store.nix
-    ../programs/spotify
-    ../programs/signal-desktop
-    ../programs/thunderbird.nix
-    ../programs/zathura.nix
-    ../services/ulauncher.nix
-    ../services/gnome-keyring.nix
+    ./graphical.nix
   ];
 
   home.sessionVariables =
@@ -31,27 +19,14 @@ with builtins; {
 
   home.packages = with pkgs; [
     baobab
-    brightnessctl
-    evince
-    fira
-    fira-code
-    fira-code-symbols
-    fira-mono
-    fontconfig
-    font-awesome
-    glibcLocales
     gimp
     networkmanagerapplet
-    google-chrome
     gource
     gparted
-    graphviz
     insomnia
+    meld
     neovim-remote
-    noto-fonts
-    pantheon.elementary-files
-    pantheon.elementary-photos
-    pavucontrol
+    niv
     pinta
     picard
     portfolio
@@ -59,17 +34,20 @@ with builtins; {
     rclone-browser
     shfmt
     siji
+    stow
+    stylish-haskell
+    skypeforlinux
+    sshfs-fuse
     teamviewer
     transmission_4-gtk
+    universal-ctags
     obs-studio
-    vlc
     wrangler
     xclip
     xdotool
     yubikey-personalization
     yubikey-personalization-gui
-    zoom-us
-    zotero
+    yq
 
     m17n_db
     m17n_lib

@@ -42,7 +42,6 @@ with builtins; {
     dasel
     dateutils
     dnsutils
-    docker-compose
     entr
     eza
     fatrace
@@ -56,7 +55,6 @@ with builtins; {
     htop
     iotop
     jq
-    #kbfs
     miller
     moreutils
     mosh
@@ -69,14 +67,11 @@ with builtins; {
     nvme-cli
     openssl
     pandoc
-    pantheon.elementary-files
-    pantheon.elementary-photos
     parted
     pciutils
     pdfgrep
     pdftk
     phoronix-test-suite
-    pinta
     poppler_utils
     psmisc
     pv

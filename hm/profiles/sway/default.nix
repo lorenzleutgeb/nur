@@ -247,8 +247,8 @@ in {
     # Gnome
     gsettings-desktop-schemas
     pantheon.elementary-icon-theme
-    gnome3.adwaita-icon-theme
-    gnome.gnome-tweaks
+    adwaita-icon-theme
+    gnome-tweaks
 
     (pkgs.writeTextFile {
       name = "startsway";

@@ -5,7 +5,7 @@
 }:
 with builtins; {
   imports = [
-    ./graphical.nix
+    ./terminal.nix
     ./rust.nix
     ../programs/bat
     ../programs/browserpass.nix
@@ -14,17 +14,12 @@ with builtins; {
     ../programs/gh.nix
     ../programs/git
     ../programs/go.nix
-    #../programs/isabelle.nix
     ../programs/nvim
-    #../programs/libvirt
     ../programs/password-store.nix
     ../programs/ripgrep.nix
     ../programs/ssh.nix
     ../programs/cakeml.nix
-    ../programs/vscode.nix
     ../programs/zsh
-    ../programs/jetbrains.nix
-    ../services/flameshot.nix
     ../services/mpris-proxy.nix
     ../services/radicle.nix
     ../services/syncthing.nix
@@ -34,7 +29,6 @@ with builtins; {
     pythonPackages = python311Packages;
   in [
     alacritty
-    #android-studio
     aspell
     aspellDicts.en
     aspellDicts.en-computers
@@ -45,18 +39,14 @@ with builtins; {
     brightnessctl
     cachix
     cmake
-    #ctags
     curlFull
     dive
-    #dockerTools
     docker-compose
     dos2unix
-    droidcam
     elan
     elfutils
     entr
     envsubst
-    evince
     exiftool
     exercism
     fd
@@ -67,21 +57,17 @@ with builtins; {
     fira-mono
     fontconfig
     font-awesome
-    #fwupdmgr
     fzf
     gcc
     gdb
     ghcid
     glibcLocales
     gnumake
-    google-chrome
     google-cloud-sdk
     gource
-    gparted
     graphviz
     hlint
     htop
-    insomnia
     iperf
     jq
     kbfs
@@ -90,9 +76,7 @@ with builtins; {
     liberation_ttf
     libreoffice
     llvm
-    #haskellPackages.miv
     material-icons
-    meld
     mupdf
     nmap
     ncdu
@@ -103,14 +87,10 @@ with builtins; {
     nodePackages.pnpm
     noto-fonts
     pandoc
-    pantheon.elementary-files
-    pantheon.elementary-photos
     pavucontrol
     pdfgrep
-    #perl532Packages.GitAutofixup
     pinta
     poppler_utils
-    pwgen
     pythonPackages.python
     pythonPackages.beautifulsoup4
     pythonPackages.mwclient
@@ -126,30 +106,16 @@ with builtins; {
     skaffold
     stow
     stylish-haskell
-    skypeforlinux
     sshfs-fuse
-    teamviewer
-    transmission-gtk
     universal-ctags
-    monero
-    monero-gui
-    #nodePackages.node2nix
-    #nodePackages.firebase-tools # Custom package
-    #nodePackages.turtle-validator # Custom package
-    #obsidian
-    obs-studio
-    #obs-v4l2sink
-    #nodejs
-    roboto
+    monero-cli
     roboto-mono
     roboto-slab
     skopeo
     socat
-    #swiPrologWithGui # 2023-06-06: Depends on insecure OpenSSL
     tio
     tmux
     tree
-    vlc
     wally-cli
     wget
     wrangler
@@ -157,6 +123,5 @@ with builtins; {
     xdotool
     yubikey-personalization
     yq
-    zoom-us
   ];
 }
