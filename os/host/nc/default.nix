@@ -36,8 +36,6 @@ in {
     ./wireguard.nix
   ];
 
-  services.nginx.enable = false;
-
   fileSystems =
     (builtins.listToAttrs (map
       ({

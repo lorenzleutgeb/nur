@@ -69,8 +69,6 @@
 in {
   environment.etc."cgitrc".source = mkCgitrc;
   services = {
-    nginx.enable = lib.mkForce false;
-
     fcgiwrap.instances."cgit-radicle".socket = let
       inherit (config.services) caddy;
     in {
