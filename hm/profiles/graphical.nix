@@ -60,7 +60,6 @@ with builtins; {
     pinta
     picard
     portfolio
-    psensor
     qnotero
     ranger
     rclone-browser

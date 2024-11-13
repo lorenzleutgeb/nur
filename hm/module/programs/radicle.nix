@@ -73,10 +73,7 @@ in {
     programs.radicle = {
       enable = mkEnableOption "Radicle";
       cli = {
-        package = mkPackageOption pkgs "radicle-cli" {};
-      };
-      remote-helper = {
-        package = mkPackageOption pkgs "radicle-remote-helper" {};
+        package = mkPackageOption pkgs "radicle-node" {};
       };
       uri = {
         rad = {
@@ -228,7 +225,7 @@ in {
     ];
 
     home = {
-      packages = [cfg.cli.package cfg.remote-helper.package];
+      packages = [cfg.cli.package];
       file.".radicle/${configFile.name}".source = configFile.path;
     };
 
