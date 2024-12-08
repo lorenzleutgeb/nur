@@ -11,6 +11,9 @@ in {
     format = "binary";
     owner = config.systemd.services.vaultwarden.serviceConfig.User;
   };
+
+  #users.users.vaultwarden.extraGroups = [config.services.nullmailer.group];
+
   services = {
     vaultwarden = {
       enable = true;
@@ -25,12 +28,19 @@ in {
         ROCKET_PORT = 8222;
         SIGNUPS_ALLOWED = false;
         SMTP_FROM = "bitwarden@leutgeb.xyz";
+        SMTP_USERNAME = "bitwarden@leutgeb.xyz";
         SMTP_FROM_NAME = "Bitwarden";
-        USE_SENDMAIL = true;
-        SENDMAIL_COMMAND = let
-          inherit (config.security) wrapperDir;
-          inherit (config.services.mail) sendmailSetuidWrapper;
-        in "${wrapperDir}/${sendmailSetuidWrapper.program}";
+        SMTP_HOST = "smtp.migadu.com";
+        SMTP_PORT = "465";
+        SMTP_SECURITY = "force_tls";
+        /*
+        # https://discourse.nixos.org/t/nullmailer-and-systemd-services/41225
+               USE_SENDMAIL = true;
+               SENDMAIL_COMMAND = let
+                 inherit (config.security) wrapperDir;
+                 inherit (config.services.mail) sendmailSetuidWrapper;
+               in "${wrapperDir}/${sendmailSetuidWrapper.program}";
+        */
       };
       environmentFile = config.sops.secrets.vaultwarden.path;
     };
@@ -41,7 +51,7 @@ in {
   systemd.services = {
     vaultwarden.serviceConfig = {
       StateDirectory = lib.mkForce "vaultwarden";
-      ReadWritePaths = "/var/spool/nullmailer";
+      #ReadWritePaths = "/var/spool/nullmailer";
     };
     backup-vaultwarden.environment.DATA_FOLTER = lib.mkForce libDir;
   };
