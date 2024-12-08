@@ -11,6 +11,9 @@ in {
     format = "binary";
     owner = config.systemd.services.vaultwarden.serviceConfig.User;
   };
+
+  users.users.vaultwarden.extraGroups = [config.services.nullmailer.group];
+
   services = {
     vaultwarden = {
       enable = true;
@@ -26,7 +29,7 @@ in {
         SIGNUPS_ALLOWED = false;
         SMTP_FROM = "bitwarden@leutgeb.xyz";
         SMTP_FROM_NAME = "Bitwarden";
-        USE_SENDMAIL = true;
+        USE_SENDMAIL = false;
         SENDMAIL_COMMAND = let
           inherit (config.security) wrapperDir;
           inherit (config.services.mail) sendmailSetuidWrapper;
@@ -41,7 +44,7 @@ in {
   systemd.services = {
     vaultwarden.serviceConfig = {
       StateDirectory = lib.mkForce "vaultwarden";
-      ReadWritePaths = "/var/spool/nullmailer";
+      #ReadWritePaths = "/var/spool/nullmailer";
     };
     backup-vaultwarden.environment.DATA_FOLTER = lib.mkForce libDir;
   };
