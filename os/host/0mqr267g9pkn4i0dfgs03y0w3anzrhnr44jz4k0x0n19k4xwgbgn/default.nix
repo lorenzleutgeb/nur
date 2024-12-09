@@ -11,6 +11,7 @@
     ../../mixin/kmscon.nix
     (import ../../mixin/lorenz.nix {})
     ../../mixin/nix.nix
+    ../../mixin/motd.nix
     ../../mixin/progressive.nix
     ../../mixin/sops.nix
     ../../mixin/ssh.nix
