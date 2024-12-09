@@ -19,6 +19,7 @@
     ../../mixin/tailscale.nix
     ./hardware-configuration.nix
     ./bluetooth.nix
+    ./monero.nix
     ./nfs.nix
     ./rsync.nix
     ./tor.nix
