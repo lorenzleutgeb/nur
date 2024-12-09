@@ -6,13 +6,13 @@
     # Don't forget to also adjust the URL for home-manager below
     # accordingly.
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.05";
-    nixpkgs.follows = "nixpkgs-unstable";
+    nixpkgs-stable.url = "github:lorenzleutgeb/nixpkgs/tmp";
+    nixpkgs.follows = "nixpkgs-stable";
 
     compat.url = "github:edolstra/flake-compat";
     hardware.url = "github:NixOS/nixos-hardware";
     hm = {
-      url = "github:nix-community/home-manager/master";
+      url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     rust-overlay = {
@@ -34,8 +34,7 @@
     };
     sops = {
       url = "github:Mic92/sops-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.nixpkgs-stable.follows = "nixpkgs-stable";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     utils.url = "github:numtide/flake-utils";
     vscode-server = {
