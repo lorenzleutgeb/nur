@@ -24,7 +24,7 @@
         concatStringsSep "\n" (
           mapAttrsToList
           cgitrcLine
-          ({virtual-root = cfg.nginx.location;} // cfg.settings)
+          ({virtual-root = "/";} // cfg.settings)
         )
       }
       ${optionalString (cfg.scanPath != null) (cgitrcLine "scan-path" cfg.scanPath)}
@@ -150,5 +150,6 @@ in {
         '';
       virtualHosts."http://${onion}".extraConfig = cgitReverseProxy;
     };
+    nginx.virtualHosts.radicle = lib.mkForce {};
   };
 }
