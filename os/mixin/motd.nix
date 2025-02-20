@@ -26,8 +26,8 @@
              ▟███▛  ▜███▙       ▜███▙
              ▝▀▀▀    ▀▀▀▀▘       ▀▀▀▘
 
-      Machine  ${config.networking.hostName}
-       NixOS   ${config.system.nixos.release}
-         @     ${self.shortRev or self.dirtyShortRev}
+     Machine  ${config.networking.hostName}
+      NixOS   ${config.system.nixos.release}
+        @     ${self.shortRev or self.dirtyShortRev}
   '';
 }
