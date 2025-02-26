@@ -73,7 +73,9 @@ do
 		EXIT="1"
 		printf "FAIL\n"
 		md "<td>\n"
-		md "\`\`\`diff\n%s\`\`\`\n" "$(cat $DIFF_FILE)"
+		md "\`\`\`diff\n"
+		cat $DIFF_FILE >> $MD
+		md "\`\`\`\n"
 		md "</td>\n"
 	else
 		printf "PASS\n"
@@ -101,7 +103,7 @@ md "\n</dl>\n\n"
 
 if [ "$HTML" != "" ]
 then
-	pandoc -s $MD -o $HTML
+	pandoc --highlight-style=zenburn -s $MD -o $HTML
 fi
 
 exit "$EXIT"
