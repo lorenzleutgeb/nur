@@ -25,6 +25,7 @@
     ./tor.nix
     ./concourse.nix
     ./caddy.nix
+    ./ttyd.nix
   ];
 
   # Use the systemd-boot EFI boot loader.

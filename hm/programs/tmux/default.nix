@@ -2,6 +2,8 @@
   programs.tmux = {
     enable = true;
 
+    secureSocket = false;
+
     extraConfig = ''
        # ==========================
        # ===  General settings  ===
