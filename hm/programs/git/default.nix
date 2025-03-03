@@ -1,8 +1,11 @@
 {
   pkgs,
   config,
+  lib,
   ...
 }: let
+  inherit (lib.attrsets) recursiveUpdate;
+
   sub = section: subsection: ''${section} "${subsection}"'';
   gitalias = import ./gitalias.nix;
 in {
@@ -80,125 +83,147 @@ in {
       yesterday = "! git log --no-merges --since='yesterday' --author=$USER --reverse --pretty=format:'%cd %s %d' --date=short";
     };
 
-    extraConfig = {
-      branch = {
-        # Automatic remote tracking.
-        autoSetupMerge = "always";
-        # Automatically use rebase for new branches.
-        autoSetupRebase = "always";
-      };
-      checkout = {
-        defaultRemote = "origin";
-        guess = true;
-        thresholdForParallelism = 0;
-      };
-      color.ui = true;
-      core = {
-        pager = "delta";
-        editor = "nvim";
-        autocrlf = "input";
-        commitGraph = true;
-      };
-      delta = {
-        theme = "Monokai Extended";
-        features = "line-numbers decorations side-by-side";
-        navigate = true;
-      };
-      diff = {
-        submodule = "log";
-        #tool = "ediff";
-      };
-      difftool = {prompt = "false";};
-      fetch = {
-        negotiationAlgorithm = "skipping";
-        prune = true;
-        parallel = 0;
-        recurseSubmodules = true;
-        writeCommitGraph = true;
-      };
-      ghq = {root = "~/src";};
-      help.autocorrect = "20";
-      interactive.diffFilter = "delta --color-only";
-      init = {defaultBranch = "main";};
-      merge = {
-        ff = false;
-        guitool = "meld";
-        # TODO: Switch to zdiff3.
-        conflictStyle = "diff3";
-      };
-      mergetool = {
-        prompt = false;
-        keepBackup = "false";
-      };
-      log.date = "iso8601";
-      pull.ff = "only";
-      push = {default = "current";};
-      rebase = {
-        updateRefs = true;
-        # Support fixup and squash commits.
-        autoSquash = true;
-        # Stash dirty worktree before rebase.
-        autoStash = true;
-      };
-      rerere = {
-        enabled = true;
-        autoUpdate = true;
-      };
-      sendemail = {
-        smtpEncryption = "tls";
-        smtpServerPort = 587;
-        annotate = true;
-      };
-      status = {showStash = true;};
-      url = let
-        mk = {
-          base,
-          short,
-        }: {
-          name = "ssh://git@${base}";
-          value = {
-            # See <https://git-scm.com/docs/git-config#Documentation/git-config.txt-urlltbasegtinsteadOf>.
-            insteadOf = short;
-            # See <https://git-scm.com/docs/git-config#Documentation/git-config.txt-urlltbasegtpushInsteadOf>.
-            pushInsteadOf = "https://${base}";
-          };
+    extraConfig =
+      # External tools that can be configured via gitconfig.
+      {
+        ghq.root = "~/src";
+        delta = {
+          theme = "Monokai Extended";
+          features = "line-numbers decorations side-by-side";
+          navigate = true;
         };
-      in
-        builtins.listToAttrs (map mk [
-          {
-            short = "gh:";
-            base = "github.com/";
-          }
-          {
-            short = "gh:ll/";
-            base = "github.com/lorenzleutgeb/";
-          }
-          {
-            short = "scl:";
-            base = "git.sclable.com/";
-          }
-          {
-            short = "scl:ll/";
-            base = "git.sclable.com/lorenz.leutgeb/";
-          }
-        ]);
-      "${sub "filter" "gpg"}" = {
-        clean = "gpg --encrypt --recipient EBB1C984 -o- %f | git-lfs clean -- %f";
-        smudge = "git-lfs smudge -- %f | gpg --decrypt --output %f";
-      };
-      "${sub "merge" "npm-merge-driver"}" = {
-        name = "Automatically merge npm lockfiles";
-        driver = "npm-merge-driver merge %A %O %B %P";
-      };
-      "${sub "lfs" "customtransfer.ipfs"}" = {
-        path = "/home/lorenz/src/github.com/lorenzleutgeb/git-lfs-ipfs/transfer.sh";
-        concurrent = false;
-      };
-      "${sub "lfs" "extension.ipfs"}" = {
-        clean = "/home/lorenz/src/github.com/lorenzleutgeb/git-lfs-ipfs/clean.sh %f";
-        smudge = "/home/lorenz/src/github.com/lorenzleutgeb/git-lfs-ipfs/smudge.sh %f";
-      };
-    };
+      }
+      // (recursiveUpdate
+        # https://blog.gitbutler.com/how-git-core-devs-configure-git/
+        {
+          column.ui = "auto";
+          branch.sort = "-committerdate";
+          tag.sort = "version:refname";
+          init.defaultBranch = "main";
+          diff = {
+            algorithm = "histogram";
+            colormoved = "plain";
+            mnemonicPrefix = true;
+            renames = true;
+          };
+          push = {
+            default = "simple";
+          };
+          fetch = {
+            prune = true;
+            pruneTags = true;
+            all = true;
+          };
+
+          help.autocorrect = "prompt";
+          commit.verbose = true;
+
+          rerere = {
+            enabled = true;
+            autoupdate = true;
+          };
+
+          rebase = {
+            # Support fixup and squash commits.
+            autoSquash = true;
+            # Stash dirty worktree before rebase.
+            autoStash = true;
+            updateRefs = true;
+          };
+        } {
+          branch = {
+            # Automatic remote tracking.
+            autoSetupMerge = "always";
+            # Automatically use rebase for new branches.
+            autoSetupRebase = "always";
+          };
+          checkout = {
+            defaultRemote = "origin";
+            guess = true;
+            thresholdForParallelism = 0;
+          };
+          core = {
+            pager = "delta";
+            editor = "nvim";
+            autocrlf = "input";
+            commitGraph = true;
+          };
+          difftool.prompt = "false";
+          fetch = {
+            negotiationAlgorithm = "skipping";
+            prune = true;
+            parallel = 0;
+            recurseSubmodules = true;
+            writeCommitGraph = true;
+          };
+          interactive.diffFilter = "delta --color-only";
+          merge = {
+            ff = false;
+            guitool = "meld";
+            conflictStyle = "zdiff3";
+          };
+          mergetool = {
+            prompt = false;
+            keepBackup = "false";
+          };
+          log.date = "iso8601";
+          pull.ff = "only";
+          rebase.updateRefs = true;
+          sendemail = {
+            smtpEncryption = "tls";
+            smtpServerPort = 587;
+            annotate = true;
+          };
+          status.showStash = true;
+          url = let
+            mk = {
+              base,
+              short,
+            }: {
+              name = "ssh://git@${base}";
+              value = {
+                # See <https://git-scm.com/docs/git-config#Documentation/git-config.txt-urlltbasegtinsteadOf>.
+                insteadOf = short;
+                # See <https://git-scm.com/docs/git-config#Documentation/git-config.txt-urlltbasegtpushInsteadOf>.
+                pushInsteadOf = "https://${base}";
+              };
+            };
+          in
+            builtins.listToAttrs (map mk [
+              {
+                short = "gh:";
+                base = "github.com/";
+              }
+              {
+                short = "gh:ll/";
+                base = "github.com/lorenzleutgeb/";
+              }
+              {
+                short = "scl:";
+                base = "git.sclable.com/";
+              }
+              {
+                short = "scl:ll/";
+                base = "git.sclable.com/lorenz.leutgeb/";
+              }
+            ]);
+          "${sub "filter" "gpg"}" = {
+            clean = "gpg --encrypt --recipient EBB1C984 -o- %f | git-lfs clean -- %f";
+            smudge = "git-lfs smudge -- %f | gpg --decrypt --output %f";
+          };
+          "${sub "merge" "npm-merge-driver"}" = {
+            name = "Automatically merge npm lockfiles";
+            driver = "npm-merge-driver merge %A %O %B %P";
+          };
+          "${sub "lfs" "customtransfer.ipfs"}" = {
+            path = "/home/lorenz/src/github.com/lorenzleutgeb/git-lfs-ipfs/transfer.sh";
+            concurrent = false;
+          };
+          "${sub "lfs" "extension.ipfs"}" = {
+            clean = "/home/lorenz/src/github.com/lorenzleutgeb/git-lfs-ipfs/clean.sh %f";
+            smudge = "/home/lorenz/src/github.com/lorenzleutgeb/git-lfs-ipfs/smudge.sh %f";
+          };
+        });
 
     includes = [
       {
