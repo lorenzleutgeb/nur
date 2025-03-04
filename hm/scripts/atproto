@@ -1,0 +1,25 @@
+#! /usr/bin/env bash
+if [ "${1:0:4}" = "did:" ]
+then
+	echo "Argument looks like a DID, attempting to resolve handle."
+
+	if [ "${1:0:8}" = "did:web:" ]
+	then
+		echo "${1:8}"
+	elif [ "${1:0:8}" = "did:plc:" ]
+	then
+		curl -s "https://plc.directory/$1" | jq -r '.alsoKnownAs[] | select(startswith("at://")) | .[5:]'
+	else
+		echo "Unsupported DID method."
+	fi
+else
+	echo "Argument looks like a handle, attempting to resolve DID."
+
+	HANDLE="$1"
+	RECORD="_atproto.${HANDLE}"
+	URL="https://${HANDLE}/.well-known/atproto-did"
+	PATTERN="did:[a-z]*:[a-z0-9]*"
+
+	echo "  DNS: $(dig +short "${RECORD}" TXT | grep -o "${PATTERN}")"
+	echo "HTTPS: $(curl --silent "${URL}" | grep -o "${PATTERN}")"
+fi
