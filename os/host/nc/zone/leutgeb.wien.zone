@@ -1,10 +1,8 @@
 $TTL 3600
 
-@			SOA	ns1 lorenz 2024070501 14400 3600 1209600 3600
+@			SOA	ns1 lorenz\.leutgeb.posteo.de. 2025031301 14400 3600 1209600 3600
 
 $INCLUDE common.zone
-
-e			CNAME	viuyg7910fd1t4dq.myfritz.net.
 
 @			TXT	"hosted-email-verify=ko4zocdh"
 

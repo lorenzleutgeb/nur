@@ -1,0 +1,11 @@
+$TTL 360
+
+@			SOA	ns1 lorenz\.leutgeb.posteo.de. 2025031301 14400 3600 1209600 3600
+
+$INCLUDE common.zone
+
+key1._domainkey		CNAME	key1.salutas.org._domainkey.migadu.com.
+key2._domainkey		CNAME	key2.salutas.org._domainkey.migadu.com.
+key3._domainkey		CNAME	key3.salutas.org._domainkey.migadu.com.
+
+storage			CNAME	e

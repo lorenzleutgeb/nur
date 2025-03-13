@@ -1,10 +1,8 @@
 $TTL 360
 
-@ IN			SOA	ns1 lorenz 2024091001 14400 3600 1209600 3600
+@			SOA	ns1 lorenz\.leutgeb.posteo.de. 2025031301 14400 3600 1209600 3600
 
 $INCLUDE common.zone
-
-e			CNAME	viuyg7910fd1t4dq.myfritz.net.
 
 @			TXT	"hosted-email-verify=3g350uwg"
 
@@ -16,6 +14,7 @@ key3._domainkey		CNAME	key3.leutgeb.xyz._domainkey.migadu.com.
 lorenz			A	5.45.105.177
 			AAAA	2a03:4000:6:10ea:54b5:3dff:fe79:b5b9
 
+_atproto		TXT	"did=did:plc:za676zfedjshnevun3elaq3a"
 _discord.lorenz		TXT	"dh=dbfb5e1781f4d8aa121ce1c805e85d978b294e5b"
 _keybase		TXT	"keybase-site-verification=u-3Yei2E3-ELYHtxX6MB-I8oh4OhnmljR0mOsf1w5OA"
 lorenz			TXT	"dnslink=/ipfs/QmQnVp1YpygyiXN4gdrxo3ZtYL6BXDeUWHQB7uSPSbFVJy"

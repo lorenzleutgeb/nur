@@ -208,7 +208,7 @@ in {
             dnssec-signing = true;
           })
           (primary {domain = "leutgeb.wien";})
-          # (primary {domain = "xn--sfest-lqa6r.live";})
+          (primary {domain = "salutas.org";})
         ];
       };
     };
