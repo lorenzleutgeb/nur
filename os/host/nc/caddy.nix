@@ -19,9 +19,12 @@ in {
     allowedUDPPorts = [443];
     allowedTCPPorts = [80 443];
   };
+
+  services.nginx.enable = lib.mkForce false;
+
   services.caddy = {
     enable = true;
-    email = "lorenz.leutgeb@gmail.com";
+    email = "lorenz.leutgeb@posteo.de";
     virtualHosts =
       {
         "http://".extraConfig = "respond `${builtins.toJSON {
