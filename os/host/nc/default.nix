@@ -34,6 +34,7 @@ in {
     ./unifi.nix
     ./vaultwarden.nix
     ./wireguard.nix
+    ./keycloak.nix
   ];
 
   fileSystems =
