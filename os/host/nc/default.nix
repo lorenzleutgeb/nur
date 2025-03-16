@@ -30,7 +30,7 @@ in {
     #./nextcloud.nix
     ./nullmailer.nix
     ./tor.nix
-    ./frigate.nix
+    #./frigate.nix
     ./unifi.nix
     ./vaultwarden.nix
     ./wireguard.nix
