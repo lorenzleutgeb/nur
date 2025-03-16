@@ -6,7 +6,7 @@
     # Don't forget to also adjust the URL for home-manager below
     # accordingly.
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "github:lorenzleutgeb/nixpkgs/tmp";
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.11";
     nixpkgs.follows = "nixpkgs-stable";
 
     compat.url = "github:edolstra/flake-compat";
