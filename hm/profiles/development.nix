@@ -22,6 +22,7 @@ with builtins; {
     ../programs/zsh
     ../services/mpris-proxy.nix
     ../services/radicle.nix
+    ../programs/radicle.nix
     ../services/syncthing.nix
   ];
 
