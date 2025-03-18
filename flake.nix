@@ -60,6 +60,13 @@
         nixpkgs-stable.follows = "nixpkgs-stable";
       };
     };
+    radicle-tui = {
+      url = "git+https://seed.radicle.xyz/z39mP9rQAaGmERfUMPULfPUi473tY.git?ref=main";
+      inputs = {
+        flake-utils.follows = "utils";
+        nixpkgs.follows = "nixpkgs";
+      };
+    };
   };
 
   outputs = inputs @ {
@@ -73,6 +80,7 @@
     sops,
     vscode-server,
     wsl,
+    radicle-tui,
     ...
   }: let
     lib = nixpkgs.lib.recursiveUpdate nixpkgs.lib (import ./lib.nix {inherit (nixpkgs) lib;});
@@ -115,10 +123,12 @@
       };
     };
 
-    pkgs = import nixpkgs {
-      inherit system;
-      overlays = attrValues self.overlays;
-    };
+    pkgs =
+      import nixpkgs {
+        inherit system;
+        overlays = attrValues self.overlays;
+      }
+      // radicle-tui.packages.${system};
 
     importPackages = pkgs:
       import ./pkg {
