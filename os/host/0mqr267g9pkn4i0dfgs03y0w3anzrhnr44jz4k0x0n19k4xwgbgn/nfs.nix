@@ -3,12 +3,12 @@
     rpcbind.enable = true;
     nfs.server = {
       enable = true;
-      hostName = "0mqr.lorenz.hs.leutgeb.xyz";
+      hostName = "0mqr";
 
       # <https://man7.org/linux/man-pages/man5/exports.5.html>
       exports = ''
-        /mnt/share nc.lorenz.hs.leutgeb.xyz(fsid=1,rw,insecure,no_root_squash,no_subtree_check)
-        /mnt/lorenz-sync nc.lorenz.hs.leutgeb.xyz(fsid=2,ro,insecure,no_root_squash,no_subtree_check)
+        /mnt/share 100.85.40.10(fsid=1,rw,insecure,no_root_squash,no_subtree_check)
+        /mnt/lorenz-sync 100.85.40.10(fsid=2,ro,insecure,no_root_squash,no_subtree_check)
       '';
     };
   };
