@@ -29,7 +29,7 @@
       enable = true;
       openFirewall = true;
       unifiPackage = pkgs.unifi;
-      mongodbPackage = pkgs.pkgs.mongodb-6_0;
+      mongodbPackage = pkgs.mongodb-ce;
     };
   };
 }
