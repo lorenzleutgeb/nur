@@ -9,6 +9,14 @@
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.11";
     nixpkgs.follows = "nixpkgs-stable";
 
+    authentik = {
+      url = "github:nix-community/authentik-nix";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-compat.follows = "compat";
+        flake-utils.follows = "utils";
+      };
+    };
     compat.url = "github:edolstra/flake-compat";
     hardware.url = "github:NixOS/nixos-hardware";
     hm = {
@@ -71,6 +79,7 @@
 
   outputs = inputs @ {
     self,
+    authentik,
     hardware,
     hm,
     nixpkgs,
@@ -103,6 +112,7 @@
 
     modules = {
       input = [
+        authentik.nixosModules.default
         nixpkgs.nixosModules.notDetected
         hm.nixosModules.home-manager
         sops.nixosModules.sops
