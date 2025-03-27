@@ -30,6 +30,8 @@
       openFirewall = true;
       unifiPackage = pkgs.unifi;
       mongodbPackage = pkgs.mongodb-ce;
+      maximumJavaHeapSize = 1024;
+      initialJavaHeapSize = 128;
     };
   };
 }

@@ -34,7 +34,7 @@ in {
     ./unifi.nix
     ./vaultwarden.nix
     ./wireguard.nix
-    ./keycloak.nix
+    #./keycloak.nix
     ./authentik.nix
   ];
 

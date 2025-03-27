@@ -25,6 +25,10 @@ in {
   services.caddy = {
     enable = true;
     email = "lorenz.leutgeb@posteo.de";
+    package = pkgs.caddy.withPlugins {
+      plugins = ["github.com/mholt/caddy-l4@master"];
+      hash = "";
+    };
     virtualHosts =
       {
         "http://".extraConfig = "respond `${builtins.toJSON {
