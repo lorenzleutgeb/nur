@@ -7,7 +7,7 @@
     # accordingly.
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.11";
-    nixpkgs.follows = "nixpkgs-stable";
+    nixpkgs.follows = "nixpkgs-unstable";
 
     authentik = {
       url = "github:nix-community/authentik-nix";
@@ -20,7 +20,7 @@
     compat.url = "github:edolstra/flake-compat";
     hardware.url = "github:NixOS/nixos-hardware";
     hm = {
-      url = "github:nix-community/home-manager/release-24.11";
+      url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     rust-overlay = {
