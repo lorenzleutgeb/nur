@@ -76,9 +76,9 @@ in {
       group = lib.mkForce caddy.group;
     };
     cgit.radicle = {
-      enable = true;
+      enable = false;
       scanPath = "/var/lib/radicle/storage";
-      package = pkgs.cgit-pink-radicle;
+      #package = pkgs.cgit-pink-radicle;
       settings = {
         enable-git-config = true;
         enable-blame = true;

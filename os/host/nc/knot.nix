@@ -187,6 +187,7 @@ in {
             notify = "notify";
             acl = [
               "transfer"
+              "acme"
             ];
           }
         ];
