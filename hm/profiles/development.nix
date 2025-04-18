@@ -22,7 +22,6 @@ with builtins; {
     ../programs/zsh
     ../services/mpris-proxy.nix
     ../services/radicle.nix
-    ../programs/radicle.nix
     ../services/syncthing.nix
   ];
 
@@ -119,7 +118,6 @@ with builtins; {
     tree
     wally-cli
     wget
-    wrangler
     xclip
     xdotool
     yubikey-personalization

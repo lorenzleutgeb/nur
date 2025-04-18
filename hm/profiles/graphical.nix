@@ -63,7 +63,6 @@ with builtins; {
     transmission_4-gtk
     obs-studio
     vlc
-    wrangler
     xclip
     xdotool
     yubikey-personalization

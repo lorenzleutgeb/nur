@@ -1,10 +1,14 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  config,
+  ...
+}: {
   home = {
     sessionPath = ["$HOME/.cargo/bin"];
     packages = with pkgs; [rustup];
   };
 
-  programs.vscode = {
+  programs.vscode.profiles.${config.home.username} = {
     userSettings = {
       "rust-analyzer.updates.askBeforeDownload" = false;
     };

@@ -23,8 +23,6 @@
     ./nfs.nix
     ./rsync.nix
     ./tor.nix
-    ./concourse.nix
-    ./caddy.nix
     ./ttyd.nix
   ];
 

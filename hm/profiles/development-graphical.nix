@@ -42,7 +42,6 @@ with builtins; {
     transmission_4-gtk
     universal-ctags
     obs-studio
-    wrangler
     xclip
     xdotool
     yubikey-personalization
