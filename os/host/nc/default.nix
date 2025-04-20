@@ -35,7 +35,7 @@ in {
     ./vaultwarden.nix
     ./wireguard.nix
     #./keycloak.nix
-    ./authentik.nix
+    #./authentik.nix
   ];
 
   fileSystems =
