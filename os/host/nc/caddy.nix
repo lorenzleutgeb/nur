@@ -32,7 +32,7 @@ in {
     email = "lorenz.leutgeb@posteo.de";
     package = pkgs.caddy.withPlugins {
       plugins = ["github.com/caddy-dns/rfc2136@v0.2.0"];
-      hash = "sha256-2/ij0GZw6WSd5SE3e130ugcxHaeXl2K0ufigYyJvKhY=";
+      hash = "sha256-W9tl+BGHSlPDBcMOQ3G1wTk7DTUSrQC2A7KB4wsf3OI=";
     };
     virtualHosts =
       {
