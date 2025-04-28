@@ -11,7 +11,7 @@ in {
     ../../mixin/dns.nix
     ../../mixin/fonts.nix
     (import ../../mixin/lorenz.nix {inherit username;})
-    ../../mixin/mkcert
+    #../../mixin/mkcert
     ../../mixin/mpi-klsb.nix
     ../../mixin/nix.nix
     ../../mixin/sops.nix
@@ -19,9 +19,10 @@ in {
     #../../mixin/tailscale.nix
   ];
 
+  hardware.graphics.enable = true;
+
   wsl = {
     enable = true;
-    nativeSystemd = true;
     wslConf = {
       user.default = username;
       network = {
