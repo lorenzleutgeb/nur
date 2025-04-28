@@ -1,5 +1,6 @@
 cc4280c21e43205b8b622d958beac36026d37116 refs/cobs/xyz.radicle.id/b63679ab2bc6c8c61a314ade4a4913891c6ab506
 fa1ecd6fc308365a299e418977fa8ccb8a9a9b72 refs/heads/cli-cob
-28e07e5c40dc98f7a4bd628ab8c3beb66db76ff9 refs/heads/main
+faaaae3567f18008a7e1fde926ebbe46a0a6f43d refs/heads/main
 6ab3bfcba0577fabdcb84498441c6605391290f4 refs/heads/master
 63abb4ec53caf639bae62e53d992b7f267c0b3c3 refs/heads/test
+b63679ab2bc6c8c61a314ade4a4913891c6ab506 refs/rad/root
