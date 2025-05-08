@@ -5,6 +5,7 @@
     ./profiles/mpi-klsb.nix
     ./profiles/terminal.nix
     ./profiles/spass.nix
+    ./profiles/radicle.nix
     ./profiles/summer-of-nix.nix
     ./programs/vscode.nix
     ./profiles/wsl.nix
