@@ -63,6 +63,7 @@ in {
 
   services = {
     cron.enable = true;
+    envfs.enable = true;
     #journald.extraConfig = "ReadKMsg=no";
     openssh = {
       enable = true;
