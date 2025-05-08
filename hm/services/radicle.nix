@@ -1,10 +1,15 @@
 {
+  pkgs,
   lib,
   osConfig,
   ...
 }: let
   tor = osConfig.services.tor.client;
 in {
+  home.packages = with pkgs; [
+    python3Packages.zulip # for rad-zulip
+  ];
+
   programs.radicle = {
     uri = {
       web-rad.enable = false;
