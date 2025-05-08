@@ -76,7 +76,7 @@ in {
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.lorenz.extraGroups = ["docker" "networkmanager"];
+  users.users.lorenz.extraGroups = ["docker"];
 
   nixpkgs.hostPlatform = "x86_64-linux";
 
@@ -84,12 +84,8 @@ in {
 
   networking = {
     firewall.enable = false;
-    networkmanager = {
-      enable = true;
-      dns = "systemd-resolved";
-    };
     hostName = "wsl";
-    nameservers = [];
+    useDHCP = false;
   };
 
   security = {
@@ -136,7 +132,7 @@ in {
         User = "root";
       };
     };
-    services.systemd-resolved.enable = true;
+    network.enable = true;
     /*
     network = {
       enable = true;
