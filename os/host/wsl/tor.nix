@@ -8,7 +8,6 @@
       onionServices = {
         "radicle".map = [
           {port = 8776;}
-          {port = 8000;}
         ];
       };
     };
