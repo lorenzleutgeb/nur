@@ -129,6 +129,7 @@
       self = {
         "programs.radicle" = ./hm/module/programs/radicle.nix;
         "services.radicle" = ./hm/module/services/radicle.nix;
+        "services.radicle-mirror" = ./hm/module/services/radicle-mirror.nix;
         "services.ulauncher" = ./hm/module/services/ulauncher.nix;
       };
     };
