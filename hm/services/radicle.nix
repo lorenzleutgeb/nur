@@ -72,15 +72,20 @@ in {
         (optional tor.enable tor.address)
         ++ (optional ygg.enable ygg.address);
       listen =
-        (optional ygg.enable ygg.address)
-        ++ (optional tor.enable "[::1]:${toString port}");
+        optional ygg.enable ygg.address;
+      #++ (optional tor.enable "[::1]:${toString port}");
     };
   };
   services.radicle = {
     node = {
       enable = true;
-      lazy = true;
+      lazy = false;
     };
     #httpd.enable = true;
+  };
+
+  services.radicle-mirror = {
+    "z3gqcJUoA1n9HaHKufZs5FCSGazv5".remote = "git@github.com:lorenzleutgeb/heartwood.git";
+    "z3WFXKNQgDcHHATJx1PxL1XhDot9u".remote = "git@github.com:lorenzleutgeb/nur.git";
   };
 }
