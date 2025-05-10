@@ -31,11 +31,10 @@ in {
       desktop-file-utils
       rustup
     ];
-  };
-
-  programs.zsh.shellAliases = {
-    "wsl-open" = explorer;
-    "x-www-browser" = explorer;
+    shellAliases = {
+      "wsl-open" = explorer;
+      "x-www-browser" = explorer;
+    };
   };
 
   xdg = {

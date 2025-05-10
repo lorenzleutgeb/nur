@@ -38,7 +38,6 @@
 
   programs = {
     sedutil.enable = true;
-    zsh.enable = true;
   };
 
   fileSystems = {

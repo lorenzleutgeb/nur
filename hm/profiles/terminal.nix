@@ -10,6 +10,7 @@ with builtins; {
     ./common.nix
     ./nixbuild.nix
     ./sops
+    ./shell.nix
     #../programs/docker.nix
     ../programs/atuin.nix
     ../programs/bat
@@ -25,7 +26,7 @@ with builtins; {
     ../programs/ripgrep.nix
     ../programs/ssh.nix
     ../programs/tmux
-    ../programs/zsh
+    ../programs/fish.nix
     ../services/gpg-agent.nix
     #../services/syncthing.nix
   ];

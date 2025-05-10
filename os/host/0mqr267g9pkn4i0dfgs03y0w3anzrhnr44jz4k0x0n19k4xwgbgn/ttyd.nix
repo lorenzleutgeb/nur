@@ -10,7 +10,7 @@
 
   user = config.users.users.lorenz;
 
-  attach = ["${getExe pkgs.tmux}" "new-session" "-A" "-s" "ttyd" "${getExe pkgs.zsh}"];
+  attach = ["${getExe pkgs.tmux}" "new-session" "-A" "-s" "ttyd"];
 in {
   services.ttyd = {
     enable = true;

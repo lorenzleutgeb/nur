@@ -97,8 +97,6 @@
           style = "Block";
           unfocused_hollow = true;
         };
-
-        shell.program = "zsh";
       };
     };
   };

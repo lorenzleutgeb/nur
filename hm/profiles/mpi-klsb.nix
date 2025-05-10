@@ -1,4 +1,5 @@
 {
+  config,
   pkgs,
   inputs,
   ...
@@ -38,6 +39,7 @@ in {
       };
     };
     packages = with pkgs; [subversion];
+    shellAliases."update-known-hosts" = "curl --silent 'https://ca.mpi-klsb.mpg.de/ssh_known_hosts' -o \"${config.home.homeDirectory}/${known}\"";
   };
 
   programs = {
@@ -61,6 +63,5 @@ in {
         };
       };
     };
-    zsh.shellAliases."update-known-hosts" = "curl --silent 'https://ca.mpi-klsb.mpg.de/ssh_known_hosts' -o \"$HOME/${known}\"";
   };
 }

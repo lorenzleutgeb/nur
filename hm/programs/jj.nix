@@ -11,5 +11,5 @@
     };
   };
 
-  programs.zsh.shellAliases.j = "jj";
+  home.shellAliases.j = "jj";
 }

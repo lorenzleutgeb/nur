@@ -5,7 +5,7 @@ in {
 
   programs.atuin = {
     enable = true;
-    enableZshIntegration = true;
+    enableFishIntegration = true;
     settings = {
       style = "compact";
       sync_frequency = "30m";
@@ -13,9 +13,4 @@ in {
       key_file = config.sops.secrets.${key}.path;
     };
   };
-
-  programs.zsh.initContent = ''
-    bindkey -M viins '^R' _atuin_search_widget
-    bindkey -M vicmd '^R' _atuin_search_widget
-  '';
 }

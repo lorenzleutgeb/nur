@@ -19,7 +19,6 @@ with builtins; {
     ../programs/ripgrep.nix
     ../programs/ssh.nix
     ../programs/cakeml.nix
-    ../programs/zsh
     ../services/mpris-proxy.nix
     ../services/syncthing.nix
   ];
