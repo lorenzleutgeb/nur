@@ -20,8 +20,9 @@ in {
 
   services = {
     resolved = {
+      llmnr = "false";
+      dnsovertls = "true";
       fallbackDns = dns;
-      extraConfig = "DNSOverTLS=yes";
     };
 
     headscale.settings.dns_config = {
@@ -29,10 +30,5 @@ in {
       nameservers = ["https://dns.nextdns.io/${nextDns.id}"];
       magic_dns = true;
     };
-  };
-
-  environment.etc = lib.mkIf (config.networking.networkmanager.dns == "dnsmasq") {
-    "NetworkManager/dnsmasq.d/cloudflare.conf".text = "server=1.1.1.1";
-    "NetworkManager/dnsmasq.d/interface.conf".text = "interface=lo";
   };
 }

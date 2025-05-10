@@ -72,7 +72,6 @@ in {
     kubo.enable = false;
     pcscd.enable = true;
     printing.enable = false;
-    resolved.enable = true;
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.

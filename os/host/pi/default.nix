@@ -76,7 +76,6 @@
       ];
     };
     tailscale.enable = true;
-    resolved.enable = true;
   };
 
   nixpkgs = {

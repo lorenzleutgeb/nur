@@ -258,8 +258,6 @@
     logind.extraConfig = ''
       RuntimeDirectorySize=24G
     '';
-
-    resolved.enable = true;
   };
 
   users.users.lorenz.extraGroups = [
