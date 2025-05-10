@@ -65,7 +65,7 @@ in {
           args = mkOption {
             description = "Arguments to pass to `git fetch`.";
             example = ["--force" "--verbose"];
-            default = ["--force" "--prune" "--porcelain"];
+            default = ["--force" "--prune" "--porcelain" "--quiet"];
             type = listOf str;
           };
           refs = {
@@ -121,6 +121,7 @@ in {
         }: {
           name = "radicle-mirror-${rid}";
           value = {
+	    Install.WantedBy = ["paths.target"];
             Unit = unit rid remote;
             Path.PathChanged = map (ref: "${storage}/${rid}/${ref}") refs.watch;
           };
@@ -137,7 +138,10 @@ in {
         }: {
           name = "radicle-mirror-${rid}";
           value = {
-            Unit = unit rid remote;
+	    Install = {
+	      WantedBy = ["default.target"];
+	    };
+            Unit = (unit rid remote);
             Service = {
               Type = "oneshot";
               ExecStart =
@@ -148,6 +152,10 @@ in {
                   ++ refs.mirror ++ (flatten (mapAttrsToList (id: {refspecs, ...}: map (spec: "refs/namespaces/${id}/${spec}") refspecs) nodes)));
               WorkingDirectory = "${storage}/${rid}";
               Environment = ["PATH=${getBin pkgs.openssh}/bin"];
+	      Restart = "on-failure";
+	      RestartSec = "10s";
+	      RestartSteps = "5";
+	      RestartMaxDelaySec = "5min";
             };
           };
         })
