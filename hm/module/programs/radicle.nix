@@ -131,7 +131,8 @@ in {
       node = {
         args = mkOption {
           type = str;
-          default = "--listen 0.0.0.0:8776 --force";
+          default = "";
+          example = "--listen 0.0.0.0:8776 --force";
         };
         package = mkPackageOption pkgs "radicle-node" {};
       };

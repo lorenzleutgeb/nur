@@ -61,29 +61,22 @@ in {
             }))
             ++ (optional (!ygg.enable && !tor.enable) (connectAddr {
               inherit nid;
-              addr = "seed.leutgeb.xyz";
+              addr = "node.radicle.lorenz.leutgeb.xyz";
             }))
         );
       onion = mkIf tor.enable {
         mode = "proxy";
-        address = with tor.socksListenAddress; "${addr}:${toString port}";
+        address = "${tor.socksListenAddress.addr}:${toString tor.socksListenAddress.port}";
       };
-      /*
       externalAddresses =
-        (optional tor.enable tor.address)
-        ++ (optional ygg.enable ygg.address);
+        (optional tor.enable tor.address) ++ (optional ygg.enable ygg.address);
       listen =
-        optional ygg.enable ygg.address;
-	++ (optional tor.enable "[::1]:${toString port}");
-      */
+        (optional tor.enable "[::1]:${toString port}") ++ (optional ygg.enable ygg.address);
     };
   };
-  services.radicle = {
-    node = {
-      enable = true;
-      lazy = false;
-    };
-    #httpd.enable = true;
+  services.radicle.node = {
+    enable = true;
+    lazy = true;
   };
 
   services.radicle-mirror = {
