@@ -14,7 +14,7 @@ in {
     };
   };
 
-  programs.zsh.initExtra = ''
+  programs.zsh.initContent = ''
     bindkey -M viins '^R' _atuin_search_widget
     bindkey -M vicmd '^R' _atuin_search_widget
   '';

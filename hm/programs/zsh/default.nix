@@ -74,7 +74,7 @@ with builtins; {
       ];
     };
 
-    initExtra = readFile ./rc;
+    initContent = readFile ./rc;
   };
 
   home = {
