@@ -82,6 +82,7 @@ with builtins; {
     siji
     signal-cli
     skaffold
+    socat
     sshfs-fuse
     universal-ctags
     usbutils
