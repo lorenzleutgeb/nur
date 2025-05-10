@@ -10,14 +10,14 @@
 
   port = 8776;
   tor =
-    osConfig.services.tor.client
+    (osConfig.services.tor.client or {enable = false;})
     // {
       # TODO: Depends on Tor running on the system.
       # sudo -u tor cat /var/lib/tor/onion/radicle/hostname
       address = "x3usylutxxwujquc4dut44krigmbmfxqgeyz2duoqkjiocvrmzwoxtad.onion:${toString port}";
     };
   ygg =
-    osConfig.services.yggdrasil
+    (osConfig.services.yggdrasil or {enable = false;})
     // {
       # TODO: Depends on Yggdrasil running on the system.
       # sudo -u yggdrasil yggdrasilctl getSelf

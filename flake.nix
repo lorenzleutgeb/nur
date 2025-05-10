@@ -98,6 +98,7 @@
       (lib)
       attrValues
       dirToAttrs
+      flatten
       nameValuePair
       mapAttrs
       mapAttrs'
@@ -237,6 +238,30 @@
       nixosModules = mapAttrs (_: import) (dirToAttrs ./os/module);
 
       nixosConfigurations = let dir = ./os/host; in mapAttrs (id: _: host id (import (dir + "/${id}"))) (readDir dir);
+
+      homeConfigurations.lorenz = hm.lib.homeManagerConfiguration {
+        inherit pkgs;
+
+        extraSpecialArgs.osConfig = {
+          users.users.lorenz = {
+            uid = 1000;
+            shell = pkgs.dash;
+          };
+          networking.hostName = "localhost";
+          nix.package = pkgs.nix;
+        };
+
+        modules =
+          homeModules.input
+          ++ (attrValues homeModules.self)
+          ++ [
+            {
+              imports = flatten (attrValues (import ./hm));
+              nixpkgs.config.allowUnfree = true;
+              home.username = "lorenz";
+            }
+          ];
+      };
 
       devShell.${system} = pkgs.mkShell {
         inherit (self.checks.${system}.pre-commit) shellHook;
