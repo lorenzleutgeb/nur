@@ -68,18 +68,20 @@ in {
         mode = "proxy";
         address = with tor.socksListenAddress; "${addr}:${toString port}";
       };
+      /*
       externalAddresses =
         (optional tor.enable tor.address)
         ++ (optional ygg.enable ygg.address);
       listen =
-        (optional ygg.enable ygg.address)
-        ++ (optional tor.enable "[::1]:${toString port}");
+        optional ygg.enable ygg.address;
+	++ (optional tor.enable "[::1]:${toString port}");
+      */
     };
   };
   services.radicle = {
     node = {
       enable = true;
-      lazy = true;
+      lazy = false;
     };
     #httpd.enable = true;
   };
