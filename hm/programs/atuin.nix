@@ -5,12 +5,17 @@ in {
 
   programs.atuin = {
     enable = true;
+    daemon.enable = true;
     enableFishIntegration = true;
     settings = {
-      style = "compact";
-      sync_frequency = "30m";
-      update_check = "false";
+      filter_mode = "workspace";
       key_file = config.sops.secrets.${key}.path;
+      keymap_mode = "vim-insert";
+      prefers_reduced_motion = "true";
+      show_help = "false";
+      style = "auto";
+      update_check = "false";
+      workspaces = "true";
     };
   };
 }
