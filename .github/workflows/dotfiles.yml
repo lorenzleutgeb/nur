@@ -8,13 +8,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - uses: cachix/install-nix-action@v18
-      with:
-        nix_path: "nixpkgs=channel:nixos-unstable"
-    - run: |
-        nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
-        nix-channel --update
-        nix-shell -I $HOME/.nix-defexpr/channels '<home-manager>' -A install
-    - run: home-manager -v build --show-trace --impure --flake .#wsl
+    - run: nix run nixpkgs#home-manager -- -v build --show-trace --impure --flake .#wsl
     - run: |
         cp --verbose --dereference --recursive result/home-files dotfiles
         chmod ug+w dotfiles
