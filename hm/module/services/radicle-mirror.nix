@@ -44,7 +44,7 @@
   opt = options.services.radicle-mirror;
 
   radicleHome = config.home.homeDirectory + "/.radicle";
-  storage = "${radicleHome}/storage/%i";
+  storage = "${radicleHome}/storage";
 in {
   meta.maintainers = with lib.maintainers; [lorenzleutgeb];
 
@@ -107,8 +107,8 @@ in {
 
   config = {
     systemd.user = let
-      unit = remote: {
-        Description = "Mirror %i to ${remote}";
+      unit = rid: remote: {
+        Description = "Mirror ${rid} to ${remote}";
         SourcePath = ./.;
         ConditionDirectoryNotEmpty = storage;
       };
@@ -119,10 +119,10 @@ in {
           remote,
           ...
         }: {
-          name = "radicle-mirror@${rid}";
+          name = "radicle-mirror-${rid}";
           value = {
-            Unit = unit remote;
-            Path.PathChanged = map (ref: "${storage}/${ref}") refs.watch;
+            Unit = unit rid remote;
+            Path.PathChanged = map (ref: "${storage}/${rid}/${ref}") refs.watch;
           };
         })
         cfg;
@@ -135,9 +135,9 @@ in {
           remote,
           ...
         }: {
-          name = "radicle-mirror@${rid}";
+          name = "radicle-mirror-${rid}";
           value = {
-            Unit = unit remote;
+            Unit = unit rid remote;
             Service = {
               Type = "oneshot";
               ExecStart =
@@ -146,7 +146,7 @@ in {
                   ++ args
                   ++ [remote]
                   ++ refs.mirror ++ (flatten (mapAttrsToList (id: {refspecs, ...}: map (spec: "refs/namespaces/${id}/${spec}") refspecs) nodes)));
-              WorkingDirectory = storage;
+              WorkingDirectory = "${storage}/${rid}";
               Environment = ["PATH=${getBin pkgs.openssh}/bin"];
             };
           };
