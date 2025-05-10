@@ -79,7 +79,6 @@ with builtins; {
 
   home = {
     packages = [pkgs.sqlite];
-    sessionPath = ["$HOME/.nix-profile/bin" "/run/current-system/sw/bin"];
   };
 
   home.file.".profile".text =

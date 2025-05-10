@@ -30,7 +30,7 @@
     # changes in each release.
     stateVersion = "20.03";
 
-    sessionPath = ["$HOME/bin"];
+    sessionPath = ["${config.home.homeDirectory}/bin"];
     packages = [pkgs.xdg-utils];
 
     sessionVariables = {
