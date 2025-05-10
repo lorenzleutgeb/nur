@@ -81,13 +81,13 @@ in {
 
   services.radicle-mirror = {
     "z3gqcJUoA1n9HaHKufZs5FCSGazv5" = {
-      remote = "git@github.com:lorenzleutgeb/heartwood.git";
+      remote = "gh:ll/heartwood";
       refs.watch = ["refs/heads/master"];
       nodes = {
         "z6MkireRatUThvd3qzfKht1S44wpm4FEWSSa4PRMTSQZ3voM".alias = "FintanH";
         "z6MksFqXN3Yhqk8pTJdUGLwATkRfQvwZXPqR2qMEhbS9wzpT".alias = "cloudhead";
       };
     };
-    "z3WFXKNQgDcHHATJx1PxL1XhDot9u".remote = "git@github.com:lorenzleutgeb/nur.git";
+    "z3WFXKNQgDcHHATJx1PxL1XhDot9u".remote = "gh:ll/nur";
   };
 }
