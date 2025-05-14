@@ -1,11 +1,16 @@
 $TTL 360
 
-@			SOA	ns1 lorenz\.leutgeb.posteo.de. 2025031301 14400 3600 1209600 3600
+@			SOA	ns1 lorenz\.leutgeb.posteo.de. 2025042100 14400 3600 1209600 3600
 
 $INCLUDE common.zone
+
+@			TXT	"hosted-email-verify=cjqv7oqf"
 
 key1._domainkey		CNAME	key1.salutas.org._domainkey.migadu.com.
 key2._domainkey		CNAME	key2.salutas.org._domainkey.migadu.com.
 key3._domainkey		CNAME	key3.salutas.org._domainkey.migadu.com.
 
 storage			CNAME	e
+
+mittelgasse.lea		A	193.238.236.138
+			AAAA	2a02:1748:ff10::f480:8f26:4ca6:1b90

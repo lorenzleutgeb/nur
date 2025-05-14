@@ -209,7 +209,10 @@ in {
             dnssec-signing = true;
           })
           (primary {domain = "leutgeb.wien";})
-          (primary {domain = "salutas.org";})
+          (primary {
+            domain = "salutas.org";
+            dnssec-signing = true;
+          })
         ];
       };
     };
