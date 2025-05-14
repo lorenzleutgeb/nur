@@ -134,6 +134,15 @@ in {
   #extraVirtualAliases.${localMail "theres-und-lorenz"} = ["theressophie@gmail.com" "${me.email}"];
 
   services = {
+    yggdrasil = {
+      enable = true;
+      persistentKeys = true;
+      settings.Peers = [
+        "tcp://ygg-uplink.thingylabs.io:80"
+        "tls://109.176.250.101:65534"
+        "tcp://vpn.itrus.su:7991"
+      ];
+    };
     fail2ban.enable = true;
     qemuGuest.enable = true;
     openssh = {
