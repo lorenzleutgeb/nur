@@ -30,10 +30,12 @@ in {
   services.caddy = {
     enable = true;
     email = "lorenz.leutgeb@posteo.de";
+    /*
     package = pkgs.caddy.withPlugins {
       plugins = ["github.com/caddy-dns/rfc2136@v0.2.0"];
       hash = "sha256-W9tl+BGHSlPDBcMOQ3G1wTk7DTUSrQC2A7KB4wsf3OI=";
     };
+    */
     virtualHosts =
       {
         "http://".extraConfig = "respond `${builtins.toJSON {
@@ -45,6 +47,7 @@ in {
       // (static "lorenz.leutgeb.xyz")
       // (static "falsum.org")
       // (static "salutas.org");
+    /*
     extraConfig = ''
       acme_dns rfc2136 {
         key_name "acme"
@@ -53,5 +56,6 @@ in {
         server "127.0.0.1:53"
       }
     '';
+    */
   };
 }
