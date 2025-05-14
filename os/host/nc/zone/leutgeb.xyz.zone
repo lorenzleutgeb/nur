@@ -18,3 +18,15 @@ _atproto.lorenz		TXT	"did=did:plc:za676zfedjshnevun3elaq3a"
 _discord.lorenz		TXT	"dh=dbfb5e1781f4d8aa121ce1c805e85d978b294e5b"
 _keybase		TXT	"keybase-site-verification=u-3Yei2E3-ELYHtxX6MB-I8oh4OhnmljR0mOsf1w5OA"
 lorenz			TXT	"dnslink=/ipfs/QmQnVp1YpygyiXN4gdrxo3ZtYL6BXDeUWHQB7uSPSbFVJy"
+
+garnix.radicle.lorenz	CNAME	server.main.radicle-server.lorenzleutgeb.garnix.me.
+
+b._dns-sd._udp		PTR	@ ;  b =        browse domain
+lb._dns-sd._udp		PTR	@ ; lb = legacy browse domain
+_services._dns-sd._udp	PTR	_radicle-node._tcp
+
+_radicle-node._tcp			PTR	lorenz\.leutgeb\.xyz._radicle-node._tcp
+lorenz\.leutgeb\.xyz._radicle-node._tcp	SRV	0 0 8776 nc
+					TXT	"nid=z6MkocYY4dgMjo2YeUEwQ4BP4AotL7MyovzJCPiEuzkjg127"
+
+node.radicle.lorenz	CNAME nc
