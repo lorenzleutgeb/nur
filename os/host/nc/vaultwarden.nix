@@ -19,7 +19,7 @@ in {
       enable = true;
       config = rec {
         DATA_FOLDER = libDir;
-        DOMAIN = "https://${domain}";
+        DOMAIN = "https://bitwarden.salutas.org";
         IP_HEADER = "X-Forwarded-For";
         PUSH_ENABLED = true;
         PUSH_IDENTITY_URI = "https://identity.bitwarden.eu";
@@ -27,8 +27,8 @@ in {
         ROCKET_ADDRESS = "127.0.0.1";
         ROCKET_PORT = 8222;
         SIGNUPS_ALLOWED = false;
-        SMTP_FROM = "bitwarden@leutgeb.xyz";
-        SMTP_USERNAME = "bitwarden@leutgeb.xyz";
+        SMTP_FROM = "bitwarden@salutas.org";
+        SMTP_USERNAME = "bitwarden@salutas.org";
         SMTP_FROM_NAME = "Bitwarden";
         SMTP_HOST = "smtp.migadu.com";
         SMTP_PORT = "465";
@@ -44,7 +44,10 @@ in {
       };
       environmentFile = config.sops.secrets.vaultwarden.path;
     };
-    caddy.virtualHosts.${domain}.extraConfig = ''
+    caddy.virtualHosts."bitwarden.salutas.org".extraConfig = ''
+      reverse_proxy 127.0.0.1:${builtins.toString config.services.vaultwarden.config.ROCKET_PORT}
+    '';
+    caddy.virtualHosts."bitwarden.leutgeb.xyz".extraConfig = ''
       reverse_proxy 127.0.0.1:${builtins.toString config.services.vaultwarden.config.ROCKET_PORT}
     '';
   };
