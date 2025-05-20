@@ -135,12 +135,9 @@
       };
     };
 
-    pkgs =
-      import nixpkgs {
-        inherit system;
-        overlays = attrValues self.overlays;
-      }
-      // radicle-tui.packages.${system};
+    pkgs = import nixpkgs {
+      inherit system;
+    };
 
     importPackages = pkgs:
       import ./pkg {
@@ -210,8 +207,6 @@
       result;
   in
     rec {
-      overlays = {default = final: prev: importPackages prev;} // (mapAttrs (_: v: import v inputs) (dirToAttrs ./overlay));
-
       packages.${system} =
         importPackages pkgs
         // {
