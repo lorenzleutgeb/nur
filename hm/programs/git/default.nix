@@ -9,11 +9,7 @@
   sub = section: subsection: ''${section} "${subsection}"'';
   gitalias = import ./gitalias.nix;
 in {
-  imports = [./difftastic.nix];
-
-  home.packages = with pkgs;
-  with gitAndTools; [
-    delta
+  home.packages = with pkgs.gitAndTools; [
     ghq
     git-absorb
     git-crypt
@@ -35,6 +31,8 @@ in {
     userName = "Lorenz Leutgeb";
     userEmail = "lorenz@leutgeb.xyz";
 
+    difftastic.enable = true;
+
     ignores = [
       "*.orig"
       ".dir-locals.el"
@@ -42,7 +40,12 @@ in {
       "/.direnv/"
       "/.env"
       "/.envrc"
-      "/result/"
+      "/result"
+      "__pycache__"
+      "*.pdf"
+      "*.o"
+      "*.a"
+      "*.so"
     ];
 
     aliases = {
@@ -63,8 +66,8 @@ in {
       mm = "! git branch -m master main && git fetch origin && git branch -u origin/main main && git remote set-head origin -a";
       month = "! git log --no-merges --since='last month' --author=$USER --reverse --pretty=format:'%cd %s %d' --date=short";
       mr = "! sh -c 'git fetch $1 merge-requests/$2/head:mr-$1-$2 && git checkout mr-$1-$2' -";
-      p = "push";
       pam = "!f() { branch=\"$(git rev-parse --abbrev-ref HEAD)\" ; git checkout --detach ; git commit $@ ; git push self HEAD:refs/patches ; git checkout \"$branch\" ; }; f";
+      p = "push";
       pf = "push --force-with-lease";
       pff = "push --force";
       pr = "!f() { remote=\${2:-origin} ; git fetch $remote refs/pull/$1/head:#$1 ; } ; f";
@@ -76,154 +79,175 @@ in {
       rs = ''
         !grs() { git remote show ''${1:-origin} | grep -vE "\stracked$" ;}; grs'';
       s = "status --short --branch";
-      sh = "show --ext-diff";
       suffix = "!gsuffix() { mv -v \${GIT_PREFIX}\${1} \${GIT_PREFIX}\${1}-$(git describe --abbrev=\${2:-4} --always --dirty) ;}; gsuffix";
       tags = "tag -l";
       who = "!gwho() { git log --pretty=%an $@ | sort | uniq ;}; gwho";
       yesterday = "! git log --no-merges --since='yesterday' --author=$USER --reverse --pretty=format:'%cd %s %d' --date=short";
     };
 
+    attributes = [
+      "*.* diff=difft"
+    ];
+
     extraConfig =
-      # External tools that can be configured via gitconfig.
       {
         ghq.root = "~/src";
+
         delta = {
           theme = "Monokai Extended";
           features = "line-numbers decorations side-by-side";
           navigate = true;
         };
       }
-      // (recursiveUpdate
-        # https://blog.gitbutler.com/how-git-core-devs-configure-git/
-        {
-          column.ui = "auto";
-          branch.sort = "-committerdate";
-          tag.sort = "version:refname";
-          init.defaultBranch = "main";
-          diff = {
-            algorithm = "histogram";
-            colormoved = "plain";
-            mnemonicPrefix = true;
-            renames = true;
-          };
-          push = {
-            default = "simple";
-          };
-          fetch = {
-            prune = true;
-            pruneTags = true;
-            all = true;
-          };
+      // {
+        branch = {
+          # Automatic remote tracking.
+          autoSetupMerge = "always";
+          # Automatically use rebase for new branches.
+          autoSetupRebase = "always";
+          sort = "-committerdate";
+        };
 
-          help.autocorrect = "prompt";
-          commit.verbose = true;
+        checkout = {
+          defaultRemote = "origin";
+          guess = true;
+          thresholdForParallelism = 0;
+        };
 
-          rerere = {
-            enabled = true;
-            autoupdate = true;
-          };
+        core = {
+          editor = "nvim";
+          autocrlf = "input";
+          commitGraph = true;
+        };
 
-          rebase = {
-            # Support fixup and squash commits.
-            autoSquash = true;
-            # Stash dirty worktree before rebase.
-            autoStash = true;
-            updateRefs = true;
-          };
-        } {
-          branch = {
-            # Automatic remote tracking.
-            autoSetupMerge = "always";
-            # Automatically use rebase for new branches.
-            autoSetupRebase = "always";
-          };
-          checkout = {
-            defaultRemote = "origin";
-            guess = true;
-            thresholdForParallelism = 0;
-          };
-          core = {
-            pager = "delta";
-            editor = "nvim";
-            autocrlf = "input";
-            commitGraph = true;
-          };
-          difftool.prompt = "false";
-          fetch = {
-            negotiationAlgorithm = "skipping";
-            prune = true;
-            parallel = 0;
-            recurseSubmodules = true;
-            writeCommitGraph = true;
-          };
-          interactive.diffFilter = "delta --color-only";
-          merge = {
-            ff = false;
-            guitool = "meld";
-            conflictStyle = "zdiff3";
-          };
-          mergetool = {
-            prompt = false;
-            keepBackup = "false";
-          };
-          log.date = "iso8601";
-          pull.ff = "only";
-          rebase.updateRefs = true;
-          sendemail = {
-            smtpEncryption = "tls";
-            smtpServerPort = 587;
-            annotate = true;
-          };
-          status.showStash = true;
-          url = let
-            mk = {
-              base,
-              short,
-            }: {
-              name = "ssh://git@${base}";
-              value = {
-                # See <https://git-scm.com/docs/git-config#Documentation/git-config.txt-urlltbasegtinsteadOf>.
-                insteadOf = short;
-                # See <https://git-scm.com/docs/git-config#Documentation/git-config.txt-urlltbasegtpushInsteadOf>.
-                pushInsteadOf = "https://${base}";
-              };
+        column.ui = "auto";
+
+        commit.verbose = true;
+
+        diff = {
+          algorithm = "histogram";
+          colormoved = true;
+          mnemonicPrefix = true;
+          renames = true;
+        };
+
+        difftool.prompt = "false";
+
+        fetch = {
+          prune = true;
+          pruneTags = true;
+          all = true;
+          negotiationAlgorithm = "skipping";
+          parallel = 0;
+          recurseSubmodules = true;
+          writeCommitGraph = true;
+        };
+
+        help.autocorrect = "prompt";
+
+        init.defaultBranch = "main";
+
+        log.date = "iso8601";
+
+        merge = {
+          ff = false;
+          guitool = "meld";
+          conflictStyle = "zdiff3";
+        };
+
+        mergetool = {
+          prompt = false;
+          keepBackup = "false";
+        };
+
+        pager.difftool = "true";
+
+        pull = {
+          rebase = true;
+          ff = "only";
+        };
+
+        push = {
+          default = "current";
+          autoSetupRemote = true;
+        };
+
+        rerere = {
+          enabled = true;
+          autoupdate = true;
+        };
+
+        rebase = {
+          # Support fixup and squash commits.
+          autoSquash = true;
+          # Stash dirty worktree before rebase.
+          autoStash = true;
+          updateRefs = true;
+          missingCommitsCheck = "error";
+        };
+
+        sendemail = {
+          smtpEncryption = "tls";
+          smtpServerPort = 587;
+          annotate = true;
+        };
+
+        status.showStash = true;
+
+        tag.sort = "version:refname";
+
+        url = let
+          mk = {
+            base,
+            short,
+          }: {
+            name = "ssh://git@${base}";
+            value = {
+              # See <https://git-scm.com/docs/git-config#Documentation/git-config.txt-urlltbasegtinsteadOf>.
+              insteadOf = short;
+              # See <https://git-scm.com/docs/git-config#Documentation/git-config.txt-urlltbasegtpushInsteadOf>.
+              pushInsteadOf = "https://${base}";
             };
-          in
-            builtins.listToAttrs (map mk [
-              {
-                short = "gh:";
-                base = "github.com/";
-              }
-              {
-                short = "gh:ll/";
-                base = "github.com/lorenzleutgeb/";
-              }
-              {
-                short = "scl:";
-                base = "git.sclable.com/";
-              }
-              {
-                short = "scl:ll/";
-                base = "git.sclable.com/lorenz.leutgeb/";
-              }
-            ]);
-          "${sub "filter" "gpg"}" = {
-            clean = "gpg --encrypt --recipient EBB1C984 -o- %f | git-lfs clean -- %f";
-            smudge = "git-lfs smudge -- %f | gpg --decrypt --output %f";
           };
-          "${sub "merge" "npm-merge-driver"}" = {
-            name = "Automatically merge npm lockfiles";
-            driver = "npm-merge-driver merge %A %O %B %P";
-          };
-          "${sub "lfs" "customtransfer.ipfs"}" = {
-            path = "/home/lorenz/src/github.com/lorenzleutgeb/git-lfs-ipfs/transfer.sh";
-            concurrent = false;
-          };
-          "${sub "lfs" "extension.ipfs"}" = {
-            clean = "/home/lorenz/src/github.com/lorenzleutgeb/git-lfs-ipfs/clean.sh %f";
-            smudge = "/home/lorenz/src/github.com/lorenzleutgeb/git-lfs-ipfs/smudge.sh %f";
-          };
-        });
+        in
+          builtins.listToAttrs (map mk [
+            {
+              short = "gh:";
+              base = "github.com/";
+            }
+            {
+              short = "gh:ll/";
+              base = "github.com/lorenzleutgeb/";
+            }
+            {
+              short = "scl:";
+              base = "git.sclable.com/";
+            }
+            {
+              short = "scl:ll/";
+              base = "git.sclable.com/lorenz.leutgeb/";
+            }
+          ]);
+
+        "${sub "filter" "gpg"}" = {
+          clean = "gpg --encrypt --recipient EBB1C984 -o- %f | git-lfs clean -- %f";
+          smudge = "git-lfs smudge -- %f | gpg --decrypt --output %f";
+        };
+
+        "${sub "merge" "npm-merge-driver"}" = {
+          name = "Automatically merge npm lockfiles";
+          driver = "npm-merge-driver merge %A %O %B %P";
+        };
+
+        "${sub "lfs" "customtransfer.ipfs"}" = {
+          path = "/home/lorenz/src/github.com/lorenzleutgeb/git-lfs-ipfs/transfer.sh";
+          concurrent = false;
+        };
+        "${sub "lfs" "extension.ipfs"}" = {
+          clean = "/home/lorenz/src/github.com/lorenzleutgeb/git-lfs-ipfs/clean.sh %f";
+          smudge = "/home/lorenz/src/github.com/lorenzleutgeb/git-lfs-ipfs/smudge.sh %f";
+        };
+      };
 
     includes = [
       {
