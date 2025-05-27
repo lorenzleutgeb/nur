@@ -6,6 +6,15 @@
   ...
 }: {
   home = {
+    sessionVariables.CDPATH = lib.concatStringsSep ":" (
+      ["."]
+      ++ (
+        let
+          src = "${config.home.homeDirectory}/src";
+        in ["${src}/git.rg1.mpi-inf.mpg.de" "${src}/rad"]
+      )
+    );
+
     shellAliases = {
       cat = assert builtins.elem pkgs.bat config.home.packages; "bat";
       ls = assert builtins.elem pkgs.eza config.home.packages; "eza --time-style=long-iso --git";
