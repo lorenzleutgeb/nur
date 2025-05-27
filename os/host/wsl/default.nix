@@ -17,7 +17,7 @@ in {
     ../../mixin/sops.nix
     ../../mixin/ssh.nix
     #../../mixin/yggdrasil.nix
-    #./tor.nix
+    ./tor.nix
     #../../mixin/tailscale.nix
   ];
 
