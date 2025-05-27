@@ -1,4 +1,8 @@
-{pkgs, lib, ...}: {
+{
+  pkgs,
+  lib,
+  ...
+}: {
   programs = {
     ssh.matchBlocks."nixbuild.net" = {
       hostname = "eu.nixbuild.net";
