@@ -56,7 +56,6 @@
       url = "github:nix-community/nixos-wsl";
       inputs = {
         flake-compat.follows = "compat";
-        flake-utils.follows = "utils";
         nixpkgs.follows = "nixpkgs";
       };
     };
@@ -65,7 +64,6 @@
       inputs = {
         flake-compat.follows = "compat";
         nixpkgs.follows = "nixpkgs";
-        nixpkgs-stable.follows = "nixpkgs-stable";
       };
     };
     radicle = {
