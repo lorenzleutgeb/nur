@@ -1,7 +1,7 @@
 {...}: {
   programs.ssh.matchBlocks = {
-    "seed.radicle.{garden,xyz}" = {
-      host = "seed.radicle.garden seed.radicle.xyz";
+    "seed.radicle.garden" = {
+      host = "seed.radicle.garden";
       user = "seed";
     };
     "ash.radicle.garden" = {
