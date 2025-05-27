@@ -45,13 +45,6 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     utils.url = "github:numtide/flake-utils";
-    vscode-server = {
-      url = "github:Ten0/nixos-vscode-server";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        flake-utils.follows = "utils";
-      };
-    };
     wsl = {
       url = "github:nix-community/nixos-wsl";
       inputs = {
@@ -88,7 +81,6 @@
     nix-index-database,
     pre-commit-hooks,
     sops,
-    vscode-server,
     wsl,
     radicle,
     ...
@@ -124,7 +116,6 @@
 
     homeModules = {
       input = [
-        vscode-server.homeModules.default
         nix-index-database.hmModules.nix-index
         sops.homeManagerModule
       ];
@@ -306,7 +297,6 @@
           modules =
             [
               config
-              vscode-server.homeModules.default
               nix-index-database.hmModules.nix-index
             ]
             ++ (attrValues (importDirToAttrs ./hm/module));

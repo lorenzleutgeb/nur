@@ -3,7 +3,6 @@
   config,
   ...
 }: {
-  services.vscode-server.enable = true;
   programs = {
     java.enable = true; # Some extensions, e.g. `valentjn.vscode-ltex` require Java.
 
