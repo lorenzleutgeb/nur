@@ -52,11 +52,15 @@ in {
         "git.rg1.mpi-inf.mpg.de"
       ];
       extraConfig = {
-        url = builtins.listToAttrs (map preferSsh [
-          "gitlab.mpi-klsb.mpg.de"
-          "github.molgen.mpg.de"
-          "gitlab.mpi-sws.org"
-        ]);
+        url =
+          (builtins.listToAttrs (map preferSsh [
+            "gitlab.mpi-klsb.mpg.de"
+            "github.molgen.mpg.de"
+            "gitlab.mpi-sws.org"
+          ]))
+          // {
+            "ssh://git@gitlab.mpi-klsb.mpg.de/info/git.rg1/".insteadOf = "rg1:";
+          };
         "${sub "sendemail" domain}" = {
           smtpUser = user;
           smtpServer = "mail.${domain}";
