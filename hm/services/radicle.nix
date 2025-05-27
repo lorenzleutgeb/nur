@@ -86,11 +86,13 @@ in {
 
   services.radicle-mirror = {
     "z3gqcJUoA1n9HaHKufZs5FCSGazv5" = {
-      remote = "gh:ll/heartwood";
+      remote = "gh:radicle-dev/heartwood";
       refs.watch = ["refs/heads/master"];
       nodes = {
+	"z6MkkPvBfjP4bQmco5Dm7UGsX2ruDBieEHi8n9DVJWX5sTEz".alias = "lorenzleutgeb";
         "z6MkireRatUThvd3qzfKht1S44wpm4FEWSSa4PRMTSQZ3voM".alias = "FintanH";
         "z6MksFqXN3Yhqk8pTJdUGLwATkRfQvwZXPqR2qMEhbS9wzpT".alias = "cloudhead";
+	"z6MkgFq6z5fkF2hioLLSNu1zP2qEL1aHXHZzGH1FLFGAnBGz".alias = "erak";
       };
     };
     "z3WFXKNQgDcHHATJx1PxL1XhDot9u".remote = "gh:ll/nur";
