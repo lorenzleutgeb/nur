@@ -84,6 +84,7 @@
     "crane": {
       "inputs": {
         "nixpkgs": [
+          "radicle",
           "radicle-tui",
           "nixpkgs"
         ]
@@ -99,6 +100,45 @@
       "original": {
         "owner": "ipetkov",
         "repo": "crane",
+        "type": "github"
+      }
+    },
+    "dream2nix": {
+      "inputs": {
+        "nixpkgs": [
+          "radicle",
+          "nixpkgs"
+        ],
+        "purescript-overlay": "purescript-overlay",
+        "pyproject-nix": "pyproject-nix_2"
+      },
+      "locked": {
+        "lastModified": 1735160684,
+        "narHash": "sha256-n5CwhmqKxifuD4Sq4WuRP/h5LO6f23cGnSAuJemnd/4=",
+        "owner": "nix-community",
+        "repo": "dream2nix",
+        "rev": "8ce6284ff58208ed8961681276f82c2f8f978ef4",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "dream2nix",
+        "type": "github"
+      }
+    },
+    "flake-compat": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1696426674,
+        "narHash": "sha256-kvjfFW7WAETZlt09AgDn1MrtKzP7t90Vf7vypd3OL1U=",
+        "owner": "edolstra",
+        "repo": "flake-compat",
+        "rev": "0f9255e01c2351cc7d116c072cb317785dd33b33",
+        "type": "github"
+      },
+      "original": {
+        "owner": "edolstra",
+        "repo": "flake-compat",
         "type": "github"
       }
     },
@@ -293,6 +333,30 @@
         "type": "github"
       }
     },
+    "purescript-overlay": {
+      "inputs": {
+        "flake-compat": "flake-compat",
+        "nixpkgs": [
+          "radicle",
+          "dream2nix",
+          "nixpkgs"
+        ],
+        "slimlock": "slimlock"
+      },
+      "locked": {
+        "lastModified": 1728546539,
+        "narHash": "sha256-Sws7w0tlnjD+Bjck1nv29NjC5DbL6nH5auL9Ex9Iz2A=",
+        "owner": "thomashoneyman",
+        "repo": "purescript-overlay",
+        "rev": "4ad4c15d07bd899d7346b331f377606631eb0ee4",
+        "type": "github"
+      },
+      "original": {
+        "owner": "thomashoneyman",
+        "repo": "purescript-overlay",
+        "type": "github"
+      }
+    },
     "pyproject-build-systems": {
       "inputs": {
         "nixpkgs": [
@@ -343,14 +407,68 @@
         "type": "github"
       }
     },
+    "pyproject-nix_2": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1702448246,
+        "narHash": "sha256-hFg5s/hoJFv7tDpiGvEvXP0UfFvFEDgTdyHIjDVHu1I=",
+        "owner": "davhau",
+        "repo": "pyproject.nix",
+        "rev": "5a06a2697b228c04dd2f35659b4b659ca74f7aeb",
+        "type": "github"
+      },
+      "original": {
+        "owner": "davhau",
+        "ref": "dream2nix",
+        "repo": "pyproject.nix",
+        "type": "github"
+      }
+    },
+    "radicle": {
+      "inputs": {
+        "dream2nix": "dream2nix",
+        "flake-utils": [
+          "utils"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "nixpkgs-stable": [
+          "nixpkgs-stable"
+        ],
+        "pre-commit-hooks": [
+          "pre-commit-hooks"
+        ],
+        "radicle-tui": "radicle-tui",
+        "sops-nix": [
+          "sops"
+        ],
+        "systems": "systems_2"
+      },
+      "locked": {
+        "lastModified": 1748018350,
+        "narHash": "sha256-K2XREEfntdopAYgj+kn5IK8V2pGtuQkI1GocH1cYLNo=",
+        "owner": "radicle-nix",
+        "repo": "radicle-nix",
+        "rev": "5fc12fb78f9221d7b49b81bb0796a9e924be9561",
+        "type": "github"
+      },
+      "original": {
+        "owner": "radicle-nix",
+        "repo": "radicle-nix",
+        "type": "github"
+      }
+    },
     "radicle-tui": {
       "inputs": {
         "advisory-db": "advisory-db",
         "crane": "crane",
         "flake-utils": [
-          "utils"
+          "radicle",
+          "flake-utils"
         ],
         "nixpkgs": [
+          "radicle",
           "nixpkgs"
         ],
         "rust-overlay": "rust-overlay"
@@ -362,12 +480,12 @@
         "rev": "227bd3b15b6dbbdcf64408240f50f3db37853453",
         "revCount": 825,
         "type": "git",
-        "url": "https://seed.radicle.xyz/z39mP9rQAaGmERfUMPULfPUi473tY.git"
+        "url": "https://seed.radicle.xyz/rad:z39mP9rQAaGmERfUMPULfPUi473tY.git"
       },
       "original": {
         "ref": "main",
         "type": "git",
-        "url": "https://seed.radicle.xyz/z39mP9rQAaGmERfUMPULfPUi473tY.git"
+        "url": "https://seed.radicle.xyz/rad:z39mP9rQAaGmERfUMPULfPUi473tY.git"
       }
     },
     "root": {
@@ -383,7 +501,7 @@
         "nixpkgs-stable": "nixpkgs-stable",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "pre-commit-hooks": "pre-commit-hooks",
-        "radicle-tui": "radicle-tui",
+        "radicle": "radicle",
         "rust-overlay": "rust-overlay_2",
         "sbt": "sbt",
         "sops": "sops",
@@ -395,6 +513,7 @@
     "rust-overlay": {
       "inputs": {
         "nixpkgs": [
+          "radicle",
           "radicle-tui",
           "nixpkgs"
         ]
@@ -456,6 +575,29 @@
         "type": "github"
       }
     },
+    "slimlock": {
+      "inputs": {
+        "nixpkgs": [
+          "radicle",
+          "dream2nix",
+          "purescript-overlay",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1688756706,
+        "narHash": "sha256-xzkkMv3neJJJ89zo3o2ojp7nFeaZc2G0fYwNXNJRFlo=",
+        "owner": "thomashoneyman",
+        "repo": "slimlock",
+        "rev": "cf72723f59e2340d24881fd7bf61cb113b4c407c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "thomashoneyman",
+        "repo": "slimlock",
+        "type": "github"
+      }
+    },
     "sops": {
       "inputs": {
         "nixpkgs": [
@@ -506,9 +648,24 @@
         "type": "github"
       }
     },
+    "systems_3": {
+      "locked": {
+        "lastModified": 1681028828,
+        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-systems",
+        "repo": "default",
+        "type": "github"
+      }
+    },
     "utils": {
       "inputs": {
-        "systems": "systems_2"
+        "systems": "systems_3"
       },
       "locked": {
         "lastModified": 1731533236,
