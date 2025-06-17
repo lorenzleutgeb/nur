@@ -29,8 +29,6 @@ in {
   ];
 
   programs.radicle = {
-    cli.package = pkgs.radicle-node-1_2-pre;
-    node.package = pkgs.radicle-node-1_2-pre;
     uri = {
       web-rad.enable = false;
       rad.browser.enable = false;
