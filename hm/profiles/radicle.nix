@@ -1,4 +1,4 @@
-{...}: {
+{pkgs, ...}: {
   programs.ssh.matchBlocks = {
     "seed.radicle.garden" = {
       host = "seed.radicle.garden";
@@ -9,4 +9,11 @@
       user = "root";
     };
   };
+
+  home.packages = with pkgs; [
+    attic-client
+    openssl
+    openssl.dev
+    pkg-config
+  ];
 }
