@@ -2,11 +2,6 @@
   home.file.".ssh/config_dns".text = ''
   '';
 
-  home.file.".ssh/config" = {
-    target = ".ssh/config.orig";
-    onChange = ''cat .ssh/config.orig > .ssh/config && chmod 400 .ssh/config'';
-  };
-
   programs.ssh = {
     enable = true;
     compression = true;
