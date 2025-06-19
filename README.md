@@ -96,7 +96,7 @@ connect $ADDR
 https://www.thomas-krenn.com/de/wiki/Partition_Alignment
 
 [man-machine-id]: https://man7.org/linux/man-pages/man5/machine-id.5.html
-[wiki-bt]: https://nixos.wiki/wiki/Bluetooth
+[wiki-bt]: https://wiki.nixos.org/wiki/Bluetooth
 
 ## Edge Router
 
