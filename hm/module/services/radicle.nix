@@ -128,7 +128,7 @@ in {
             Service = {
               Environment = ["SYSTEMD_LOG_LEVEL=debug"];
               ExecSearchPath = "${pkgs.systemd}/lib/systemd";
-              ExecStart = "systemd-socket-proxyd --exit-idle-time=5m %t/radicle/proxy.sock";
+              ExecStart = "systemd-socket-proxyd --exit-idle-time=1h %t/radicle/proxy.sock";
               PrivateTmp = "yes";
               PrivateNetwork = "yes";
               RuntimeDirectory = "radicle";
