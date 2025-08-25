@@ -152,29 +152,67 @@ in {
         User = "root";
       };
     };
-    network.enable = true;
-    /*
-    network = {
+    #network.enable = true;
+
+    network = let
+      nics = [
+        {
+          order = "30";
+          name = "eth0";
+          matchConfig.PermanentMACAddress = "38:f3:ab:f3:7c:1e";
+        }
+        {
+          order = "50";
+          name = "wlan0";
+          matchConfig.PermanentMACAddress = "58:6c:25:b3:98:27";
+        }
+        {
+          order = "80";
+          name = "uni";
+          matchConfig.PermanentMACAddress = "00:e0:4c:68:03:39";
+        }
+      ];
+    in {
       enable = true;
-      networks."eth0" = {
-        enable = true;
-        name = "eth0";
-        dns = dns;
-        extraConfig = ''
-          DNSOverTLS=yes
-          DNSSEC=yes
-        '';
-        DHCP = "yes";
-        #address = [ "172.24.160.2" ];
-        #gateway = [ "172.24.160.1" ];
-        dhcpV4Config = {
-          UseDNS = false;
-          UseRoutes = true;
-          UseHostname = false;
-          UseDomains = true;
-        };
+      wait-online = {
+        ignoredInterfaces = map (x: x.name) (builtins.filter (x: !(x.wait or false)) nics);
+        timeout = 5;
       };
+      /*
+      links = builtins.listToAttrs (map (nic: {
+          name = "${nic.order}-${nic.name}";
+          value = {
+            inherit (nic) matchConfig;
+            linkConfig =
+              {
+                Name = nic.name;
+              }
+              // (nic.linkConfig or {});
+          };
+        })
+        nics);
+
+      networks = builtins.listToAttrs (map (nic: {
+          inherit (nic) name;
+          value = {
+            enable = true;
+            inherit (nic) matchConfig;
+            networkConfig = {
+              IPv6AcceptRA = true;
+       DNSSEC = "yes";
+       DNSOverTLS = "yes";
+            };
+            dns = config.services.resolved.fallbackDns;
+            dhcpV4Config = {
+              UseDNS = false;
+              UseRoutes = true;
+              UseHostname = false;
+              UseDomains = true;
+            };
+          };
+        })
+        nics);
+      */
     };
-    */
   };
 }
