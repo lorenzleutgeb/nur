@@ -135,8 +135,8 @@ in {
 
         fetch = {
           prune = true;
-          pruneTags = true;
-          all = true;
+          pruneTags = false;
+          all = false;
           negotiationAlgorithm = "skipping";
           parallel = 0;
           recurseSubmodules = true;
