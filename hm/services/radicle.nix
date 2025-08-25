@@ -33,6 +33,7 @@ in {
       web-rad.enable = false;
       rad.browser.enable = false;
     };
+    node.args = "--log debug";
     settings = {
       preferredSeeds = [];
       node = {
@@ -78,6 +79,7 @@ in {
   services.radicle.node = {
     enable = true;
     lazy = true;
+    environment.RUST_BACKTRACE = "1";
   };
 
   services.radicle-mirror = {
