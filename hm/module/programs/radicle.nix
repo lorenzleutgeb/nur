@@ -86,7 +86,7 @@ in {
             };
             preferredNode = mkOption {
               type = str;
-              default = "seed.radicle.garden";
+              default = "seed.radicle.xyz";
             };
           };
           vscode = {
@@ -150,9 +150,9 @@ in {
         };
         preferredSeeds = mkOption {
           type = listOf str;
-          default = [
-            "z6MkrLMMsiPWUcNPHcRajuMi9mDfYckSoJyPwwnknocNYPm7@seed.radicle.garden:8776"
-            "z6Mkmqogy2qEM2ummccUthFEaaHvyYmYBYh3dbe9W4ebScxo@ash.radicle.garden:8776"
+          example = [
+            "z6Mkmqogy2qEM2ummccUthFEaaHvyYmYBYh3dbe9W4ebScxo@rosa.radicle.xyz:8776"
+            "z6MkrLMMsiPWUcNPHcRajuMi9mDfYckSoJyPwwnknocNYPm7@iris.radicle.xyz:8776"
           ];
         };
         web = freeform {
