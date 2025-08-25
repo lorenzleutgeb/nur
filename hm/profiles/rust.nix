@@ -1,6 +1,7 @@
 {
   pkgs,
   config,
+  lib,
   ...
 }: {
   home = {
@@ -16,4 +17,10 @@
       rust-lang.rust-analyzer
     ];
   };
+
+  home.file.".cargo/config.toml".text = ''
+    [target.x86_64-unknown-linux-gnu]
+    linker = "${lib.getExe pkgs.clang}"
+    rustflags = ["-C", "link-arg=-fuse-ld=${lib.getExe pkgs.mold}"]
+  '';
 }
