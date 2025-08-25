@@ -87,12 +87,38 @@ in {
       remote = "gh:radicle-dev/heartwood";
       refs.watch = ["refs/heads/master"];
       nodes = {
-	"z6MkkPvBfjP4bQmco5Dm7UGsX2ruDBieEHi8n9DVJWX5sTEz".alias = "lorenzleutgeb";
+        "z6MkkPvBfjP4bQmco5Dm7UGsX2ruDBieEHi8n9DVJWX5sTEz".alias = "lorenzleutgeb";
         "z6MkireRatUThvd3qzfKht1S44wpm4FEWSSa4PRMTSQZ3voM".alias = "FintanH";
         "z6MksFqXN3Yhqk8pTJdUGLwATkRfQvwZXPqR2qMEhbS9wzpT".alias = "cloudhead";
-	"z6MkgFq6z5fkF2hioLLSNu1zP2qEL1aHXHZzGH1FLFGAnBGz".alias = "erak";
+        "z6MkgFq6z5fkF2hioLLSNu1zP2qEL1aHXHZzGH1FLFGAnBGz".alias = "erak";
       };
     };
+    "z39mP9rQAaGmERfUMPULfPUi473tY" = {
+      remote = "gh:radicle-dev/radicle-tui";
+      refs.watch = ["refs/heads/master"];
+      nodes = {
+        "z6MkgFq6z5fkF2hioLLSNu1zP2qEL1aHXHZzGH1FLFGAnBGz".alias = "erak";
+      };
+    };
+
+    "z371PVmDHdjJucejRoRYJcDEvD5pp" = {
+      remote = "gh:radicle-dev/radicle.xyz";
+      refs.watch = ["refs/heads/master"];
+      nodes = {
+        "z6MkkPvBfjP4bQmco5Dm7UGsX2ruDBieEHi8n9DVJWX5sTEz".alias = "lorenzleutgeb";
+        "z6MkireRatUThvd3qzfKht1S44wpm4FEWSSa4PRMTSQZ3voM".alias = "FintanH";
+        "z6MkgFq6z5fkF2hioLLSNu1zP2qEL1aHXHZzGH1FLFGAnBGz".alias = "erak";
+      };
+    };
+
+    "z6cFWeWpnZNHh9rUW8phgA3b5yGt" = {
+      remote = "gh:radicle-dev/radicle.xyz";
+      refs.watch = ["refs/heads/master"];
+      nodes = {
+        "z6MkireRatUThvd3qzfKht1S44wpm4FEWSSa4PRMTSQZ3voM".alias = "FintanH";
+      };
+    };
+
     "z3WFXKNQgDcHHATJx1PxL1XhDot9u".remote = "gh:ll/nur";
   };
 }
