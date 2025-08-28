@@ -8,5 +8,6 @@
     openssl
     openssl.dev
     pkg-config
+    radicle-tui
   ];
 }
