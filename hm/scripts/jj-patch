@@ -1,0 +1,70 @@
+#! /usr/bin/env bash
+
+# Takes the optional flag `--draft` and the optional
+# positional argument `REV` which is something that
+# `jj` understands as a revision.
+#
+# Pushes the revision to Radicle storage in order to
+# create a new patch, and sets up a tracked bookmark.
+
+set -euo pipefail
+
+OPTIONS="-o no-sync"
+
+if [ "${1:-}" = "--draft" ]
+then
+	OPTIONS+=" -o patch.draft"
+	REV="${2:-@}"
+else
+	REV="${1:-@}"
+fi
+
+SELF="$(rad self --did | cut -c 9-)"
+TMP="$(mktemp)"
+
+handle_err () {
+	declare exit_code=$?
+	printf "Temporary file: %s" "$TMP"
+	exit "$exit_code"
+}
+trap handle_err ERR
+
+git remote -v | grep -F "$SELF (push)" > "$TMP"
+
+# Only push if remote is unique.
+CANDIDATES="$(cat "$TMP" | wc -l)"
+if [ "$CANDIDATES" != "1" ]
+then
+	printf "Failed to determine remote. Found %s candidates:\n" "$CANDIDATES"
+	cat $TMP
+	exit 1
+fi
+
+REMOTE="$(cut -f 1 "$TMP")"
+REF="patches"
+COMMIT="$(jj show --no-patch --template 'commit_id' "$REV")"
+
+set -x
+git push $OPTIONS "$REMOTE" "$COMMIT:refs/$REF"
+git fetch --porcelain "$REMOTE" > "$TMP"
+{ set +x; } 2>/dev/null
+
+ID="$(\
+	grep -F "* 0000000000000000000000000000000000000000 $COMMIT refs/remotes/$REMOTE/$REF/" "$TMP" | \
+	rev | \
+	cut -b -40 | \
+	rev\
+)"
+
+printf "\n" # Separate Git and Jujutsu output just a little.
+
+set -x
+jj bookmark create --revision "$REV" "$REF/$ID"
+jj bookmark track "$REF/$ID@$REMOTE"
+{ set +x; } 2>/dev/null
+
+printf '\n\t%s\n\n' "$REF/$ID@$REMOTE"
+rm -f "$TMP"
+
+set -x
+rad sync -a
