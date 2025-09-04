@@ -8,6 +8,8 @@
 
   inherit (lib) mkIf optional;
 
+  package = pkgs.radicle-node-overlay;
+
   port = 8776;
   tor =
     (osConfig.services.tor.client or {enable = false;})
@@ -29,11 +31,17 @@ in {
   ];
 
   programs.radicle = {
+    cli = {
+      inherit package;
+    };
     uri = {
       web-rad.enable = false;
       rad.browser.enable = false;
     };
-    node.args = "--log debug";
+    node = {
+      inherit package;
+      args = "--log debug";
+    };
     settings = {
       preferredSeeds = [];
       node = {

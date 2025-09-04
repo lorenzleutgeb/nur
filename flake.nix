@@ -189,6 +189,7 @@
               nixpkgs = {
                 overlays = [
                   radicle.overlays.master
+		  (import ./overlay/radicle-node.nix)
                 ];
                 config.allowUnfree = true;
               };
