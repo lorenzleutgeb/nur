@@ -84,7 +84,7 @@ in {
           address = "${tor.socksListenAddress.addr}:${toString tor.socksListenAddress.port}";
         };
         #externalAddresses = (optional tor.enable tor.address) ++ (optional ygg.enable ygg.address);
-        #listen = (optional tor.enable "127.0.0.1:${toString port}") ++ (optional ygg.enable ygg.address);
+        listen = optional tor.enable "127.0.0.1:${toString port}"; #++ (optional ygg.enable ygg.address);
       };
     };
   };
