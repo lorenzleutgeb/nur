@@ -58,6 +58,10 @@ in {
               addr = "seed.radicle.xyz";
             })
           ]
+          ++ (optional tor.enable (connectAddr {
+            nid = "z6MkireRatUThvd3qzfKht1S44wpm4FEWSSa4PRMTSQZ3voM";
+            addr = "67apylyibh2oeonhwjlkloezjpc2yupjzajfb4o63bwhe75uq2c2dvid.onion";
+          }))
           ++ (
             let
               nid = "z6MkocYY4dgMjo2YeUEwQ4BP4AotL7MyovzJCPiEuzkjg127";
