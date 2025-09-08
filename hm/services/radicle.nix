@@ -11,13 +11,7 @@
   package = pkgs.radicle-node-overlay;
 
   port = 8776;
-  tor =
-    (osConfig.services.tor.client or {enable = false;})
-    // {
-      # TODO: Depends on Tor running on the system.
-      # sudo -u tor cat /var/lib/tor/onion/radicle/hostname
-      address = "x3usylutxxwujquc4dut44krigmbmfxqgeyz2duoqkjiocvrmzwoxtad.onion:${toString port}";
-    };
+  tor = osConfig.services.tor.client or {enable = false;};
   ygg =
     (osConfig.services.yggdrasil or {enable = false;})
     // {
