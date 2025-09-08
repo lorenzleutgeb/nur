@@ -116,6 +116,7 @@ in {
       };
     };
     rtkit.enable = true;
+    unprivilegedUsernsClone = true;
   };
 
   virtualisation = {

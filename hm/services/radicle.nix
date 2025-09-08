@@ -32,10 +32,6 @@ in {
       web-rad.enable = false;
       rad.browser.enable = false;
     };
-    node = {
-      inherit package;
-      args = "--log debug";
-    };
     settings = {
       preferredSeeds = [];
       node = {
@@ -82,10 +78,15 @@ in {
       };
     };
   };
+
   services.radicle.node = {
     enable = true;
-    lazy = true;
-    environment.RUST_BACKTRACE = "1";
+    lazy.enable = true;
+    environment = {
+      GIT_TRACE = "true";
+      RUST_BACKTRACE = "full";
+    };
+    args = "--log debug";
   };
 
   services.radicle-mirror = {

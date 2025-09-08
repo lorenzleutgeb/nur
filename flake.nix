@@ -20,7 +20,7 @@
     compat.url = "github:edolstra/flake-compat";
     hardware.url = "github:NixOS/nixos-hardware";
     hm = {
-      url = "github:nix-community/home-manager/release-25.05";
+      url = "path:/home/lorenz/src/github.com/nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     rust-overlay = {
@@ -120,8 +120,8 @@
         sops.homeManagerModule
       ];
       self = {
-        "programs.radicle" = ./hm/module/programs/radicle.nix;
-        "services.radicle" = ./hm/module/services/radicle.nix;
+        #"programs.radicle" = ./hm/module/programs/radicle.nix;
+        #"services.radicle" = ./hm/module/services/radicle.nix;
         "services.radicle-mirror" = ./hm/module/services/radicle-mirror.nix;
         "services.ulauncher" = ./hm/module/services/ulauncher.nix;
       };
