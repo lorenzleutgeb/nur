@@ -9,6 +9,7 @@
 
   inherit (lib) mkIf optional;
 
+  #package = pkgs.radicle-node;
   package = pkgs.radicle-node-overlay;
 
   port = 8776;

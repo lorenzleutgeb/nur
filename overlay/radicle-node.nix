@@ -1,16 +1,16 @@
 final: prev: let
-  version = "1.4.0";
+  version = "unstable";
   prevName = "radicle-node";
   finalName = "${prevName}-overlay";
 in {
-  ${finalName} = prev.${prevName}.overrideAttrs (old: {
+  ${finalName} = prev.${prevName}.overrideAttrs (finalAttrs: prevAttrs: {
     inherit version;
     pname = finalName;
 
     src = final.fetchgit {
-      inherit (old.src) url;
-      tag = "releases/${version}";
-      hash = "sha256-e5Zelu3g8m9u5NtyABkIV4wOed9cq58xSaxginoDb2Q=";
+      inherit (prevAttrs.src) url;
+      rev = "5e430f4483665a28061029783e97cc7f65571ed9";
+      hash = "sha256-MaLweunmIfNLcvisLtAir35KFYEWre8t9t+8ESqG7qk=";
       leaveDotGit = true;
       postFetch = ''
         git -C $out rev-parse HEAD > $out/.git_head
@@ -19,6 +19,11 @@ in {
       '';
     };
 
-    cargoHash = "sha256-64SDz0wHKcp/tPGDDOlCRFr3Z1q6cWOafhP0howSFhA=";
+    cargoDeps = final.rustPlatform.fetchCargoVendor {
+      inherit (finalAttrs) src;
+      hash = "sha256-iJE6lSx1o6qQqomHI3myIxIBol99Ev+5O/XTiyZT0B0=";
+    };
+
+    doCheck = false;
   });
 }
