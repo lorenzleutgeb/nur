@@ -1,6 +1,7 @@
 {
   pkgs,
   lib,
+  config,
   osConfig,
   ...
 }: let
@@ -75,11 +76,13 @@ in {
         };
         #externalAddresses = (optional tor.enable tor.address) ++ (optional ygg.enable ygg.address);
         listen = optional tor.enable "127.0.0.1:${toString port}"; #++ (optional ygg.enable ygg.address);
+        #secret = "${config.home.homeDirectory}/.radicle/node/key";
       };
     };
   };
 
   services.radicle.node = {
+    inherit package;
     enable = true;
     lazy.enable = true;
     environment = {
