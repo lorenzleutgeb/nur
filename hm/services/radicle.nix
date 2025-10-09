@@ -26,6 +26,8 @@ in {
     python3Packages.zulip # for rad-zulip
   ];
 
+  systemd.user.services.radicle-node.Service.LoadCredential = "xyz.radicle.node.secret:${config.home.homeDirectory}/.radicle/node/key";
+
   programs.radicle = {
     cli = {
       inherit package;
@@ -37,6 +39,9 @@ in {
     settings = {
       preferredSeeds = [];
       node = {
+        announcers = [
+          "z6MkkPvBfjP4bQmco5Dm7UGsX2ruDBieEHi8n9DVJWX5sTEz"
+        ];
         connect = let
           connectAddr = {
             nid,
