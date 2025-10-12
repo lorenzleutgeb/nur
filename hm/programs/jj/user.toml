@@ -1,0 +1,92 @@
+"$schema" = "https://jj-vcs.github.io/jj/latest/config-schema.json"
+
+[aliases]
+dlog = ["log", "-r"]
+l = ["log", "-r", "(trunk()..@):: | (trunk()..@)-"]
+tug = [
+    "bookmark",
+    "move",
+    "--from",
+    "closest_bookmark(@)",
+    "--to",
+    "closest_pushable(@)",
+]
+mega-add =    ["rebase", "--source", "mega", "--destination", "all:mega-", "--destination", "@"]
+mega-rebase = ["rebase", "--source", "all:roots(trunk()..mega)", "--destination", "trunk()",  "--skip-emptied"]
+mega-remove = ["rebase", "--source", "mega", "--destination", "all:mega- ~ @"]
+
+[git]
+write-change-id-header = true
+
+[core]
+fsmonitor = "watchman"
+watchman.register-snapshot-trigger = true
+
+[colors]
+total_added = "green"
+total_removed = "red"
+
+[diff]
+tool = ["difft", "--color=always", "$left", "$right"]
+
+[fix.tools.rustfmt]
+command = ["rustfmt", "--emit", "stdout"]
+patterns = ["glob:'**/*.rs'"]
+
+[revset-aliases]
+"immutable_heads()" = "present(trunk() | tags())"
+
+"private()" = '''
+description(glob:'wip:*') |
+description(glob:'private:*') |
+description(glob:'WIP:*') |
+description(glob:'PRIVATE:*') |
+conflicts() |
+(empty() ~ merges())
+'''
+
+[signing]
+backend = "ssh"
+behavior = "own"
+key = "~/.ssh/id_ed25519.pub"
+
+[templates]
+draft_commit_description = '''
+concat(
+  coalesce(description, default_commit_description, "\n"),
+  "\nJJ: ignore-rest\n\n",
+  diff.stat(),
+  "\n",
+  diff.git(),
+)
+'''
+
+[template-aliases]
+'format_short_id(id)' = 'id.shortest(4)'
+'format_short_commit_id(id)' = 'id.shortest(7)'
+
+'format_timestamp(timestamp)' = 'timestamp.local().format("%Y-%m-%d %H:%M")'
+
+'format_short_signature(signature)' = '''
+  coalesce(signature.name(), email_placeholder)'''
+
+'format_short_commit_header(commit)' = '''
+separate(" ",
+  format_short_change_id_with_hidden_and_divergent_info(commit),
+  format_short_commit_id(commit.commit_id()),
+  format_short_signature(commit.author()),
+  format_timestamp(commit_timestamp(commit)),
+  commit.bookmarks(),
+  commit.tags(),
+  commit.working_copies(),
+  if(commit.git_head(), label("git_head", "git_head()")),
+  if(commit.conflict(), label("conflict", "conflict")),
+  if(config("ui.show-cryptographic-signatures").as_boolean(),
+    format_short_cryptographic_signature(commit.signature())),
+)
+'''
+
+[ui]
+default-command = ["log"]
+diff-formatter = ["difft", "--color=always", "$left", "$right"]
+show-cryptographic-signatures = false

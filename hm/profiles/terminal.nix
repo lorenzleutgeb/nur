@@ -19,7 +19,7 @@ with builtins; {
     ../programs/gh.nix
     ../programs/git
     ../programs/gpg.nix
-    ../programs/jj.nix
+    ../programs/jj
     ../programs/nix
     ../programs/nvim
     ../programs/password-store.nix
