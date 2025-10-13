@@ -19,9 +19,11 @@
     ./profiles/gaming.nix
     ./profiles/latex.nix
     ./profiles/mpi-klsb.nix
+    ./profiles/radicle.nix
     #./services/v4lbridge.nix
     ./profiles/spass.nix
     ./profiles/summer-of-nix.nix
+    ./services/radicle.nix
   ];
 
   "nc" = [
