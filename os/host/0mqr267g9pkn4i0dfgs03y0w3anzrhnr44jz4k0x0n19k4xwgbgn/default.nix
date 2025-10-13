@@ -21,7 +21,7 @@
     ./bluetooth.nix
     ./monero.nix
     ./nfs.nix
-    ./rsync.nix
+    #./rsync.nix
     ./tor.nix
     ./ttyd.nix
   ];
