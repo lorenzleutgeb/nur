@@ -22,7 +22,7 @@ with builtins; {
     ../programs/jj
     ../programs/nix
     ../programs/nvim
-    ../programs/password-store.nix
+    ../programs/rbw.nix
     ../programs/ripgrep.nix
     ../programs/ssh.nix
     ../programs/tmux

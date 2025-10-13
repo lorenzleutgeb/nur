@@ -8,14 +8,12 @@ with builtins; {
     ./terminal.nix
     ./rust.nix
     ../programs/bat
-    ../programs/browserpass.nix
     ../programs/firefox
     ../programs/fzf.nix
     ../programs/gh.nix
     ../programs/git
     ../programs/go.nix
     ../programs/nvim
-    ../programs/password-store.nix
     ../programs/ripgrep.nix
     ../programs/ssh.nix
     ../programs/cakeml.nix

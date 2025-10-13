@@ -9,9 +9,7 @@ with builtins; {
     ./terminal.nix
     ./sway
     ../programs/alacritty
-    ../programs/browserpass.nix
     ../programs/firefox
-    ../programs/password-store.nix
     ../programs/spotify
     ../programs/signal-desktop
     ../programs/thunderbird.nix
