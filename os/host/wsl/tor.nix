@@ -3,14 +3,7 @@
     enable = true;
     enableGeoIP = false;
     openFirewall = true;
-    relay = {
-      role = "private-bridge";
-      onionServices = {
-        "radicle".map = [
-          {port = 8776;}
-        ];
-      };
-    };
+    relay.role = "private-bridge";
     settings = {
       ORPort = "auto";
       ClientUseIPv6 = true;
