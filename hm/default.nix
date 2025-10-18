@@ -29,5 +29,7 @@
   "nc" = [
     ./profiles/common.nix
     ./profiles/terminal.nix
+
+    {services.radicle-mirror = {};}
   ];
 }
