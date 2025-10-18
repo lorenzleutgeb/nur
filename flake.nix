@@ -18,6 +18,10 @@
       };
     };
     compat.url = "github:edolstra/flake-compat";
+    disko = {
+      url = "github:nix-community/disko/latest";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     hardware.url = "github:NixOS/nixos-hardware";
     hm = {
       url = "path:/home/lorenz/src/github.com/nix-community/home-manager";
@@ -74,6 +78,7 @@
   outputs = inputs @ {
     self,
     authentik,
+    disko,
     hardware,
     hm,
     nixpkgs,
@@ -107,6 +112,7 @@
     modules = {
       input = [
         authentik.nixosModules.default
+	disko.nixosModules.disko
         nixpkgs.nixosModules.notDetected
         hm.nixosModules.home-manager
         sops.nixosModules.sops
