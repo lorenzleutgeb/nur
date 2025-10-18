@@ -1,6 +1,6 @@
 $TTL 360
 
-@			SOA	ns1 lorenz\.leutgeb.posteo.de. 2025042100 14400 3600 1209600 3600
+@			SOA	ns1 lorenz\.leutgeb.posteo.eu. 2025072201 14400 3600 1209600 3600
 
 $INCLUDE common.zone
 
