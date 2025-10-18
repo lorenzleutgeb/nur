@@ -99,6 +99,17 @@ in {
             id = "quad9";
             address = ["2620:fe::fe" "2620:fe::9" "9.9.9.9" "149.112.112.112"];
           }
+          {
+            id = "hetzner";
+            address = [
+              "213.239.242.238"
+              "213.133.100.103"
+              "193.47.99.3"
+              "2a01:4f8:0:a101::a:1"
+              "2a01:4f8:0:1::5ddc:2"
+              "2001:67c:192c::add:a3"
+            ];
+          }
         ];
 
         remotes = [
@@ -108,6 +119,7 @@ in {
               "ns1.he.net"
               "ns2.afraid.org"
               "1984.is"
+              "hetzner"
             ];
           }
           {
@@ -116,6 +128,7 @@ in {
               "slave.dns.he.net"
               "ns2.afraid.org"
               "1984.is"
+              "hetzner"
             ];
           }
         ];
