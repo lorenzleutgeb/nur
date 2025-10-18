@@ -92,15 +92,6 @@ in {
             ];
           }
           {
-            id = "puck.nether.net";
-            address = [
-              "2602:fe55:5::5"
-
-              # NOTE: Only our IPv6 is allowlisted on their end.
-              #"204.42.254.5"
-            ];
-          }
-          {
             id = "1984.is";
             address = "93.95.224.6";
           }
@@ -116,7 +107,6 @@ in {
             remote = [
               "ns1.he.net"
               "ns2.afraid.org"
-              "puck.nether.net"
               "1984.is"
             ];
           }
@@ -125,7 +115,6 @@ in {
             remote = [
               "slave.dns.he.net"
               "ns2.afraid.org"
-              "puck.nether.net"
               "1984.is"
             ];
           }
