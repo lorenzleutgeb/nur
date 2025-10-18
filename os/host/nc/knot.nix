@@ -58,7 +58,7 @@ in {
         server = {
           listen = [
             "5.45.105.177" # netcup
-            "2a03:4000:6:10ea:54b5:3dff:fe79:b5b9" # netcup
+            "2a03:4000:6:10ea::1" # netcup
           ];
 
           automatic-acl = true;

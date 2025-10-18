@@ -84,23 +84,25 @@ in {
   # Per-interface useDHCP will be mandatory in the future, so this generated config
   # replicates the default behaviour.
   networking = {
+    inherit domain;
     hostName = "nc";
+    useNetworkd = true;
   };
 
   systemd.network = let
     device = "ens3";
   in {
     enable = true;
-    networks."10-${device}" = {
-      matchConfig.Name = device;
-      networkConfig = {
-        IPv6AcceptRA = true;
-        Address = [
-          "5.45.105.177/22"
-          "2a03:4000:6:10ea:54b5:3dff:fe79:b5b9/64"
-        ];
-      };
-      gateway = ["5.45.104.1"];
+    networks."10-netcup" = {
+      matchConfig.Name = "ens3";
+      address = [
+        "5.45.105.177/22"
+        "2a03:4000:6:10ea::1/128"
+      ];
+      gateway = [
+        "5.45.104.1"
+        "fe80::1"
+      ];
       dns = config.services.resolved.fallbackDns;
     };
   };
