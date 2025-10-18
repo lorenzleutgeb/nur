@@ -23,7 +23,7 @@ in {
     ../../mixin/ssh.nix
     ../../mixin/tailscale.nix
     ./caddy.nix
-    ./git.nix
+    #./git.nix
     #./headscale.nix
     ./knot.nix
     ./mta-sts.nix
