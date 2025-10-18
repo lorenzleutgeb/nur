@@ -11,8 +11,8 @@ key2._domainkey		CNAME	key2.leutgeb.xyz._domainkey.migadu.com.
 key3._domainkey		CNAME	key3.leutgeb.xyz._domainkey.migadu.com.
 
 
-lorenz			A	5.45.105.177
-			AAAA	2a03:4000:6:10ea::1
+lorenz			A	152.53.113.87
+			AAAA	2a0a:4cc0:80:42c6::1
 
 _atproto.lorenz		TXT	"did=did:plc:za676zfedjshnevun3elaq3a"
 _discord.lorenz		TXT	"dh=dbfb5e1781f4d8aa121ce1c805e85d978b294e5b"

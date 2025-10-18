@@ -2,6 +2,7 @@
   lib,
   pkgs,
   config,
+  modulesPath,
   ...
 }:
 with builtins; let
@@ -36,34 +37,11 @@ in {
     ./wireguard.nix
     #./keycloak.nix
     #./authentik.nix
-  ];
 
-  fileSystems =
-    (builtins.listToAttrs (map
-      ({
-        subvol,
-        mountpoint ? "/${subvol}",
-      }: {
-        name = mountpoint;
-        value = {
-          device = "/dev/disk/by-uuid/6906f221-06ca-4db2-befc-5f4052ed8348";
-          fsType = "btrfs";
-          options = ["compress=zstd" "discard=async" "noatime" "subvol=${subvol}"];
-        };
-      }) [
-        {
-          mountpoint = "/";
-          subvol = "root";
-        }
-        {subvol = "home";}
-        {subvol = "nix";}
-      ]))
-    // {
-      "/boot" = {
-        device = "/dev/disk/by-uuid/2AB6-5830";
-        fsType = "vfat";
-      };
-    };
+    ./disk-config.nix
+
+    (modulesPath + "/profiles/qemu-guest.nix")
+  ];
 
   boot = {
     kernel.sysctl."net.ipv4.ip_forward" = 1;
@@ -75,6 +53,11 @@ in {
       "virtio_pci"
       "sr_mod"
       "virtio_blk"
+
+      "ahci"
+      "xhci_pci"
+      "virtio_scsi"
+      "sd_mod"
     ];
   };
 
@@ -87,6 +70,7 @@ in {
     inherit domain;
     hostName = "nc";
     useNetworkd = true;
+    useDHCP = false;
   };
 
   systemd.network = let
@@ -96,11 +80,11 @@ in {
     networks."10-netcup" = {
       matchConfig.Name = "ens3";
       address = [
-        "5.45.105.177/22"
-        "2a03:4000:6:10ea::1/128"
+        "152.53.113.87/22"
+        "2a0a:4cc0:80:42c6::1/128"
       ];
       gateway = [
-        "5.45.104.1"
+        "152.53.112.1"
         "fe80::1"
       ];
       dns = config.services.resolved.fallbackDns;

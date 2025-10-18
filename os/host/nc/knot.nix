@@ -57,8 +57,8 @@ in {
       settings = {
         server = {
           listen = [
-            "5.45.105.177" # netcup
-            "2a03:4000:6:10ea::1" # netcup
+            "152.53.113.87" # netcup
+            "2a0a:4cc0:80:42c6::1" # netcup
           ];
 
           automatic-acl = true;
