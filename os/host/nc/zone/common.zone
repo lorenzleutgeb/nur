@@ -1,7 +1,5 @@
 $TTL 3600
 
-$INCLUDE secondaries.zone
-
 $INCLUDE migadu.zone
 
 @	CAA	0 issue "letsencrypt.org"

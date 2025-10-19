@@ -1,15 +1,12 @@
-@	NS	ns2.he.net.
-	NS	ns3.he.net.
+; Keep this list short enough to fit 512 bytes.
+@	NS	ns3.he.net.
 	NS	ns4.he.net.
 	NS	ns5.he.net.
 
 	NS	ns1.afraid.org.
 	NS	ns2.afraid.org.
 
-	NS	ns0.1984.is.
 	NS	ns1.1984.is.
-	NS	ns2.1984.is.
-	NS	ns1.1984hosting.com.
 	NS	ns2.1984hosting.com.
 
 	NS	ns1.first-ns.de.

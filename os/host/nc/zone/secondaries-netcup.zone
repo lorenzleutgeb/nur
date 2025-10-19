@@ -1,0 +1,7 @@
+; Netcup allows to set only five nameservers.
+; This is a subset of the nameservers used with
+; spaceship.
+@	NS	ns3.he.net.
+	NS	ns2.afraid.org.
+	NS	ns1.1984.is.
+	NS	ns1.first-ns.de.

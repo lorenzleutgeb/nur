@@ -1,7 +1,8 @@
 $TTL 360
 
-@			SOA	ns1 lorenz\.leutgeb.posteo.eu. 2025101801 14400 3600 1209600 3600
+@			SOA	ns1 lorenz\.leutgeb.posteo.eu. 2025101910 14400 3600 1209600 3600
 
+$INCLUDE secondaries-spaceship.zone
 $INCLUDE common.zone
 
 @			TXT	"hosted-email-verify=3g350uwg"
@@ -9,7 +10,6 @@ $INCLUDE common.zone
 key1._domainkey		CNAME	key1.leutgeb.xyz._domainkey.migadu.com.
 key2._domainkey		CNAME	key2.leutgeb.xyz._domainkey.migadu.com.
 key3._domainkey		CNAME	key3.leutgeb.xyz._domainkey.migadu.com.
-
 
 lorenz			A	152.53.113.87
 			AAAA	2a0a:4cc0:80:42c6::1

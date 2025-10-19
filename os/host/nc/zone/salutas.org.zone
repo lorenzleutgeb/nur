@@ -1,7 +1,8 @@
 $TTL 360
 
-@			SOA	ns1 lorenz\.leutgeb.posteo.eu. 2025072201 14400 3600 1209600 3600
+@			SOA	ns1 lorenz\.leutgeb.posteo.eu. 2025101910 14400 3600 1209600 3600
 
+$INCLUDE secondaries-spaceship.zone
 $INCLUDE common.zone
 
 @			TXT	"hosted-email-verify=cjqv7oqf"
