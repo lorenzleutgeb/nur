@@ -18,10 +18,6 @@ mega-remove = ["rebase", "--source", "mega", "--destination", "all:mega- ~ @"]
 [git]
 write-change-id-header = true
 
-[core]
-fsmonitor = "watchman"
-watchman.register-snapshot-trigger = true
-
 [colors]
 total_added = "green"
 total_removed = "red"
@@ -32,6 +28,10 @@ tool = ["difft", "--color=always", "$left", "$right"]
 [fix.tools.rustfmt]
 command = ["rustfmt", "--emit", "stdout"]
 patterns = ["glob:'**/*.rs'"]
+
+[fsmonitor]
+backend = "watchman"
+watchman.register-snapshot-trigger = true
 
 [revset-aliases]
 "immutable_heads()" = "present(trunk() | tags())"
