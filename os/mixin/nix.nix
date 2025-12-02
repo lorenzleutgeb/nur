@@ -18,11 +18,10 @@
     nixPath = ["nixpkgs=/etc/${config.environment.etc."nix/inputs/nixpkgs".target}"];
     settings = {
       auto-optimise-store = true;
-      substituters = ["https://lean4.cachix.org/" "https://mob.cachix.org/"];
+      substituters = ["https://lean4.cachix.org/"];
       trusted-users = ["lorenz"];
       trusted-public-keys = [
         "lean4.cachix.org-1:mawtxSxcaiWE24xCXXgh3qnvlTkyU7evRRnGeAhD4Wk="
-        "mob.cachix.org-1:tSCZwvAK6F/+O4zjGUL6GH9wAFURQfptWUOks7Zu1Z0="
       ];
     };
     extraOptions = ''
