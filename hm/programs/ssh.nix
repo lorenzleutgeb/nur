@@ -4,10 +4,13 @@
 
   programs.ssh = {
     enable = true;
-    compression = true;
-    hashKnownHosts = true;
+    enableDefaultConfig = false;
 
     matchBlocks = {
+      "*" = {
+        compression = true;
+        hashKnownHosts = true;
+      };
       "1gh3" = {
         hostname = "100.80.204.123";
         port = 9022;

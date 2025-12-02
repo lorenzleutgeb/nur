@@ -6,7 +6,7 @@
     # Don't forget to also adjust the URL for home-manager below
     # accordingly.
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.05";
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.11";
     nixpkgs.follows = "nixpkgs-stable";
 
     authentik = {

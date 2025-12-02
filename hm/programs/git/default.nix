@@ -9,7 +9,7 @@
   sub = section: subsection: ''${section} "${subsection}"'';
   gitalias = import ./gitalias.nix;
 in {
-  home.packages = with pkgs.gitAndTools; [
+  home.packages = with pkgs; [
     ghq
     git-absorb
     git-crypt
@@ -25,7 +25,7 @@ in {
 
   programs.git = {
     enable = true;
-    package = pkgs.gitAndTools.gitFull;
+    package = pkgs.gitFull;
 
     lfs.enable = true;
     userName = "Lorenz Leutgeb";

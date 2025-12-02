@@ -61,10 +61,10 @@ in {
       lshw
       lsof
       nfs-utils
-      utillinux
+      util-linux
       which
       wget
-      config.boot.kernelPackages.perf
+      perf
     ];
 
     variables = {};

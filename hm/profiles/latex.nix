@@ -26,7 +26,6 @@ with builtins; {
     noto-fonts
     pandoc
     pdfgrep
-    poppler_utils
     texlive.combined.scheme-full
     roboto
     roboto-mono

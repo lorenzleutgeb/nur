@@ -86,7 +86,6 @@ with builtins; {
     pavucontrol
     pdfgrep
     pinta
-    poppler_utils
     pythonPackages.python
     pythonPackages.beautifulsoup4
     pythonPackages.mwclient

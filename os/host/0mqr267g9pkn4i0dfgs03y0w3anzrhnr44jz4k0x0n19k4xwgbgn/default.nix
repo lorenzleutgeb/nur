@@ -183,11 +183,11 @@
       lshw
       lsof
       nfs-utils
-      utillinux
+      util-linux
       which
       tpm2-tools
       tpm2-pkcs11
-      config.boot.kernelPackages.perf
+      perf
     ];
     sessionVariables.LIBVA_DRIVER_NAME = "iHD";
   };

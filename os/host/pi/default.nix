@@ -53,7 +53,7 @@
       coreutils-full
       lshw
       lsof
-      utillinux
+      util-linux
       which
       wget
       zstd

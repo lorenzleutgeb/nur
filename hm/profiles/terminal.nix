@@ -73,7 +73,7 @@ with builtins; {
     pdfgrep
     pdftk
     phoronix-test-suite
-    poppler_utils
+    poppler-utils
     psmisc
     pv
     pwgen
