@@ -4,9 +4,11 @@
     ./profiles/latex.nix
     ./profiles/mpi-klsb.nix
     ./profiles/terminal.nix
+    ./profiles/sops
     ./profiles/spass.nix
     ./profiles/radicle.nix
     ./profiles/summer-of-nix.nix
+    ./programs/atuin.nix
     ./programs/vscode.nix
     ./profiles/wsl.nix
     ./services/radicle.nix
@@ -21,14 +23,18 @@
     ./profiles/mpi-klsb.nix
     ./profiles/radicle.nix
     #./services/v4lbridge.nix
+    ./profiles/sops
     ./profiles/spass.nix
     ./profiles/summer-of-nix.nix
+    ./programs/atuin.nix
     ./services/radicle.nix
   ];
 
   "nc" = [
     ./profiles/common.nix
+    ./profiles/sops
     ./profiles/terminal.nix
+    ./programs/atuin.nix
 
     {services.radicle-mirror = {};}
   ];

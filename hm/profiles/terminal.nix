@@ -9,10 +9,8 @@ with builtins; {
   imports = [
     ./common.nix
     ./nixbuild.nix
-    ./sops
     ./shell.nix
     #../programs/docker.nix
-    ../programs/atuin.nix
     ../programs/bat
     ../programs/direnv
     ../programs/fzf.nix

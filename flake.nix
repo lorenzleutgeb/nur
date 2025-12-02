@@ -112,7 +112,7 @@
     modules = {
       input = [
         authentik.nixosModules.default
-	disko.nixosModules.disko
+        disko.nixosModules.disko
         nixpkgs.nixosModules.notDetected
         hm.nixosModules.home-manager
         sops.nixosModules.sops
@@ -121,10 +121,10 @@
     };
 
     homeModules = {
-      input = [
-        nix-index-database.homeModules.nix-index
-        sops.homeManagerModule
-      ];
+      input = {
+        nix-index = nix-index-database.homeModules.nix-index;
+        sops = sops.homeManagerModule;
+      };
       self = {
         #"programs.radicle" = ./hm/module/programs/radicle.nix;
         #"services.radicle" = ./hm/module/services/radicle.nix;
@@ -150,7 +150,7 @@
         home-manager = {
           users.${user}.imports =
             hm.${host}
-            ++ homeModules.input
+            ++ [homeModules.input.nix-index]
             ++ (attrValues homeModules.self);
 
           useGlobalPkgs = true;
@@ -158,6 +158,7 @@
           backupFileExtension = "bak";
           extraSpecialArgs = {
             inherit inputs self;
+            modules = homeModules.input;
           };
         };
       }
@@ -195,7 +196,7 @@
               nixpkgs = {
                 overlays = [
                   radicle.overlays.master
-		  (import ./overlay/radicle-node.nix)
+                  (import ./overlay/radicle-node.nix)
                 ];
                 config.allowUnfree = true;
               };
