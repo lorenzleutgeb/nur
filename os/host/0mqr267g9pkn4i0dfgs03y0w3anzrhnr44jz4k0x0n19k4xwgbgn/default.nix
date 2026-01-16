@@ -206,6 +206,7 @@
     flatpak.enable = true;
     fwupd.enable = true;
     #journald.extraConfig = "ReadKMsg=no";
+    logind.settings.Login.RuntimeDirectorySize = "24G";
     openssh = {
       enable = true;
       settings.X11Forwarding = true;
@@ -254,10 +255,6 @@
         KERNEL=="ttyACM[0-9]*", SUBSYSTEM=="tty", ATTRS{idVendor}=="1d6b", ATTRS{idProduct}=="0104", SYMLINK="ttybbb"
       '';
     };
-
-    logind.extraConfig = ''
-      RuntimeDirectorySize=24G
-    '';
   };
 
   users.users.lorenz.extraGroups = [
