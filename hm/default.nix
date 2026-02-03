@@ -1,11 +1,12 @@
 {
   "wsl" = [
+    ./profiles/bpfverify.nix
     ./profiles/common.nix
     ./profiles/latex.nix
     ./profiles/mpi-klsb.nix
     ./profiles/terminal.nix
     ./profiles/sops
-    ./profiles/spass.nix
+    #./profiles/spass.nix
     ./profiles/radicle.nix
     ./profiles/summer-of-nix.nix
     ./programs/atuin.nix
