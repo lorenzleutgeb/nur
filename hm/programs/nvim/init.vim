@@ -26,18 +26,6 @@ set t_8f=[38;2;%lu;%lu;%lum
 set t_8b=[48;2;%lu;%lu;%lum
 set termguicolors
 
-set guifont=Fira\ Code:h13
-
-command! MakeTags !ctags -R .
-
-" Automatically source rc if saving a vim file.
-if has ('autocmd') " Remain compatible with earlier versions
- augroup vim       " Source vim configuration upon save
-    autocmd! BufWritePost $MYVIMRC source % | echom "Reloaded " . $MYVIMRC | redraw
-    autocmd! BufWritePost $MYGVIMRC if has('gui_running') | so % | echom "Reloaded " . $MYGVIMRC | endif | redraw
-  augroup END
-endif " has autocmd
-
 set nocp
 filetype plugin on
 

@@ -5,7 +5,10 @@
 }:
 with builtins; {
   home = {
-    packages = with pkgs; [neovim-remote haskellPackages.miv powerline-fonts];
+    packages = with pkgs; [
+      neovim-remote
+      powerline-fonts
+    ];
   };
 
   programs.neovim = {
@@ -13,19 +16,21 @@ with builtins; {
     defaultEditor = true;
     vimAlias = true;
     extraConfig = readFile ./init.vim;
-    plugins = with pkgs.vimPlugins; [];
+    plugins = with pkgs.vimPlugins; [
+      gruvbox
+      tex-conceal-vim
+      vim-airline
+      vim-easyescape
+      vimtex
+    ];
   };
 
-  xdg.configFile."miv/config.yaml".source = ./config.yaml;
-
-  xdg.configFile."nvim/UltiSnips/tex.snippets".source =
-    ./UltiSnips/tex.snippets;
-
-  xdg.configFile."nvim/filetype.vim".source = ./filetype.vim;
-  xdg.configFile."nvim/ftplugin/help.vim".source = ./ftplugin/help.vim;
-  xdg.configFile."nvim/ftplugin/lp.vim".source = ./ftplugin/lp.vim;
-
-  xdg.configFile."nvim/syntax/lp.vim".source = ./syntax/lp.vim;
-
-  xdg.configFile."nvim/simple.vim".source = ./simple.vim;
+  xdg.configFile = {
+    "nvim/UltiSnips/tex.snippets".source = ./UltiSnips/tex.snippets;
+    "nvim/filetype.vim".source = ./filetype.vim;
+    "nvim/ftplugin/help.vim".source = ./ftplugin/help.vim;
+    "nvim/ftplugin/lp.vim".source = ./ftplugin/lp.vim;
+    "nvim/syntax/lp.vim".source = ./syntax/lp.vim;
+    "nvim/simple.vim".source = ./simple.vim;
+  };
 }
