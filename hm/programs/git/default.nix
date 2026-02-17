@@ -212,6 +212,10 @@ in {
         in
           builtins.listToAttrs (map mk [
             {
+              short = "cb:";
+              base = "codeberg.org/";
+            }
+            {
               short = "gh:";
               base = "github.com/";
             }
@@ -226,6 +230,14 @@ in {
             {
               short = "scl:ll/";
               base = "git.sclable.com/lorenz.leutgeb/";
+            }
+            {
+              short = "sh:";
+              base = "git.sr.ht/~";
+            }
+            {
+              short = "sh:ll/";
+              base = "git.sr.ht/~lorenzleutgeb/";
             }
           ]);
 
