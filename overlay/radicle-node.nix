@@ -9,8 +9,8 @@ in {
 
     src = final.fetchgit {
       inherit (prevAttrs.src) url;
-      rev = "54fdbbfce3e12655d08c20112024859c9aa32cab";
-      hash = "sha256-NLO0rdw8uecNRn9Fnzb7ldtI/SV+YziC4bWeAE3BeCg=";
+      rev = "46f4c0f38ffb181f6e5787997c6153f18ab22902";
+      hash = "sha256-W94Vwf7ozwkENLueKF9Lvkns7HRX7PbMtvMHMCujV/s=";
       leaveDotGit = true;
       postFetch = ''
         git -C $out rev-parse HEAD > $out/.git_head
@@ -21,7 +21,7 @@ in {
 
     cargoDeps = final.rustPlatform.fetchCargoVendor {
       inherit (finalAttrs) src;
-      hash = "sha256-dJloJf9dwnpOUjkpzL80jEmNa+ksbGtau5h1oYlO7NI=";
+      hash = "sha256-9+mlNQwV2bUyAXkPN7aflGuN/Xd32uT+JEjl48ZDeXY=";
     };
 
     doCheck = false;
