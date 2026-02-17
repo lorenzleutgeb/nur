@@ -116,7 +116,11 @@ in {
 
   services.radicle-mirror = {
     "z3gqcJUoA1n9HaHKufZs5FCSGazv5" = {
-      remote = "gh:radicle-dev/heartwood";
+      remotes = [
+        "gh:radicle-dev/heartwood"
+        "sh:ll/heartwood"
+        "cb:radicle/heartwood"
+      ];
       refs.watch = ["refs/heads/master"];
       nodes = {
         "z6MkkPvBfjP4bQmco5Dm7UGsX2ruDBieEHi8n9DVJWX5sTEz".alias = "lorenzleutgeb";
@@ -124,7 +128,7 @@ in {
       };
     };
     "z39mP9rQAaGmERfUMPULfPUi473tY" = {
-      remote = "gh:radicle-dev/radicle-tui";
+      remotes = ["gh:radicle-dev/radicle-tui"];
       refs.watch = ["refs/heads/master"];
       nodes = {
         "z6MkgFq6z5fkF2hioLLSNu1zP2qEL1aHXHZzGH1FLFGAnBGz".alias = "erak";
@@ -132,7 +136,7 @@ in {
     };
 
     "z371PVmDHdjJucejRoRYJcDEvD5pp" = {
-      remote = "gh:radicle-dev/radicle.xyz";
+      remotes = ["gh:radicle-dev/radicle.xyz"];
       refs.watch = ["refs/heads/master"];
       nodes = {
         "z6MkkPvBfjP4bQmco5Dm7UGsX2ruDBieEHi8n9DVJWX5sTEz".alias = "lorenzleutgeb";
@@ -141,13 +145,13 @@ in {
     };
 
     "z6cFWeWpnZNHh9rUW8phgA3b5yGt" = {
-      remote = "gh:radicle-dev/radicle-git";
+      remotes = ["gh:radicle-dev/radicle-git"];
       refs.watch = ["refs/heads/master"];
       nodes = {
         "z6MkireRatUThvd3qzfKht1S44wpm4FEWSSa4PRMTSQZ3voM".alias = "FintanH";
       };
     };
 
-    "z3WFXKNQgDcHHATJx1PxL1XhDot9u".remote = "gh:ll/nur";
+    "z3WFXKNQgDcHHATJx1PxL1XhDot9u".remotes = ["gh:ll/nur"];
   };
 }

@@ -7,6 +7,7 @@
 }: let
   inherit
     (lib)
+    concatLines
     concatStringsSep
     flatten
     generators
@@ -57,10 +58,10 @@ in {
             example = "z42hL2jL4XNk6K8oHQaSWfMgCL7ji";
             type = str;
           };
-          remote = mkOption {
-            description = "Git repository to mirror to.";
-            example = "git@example.com:example.git";
-            type = str;
+          remotes = mkOption {
+            description = "Git repositories to mirror to.";
+            example = ["git@example.com:example.git"];
+            type = listOf str;
           };
           args = mkOption {
             description = "Arguments to pass to `git fetch`.";
@@ -107,22 +108,18 @@ in {
 
   config = {
     systemd.user = let
-      unit = rid: remote: {
-        Description = "Mirror ${rid} to ${remote}";
+      unit = rid: {
+        Description = "Mirror ${rid}";
         SourcePath = ./.;
         ConditionDirectoryNotEmpty = storage;
       };
     in {
       paths =
-        lib.mapAttrs' (rid: {
-          refs,
-          remote,
-          ...
-        }: {
+        lib.mapAttrs' (rid: {refs, ...}: {
           name = "radicle-mirror-${rid}";
           value = {
             Install.WantedBy = ["paths.target"];
-            Unit = unit rid remote;
+            Unit = unit rid;
             Path.PathChanged = map (ref: "${storage}/${rid}/${ref}") refs.watch;
           };
         })
@@ -133,23 +130,25 @@ in {
           args,
           refs,
           nodes,
-          remote,
+          remotes,
           ...
-        }: {
+        }: let
+          push = remote:
+            concatStringsSep " "
+            ([(lib.getExe pkgs.git) "push"]
+              ++ args
+              ++ [remote]
+              ++ refs.mirror ++ (flatten (mapAttrsToList (id: {refspecs, ...}: map (spec: "refs/namespaces/${id}/${spec}") refspecs) nodes)));
+        in {
           name = "radicle-mirror-${rid}";
           value = {
             Install = {
               WantedBy = ["default.target"];
             };
-            Unit = unit rid remote;
+            Unit = unit rid;
             Service = {
               Type = "oneshot";
-              ExecStart =
-                concatStringsSep " "
-                ([(lib.getExe pkgs.git) "push"]
-                  ++ args
-                  ++ [remote]
-                  ++ refs.mirror ++ (flatten (mapAttrsToList (id: {refspecs, ...}: map (spec: "refs/namespaces/${id}/${spec}") refspecs) nodes)));
+              ExecStart = map push remotes;
               WorkingDirectory = "${storage}/${rid}";
               Environment = ["PATH=${getBin pkgs.openssh}/bin"];
               Restart = "on-failure";
