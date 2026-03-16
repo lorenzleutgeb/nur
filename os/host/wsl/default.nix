@@ -121,9 +121,9 @@ in {
   };
 
   virtualisation = {
-    podman.enable = true;
+    podman.enable = false;
     docker = {
-      enable = false;
+      enable = true;
       enableOnBoot = false;
     };
     libvirtd = {
