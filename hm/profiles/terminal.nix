@@ -93,4 +93,8 @@ with builtins; {
     zip
     zola
   ];
+
+  programs = {
+    mergiraf.enable = true;
+  };
 }
