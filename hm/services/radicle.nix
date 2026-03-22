@@ -97,6 +97,7 @@ in {
             addr = "67apylyibh2oeonhwjlkloezjpc2yupjzajfb4o63bwhe75uq2c2dvid.onion";
             port = 8776;
           }));
+        fetch.signedReferences.featureLevel.minimum = "parent";
         onion = mkIf tor.enable {
           mode = "proxy";
           address = "${tor.socksListenAddress.addr}:${toString tor.socksListenAddress.port}";
