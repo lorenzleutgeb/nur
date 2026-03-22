@@ -70,6 +70,7 @@ in {
                 port = 58776;
               }))
           )
+          /*
           ++ (
             let
               nid = "z6MkocYY4dgMjo2YeUEwQ4BP4AotL7MyovzJCPiEuzkjg127";
@@ -84,12 +85,13 @@ in {
                 addr = "[202:f094:502b:1b03:9e0:2c3d:bc8b:428b]";
                 port = 8776;
               }))
-              ++ (optional (!ygg.enable && !tor.enable) (connectAddr {
-                inherit nid;
-                addr = "node.radicle.lorenz.leutgeb.xyz";
-                port = 8776;
-              }))
+            ++ (optional (!ygg.enable && !tor.enable) (connectAddr {
+              inherit nid;
+              addr = "node.radicle.lorenz.leutgeb.xyz";
+              port = 8776;
+            }))
           )
+          */
           ++ (optional tor.enable (connectAddr {
             nid = "z6MkireRatUThvd3qzfKht1S44wpm4FEWSSa4PRMTSQZ3voM";
             addr = "67apylyibh2oeonhwjlkloezjpc2yupjzajfb4o63bwhe75uq2c2dvid.onion";
