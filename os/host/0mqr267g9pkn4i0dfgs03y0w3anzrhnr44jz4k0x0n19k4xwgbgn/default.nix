@@ -17,12 +17,12 @@
     ../../mixin/ssh.nix
     ../../mixin/ngi.nix
     ../../mixin/tailscale.nix
+    ../../mixin/tor.nix
     ./hardware-configuration.nix
     ./bluetooth.nix
     ./monero.nix
     ./nfs.nix
     #./rsync.nix
-    ./tor.nix
     ./ttyd.nix
   ];
 

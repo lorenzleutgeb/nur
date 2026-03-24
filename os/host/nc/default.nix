@@ -22,6 +22,7 @@ in {
     ../../mixin/sops.nix
     ../../mixin/ssh.nix
     ../../mixin/tailscale.nix
+    ../../mixin/tor.nix
     ./caddy.nix
     #./git.nix
     #./headscale.nix
@@ -30,7 +31,6 @@ in {
     #./nfs.nix
     #./nextcloud.nix
     ./nullmailer.nix
-    ./tor.nix
     #./frigate.nix
     ./unifi.nix
     ./vaultwarden.nix
