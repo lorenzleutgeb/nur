@@ -18,6 +18,7 @@ in {
     (import ../../mixin/lorenz.nix {})
     ../../mixin/nix.nix
     ../../mixin/progressive.nix
+    ../../mixin/radicle.nix
     #../../mixin/remote-build.nix
     ../../mixin/sops.nix
     ../../mixin/ssh.nix
