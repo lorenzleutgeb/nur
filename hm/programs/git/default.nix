@@ -152,7 +152,6 @@ in {
         merge = {
           ff = false;
           guitool = "meld";
-          conflictStyle = "zdiff3";
         };
 
         mergetool = {
