@@ -111,10 +111,10 @@ in {
     enable = true;
     lazy.enable = true;
     environment = {
-      GIT_TRACE = "true";
+      #GIT_TRACE = "true";
       RUST_BACKTRACE = "full";
     };
-    args = "--log debug";
+    #args = "--log-level debug";
   };
 
   services.radicle-mirror = {
