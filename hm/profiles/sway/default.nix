@@ -293,15 +293,17 @@ in {
 
   services.mako = {
     enable = true;
-    anchor = "bottom-center";
-    backgroundColor = "#00000033";
-    borderColor = "#333333FF";
-    borderRadius = 3;
-    borderSize = 2;
-    defaultTimeout = 10 * 1000;
-    font = "${theme.font.sans} 12";
-    width = 2560 / 4;
-    height = 1440 / 10;
+    settings = {
+      anchor = "bottom-center";
+      background-color = "#00000033";
+      border-color = "#333333FF";
+      border-radius = 3;
+      border-size = 2;
+      default-timeout = 10 * 1000;
+      font = "${theme.font.sans} 12";
+      height = 1440 / 10;
+      width = 2560 / 4;
+    };
     extraConfig = ''
       [app-name="Spotify"]
       border-color=#1DB954

@@ -104,7 +104,6 @@ with builtins; {
       tree
       wally-cli
       wget
-      yubikey-personalization
       yq
     ]);
 }

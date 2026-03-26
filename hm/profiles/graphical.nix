@@ -16,17 +16,9 @@ with builtins; {
     ../programs/zathura.nix
     #../services/mpris-proxy.nix
     ../services/ulauncher.nix
-    ../services/gnome-keyring.nix
   ];
 
-  home.sessionVariables =
-    if
-      /*
-      super.enable4k
-      */
-      true
-    then {GDK_DPI_SCALE = "1.5";}
-    else {};
+  home.sessionVariables.GDK_DPI_SCALE = "1.5";
 
   home.packages = with pkgs; [
     baobab
@@ -64,16 +56,10 @@ with builtins; {
     vlc
     xclip
     xdotool
-    yubikey-personalization-gui
     zoom-us
     zotero
 
     m17n_db
     m17n_lib
   ];
-
-  i18n.inputMethod = {
-    enabled = "fcitx5";
-    fcitx5.addons = with pkgs; [fcitx5-m17n];
-  };
 }

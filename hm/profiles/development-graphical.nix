@@ -8,15 +8,6 @@ with builtins; {
     ./graphical.nix
   ];
 
-  home.sessionVariables =
-    if
-      /*
-      super.enable4k
-      */
-      true
-    then {GDK_DPI_SCALE = "1.5";}
-    else {};
-
   home.packages = with pkgs; [
     baobab
     gimp
@@ -35,7 +26,6 @@ with builtins; {
     siji
     stow
     stylish-haskell
-    skypeforlinux
     sshfs-fuse
     teamviewer
     transmission_4-gtk
@@ -43,16 +33,9 @@ with builtins; {
     obs-studio
     xclip
     xdotool
-    yubikey-personalization
-    yubikey-personalization-gui
     yq
 
     m17n_db
     m17n_lib
   ];
-
-  i18n.inputMethod = {
-    enabled = "fcitx5";
-    fcitx5.addons = with pkgs; [fcitx5-m17n];
-  };
 }
