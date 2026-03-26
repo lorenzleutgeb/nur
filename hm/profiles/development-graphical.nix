@@ -25,7 +25,6 @@ with builtins; {
     gparted
     insomnia
     meld
-    neovim-remote
     niv
     pinta
     picard

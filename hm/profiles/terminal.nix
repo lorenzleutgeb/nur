@@ -60,7 +60,6 @@ with builtins; {
     mtr
     ngrep
     ngrok
-    neovim-remote
     niv
     nixpkgs-review
     nvme-cli

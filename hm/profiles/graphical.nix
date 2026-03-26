@@ -45,7 +45,6 @@ with builtins; {
     gparted
     graphviz
     insomnia
-    neovim-remote
     noto-fonts
     pantheon.elementary-files
     pantheon.elementary-photos

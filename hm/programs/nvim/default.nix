@@ -6,7 +6,7 @@
 with builtins; {
   home = {
     packages = with pkgs; [
-      neovim-remote
+      #neovim-remote
       powerline-fonts
     ];
   };

@@ -76,7 +76,6 @@ with builtins; {
     mupdf
     nmap
     ncdu
-    neovim-remote
     niv
     nvme-cli
     nodejs
