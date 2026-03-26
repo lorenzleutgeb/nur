@@ -51,7 +51,7 @@ in {
         "gitlab.mpi-sws.org"
         "git.rg1.mpi-inf.mpg.de"
       ];
-      extraConfig = {
+      settings = {
         url =
           (builtins.listToAttrs (map preferSsh [
             "gitlab.mpi-klsb.mpg.de"
