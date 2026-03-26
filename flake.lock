@@ -241,14 +241,17 @@
         ]
       },
       "locked": {
-        "lastModified": 1760448869,
-        "narHash": "sha256-aqlhiS8J2xQh8RZl3CgQg5HHpxKMhY8V1kddT6i7VQ8=",
-        "path": "/home/lorenz/src/github.com/nix-community/home-manager",
-        "type": "path"
+        "lastModified": 1774534244,
+        "narHash": "sha256-WnmXKsbkwokDdrdI1XwRWH4RYYalOVKgV/hYQmL3/TE=",
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "rev": "86014e836ca6f4a04d59b85111d39660bdda01cd",
+        "type": "github"
       },
       "original": {
-        "path": "/home/lorenz/src/github.com/nix-community/home-manager",
-        "type": "path"
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "type": "github"
       }
     },
     "napalm": {

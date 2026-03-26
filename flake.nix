@@ -24,7 +24,7 @@
     };
     hardware.url = "github:NixOS/nixos-hardware";
     hm = {
-      url = "path:/home/lorenz/src/github.com/nix-community/home-manager";
+      url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     rust-overlay = {
