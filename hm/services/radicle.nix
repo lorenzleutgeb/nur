@@ -12,6 +12,7 @@
   #package = pkgs.radicle-node;
   package = pkgs.radicle-node-overlay;
 
+  i2p = osConfig.services.i2pd or {enable = false;};
   tor = osConfig.services.tor.client or {enable = false;};
   ygg =
     (osConfig.services.yggdrasil or {enable = false;})
@@ -101,6 +102,10 @@ in {
         onion = mkIf tor.enable {
           mode = "proxy";
           address = "${tor.socksListenAddress.addr}:${toString tor.socksListenAddress.port}";
+        };
+        i2p = mkIf (i2p.enable && i2p.proto.socksProxy.enable) {
+          mode = "proxy";
+          address = "${i2p.proto.socksProxy.address}:${toString i2p.proto.socksProxy.port}";
         };
       };
     };

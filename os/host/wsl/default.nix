@@ -10,6 +10,7 @@ in {
   imports = [
     ../../mixin/dns.nix
     ../../mixin/fonts.nix
+    ../../mixin/i2p.nix
     (import ../../mixin/lorenz.nix {inherit username;})
     #../../mixin/mkcert
     ../../mixin/mpi-klsb.nix
