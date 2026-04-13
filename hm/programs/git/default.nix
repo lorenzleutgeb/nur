@@ -23,7 +23,10 @@ in {
     "GH_BASE" = "${config.home.homeDirectory}/src/github.com}";
   };
 
-  programs.difftastic.git.enable = true;
+  programs.difftastic = {
+    enable = true;
+    git.enable = true;
+  };
 
   programs.git = {
     enable = true;
