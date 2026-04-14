@@ -38,6 +38,7 @@ in {
       "*.orig"
       ".dir-locals.el"
       ".mob"
+      "/.codex"
       "/.direnv/"
       "/.env"
       "/.envrc"
