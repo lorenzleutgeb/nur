@@ -5,9 +5,6 @@
 
       gnumake
 
-      llvmPackages_20.bintools-unwrapped
-      llvmPackages_20.clang-unwrapped
-
       python3
 
       z3

@@ -36,9 +36,7 @@ with builtins; {
       aspellDicts.en-science
       asciinema
       autojump
-      binutils
       cachix
-      clang
       cmake
       curlFull
       dive
