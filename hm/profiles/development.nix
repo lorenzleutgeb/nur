@@ -9,7 +9,6 @@ with builtins; {
     ./terminal.nix
 
     ../programs/bat
-    ../programs/cakeml.nix
     ../programs/fzf.nix
     ../programs/gh.nix
     ../programs/git
