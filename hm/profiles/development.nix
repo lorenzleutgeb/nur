@@ -5,6 +5,7 @@
 }:
 with builtins; {
   imports = [
+    ./go.nix
     ./rust.nix
     ./terminal.nix
 
@@ -12,7 +13,6 @@ with builtins; {
     ../programs/fzf.nix
     ../programs/gh.nix
     ../programs/git
-    ../programs/go.nix
     ../programs/nvim
     ../programs/ripgrep.nix
     ../programs/ssh.nix
