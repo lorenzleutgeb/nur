@@ -14,6 +14,7 @@ with builtins; {
     ../programs/signal-desktop
     ../programs/thunderbird.nix
     ../programs/zathura.nix
+    #../services/mpris-proxy.nix
     ../services/ulauncher.nix
     ../services/gnome-keyring.nix
   ];

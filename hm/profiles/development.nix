@@ -5,10 +5,11 @@
 }:
 with builtins; {
   imports = [
-    ./terminal.nix
     ./rust.nix
+    ./terminal.nix
+
     ../programs/bat
-    ../programs/firefox
+    ../programs/cakeml.nix
     ../programs/fzf.nix
     ../programs/gh.nix
     ../programs/git
@@ -16,8 +17,6 @@ with builtins; {
     ../programs/nvim
     ../programs/ripgrep.nix
     ../programs/ssh.nix
-    ../programs/cakeml.nix
-    ../services/mpris-proxy.nix
     ../services/syncthing.nix
   ];
 
