@@ -46,6 +46,7 @@ with builtins; {
     gparted
     graphviz
     insomnia
+    libreoffice
     noto-fonts
     pantheon.elementary-files
     pantheon.elementary-photos
@@ -63,7 +64,6 @@ with builtins; {
     vlc
     xclip
     xdotool
-    yubikey-personalization
     yubikey-personalization-gui
     zoom-us
     zotero

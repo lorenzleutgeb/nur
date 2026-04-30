@@ -30,7 +30,6 @@ with builtins; {
       yamllint
     ])
     ++ (with pkgs; [
-      alacritty
       aspell
       aspellDicts.en
       aspellDicts.en-computers
@@ -38,7 +37,6 @@ with builtins; {
       asciinema
       autojump
       binutils
-      brightnessctl
       cachix
       clang
       cmake
@@ -74,10 +72,8 @@ with builtins; {
       iperf
       jq
       kbfs
-      kdiff3
       kubectl
       liberation_ttf
-      libreoffice
       llvm
       material-icons
       mupdf
@@ -111,8 +107,6 @@ with builtins; {
       tree
       wally-cli
       wget
-      xclip
-      xdotool
       yubikey-personalization
       yq
     ]);
