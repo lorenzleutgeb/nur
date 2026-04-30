@@ -1,18 +1,19 @@
 {
   "wsl" = [
+    #./profiles/spass.nix
+
     ./profiles/bpfverify.nix
     ./profiles/common.nix
     ./profiles/development.nix
     ./profiles/latex.nix
     ./profiles/mpi-klsb.nix
-    ./profiles/terminal.nix
-    ./profiles/sops
-    #./profiles/spass.nix
     ./profiles/radicle.nix
+    ./profiles/sops
     ./profiles/summer-of-nix.nix
+    ./profiles/terminal.nix
+    ./profiles/wsl.nix
     ./programs/atuin.nix
     ./programs/vscode.nix
-    ./profiles/wsl.nix
     ./services/radicle.nix
   ];
 
