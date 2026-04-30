@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  osConfig,
+  ...
+}: {
   services.gpg-agent = {
     enable = true;
     enableSshSupport = true;
@@ -10,7 +14,7 @@
   home.sessionVariables = ''
     export GPG_TTY="$(tty)"
     gpg-connect-agent /bye
-    export SSH_AUTH_SOCK="/run/user/$UID/gnupg/S.gpg-agent.ssh"
+    export SSH_AUTH_SOCK="/run/user/${builtins.toString osConfig.users.users.${config.home.username}.uid}/gnupg/S.gpg-agent.ssh"
   '';
   */
 }

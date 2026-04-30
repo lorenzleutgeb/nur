@@ -1,6 +1,7 @@
 {
   pkgs,
   config,
+  osConfig,
   ...
 }: {
   imports = [./yubikey.nix ../scripts];
@@ -34,7 +35,7 @@
     packages = [pkgs.xdg-utils];
 
     sessionVariables = {
-      XDG_RUNTIME_DIR = "/var/run/user/$UID";
+      XDG_RUNTIME_DIR = "/var/run/user/${builtins.toString osConfig.users.users.${config.home.username}.uid}";
     };
   };
 }
