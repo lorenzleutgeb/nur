@@ -49,6 +49,9 @@ in {
         announcers = [
           "z6MkkPvBfjP4bQmco5Dm7UGsX2ruDBieEHi8n9DVJWX5sTEz"
         ];
+        listen = [
+          "127.0.0.1:58776"
+        ];
         connect = let
           connectAddr = {
             nid,
