@@ -9,8 +9,8 @@
 
   inherit (lib) mkIf optional;
 
-  #package = pkgs.radicle-node;
-  package = pkgs.radicle-node-overlay;
+  package = pkgs.radicle-node;
+  #package = pkgs.radicle-node-overlay;
 
   i2p = osConfig.services.i2pd or {enable = false;};
   tor = osConfig.services.tor.client or {enable = false;};
