@@ -71,28 +71,58 @@ in {
   };
 
   systemd.user = {
-    services."anti-opsi".Service = {
-      Type = "oneshot";
-      ExecStart = (lib.getExe (pkgs.writeShellApplication {
-        name = "anti-opsi";
-	runtimeInputs = with pkgs; [ curl jq ];
-	text = ''
-	  OUTPUT="/mnt/c/Users/lorenz/anti-opsi/thunderbird.msi"
-	  curl \
-	    --time-cond "$OUTPUT" \
-	    --output "$OUTPUT" \
-	    --max-time 120 \
-	    --location "https://download.mozilla.org/?product=thunderbird-$(curl -H 'accept: application/json' "https://query.wikidata.org/sparql?query=$(jq -r '@uri' <<<"\"SELECT ?version WHERE { wd:Q483604 p:P348 ?versionStatement. ?versionStatement ps:P348 ?version; pq:P548 wd:Q2804309; pq:P577 ?date. } ORDER BY DESC(?date) LIMIT 1\"")" | jq -r .results.bindings[0].version.value)-msi-SSL&os=win64&lang=en-US"
-	'';
-      }));
+    services = {
+      "anti-opsi".Service = {
+        Type = "oneshot";
+        ExecStart = lib.getExe (pkgs.writeShellApplication {
+          name = "anti-opsi";
+          runtimeInputs = with pkgs; [curl jq];
+          text = ''
+            OUTPUT="/mnt/c/Users/lorenz/anti-opsi/thunderbird.msi"
+            curl \
+              --time-cond "$OUTPUT" \
+              --output "$OUTPUT" \
+              --max-time 120 \
+              --location "https://download.mozilla.org/?product=thunderbird-$(curl -H 'accept: application/json' "https://query.wikidata.org/sparql?query=$(jq -r '@uri' <<<"\"SELECT ?version WHERE { wd:Q483604 p:P348 ?versionStatement. ?versionStatement ps:P348 ?version; pq:P548 wd:Q2804309; pq:P577 ?date. } ORDER BY DESC(?date) LIMIT 1\"")" | jq -r .results.bindings[0].version.value)-msi-SSL&os=win64&lang=en-US"
+          '';
+        });
+      };
+
+      "backup".Service = {
+        Type = "oneshot";
+        ExecStart = lib.getExe (pkgs.writeShellApplication {
+          name = "backup";
+          runtimeInputs = with pkgs; [coreutils git openssh];
+          text = ''
+	    LOCAL="/home/lorenz/src/gitlab.mpi-klsb.mpg.de/info/git.rg1/lorenz"
+	    REMOTE="git@gitlab.mpi-klsb.mpg.de:lorenz/backup.git"
+
+            git -C "$LOCAL" push --verbose --force \
+	      "$REMOTE" "HEAD:refs/heads/$(date --iso-8601=minutes | tr ':' '_')"  "HEAD:refs/heads/backup"
+          '';
+        });
+      };
     };
 
-    timers."anti-opsi" = {
-      Timer = {
-        OnBootSec = "10m";
-        OnUnitActiveSec = "24h";
+    paths."backup" = {
+      Path.PathModified = "/home/lorenz/src/gitlab.mpi-klsb.mpg.de/info/git.rg1/lorenz/.git/HEAD";
+      Install.WantedBy = ["paths.target"];
+    };
+
+    timers = {
+      "anti-opsi" = {
+        Timer = {
+          OnBootSec = "10m";
+          OnUnitActiveSec = "24h";
+        };
+        Install.WantedBy = ["timers.target"];
       };
-      Install.WantedBy = ["timers.target"];
+      /*
+      "backup" = {
+        Timer.OnCalendar = "*:0/5";
+        Install.WantedBy = ["timers.target"];
+      };
+      */
     };
   };
 }
