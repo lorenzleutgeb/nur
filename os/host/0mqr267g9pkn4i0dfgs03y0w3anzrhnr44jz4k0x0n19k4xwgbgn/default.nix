@@ -5,6 +5,7 @@
 }: {
   imports = [
     ../../mixin/caddy.nix
+    ../../mixin/common.nix
     ../../mixin/dns.nix
     ../../mixin/fonts.nix
     ../../mixin/harmonia.nix
@@ -164,7 +165,6 @@
   };
 
   programs = {
-    adb.enable = true;
     dconf.enable = true;
     java = {
       enable = false;
@@ -258,7 +258,6 @@
   };
 
   users.users.lorenz.extraGroups = [
-    "adbusers"
     "docker"
     "libvirtd"
     "mkcert"

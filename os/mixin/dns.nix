@@ -31,14 +31,11 @@ in {
   #systemd.services.systemd-resolved.serviceConfig.Environment = "SYSTEMD_LOG_LEVEL=debug";
 
   services = {
-    resolved = {
-      llmnr = "false";
-      dnsovertls = "true";
-      fallbackDns = dns;
-
-      extraConfig = ''
-        MulticastDNS=true
-      '';
+    resolved.settings.Resolve = {
+      DNSOverTLS = true;
+      FallbackDNS = dns;
+      LMNR = false;
+      MulticastDNS = true;
     };
 
     headscale.settings.dns_config = {

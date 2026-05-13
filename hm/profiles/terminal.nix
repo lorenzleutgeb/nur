@@ -86,7 +86,7 @@ with builtins; {
     tree
     unzip
     vmtouch
-    xxHash
+    xxhash
     yubikey-personalization
     yq
     zip
@@ -94,6 +94,10 @@ with builtins; {
   ];
 
   programs = {
-    mergiraf.enable = true;
+    mergiraf = {
+      enable = true;
+      enableJujutsuIntegration = true;
+      enableGitIntegration = true;
+    };
   };
 }

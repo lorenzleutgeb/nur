@@ -13,7 +13,10 @@
     enable = true;
     mime.enable = true;
     mimeApps.enable = true;
-    userDirs.enable = true;
+    userDirs = {
+      enable = true;
+      setSessionVariables = true;
+    };
   };
 
   manual.html.enable = true;

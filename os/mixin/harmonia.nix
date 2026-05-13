@@ -2,7 +2,7 @@
   port = "5000";
 in {
   services = {
-    harmonia = {
+    harmonia.cache = {
       enable = true;
       settings.bind = "[::]:${port}";
     };

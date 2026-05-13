@@ -80,12 +80,12 @@ with builtins; {
       niv
       nvme-cli
       nodejs
-      nodePackages.pnpm
       noto-fonts
       pandoc
       pavucontrol
       pdfgrep
       pinta
+      pnpm
       ranger
       shellcheck
       shfmt

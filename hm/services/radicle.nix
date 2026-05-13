@@ -59,8 +59,8 @@ in {
             port,
           }: "${nid}@${addr}:${toString port}";
         in
-	  []
-	  /*
+          []
+          /*
           (
             let
               nid = "z6MksmpU5b1dS7oaqF2bHXhQi1DWy2hB7Mh9CuN7y1DN6QSz";
@@ -76,7 +76,7 @@ in {
                 port = 58776;
               }))
           )
-	  */
+          */
           /*
           ++ (
             let

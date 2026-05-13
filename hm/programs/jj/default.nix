@@ -18,9 +18,8 @@
   programs.jujutsu = {
     enable = true;
     settings = {
-      user = with config.programs.git; {
-        name = userName;
-        email = userEmail;
+      user = {
+        inherit (config.programs.git.settings.user) name email;
       };
     };
   };

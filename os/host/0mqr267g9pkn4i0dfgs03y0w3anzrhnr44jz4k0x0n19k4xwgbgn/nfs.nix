@@ -19,11 +19,13 @@
       fsType = "btrfs";
       options = ["compress=zstd" "discard=async" "noatime" "subvol=share"];
     };
+    /*
     "/mnt/lorenz-sync" = {
       device = "/home/lorenz/sync";
       options = ["bind" "ro" "uid=993" "gid=992" "noexec" "noatime" "nosuid"];
       depends = ["/home"];
     };
+    */
   };
 
   systemd = {

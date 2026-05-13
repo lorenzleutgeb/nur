@@ -54,7 +54,7 @@ in {
       "*.* diff=difft"
     ];
 
-    extraConfig =
+    settings =
       {
         ghq.root = "~/src";
 

@@ -17,12 +17,14 @@ with builtins; {
     vimAlias = true;
     extraConfig = readFile ./init.vim;
     plugins = with pkgs.vimPlugins; [
-      gruvbox
-      tex-conceal-vim
-      vim-airline
-      vim-easyescape
-      vimtex
+      #gruvbox
+      #tex-conceal-vim
+      #vim-airline
+      #vim-easyescape
+      #vimtex
     ];
+    withPython3 = false;
+    withRuby = false;
   };
 
   xdg.configFile = {

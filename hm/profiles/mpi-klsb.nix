@@ -94,11 +94,11 @@ in {
           name = "backup";
           runtimeInputs = with pkgs; [coreutils git openssh];
           text = ''
-	    LOCAL="/home/lorenz/src/gitlab.mpi-klsb.mpg.de/info/git.rg1/lorenz"
-	    REMOTE="git@gitlab.mpi-klsb.mpg.de:lorenz/backup.git"
+            LOCAL="/home/lorenz/src/gitlab.mpi-klsb.mpg.de/info/git.rg1/lorenz"
+            REMOTE="git@gitlab.mpi-klsb.mpg.de:lorenz/backup.git"
 
-            git -C "$LOCAL" push --verbose --force \
-	      "$REMOTE" "HEAD:refs/heads/$(date --iso-8601=minutes | tr ':' '_')"  "HEAD:refs/heads/backup"
+                   git -C "$LOCAL" push --verbose --force \
+              "$REMOTE" "HEAD:refs/heads/$(date --iso-8601=minutes | tr ':' '_')"  "HEAD:refs/heads/backup"
           '';
         });
       };
