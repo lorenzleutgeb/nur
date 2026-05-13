@@ -2,7 +2,10 @@
   services = {
     caddy.virtualHosts = {
       "unifi.leutgeb.xyz".extraConfig = ''
-        reverse_proxy :8443 {
+        reverse_proxy https://127.0.0.1:8443 {
+          header_up Host localhost:8443
+          header_up Origin https://localhost:8443
+          header_up Referer https://localhost:8443/
           transport http {
             tls_insecure_skip_verify
           }
@@ -23,6 +26,20 @@
           redir https://{host} permanent
         }
         respond "?"
+      '';
+      "http://127.0.0.1:9080".extraConfig = ''
+        @manifest {
+          path /api/ucore/manifest
+        }
+
+        handle @manifest {
+          header Content-Type application/json
+          respond "{}" 200
+        }
+
+        handle {
+          respond "" 401
+        }
       '';
     };
     unifi = {
