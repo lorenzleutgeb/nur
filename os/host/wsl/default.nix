@@ -25,25 +25,18 @@ in {
 
   hardware.graphics.enable = true;
 
-  wsl = {
+  wsl = let
+    defaultUser = username;
+  in {
+    inherit defaultUser;
     enable = true;
     wslConf = {
-      user.default = username;
-      automount = {
-        enabled = false;
-        mountFsTab = false;
-      };
+      user.default = defaultUser;
       network = {
         generateHosts = false;
         generateResolvConf = false;
       };
-      interop = {
-        enabled = true;
-        appendWindowsPath = false;
-      };
     };
-    defaultUser = username;
-    startMenuLaunchers = false;
   };
 
   # Set your time zone.
@@ -82,17 +75,6 @@ in {
     kubo.enable = false;
     pcscd.enable = true;
     printing.enable = false;
-  };
-
-  fileSystems."/mnt/c" = {
-    device = "C:";
-    fsType = "drvfs";
-    noCheck = true;
-    options = [
-      "uid=${builtins.toString config.users.users.lorenz.uid}"
-      "gid=${builtins.toString config.users.groups.${config.users.users.lorenz.group}.gid}"
-      "x-systemd.automount"
-    ];
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
