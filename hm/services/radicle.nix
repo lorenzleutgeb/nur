@@ -137,8 +137,9 @@ in {
       ];
       refs.watch = ["refs/heads/master"];
       nodes = {
-        "z6MkkPvBfjP4bQmco5Dm7UGsX2ruDBieEHi8n9DVJWX5sTEz".alias = "lorenzleutgeb";
+        "z6MkwPUeUS2fJMfc2HZN1RQTQcTTuhw4HhPySB8JeUg2mVvx".alias = "rudolfs";
         "z6MkireRatUThvd3qzfKht1S44wpm4FEWSSa4PRMTSQZ3voM".alias = "FintanH";
+        "z6MkkPvBfjP4bQmco5Dm7UGsX2ruDBieEHi8n9DVJWX5sTEz".alias = "lorenzleutgeb";
       };
     };
     "z39mP9rQAaGmERfUMPULfPUi473tY" = {
