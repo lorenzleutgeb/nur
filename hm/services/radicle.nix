@@ -31,8 +31,9 @@ in {
   systemd.user.services.radicle-node.Service = {
     LoadCredential = "xyz.radicle.node.secret:${config.home.homeDirectory}/.radicle/node/key";
     IPAccounting = true;
-    IPAddressAllow = "${tor.socksListenAddress.addr}:${toString tor.socksListenAddress.port}";
-    IPAddressDeny = "any";
+    # For Tor/I2P only:
+    #IPAddressAllow = "localhost";
+    #IPAddressDeny = "any";
   };
 
   programs.radicle = {
