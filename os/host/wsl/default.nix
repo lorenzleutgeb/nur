@@ -32,9 +32,17 @@ in {
     enable = true;
     wslConf = {
       user.default = defaultUser;
+      automount = {
+        enabled = false;
+        mountFsTab = false;
+      };
       network = {
         generateHosts = false;
         generateResolvConf = false;
+      };
+      interop = {
+        enabled = true;
+        appendWindowsPath = false;
       };
     };
   };
@@ -75,6 +83,17 @@ in {
     kubo.enable = false;
     pcscd.enable = true;
     printing.enable = false;
+  };
+
+  fileSystems."/mnt/c" = {
+    device = "C:";
+    fsType = "drvfs";
+    noCheck = true;
+    options = [
+      "uid=${builtins.toString config.users.users.lorenz.uid}"
+      "gid=${builtins.toString config.users.groups.${config.users.users.lorenz.group}.gid}"
+      "x-systemd.automount"
+    ];
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
