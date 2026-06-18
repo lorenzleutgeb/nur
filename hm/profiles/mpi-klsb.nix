@@ -78,12 +78,19 @@ in {
           name = "anti-opsi";
           runtimeInputs = with pkgs; [curl jq];
           text = ''
-            OUTPUT="/mnt/c/Users/lorenz/anti-opsi/thunderbird.msi"
+            OUTPUT="/mnt/c/Users/lorenz/anti-opsi/"
+            THUNDERBIRD="$OUTPUT/thunderbird.msi"
             curl \
-              --time-cond "$OUTPUT" \
-              --output "$OUTPUT" \
+              --time-cond "$THUNDERBIRD" \
+              --output "$THUNDERBIRD" \
               --max-time 120 \
               --location "https://download.mozilla.org/?product=thunderbird-$(curl -H 'accept: application/json' "https://query.wikidata.org/sparql?query=$(jq -r '@uri' <<<"\"SELECT ?version WHERE { wd:Q483604 p:P348 ?versionStatement. ?versionStatement ps:P348 ?version; pq:P548 wd:Q2804309; pq:P577 ?date. } ORDER BY DESC(?date) LIMIT 1\"")" | jq -r .results.bindings[0].version.value)-msi-SSL&os=win64&lang=en-US"
+            FIREFOX="$OUTPUT/firefox.msi"
+            curl \
+              --time-cond "$FIREFOX" \
+              --output "$FIREFOX" \
+              --max-time 120 \
+	      --location "https://download.mozilla.org/?product=firefox-msi-latest-ssl&os=win64&lang=en-US"
           '';
         });
       };
