@@ -109,15 +109,39 @@ in {
           '';
         });
       };
+
+      "ssh-known-hosts".Service = {
+        Type = "oneshot";
+        ExecStart = lib.getExe (pkgs.writeShellApplication {
+          name = "ssh-known-hosts";
+          runtimeInputs = with pkgs; [coreutils git openssh];
+          text = ''
+            cp /home/lorenz/.ssh/known_hosts /mnt/c/Users/lorenz/.ssh/known_hosts
+          '';
+        });
+      };
     };
 
-    paths."backup" = {
-      Path.PathModified = "/home/lorenz/src/gitlab.mpi-klsb.mpg.de/info/git.rg1/lorenz/.git/HEAD";
-      Install.WantedBy = ["paths.target"];
+    paths = {
+      "backup" = {
+        Path.PathModified = "/home/lorenz/src/gitlab.mpi-klsb.mpg.de/info/git.rg1/lorenz/.git/HEAD";
+        Install.WantedBy = ["paths.target"];
+      };
+      "ssh-known-hosts" = {
+        Path.PathModified = "/home/lorenz/.ssh/known_hosts";
+        Install.WantedBy = ["paths.target"];
+      };
     };
 
     timers = {
       "anti-opsi" = {
+        Timer = {
+          OnBootSec = "10m";
+          OnUnitActiveSec = "24h";
+        };
+        Install.WantedBy = ["timers.target"];
+      };
+      "ssh-known-hosts" = {
         Timer = {
           OnBootSec = "10m";
           OnUnitActiveSec = "24h";
