@@ -26,7 +26,7 @@ with builtins; {
     noto-fonts
     pandoc
     pdfgrep
-    texlive.combined.scheme-full
+    texliveFull
     roboto
     roboto-mono
     roboto-slab

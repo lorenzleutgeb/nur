@@ -116,7 +116,8 @@
             DHCP = "ipv4";
             IPv6AcceptRA = true;
           };
-          dns = config.services.resolved.fallbackDns;
+          dns = config.services.resolved.settings.Resolve.FallbackDNS;
+
           dhcpV4Config = {
             UseDNS = false;
             UseRoutes = true;

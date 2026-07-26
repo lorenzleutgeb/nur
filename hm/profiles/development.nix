@@ -23,7 +23,6 @@ with builtins; {
     (with pkgs.python3Packages; [
       python
       beautifulsoup4
-      mwclient
       pip
       setuptools
       requests

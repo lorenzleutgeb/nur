@@ -88,7 +88,7 @@ in {
         "152.53.112.1"
         "fe80::1"
       ];
-      dns = config.services.resolved.fallbackDns;
+      dns = config.services.resolved.settings.Resolve.FallbackDNS;
     };
   };
 
@@ -102,7 +102,7 @@ in {
     fuse
     lsof
     pflogsumm
-    utillinux
+    util-linux
     vim
     wget
     which

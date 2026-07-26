@@ -1,11 +1,8 @@
 {pkgs, ...}: {
+  fonts.packages = [pkgs.fira-code];
+
   services.kmscon = {
     enable = true;
-    fonts = [
-      {
-        name = "Fira Code";
-        package = pkgs.fira-code;
-      }
-    ];
+    config.font-name = "Fira Code";
   };
 }

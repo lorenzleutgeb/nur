@@ -27,13 +27,11 @@ in {
       };
       wireguardPeers = [
         {
-          wireguardPeerConfig = {
-            PublicKey = "k3u9msA9b6WsO1mHg1B3F5p8d+mk01KPColOXDDbhC4=";
-            AllowedIPs = "192.168.178.0/24";
-            PersistentKeepalive = 25;
-            PresharedKeyFile = config.sops.secrets."fritz/psk".path;
-            Endpoint = "viuyg7910fd1t4dq.myfritz.net:55750";
-          };
+          PublicKey = "k3u9msA9b6WsO1mHg1B3F5p8d+mk01KPColOXDDbhC4=";
+          AllowedIPs = "192.168.178.0/24";
+          PersistentKeepalive = 25;
+          PresharedKeyFile = config.sops.secrets."fritz/psk".path;
+          Endpoint = "viuyg7910fd1t4dq.myfritz.net:55750";
         }
       ];
     };

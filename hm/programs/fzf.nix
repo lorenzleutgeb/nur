@@ -3,13 +3,19 @@
     enable = true;
     enableFishIntegration = true;
 
-    changeDirWidgetCommand = "fd --type d";
-    changeDirWidgetOptions = ["--preview 'tree -C {} | head -200'"];
+    changeDirWidget = {
+      command = "fd --type d";
+      options = ["--preview 'tree -C {} | head -200'"];
+    };
 
     defaultCommand = "fd --type f";
     defaultOptions = ["--style minimal"];
 
-    fileWidgetCommand = "fd --type f";
-    fileWidgetOptions = ["--preview 'bat --color=always --style=changes {}'"];
+    fileWidget = {
+      command = "fd --type f";
+      options = ["--preview 'bat --color=always --style=changes {}'"];
+    };
+
+    historyWidget.fish.command = "";
   };
 }
