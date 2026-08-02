@@ -37,7 +37,7 @@ in {
     ./vaultwarden.nix
     ./wireguard.nix
     #./keycloak.nix
-    #./authentik.nix
+    ./kanidm.nix
 
     ./disk-config.nix
 
