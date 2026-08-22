@@ -143,27 +143,12 @@ in {
         "z6MkkPvBfjP4bQmco5Dm7UGsX2ruDBieEHi8n9DVJWX5sTEz".alias = "lorenzleutgeb";
       };
     };
-    "z39mP9rQAaGmERfUMPULfPUi473tY" = {
-      remotes = ["gh:radicle-dev/radicle-tui"];
-      refs.watch = ["refs/heads/master"];
-      nodes = {
-        "z6MkgFq6z5fkF2hioLLSNu1zP2qEL1aHXHZzGH1FLFGAnBGz".alias = "erak";
-      };
-    };
 
     "z371PVmDHdjJucejRoRYJcDEvD5pp" = {
       remotes = ["gh:radicle-dev/radicle.xyz"];
       refs.watch = ["refs/heads/master"];
       nodes = {
         "z6MkkPvBfjP4bQmco5Dm7UGsX2ruDBieEHi8n9DVJWX5sTEz".alias = "lorenzleutgeb";
-        "z6MkireRatUThvd3qzfKht1S44wpm4FEWSSa4PRMTSQZ3voM".alias = "FintanH";
-      };
-    };
-
-    "z6cFWeWpnZNHh9rUW8phgA3b5yGt" = {
-      remotes = ["gh:radicle-dev/radicle-git"];
-      refs.watch = ["refs/heads/master"];
-      nodes = {
         "z6MkireRatUThvd3qzfKht1S44wpm4FEWSSa4PRMTSQZ3voM".alias = "FintanH";
       };
     };
