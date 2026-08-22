@@ -41,8 +41,8 @@ in {
     # https://plex.mpi-klsb.mpg.de/display/Documentation/UntrustedCertificates#UntrustedCertificates-InternalRoot-CADownload
     (fetchcert {
       url = "https://ca.mpi-klsb.mpg.de/klsb.crt";
-      fileHash = "0lqgqn110b52c0vgrfahdc7k4gfrbxz47ckk6ghqn4491q9h4njc";
-      certHash = "FE:F6:82:83:A9:10:34:D0:7C:19:BE:BF:F7:04:8B:C4:D5:E6:CF:D9:F4:A4:5C:EB:46:79:33:65:BD:94:CF:44";
+      fileHash = "sha256:1jqs7hgkmspbprw874ik0qvjaclv1z244n9wn903j5j8mywqzg5y";
+      certHash = "96:DD:8E:A1:94:8A:EB:BB:7A:05:B2:C3:61:06:01:88:FA:2C:85:1D:29:DD:AB:C9:EB:5E:15:DF:14:E9:23:0D";
     })
 
     # https://plex.mpi-klsb.mpg.de/display/Documentation/eduroam#eduroam-Servercertificates
