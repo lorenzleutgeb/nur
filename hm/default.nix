@@ -1,7 +1,5 @@
 {
   "wsl" = [
-    #./profiles/spass.nix
-
     ./profiles/bpfverify.nix
     ./profiles/common.nix
     ./profiles/development.nix
@@ -9,6 +7,7 @@
     ./profiles/mpi-klsb.nix
     ./profiles/radicle.nix
     ./profiles/sops
+    ./profiles/spass.nix
     ./profiles/summer-of-nix.nix
     ./profiles/terminal.nix
     ./profiles/wsl.nix
