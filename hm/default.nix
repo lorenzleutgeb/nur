@@ -4,6 +4,7 @@
     ./profiles/common.nix
     ./profiles/development.nix
     ./profiles/latex.nix
+    ./profiles/logic1.nix
     ./profiles/mpi-klsb.nix
     ./profiles/radicle.nix
     ./profiles/sops
@@ -22,6 +23,7 @@
     ./profiles/development-graphical.nix
     ./profiles/gaming.nix
     ./profiles/latex.nix
+    ./profiles/logic1.nix
     ./profiles/mpi-klsb.nix
     ./profiles/radicle.nix
     #./services/v4lbridge.nix
