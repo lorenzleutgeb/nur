@@ -6,6 +6,7 @@
     ./profiles/latex.nix
     ./profiles/logic1.nix
     ./profiles/mpi-klsb.nix
+    ./profiles/msmtp.nix
     ./profiles/radicle.nix
     ./profiles/sops
     ./profiles/spass.nix

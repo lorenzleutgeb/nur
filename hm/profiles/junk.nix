@@ -7,11 +7,6 @@
   accounts.email = {
     maildirBasePath = "mail";
 
-    accounts.lorenz = {
-      primary = true;
-      address = "lorenz@leutgeb.xyz";
-    };
-
     accounts.junk = {
       address = "lorenz@leutgeb.xyz";
       userName = "lorenz-junk@leutgeb.xyz";
