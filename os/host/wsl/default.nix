@@ -75,11 +75,17 @@ in {
   services = {
     cron.enable = true;
     envfs.enable = true;
-    #journald.extraConfig = "ReadKMsg=no";
+
+    journald.extraConfig = ''
+      MaxRetentionSec=30d
+      ReadKMsg=no
+    '';
+
     openssh = {
       enable = true;
       settings.X11Forwarding = true;
     };
+
     kubo.enable = false;
     pcscd.enable = true;
     printing.enable = false;
