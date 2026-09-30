@@ -15,9 +15,9 @@
   nixpkgs.config.allowUnfree = true;
 
   nix = {
-    nixPath = ["nixpkgs=/etc/${config.environment.etc."nix/inputs/nixpkgs".target}"];
     settings = {
       auto-optimise-store = true;
+      nix-path = ["nixpkgs=/etc/${config.environment.etc."nix/inputs/nixpkgs".target}"];
       substituters = ["https://lean4.cachix.org/"];
       trusted-users = ["lorenz"];
       trusted-public-keys = [

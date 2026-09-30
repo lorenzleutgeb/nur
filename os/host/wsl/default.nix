@@ -77,10 +77,10 @@ in {
     cron.enable = true;
     envfs.enable = true;
 
-    journald.extraConfig = ''
-      MaxRetentionSec=30d
-      ReadKMsg=no
-    '';
+    journald.settings.Journal = {
+      MaxRetentionSec = "30d";
+      ReadKMsg = "no";
+    };
 
     openssh = {
       enable = true;
