@@ -56,7 +56,6 @@ with builtins; {
     jq
     miller
     moreutils
-    mosh
     mtr
     ngrep
     ngrok
