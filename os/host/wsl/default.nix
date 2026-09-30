@@ -99,7 +99,6 @@ in {
     options = [
       "uid=${builtins.toString config.users.users.lorenz.uid}"
       "gid=${builtins.toString config.users.groups.${config.users.users.lorenz.group}.gid}"
-      "x-systemd.automount"
     ];
   };
 
