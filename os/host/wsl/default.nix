@@ -60,6 +60,7 @@ in {
     systemPackages = with pkgs; [
       coreutils-full
       exfat
+      kmod
       lshw
       lsof
       nfs-utils
