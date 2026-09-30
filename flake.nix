@@ -188,7 +188,10 @@
                   radicle.overlays.master
                   (import ./overlay/radicle-node.nix)
                 ];
-                config.allowUnfree = true;
+                config = {
+                  allowInsecurePredicate = pkg: (lib.getName pkg) == "radicle-node";
+                  allowUnfree = true;
+                };
               };
             }
             preconfig
