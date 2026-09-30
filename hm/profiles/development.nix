@@ -31,8 +31,6 @@ with builtins; {
     ++ (with pkgs; [
       aspell
       aspellDicts.en
-      aspellDicts.en-computers
-      aspellDicts.en-science
       asciinema
       autojump
       cachix

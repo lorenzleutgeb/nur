@@ -8,8 +8,6 @@ with builtins; {
     aspell
     aspellDicts.de
     aspellDicts.en
-    aspellDicts.en-computers
-    aspellDicts.en-science
     bibtool
     entr
     envsubst
