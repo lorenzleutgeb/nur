@@ -52,6 +52,7 @@ with builtins; {
     glibcLocales
     graphviz
     htop
+    inetutils
     iotop
     jq
     miller
