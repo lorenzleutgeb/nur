@@ -9,7 +9,7 @@
 
   inherit (lib) mkIf optional;
 
-  package = pkgs.radicle-node;
+  package = pkgs.radicle-node.overrideAttrs {doCheck = false;};
   #package = pkgs.radicle-node-overlay;
 
   i2p = osConfig.services.i2pd or {enable = false;};
