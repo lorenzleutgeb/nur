@@ -33,7 +33,6 @@ with builtins; {
     alejandra
     asciinema
     autojump
-    beets
     cachix
     chromaprint
     csvkit
