@@ -109,6 +109,13 @@ in {
 
   #nix.settings.substituters = ["https://0mqr.fluffy-ordinal.ts.net/cache/?trusted=true"];
 
+  nix.gc = {
+    automatic = true;
+    dates = "daily";
+    randomizedDelaySec = "1h";
+    options = "--delete-older-than 10d";
+  };
+
   networking = {
     hosts."202:f094:502b:1b03:9e0:2c3d:bc8b:428b" = ["yggdrasil.seed.leutgeb.xyz"]; # Work around rad:z3gqcJUoA1n9HaHKufZs5FCSGazv5/issue/608341c7ec80555e4b16050ab25c8d5be6322e18
     firewall.enable = false;
