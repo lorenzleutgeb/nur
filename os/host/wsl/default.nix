@@ -168,19 +168,18 @@ in {
         User = "root";
       };
     };
-    #network.enable = true;
 
     network = let
       nics = [
         {
           order = "30";
           name = "eth0";
-          matchConfig.PermanentMACAddress = "38:f3:ab:f3:7c:1e";
+          matchConfig.PermanentMACAddress = "88:a4:c2:c4:8b:cd";
         }
         {
           order = "50";
           name = "wlan0";
-          matchConfig.PermanentMACAddress = "58:6c:25:b3:98:27";
+          matchConfig.PermanentMACAddress = "70:cd:0d:f2:fc:06";
         }
         {
           order = "80";
