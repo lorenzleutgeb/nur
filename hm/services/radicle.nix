@@ -137,6 +137,7 @@ in {
         "cb:radicle/heartwood"
       ];
       refs.watch = ["refs/heads/main"];
+      args = ["--force" "--porcelain" "--quiet"];
       nodes = {
         "z6MkwPUeUS2fJMfc2HZN1RQTQcTTuhw4HhPySB8JeUg2mVvx".alias = "rudolfs";
         "z6MkireRatUThvd3qzfKht1S44wpm4FEWSSa4PRMTSQZ3voM".alias = "FintanH";

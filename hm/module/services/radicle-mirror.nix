@@ -64,7 +64,7 @@ in {
             type = listOf str;
           };
           args = mkOption {
-            description = "Arguments to pass to `git fetch`.";
+            description = "Arguments to pass to `git push`.";
             example = ["--force" "--verbose"];
             default = ["--force" "--prune" "--porcelain" "--quiet"];
             type = listOf str;
