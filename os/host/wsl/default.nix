@@ -231,5 +231,8 @@ in {
         nics);
       */
     };
+    tmpfiles.rules = [
+      "e /tmp - - - 10d"
+    ];
   };
 }
