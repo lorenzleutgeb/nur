@@ -18,7 +18,6 @@ in {
     openssl
     openssl.dev
     pkg-config
-    radicle-tui
     radicle-storage
   ];
 }
