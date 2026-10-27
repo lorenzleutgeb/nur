@@ -125,7 +125,7 @@ in {
     paths = {
       "backup" = {
         Path.PathModified = "/home/lorenz/src/gitlab.mpi-klsb.mpg.de/info/git.rg1/lorenz/.git/HEAD";
-        Install.WantedBy = ["paths.target"];
+        #Install.WantedBy = ["paths.target"];
       };
       "ssh-known-hosts" = {
         Path.PathModified = "/home/lorenz/.ssh/known_hosts";
