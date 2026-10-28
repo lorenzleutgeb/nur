@@ -82,7 +82,12 @@ in {
 
   services = {
     cron.enable = true;
-    envfs.enable = true;
+    envfs = {
+      enable = true;
+      extraFallbackPathCommands = ''
+        ln -s /init $out/wslinfo
+      '';
+    };
 
     journald.settings.Journal = {
       MaxRetentionSec = "30d";
