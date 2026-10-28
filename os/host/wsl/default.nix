@@ -30,6 +30,13 @@ in {
   in {
     inherit defaultUser;
     enable = true;
+    populateBin = lib.mkForce true;
+    extraBin = [
+      {
+        name = "mount.drvfs";
+        src = "/init";
+      }
+    ];
     wslConf = {
       user.default = defaultUser;
       automount = {
