@@ -9,6 +9,7 @@ in {
 
   services.monero = {
     enable = true;
+    prune = true;
     extraConfig = ''
       tx-proxy=tor,${tor},10
       proxy=${tor}
