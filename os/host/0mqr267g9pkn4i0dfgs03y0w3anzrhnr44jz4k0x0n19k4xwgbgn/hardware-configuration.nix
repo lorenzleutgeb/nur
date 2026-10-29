@@ -52,7 +52,6 @@ in {
 
   boot.initrd = {
     systemd = {
-      enable = true;
       emergencyAccess = true;
       network = config.systemd.network;
     };

@@ -5,17 +5,15 @@
 }:
 with builtins; {
   imports = [
-    ./input-method.nix
-    ./terminal.nix
-    ./sway
     ../programs/alacritty
     ../programs/firefox
-    ../programs/spotify
     ../programs/signal-desktop
     ../programs/thunderbird.nix
     ../programs/zathura.nix
-    #../services/mpris-proxy.nix
     ../services/ulauncher.nix
+    ./input-method.nix
+    ./sway
+    ./terminal.nix
   ];
 
   home.sessionVariables.GDK_DPI_SCALE = "1.5";
@@ -32,9 +30,6 @@ with builtins; {
     font-awesome
     glibcLocales
     gimp
-    networkmanagerapplet
-    google-chrome
-    gource
     gparted
     graphviz
     insomnia
@@ -46,19 +41,11 @@ with builtins; {
     pinta
     picard
     portfolio
-    qnotero
     rclone-browser
-    shfmt
     siji
-    teamviewer
     transmission_4-gtk
     obs-studio
     vlc
-    xclip
-    xdotool
-    zoom-us
-    zotero
-
     m17n_db
     m17n_lib
   ];

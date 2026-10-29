@@ -5,7 +5,8 @@ with pkgs; {
   i18n.inputMethod = let
     method = "fcitx5";
   in {
-    enabled = method;
+    enable = true;
+    type = method;
     ${method}.addons = [fcitx5-m17n];
   };
 }

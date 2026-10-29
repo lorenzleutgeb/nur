@@ -19,15 +19,16 @@
   ];
 
   "0mqr267g9pkn4i0dfgs03y0w3anzrhnr44jz4k0x0n19k4xwgbgn" = [
-    ./profiles/junk.nix
+    #./services/v4lbridge.nix
     ./profiles/common.nix
     ./profiles/development-graphical.nix
     ./profiles/gaming.nix
+    ./profiles/junk.nix
     ./profiles/latex.nix
     ./profiles/logic1.nix
     ./profiles/mpi-klsb.nix
+    ./profiles/msmtp.nix
     ./profiles/radicle.nix
-    #./services/v4lbridge.nix
     ./profiles/sops
     ./profiles/spass.nix
     ./profiles/summer-of-nix.nix
